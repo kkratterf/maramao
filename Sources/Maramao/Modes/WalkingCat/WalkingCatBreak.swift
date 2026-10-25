@@ -68,8 +68,9 @@ final class WalkingCatBreak: BreakMode {
     private static let blockerLevel = NSWindow.Level(rawValue: NSWindow.Level.screenSaver.rawValue - 1)
     private static let catLevel = NSWindow.Level.screenSaver
     private static let hudLevel = NSWindow.Level(rawValue: NSWindow.Level.screenSaver.rawValue + 1)
-    /// Tall enough for the cat's tip under the pill (see BreakHUD); the empty part is transparent.
-    private static let hudSize = NSSize(width: 460, height: 200)
+    /// Tall enough for the cat's tip under the pill (see BreakHUD) and wide enough for both
+    /// "Rimanda" and "Salta"; the empty part is transparent.
+    private static let hudSize = NSSize(width: 560, height: 200)
     private static let defaultEntranceLine = String(localized: "Questa finestra adesso è mia.")
     private static let lines = [
         String(localized: "Questa finestra adesso è mia."),

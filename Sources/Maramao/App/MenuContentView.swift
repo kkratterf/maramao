@@ -52,6 +52,7 @@ struct MenuContentView: View {
     }
 
     private var phaseTitle: String {
+        if engine.isBreakSnoozed { return BreakSnoozeText.waiting }
         switch engine.phase {
         case .idle:
             if availability.isSnoozed { return String(localized: "Il gatto dorme \(availability.untilText())") }
@@ -98,6 +99,13 @@ struct MenuContentView: View {
                 Button("Pausa gatto ora") { engine.takeBreakNow() }
                     .help(String(localized: "Fai subito la pausa") + shortcuts.hint(.takeBreak))
             case .shortBreak, .longBreak:
+                if engine.isBreakSnoozed {
+                    Button("Pausa gatto ora") { engine.takeBreakNow() }
+                        .help(String(localized: "Fai subito la pausa") + shortcuts.hint(.takeBreak))
+                } else if engine.canSnoozeBreak {
+                    Button(BreakSnoozeText.button(minutes: settings.snoozePolicy.minutes)) { engine.snoozeBreak() }
+                        .help(BreakSnoozeText.left(settings.snoozePolicy.snoozesLeft(usedToday: stats.today.breaksSnoozed)) + shortcuts.hint(.snooze))
+                }
                 Button("Salta pausa") { engine.skip() }
                     .disabled(!engine.canSkipBreak)
                     .help((settings.strictMode ? String(localized: "Modalità severa: non si salta") : String(localized: "Disponibile dopo \(Int(settings.skipUnlockSeconds)) secondi")) + shortcuts.hint(.skip))

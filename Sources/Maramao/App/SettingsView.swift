@@ -103,6 +103,24 @@ struct SettingsView: View {
                         Text("Pulsante \"Salta\" dopo \(Int(settings.skipUnlockSeconds)) secondi")
                     }
                 }
+                if !settings.strictMode {
+                    Picker("Rimanda la pausa", selection: $settings.snoozeDailyLimit) {
+                        ForEach(BreakSnoozePolicy.dailyLimitOptions, id: \.self) { limit in
+                            Text(BreakSnoozeText.limitLabel(limit)).tag(limit)
+                        }
+                    }
+                    if settings.snoozeDailyLimit > 0 {
+                        Picker("Di quanto", selection: $settings.snoozeMinutes) {
+                            ForEach(BreakSnoozePolicy.minuteOptions, id: \.self) { minutes in
+                                Text(BreakSnoozeText.minutesLabel(minutes)).tag(minutes)
+                            }
+                        }
+                        Text("\"Rimanda\" compare nella prima metà della pausa: il gatto se ne va e torna dopo, con la pausa intera. Non è \"Pausa per…\", che addormenta tutta l'app.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
                 Text("Uscita di emergenza: \(EmergencyExitGuard.shortcutLabel) chiude subito qualsiasi pausa, anche in modalità severa. Funziona anche cliccando \(EmergencyExitGuard.cornerClicks) volte di fila nell'angolo in alto a sinistra dello schermo.")
                     .font(.caption)
                     .foregroundStyle(.secondary)

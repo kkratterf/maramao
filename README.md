@@ -26,7 +26,7 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 | 🔴 | **Caccia al laser** | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops. Leave the mouse alone and the cat sits down to groom. |
 | ⌨️ | **Il gatto sulla tastiera** | A cat falls asleep on a big keyboard. Every key you press ends up as cat-typing ("mmmmrrrrrooooow"), and Cmd-Q won't get you out. |
 
-Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
+Breaks can be skipped after a minute (configurable), or never in **modalità severa**. Need two more minutes? **Rimanda** on the break pill (or ⌃⌥⌘R) sends the cat away for 1, 3 or 5 minutes and brings the whole break back afterwards, up to 3 times a day by default (Settings → **Severità**). Snoozes show up in the stats. Not to be confused with **Pausa per…**, which puts the whole app to sleep.
 
 With more than one display, **Schermi** in Settings picks where the cats appear: every display, only the main one, or the one with the mouse. The others are just dimmed a little.
 
@@ -53,6 +53,7 @@ They work from any app and need no special permission. Turn each one on or off i
 | ⌃⌥⌘P | Start a pomodoro, or pause / resume it |
 | ⌃⌥⌘B | Take the cat break now |
 | ⌃⌥⌘S | Skip the current phase (a break only once skipping is allowed) |
+| ⌃⌥⌘R | Snooze the break that just started (**Rimanda**, within the daily limit) |
 
 ---
 

@@ -6,6 +6,7 @@ enum GlobalShortcut: String, CaseIterable, Identifiable {
     case startPause
     case takeBreak
     case skip
+    case snooze
 
     var id: String { rawValue }
 
@@ -17,6 +18,7 @@ enum GlobalShortcut: String, CaseIterable, Identifiable {
         case .startPause: return HotKeyCombo(keyCode: kVK_ANSI_P, modifiers: HotKeyCombo.controlOptionCommand)
         case .takeBreak: return HotKeyCombo(keyCode: kVK_ANSI_B, modifiers: HotKeyCombo.controlOptionCommand)
         case .skip: return HotKeyCombo(keyCode: kVK_ANSI_S, modifiers: HotKeyCombo.controlOptionCommand)
+        case .snooze: return HotKeyCombo(keyCode: kVK_ANSI_R, modifiers: HotKeyCombo.controlOptionCommand)
         }
     }
 
@@ -25,6 +27,7 @@ enum GlobalShortcut: String, CaseIterable, Identifiable {
         case .startPause: return String(localized: "Inizia / metti in pausa")
         case .takeBreak: return String(localized: "Pausa gatto ora")
         case .skip: return String(localized: "Salta (quando si può)")
+        case .snooze: return String(localized: "Rimanda la pausa (quando si può)")
         }
     }
 
@@ -110,11 +113,14 @@ final class GlobalShortcuts: ObservableObject {
             case .shortBreak, .longBreak: break // Breaks cannot be paused.
             }
         case .takeBreak:
-            guard !engine.phase.isBreak else { return }
+            guard !engine.phase.isBreak || engine.isBreakSnoozed else { return }
             engine.takeBreakNow()
         case .skip:
             // `skip()` itself refuses to end a break before it may be skipped.
             engine.skip()
+        case .snooze:
+            // `snoozeBreak()` itself checks the daily limit and the offer window.
+            engine.snoozeBreak()
         }
     }
 }

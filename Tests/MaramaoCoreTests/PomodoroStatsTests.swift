@@ -219,6 +219,21 @@ final class PomodoroStatsTests: XCTestCase {
         XCTAssertEqual(day.workSessions, 3)
         XCTAssertEqual(day.breaksSkipped, 1)
         XCTAssertEqual(day.emergencyExits, 0)
+        XCTAssertEqual(day.breaksSnoozed, 0)
         XCTAssertEqual(day.modes["catPile"], BreakModeCounts(completed: 2, skipped: 1))
+    }
+
+    func testSnoozesAreCountedPerDayAndSummed() {
+        var stats = PomodoroStats()
+        let now = date(2026, 10, 25, 10)
+        stats.recordSnooze(at: now, calendar: calendar)
+        stats.recordSnooze(at: now, calendar: calendar)
+        stats.recordSnooze(at: date(2026, 10, 24, 10), calendar: calendar)
+        let today = stats.day(now, calendar: calendar)
+        XCTAssertEqual(today.breaksSnoozed, 2)
+        XCTAssertEqual(today.breaksTotal, 0, "A snooze is not a finished break")
+        XCTAssertFalse(today.isEmpty)
+        XCTAssertEqual(stats.day(date(2026, 10, 26, 10), calendar: calendar).breaksSnoozed, 0, "The count starts again every day")
+        XCTAssertEqual(stats.total(ofLast: 7, endingAt: now, calendar: calendar).breaksSnoozed, 3)
     }
 }

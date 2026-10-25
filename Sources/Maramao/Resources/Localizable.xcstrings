@@ -1,6 +1,17 @@
 {
   "sourceLanguage": "it",
   "strings": {
+    "\"Rimanda\" compare nella prima metà della pausa: il gatto se ne va e torna dopo, con la pausa intera. Non è \"Pausa per…\", che addormenta tutta l'app.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\"Snooze\" shows up during the first half of a break: the cat leaves and comes back later with the whole break. It is not \"Pause for…\", which puts the whole app to sleep."
+          }
+        }
+      }
+    },
     "%@ e %@": {
       "extractionState": "manual",
       "localizations": {
@@ -85,6 +96,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld minutes before"
+          }
+        }
+      }
+    },
+    "%lld pause rimandate": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld breaks snoozed"
           }
         }
       }
@@ -193,6 +215,17 @@
         }
       }
     },
+    "%lld volte al giorno": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld times a day"
+          }
+        }
+      }
+    },
     "%lld/%lld pause rispettate": {
       "extractionState": "manual",
       "localizations": {
@@ -270,6 +303,17 @@
         }
       }
     },
+    "1 pausa rimandata": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 break snoozed"
+          }
+        }
+      }
+    },
     "1 secondo": {
       "extractionState": "manual",
       "localizations": {
@@ -277,6 +321,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 second"
+          }
+        }
+      }
+    },
+    "1 volta al giorno": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Once a day"
           }
         }
       }
@@ -475,6 +530,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "ME TOO. AND I DID NOTHING."
+          }
+        }
+      }
+    },
+    "Ancora %lld rinvii oggi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld snoozes left today"
+          }
+        }
+      }
+    },
+    "Ancora 1 rinvio oggi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 snooze left today"
           }
         }
       }
@@ -1157,6 +1234,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Again? Seriously?"
+          }
+        }
+      }
+    },
+    "Di quanto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze length"
           }
         }
       }
@@ -3691,6 +3779,17 @@
         }
       }
     },
+    "Pausa rimandata: il gatto torna presto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break snoozed: the cat will be back soon"
+          }
+        }
+      }
+    },
     "PAUSA.": {
       "extractionState": "manual",
       "localizations": {
@@ -4256,6 +4355,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Relax your shoulders. There you go."
+          }
+        }
+      }
+    },
+    "Rimanda %lld min": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze %lld min"
+          }
+        }
+      }
+    },
+    "Rimanda la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze the break"
+          }
+        }
+      }
+    },
+    "Rimanda la pausa (quando si può)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze the break (when allowed)"
           }
         }
       }
@@ -5213,6 +5345,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Emergency exit: %1$@ closes any break right away, even in strict mode. Clicking %2$lld times in a row in the top-left corner of the screen works too."
+          }
+        }
+      }
+    },
+    "Va bene, torno tra %lld minuti 🐾": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fine, I'll be back in %lld minutes 🐾"
+          }
+        }
+      }
+    },
+    "Va bene, torno tra un minuto 🐾": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fine, I'll be back in a minute 🐾"
           }
         }
       }
