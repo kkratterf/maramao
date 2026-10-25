@@ -5,6 +5,7 @@ Italian is the source language, so the keys are the Italian strings. Fails when:
 - an entry has no English translation (or an empty one, or a plural without "one"/"other");
 - a translation uses different format specifiers than its key (e.g. %lld vs %@);
 - a `String(localized: "...")` literal in Sources/ has no entry in the catalog;
+- an App Shortcut phrase in Intents.swift has no line in en.lproj/AppShortcuts.strings;
 - a SwiftUI literal (Text("..."), Button("..."), Toggle, Label, Section, Picker, .help, ...)
   has no entry. SwiftUI looks these up automatically, so without an entry they stay Italian.
   Literals without letters (e.g. "\\(a) · \\(b)") and the names in UNTRANSLATED are skipped.
@@ -99,6 +100,22 @@ def main():
                     errors.append(f"format mismatch {lang}{label}: {key!r} -> {value!r}")
                 elif "variations" in locs[lang] and set(specifiers(value)) - set(specifiers(key)):
                     errors.append(f"format mismatch {lang}{label}: {key!r} -> {value!r}")
+
+    # App Shortcut phrases live in en.lproj/AppShortcuts.strings (macOS 13 has no
+    # AppShortcuts.xcstrings); every phrase in Intents.swift needs an English line.
+    resources = os.path.dirname(CATALOG)
+    table = os.path.join(resources, "en.lproj", "AppShortcuts.strings")
+    phrases = set()
+    if os.path.exists(table):
+        with open(table, encoding="utf-8") as f:
+            phrases = set(re.findall(r'^"((?:[^"\\]|\\.)*)"\s*=\s*"(?:[^"\\]|\\.)+";', f.read(), re.M))
+    intents = os.path.join(ROOT, "Sources/Maramao/App/Intents.swift")
+    if os.path.exists(intents):
+        with open(intents, encoding="utf-8") as f:
+            for phrase in re.findall(r'"((?:[^"\\]|\\.)*\\\(\.applicationName\)(?:[^"\\]|\\.)*)"', f.read()):
+                key = phrase.replace("\\(.applicationName)", "${applicationName}")
+                if key not in phrases:
+                    errors.append(f"App Shortcut phrase missing from en.lproj/AppShortcuts.strings: {key!r}")
 
     literal = re.compile(r'String\(localized:\s*"((?:[^"\\]|\\.)*)"')
     for folder, _, files in os.walk(os.path.join(ROOT, "Sources")):

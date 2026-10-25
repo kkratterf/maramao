@@ -141,6 +141,47 @@
         }
       }
     },
+    "%lld pomodori oggi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodoro today"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodoros today"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodoro oggi"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodori oggi"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld secondi": {
       "extractionState": "manual",
       "localizations": {
@@ -1007,6 +1048,17 @@
         }
       }
     },
+    "Concentrazione, %@ rimasti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus, %@ left"
+          }
+        }
+      }
+    },
     "Concept preferito": {
       "extractionState": "manual",
       "localizations": {
@@ -1212,6 +1264,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Again? Seriously?"
+          }
+        }
+      }
+    },
+    "Dice la fase attuale, il tempo rimasto e i pomodori di oggi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tells the current phase, the time left and today's pomodoros."
           }
         }
       }
@@ -1433,6 +1496,17 @@
         }
       }
     },
+    "Fa partire un pomodoro, o lo riprende se è in pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starts a pomodoro, or resumes it if it's paused."
+          }
+        }
+      }
+    },
     "Fai due passi, io resto qui.": {
       "extractionState": "manual",
       "localizations": {
@@ -1528,6 +1602,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pause Maramao for a while: it comes back on its own"
+          }
+        }
+      }
+    },
+    "Fermo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopped"
+          }
+        }
+      }
+    },
+    "Finisce il pomodoro e fa partire subito la pausa coi gatti.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ends the pomodoro and starts the cat break right away."
           }
         }
       }
@@ -2407,6 +2503,17 @@
         }
       }
     },
+    "In pausa, %@ rimasti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused, %@ left"
+          }
+        }
+      }
+    },
     "Inclina la testa a destra e a sinistra, piano, come un gatto curioso.": {
       "extractionState": "manual",
       "localizations": {
@@ -2935,6 +3042,17 @@
         }
       }
     },
+    "Mette in pausa il pomodoro in corso, o lo riprende.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pauses the running pomodoro, or resumes it."
+          }
+        }
+      }
+    },
     "Metti in pausa": {
       "extractionState": "manual",
       "localizations": {
@@ -2953,6 +3071,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pause the pomodoro"
+          }
+        }
+      }
+    },
+    "Metti in pausa o riprendi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause or resume"
           }
         }
       }
@@ -3694,6 +3823,17 @@
         }
       }
     },
+    "Pausa breve, %@ rimasti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short break, %@ left"
+          }
+        }
+      }
+    },
     "Pausa con te? Il mio momento preferito.": {
       "extractionState": "manual",
       "localizations": {
@@ -3797,6 +3937,17 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "Pausa lunga, %@ rimasti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long break, %@ left"
           }
         }
       }
@@ -4601,6 +4752,17 @@
         }
       }
     },
+    "Scegli la modalità pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the break mode"
+          }
+        }
+      }
+    },
     "Scegli tra i tuoi Comandi Rapidi": {
       "extractionState": "manual",
       "localizations": {
@@ -4608,6 +4770,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pick one of your Shortcuts"
+          }
+        }
+      }
+    },
+    "Sceglie come i gatti ti fermeranno alla prossima pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chooses how the cats will stop you at the next break."
           }
         }
       }
@@ -4982,6 +5155,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Statistics"
+          }
+        }
+      }
+    },
+    "Stato di Maramao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maramao status"
           }
         }
       }

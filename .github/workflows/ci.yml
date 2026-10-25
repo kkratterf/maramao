@@ -54,6 +54,15 @@ jobs:
           echo "Maramao.app launched and stayed up"
           echo "::notice::Maramao.app $(lipo -archs "$app/Contents/MacOS/Maramao"), bundle $(du -sk "$app" | cut -f1) KB, Sparkle.framework $(du -sk "$app/Contents/Frameworks/Sparkle.framework" | cut -f1) KB"
 
+      - name: Check the Shortcuts actions metadata
+        run: |
+          data=dist/Maramao.app/Contents/Resources/Metadata.appintents/extract.actionsdata
+          [ -f "$data" ] || { echo "::error::Metadata.appintents missing from the app bundle (see the build-app.sh output)"; exit 1; }
+          for intent in StartFocusIntent PauseIntent TakeBreakIntent SetBreakModeIntent GetStatusIntent; do
+            grep -q "\"$intent\"" "$data" || { echo "::error::$intent missing from Metadata.appintents"; exit 1; }
+          done
+          echo "Metadata.appintents OK ($(wc -c < "$data" | tr -d ' ') bytes)"
+
       - name: Check the translations in the app bundle
         run: |
           app=dist/Maramao.app
