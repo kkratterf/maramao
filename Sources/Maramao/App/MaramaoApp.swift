@@ -45,6 +45,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         // System-wide shortcuts (Carbon hot keys, no permission needed).
         Task { @MainActor in GlobalShortcuts.shared.activate() }
+        Task { @MainActor in MeasurementHooks.run() }
     }
 
     /// Opens the settings window. A plain NSWindow, because `Settings` scenes
