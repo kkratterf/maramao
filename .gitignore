@@ -17,3 +17,7 @@ dist/
 
 # OS
 .DS_Store
+
+# Python bytecode (scripts/check-strings.py and friends)
+__pycache__/
+*.pyc
