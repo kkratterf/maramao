@@ -139,7 +139,7 @@
       <div class="wrap">
         <p class="kicker">I gatti</p>
         <h2 id="h-cats">Scegli chi ti interrompe.</h2>
-        <p class="section-lead">Quattro modi diversi di dirti “basta”. Li scegli dal menu e puoi provarli subito da <b>Prova un concept</b>, senza aspettare 25 minuti.</p>
+        <p class="section-lead">Cinque modi diversi di dirti “basta”, più uno a sorpresa. Li scegli dal menu e puoi provarli subito da <b>Prova un concept</b>, senza aspettare 25 minuti.</p>
 
         <ul class="cards">
           <li class="card">
@@ -187,18 +187,23 @@
             <h3><span class="emo" aria-hidden="true">🐾</span> Invasione di gatti</h3>
             <p>Piovono gatti dall'alto e si accumulano fino a seppellire tutto lo schermo. Resistere è inutile.</p>
           </li>
-        </ul>
-
-        <div class="surprise">
-          <div class="dice" aria-hidden="true">
-            <span class="slot"><span class="reel"><i>🐈</i><i>😹</i><i>😴</i><i>🐾</i><i>🐈</i></span></span>
-          </div>
-          <div>
+          <li class="card">
+            <div class="scene sc-laser" aria-hidden="true">
+              <span class="dot"></span>
+              <span class="chaser"><span class="cat" data-cat="walking gray"></span></span>
+            </div>
+            <h3><span class="emo" aria-hidden="true">🔴</span> Caccia al laser</h3>
+            <p>Il mouse diventa un puntino laser e il gatto lo insegue per tutto lo schermo. Tu giochi, lui corre, nessuno lavora.</p>
+          </li>
+          <li class="card card-surprise">
+            <div class="scene sc-dice" aria-hidden="true">
+              <div class="dice"><span class="slot"><span class="reel"><i>🐈</i><i>😹</i><i>😴</i><i>🐾</i><i>🔴</i><i>🐈</i></span></span></div>
+            </div>
             <h3><span class="emo" aria-hidden="true">🎲</span> Sorpresa</h3>
             <p>Non riesci a scegliere? Ogni pausa un gatto diverso. Non saprai mai chi arriva, ed è questo il bello.</p>
-          </div>
-        </div>
-      </div>
+          </li>
+        </ul>
+            </div>
     </section>
 
     <!-- Features -->
@@ -326,7 +331,8 @@
           </details>
           <details>
             <summary>Come lo disinstallo?</summary>
-            <p>Esci da Maramao dal suo menu (<b>Esci</b>) e trascina <b>Maramao</b> da Applicazioni al Cestino. Se avevi attivato l'avvio al login, spegnilo prima nelle impostazioni dell'app. Nessun residuo strano.</p>
+            <p>Esci da Maramao dal suo menu (<b>Esci</b>) e trascina <b>Maramao</b> da Applicazioni al Cestino. Se avevi attivato l'avvio al login, spegnilo prima nelle impostazioni dell'app. Dal Terminale fa tutto una riga, impostazioni comprese:</p>
+            <pre class="faq-cmd"><code>curl -fsSL https://raw.githubusercontent.com/kkratterf/maramao/main/install.sh | sh -s -- --uninstall</code></pre>
           </details>
           <details>
             <summary>È gratis?</summary>
