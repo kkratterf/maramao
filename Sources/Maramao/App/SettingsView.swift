@@ -75,6 +75,8 @@ struct SettingsView: View {
 
             ShortcutsSettingsSection()
 
+            AutomationsSection()
+
             Section("Statistiche") {
                 StatsSection(stats: stats, confirmReset: $confirmStatsReset)
             }
