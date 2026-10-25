@@ -53,8 +53,8 @@ final class SleepyCatBreak: BreakMode {
         lastTick = now
         anchor = NSEvent.mouseLocation
 
-        let screens = NSScreen.screens
-        let mainScreen = NSScreen.main ?? screens.first
+        let screens = BreakScreens.current()
+        let mainScreen = BreakScreens.primary(in: screens)
         windows = screens.map { screen in
             let window = OverlayWindow(screen: screen)
             window.acceptsMouseMovedEvents = true
