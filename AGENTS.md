@@ -17,6 +17,7 @@ Maramao is a native macOS Pomodoro timer that lives in the menu bar. When it is 
 | `Tests/MaramaoCoreTests` | XCTest for `MaramaoCore` |
 | `Resources/Info.plist` | App bundle metadata, including the version |
 | `scripts/build-app.sh` | Wraps the SwiftPM binary into `dist/Maramao.app` and a zip |
+| `site/` | The project website (static HTML/CSS/JS, Italian), deployed to GitHub Pages by `.github/workflows/pages.yml` |
 
 ## Language of the project
 
@@ -35,6 +36,8 @@ open dist/Maramao.app
 ```
 
 Every break mode can be tried without waiting 25 minutes: menu bar → "Prova un concept".
+
+The website has no build step: preview it with `python3 -m http.server -d site 8000` and open http://localhost:8000.
 
 ## Rules for changes
 
