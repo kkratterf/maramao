@@ -15,33 +15,9 @@ struct MaramaoApp: App {
                 .environmentObject(settings)
                 .environmentObject(stats)
         } label: {
-            MenuBarLabel(engine: engine)
+            MenuBarLabel()
         }
         .menuBarExtraStyle(.window)
-    }
-}
-
-/// The text next to the cat in the menu bar.
-struct MenuBarLabel: View {
-    @ObservedObject var engine: PomodoroEngine
-    @ObservedObject private var availability = AvailabilityStore.shared
-
-    var body: some View {
-        switch engine.phase {
-        case .idle:
-            if let until = availability.snoozedUntil {
-                Text("😴 \(AvailabilityText.clock(until))")
-                    .monospacedDigit()
-            } else {
-                Text("🐱")
-            }
-        case .work:
-            Text("\(engine.isPaused ? "⏸" : "🍅") \(formatClock(engine.remaining))")
-                .monospacedDigit()
-        case .shortBreak, .longBreak:
-            Text("😾 \(formatClock(engine.remaining))")
-                .monospacedDigit()
-        }
     }
 }
 
@@ -53,6 +29,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         // System-wide shortcuts (Carbon hot keys, no permission needed).
         Task { @MainActor in GlobalShortcuts.shared.activate() }
+        // Runs the user's Shortcuts on phase changes (off unless turned on in Settings).
+        Task { @MainActor in ShortcutAutomations.shared.activate() }
         Task { @MainActor in MeasurementHooks.run() }
     }
 
