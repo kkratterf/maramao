@@ -30,6 +30,8 @@ Breaks can be skipped after a minute (configurable), or never in **modalità sev
 
 With more than one display, **Schermi** in Settings picks where the cats appear: every display, only the main one, or the one with the mouse. The others are just dimmed a little.
 
+**Il tuo gatto** remembers you. Every respected break earns it a treat (*croccantino*) you can give from the menu or Settings; skipped breaks make it a little grumpy, a streak of respected ones makes it happier. During breaks you can pet it with a click (it purrs) and drag it around in *Il gatto sulla finestra* and *Invasione di gatti*. Name it in Settings → **Il tuo gatto**, or turn the whole thing off there.
+
 In Settings → **Barra dei menu** you choose what the menu bar shows: cat and countdown (default), only the cat, only the countdown, or the cat inside a ring that fills up as the session goes on. The countdown can also drop the seconds (`24m`).
 
 ### When you step away

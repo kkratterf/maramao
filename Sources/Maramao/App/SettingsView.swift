@@ -82,6 +82,8 @@ struct SettingsView: View {
                 }
             }
 
+            CatCompanionSection()
+
             CatPacksSettingsSection()
 
             Section("Accessibilità") {
