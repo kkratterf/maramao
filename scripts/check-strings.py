@@ -5,10 +5,10 @@ Italian is the source language, so the keys are the Italian strings. Fails when:
 - an entry has no English translation (or an empty one, or a plural without "one"/"other");
 - a translation uses different format specifiers than its key (e.g. %lld vs %@);
 - a `String(localized: "...")` literal in Sources/ has no entry in the catalog;
-- an App Shortcut phrase in Intents.swift has no line in en.lproj/AppShortcuts.strings.
-
-SwiftUI literals (Text("..."), Button("..."), ...) are looked up automatically and are not
-checked here: without an entry they simply stay Italian.
+- an App Shortcut phrase in Intents.swift has no line in en.lproj/AppShortcuts.strings;
+- a SwiftUI literal (Text("..."), Button("..."), Toggle, Label, Section, Picker, .help, ...)
+  has no entry. SwiftUI looks these up automatically, so without an entry they stay Italian.
+  Literals without letters (e.g. "\\(a) · \\(b)") and the names in UNTRANSLATED are skipped.
 
 Usage: scripts/check-strings.py [path/to/Localizable.xcstrings]
 """
@@ -20,6 +20,14 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CATALOG = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "Sources/Maramao/Resources/Localizable.xcstrings")
 REQUIRED = ["en"]
+# SwiftUI calls whose first string literal is a LocalizedStringKey.
+SWIFTUI = re.compile(
+    r'(?:\b(?:Text|Button|Toggle|Label|Section|Picker|TextField|SecureField|DatePicker|Menu|Stepper'
+    r'|LabeledContent|Link|GroupBox)\(|\.(?:help|navigationTitle|accessibilityLabel|accessibilityHint'
+    r'|alert|confirmationDialog)\()\s*"((?:[^"\\]|\\.)*)"'
+)
+# Literals that read the same in every language.
+UNTRANSLATED = {"Maramao"}
 SPEC = re.compile(r"%(?:\d+\$)?(lld|ld|d|lf|f|@)|%%")
 
 
@@ -41,9 +49,16 @@ def units(localization):
             yield f" [{form}]", entry.get("stringUnit", {}).get("value", "")
 
 
-def swift_key_pattern(literal):
+def strip_interpolations(literal):
+    """The literal without its \\(...) interpolations."""
+    return re.sub(r"\\\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\)", "", literal)
+
+
+def swift_key_pattern(literal, swiftui=False):
     """Regex matching the catalog key of a Swift `String(localized: "...")` literal.
-    Each interpolation \\(...) becomes any format specifier."""
+    Each interpolation \\(...) becomes any format specifier. A SwiftUI literal without
+    interpolations keeps a literal % as is, so either spelling matches there."""
+    plain_percent = swiftui and "\\(" not in literal
     out, i = "", 0
     while i < len(literal):
         if literal.startswith("\\(", i):
@@ -57,7 +72,7 @@ def swift_key_pattern(literal):
             out += re.escape({"n": "\n", "t": "\t"}.get(literal[i + 1], literal[i + 1]))
             i += 2
         elif literal[i] == "%":
-            out += "%%"
+            out += "%%?" if plain_percent else "%%"
             i += 1
         else:
             out += re.escape(literal[i])
@@ -108,13 +123,22 @@ def main():
             if not name.endswith(".swift"):
                 continue
             path = os.path.join(folder, name)
+            rel = os.path.relpath(path, ROOT)
             with open(path, encoding="utf-8") as f:
                 for number, line in enumerate(f, 1):
+                    if line.lstrip().startswith("//"):
+                        continue
                     for match in literal.finditer(line):
                         pattern = swift_key_pattern(match.group(1))
                         if not any(pattern.match(k) for k in keys):
-                            rel = os.path.relpath(path, ROOT)
                             errors.append(f"not in the catalog: {rel}:{number} {match.group(1)!r}")
+                    for match in SWIFTUI.finditer(line):
+                        text = match.group(1)
+                        if text in UNTRANSLATED or not re.search(r"[^\W\d_]", strip_interpolations(text)):
+                            continue
+                        pattern = swift_key_pattern(text, swiftui=True)
+                        if not any(pattern.match(k) for k in keys):
+                            errors.append(f"SwiftUI literal not in the catalog: {rel}:{number} {text!r}")
 
     for error in errors:
         print(f"error: {error}")

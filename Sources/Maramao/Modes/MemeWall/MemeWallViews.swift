@@ -398,7 +398,7 @@ struct MemeWallAnimatedCat: View {
             if meme.template == .sleepy {
                 ForEach(0..<3, id: \.self) { i in
                     let p = (t * 0.5 + Double(i) / 3).truncatingRemainder(dividingBy: 1)
-                    Text("z")
+                    Text(verbatim: "z")
                         .font(.system(size: side * (0.05 + CGFloat(p) * 0.05), weight: .heavy, design: .rounded))
                         .foregroundColor(.white)
                         .shadow(color: .black.opacity(0.5), radius: 2)

@@ -65,7 +65,7 @@ struct WalkingCatStageView: View {
                 let phase = (time * 0.33 + Double(index) / 3.0).truncatingRemainder(dividingBy: 1.0)
                 let p = CGFloat(phase)
                 let wobble = CGFloat(sin(phase * 7.0)) * 5
-                Text("z")
+                Text(verbatim: "z")
                     .font(.system(size: 13 + 15 * p + width * 0.015, weight: .heavy, design: .rounded))
                     .foregroundColor(.white)
                     .shadow(color: Color.black.opacity(0.55), radius: 2, x: 0, y: 1)
