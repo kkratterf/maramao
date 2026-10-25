@@ -39,3 +39,28 @@ jobs:
           name: Maramao-app
           path: dist/*.zip
           retention-days: 14
+
+      - name: Build the DMG
+        run: scripts/build-dmg.sh
+
+      - name: Check the DMG
+        run: |
+          dmg=$(ls dist/Maramao-*.dmg)
+          mnt=$(mktemp -d)
+          hdiutil attach -readonly -nobrowse -noverify -mountpoint "$mnt" "$dmg" >/dev/null
+          ls -la "$mnt"
+          status=0
+          [ -d "$mnt/Maramao.app" ] || { echo "::error::Maramao.app missing from the DMG"; status=1; }
+          [ -L "$mnt/Applications" ] || { echo "::error::Applications link missing from the DMG"; status=1; }
+          [ -f "$mnt/.background/background.tiff" ] || echo "::warning::no background in the DMG"
+          [ -f "$mnt/.DS_Store" ] || echo "::warning::no Finder layout (.DS_Store) in the DMG"
+          codesign --verify --verbose=1 "$mnt/Maramao.app" || status=1
+          hdiutil detach "$mnt" -quiet || hdiutil detach "$mnt" -force
+          exit $status
+
+      - name: Upload the DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: Maramao-dmg
+          path: dist/*.dmg
+          retention-days: 14
