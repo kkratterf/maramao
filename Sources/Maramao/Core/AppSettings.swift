@@ -30,6 +30,8 @@ final class AppSettings: ObservableObject {
     @Published var menuBarHideSeconds: Bool { didSet { defaults.set(menuBarHideSeconds, forKey: Keys.menuBarHideSeconds) } }
     /// Raw `MotionPreference`: follow Reduce Motion, or force calm or full break animations.
     @Published var motionPreferenceRaw: String { didSet { defaults.set(motionPreferenceRaw, forKey: Keys.motionPreference) } }
+    /// "Il tuo gatto": the cat remembers you, can be petted and fed with treats.
+    @Published var companionEnabled: Bool { didSet { defaults.set(companionEnabled, forKey: Keys.companionEnabled) } }
 
     private enum Keys {
         static let workMinutes = "workMinutes"
@@ -47,6 +49,7 @@ final class AppSettings: ObservableObject {
         static let menuBarStyle = "menuBarStyle"
         static let menuBarHideSeconds = "menuBarHideSeconds"
         static let motionPreference = "motionPreference"
+        static let companionEnabled = "companionEnabled"
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -67,6 +70,7 @@ final class AppSettings: ObservableObject {
             Keys.menuBarStyle: MenuBarStyle.defaultStyle.rawValue,
             Keys.menuBarHideSeconds: false,
             Keys.motionPreference: MotionPreference.defaultPreference.rawValue,
+            Keys.companionEnabled: true,
         ])
         workMinutes = defaults.double(forKey: Keys.workMinutes)
         shortBreakMinutes = defaults.double(forKey: Keys.shortBreakMinutes)
@@ -83,6 +87,7 @@ final class AppSettings: ObservableObject {
         menuBarStyleRaw = defaults.string(forKey: Keys.menuBarStyle) ?? MenuBarStyle.defaultStyle.rawValue
         menuBarHideSeconds = defaults.bool(forKey: Keys.menuBarHideSeconds)
         motionPreferenceRaw = defaults.string(forKey: Keys.motionPreference) ?? MotionPreference.defaultPreference.rawValue
+        companionEnabled = defaults.bool(forKey: Keys.companionEnabled)
     }
 
     var breakMode: BreakModeID {

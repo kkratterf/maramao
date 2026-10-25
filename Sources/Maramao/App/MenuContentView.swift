@@ -9,6 +9,8 @@ struct MenuContentView: View {
     @ObservedObject private var shortcuts = GlobalShortcuts.shared
     @ObservedObject private var availability = AvailabilityStore.shared
     @ObservedObject private var updater = AppUpdater.shared
+    @ObservedObject private var companion = CatCompanionStore.shared
+    @State private var treatReaction: String?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -17,6 +19,9 @@ struct MenuContentView: View {
             controls
             snoozeRow
             todayRow
+            if settings.companionEnabled {
+                companionRow
+            }
             Divider()
             modePicker
             previewRow
@@ -135,6 +140,46 @@ struct MenuContentView: View {
                 .help("Ferma Maramao per un po': riparte da solo")
                 Spacer()
             }
+        }
+    }
+
+    /// "Il tuo gatto": mood, treats and a button to give one.
+    private var companionRow: some View {
+        let cat = companion.companion
+        return HStack(spacing: 8) {
+            Text(cat.mood.emoji)
+                .font(.title3)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(treatReaction.map { "\(cat.name): \($0)" } ?? cat.name)
+                    .font(.caption.weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                Text("\(cat.mood.label) · \(CatCompanionText.treatsLine(cat.treats))")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .accessibilityElement(children: .combine)
+            Spacer(minLength: 4)
+            Button {
+                giveTreat()
+            } label: {
+                Label("Croccantino", systemImage: "fish")
+            }
+            .controlSize(.small)
+            .disabled(!cat.canGiveTreat)
+            .help(cat.canGiveTreat ? "Dai un croccantino a \(cat.name)" : CatCompanionText.earnTreatHint)
+        }
+    }
+
+    private func giveTreat() {
+        guard let reaction = companion.giveTreat() else { return }
+        treatReaction = reaction
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 4_000_000_000)
+            if treatReaction == reaction { treatReaction = nil }
         }
     }
 

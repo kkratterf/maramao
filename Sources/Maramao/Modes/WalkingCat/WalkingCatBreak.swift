@@ -1,4 +1,5 @@
 import AppKit
+import MaramaoCore
 import SwiftUI
 
 /// "Il gatto sulla finestra": a cat walks in from the edge of the screen, jumps onto the window
@@ -69,6 +70,7 @@ final class WalkingCatBreak: BreakMode {
     private static let hudLevel = NSWindow.Level(rawValue: NSWindow.Level.screenSaver.rawValue + 1)
     /// Tall enough for the cat's tip under the pill (see BreakHUD); the empty part is transparent.
     private static let hudSize = NSSize(width: 460, height: 200)
+    private static let defaultEntranceLine = "Questa finestra adesso è mia."
     private static let lines = [
         "Questa finestra adesso è mia.",
         "Riposati, umano.",
@@ -116,6 +118,11 @@ final class WalkingCatBreak: BreakMode {
     private var timeScale: Double = 1
     /// Reduce Motion: the cat fades in and out in place instead of walking and jumping.
     private var calm = false
+    /// "Il tuo gatto": the mood and the opening line, read once per break.
+    private var mood: CatMood = .calm
+    private var entranceLine = WalkingCatBreak.defaultEntranceLine
+    private var dragging = false
+    private var dragOffset = CGPoint.zero
     private var fadeFrom: Double = 1
     private var fadeTo: Double = 1
     private var fadeStart: TimeInterval = 0
@@ -132,6 +139,9 @@ final class WalkingCatBreak: BreakMode {
         self.context = context
         timeScale = min(1, max(0.2, context.duration / 90))
         calm = BreakAccessibility.reduceMotion
+        let companion = CatCompanionStore.shared
+        mood = companion.breakMood
+        entranceLine = companion.greeting(fallback: Self.defaultEntranceLine)
 
         let screens = NSScreen.screens
         guard !screens.isEmpty else { return }
@@ -159,6 +169,10 @@ final class WalkingCatBreak: BreakMode {
         let hitView = WalkingCatHitView(frame: NSRect(x: 0, y: 0, width: 10, height: 10))
         hitView.autoresizingMask = [.width, .height]
         hitView.onClick = { [weak self] in self?.catTapped() }
+        hitView.canDrag = { [weak self] in self?.canDragCat ?? false }
+        hitView.onDragBegan = { [weak self] point in self?.dragBegan(at: point) }
+        hitView.onDragMoved = { [weak self] point in self?.dragMoved(to: point) }
+        hitView.onDragEnded = { [weak self] _ in self?.dragEnded() }
         hit.contentView = hitView
         hitWindow = hit
 
@@ -222,6 +236,7 @@ final class WalkingCatBreak: BreakMode {
         queue.removeAll()
         running = nil
         settled = false
+        dragging = false
         cat.bubble = nil
 
         if calm {
@@ -324,7 +339,7 @@ final class WalkingCatBreak: BreakMode {
                 nextPollAt = time + 1
                 checkTarget()
             }
-            if settled, cat.bubble == nil, time >= nextBubbleAt {
+            if settled, !dragging, cat.bubble == nil, time >= nextBubbleAt {
                 sayRandomLine()
             }
             updateHitWindow()
@@ -332,7 +347,7 @@ final class WalkingCatBreak: BreakMode {
 
         // While the cat just sleeps, 15 fps is plenty for breathing and the "z"s.
         frameCount += 1
-        let idle = settled && running == nil && queue.isEmpty && cat.hearts.isEmpty
+        let idle = settled && !dragging && running == nil && queue.isEmpty && cat.hearts.isEmpty
             && (cat.bubble == nil || (cat.bubbleAge > 0.3 && cat.bubbleRemaining > 0.4))
         if idle && frameCount % 2 == 1 { return }
         model.snapshot = cat
@@ -644,11 +659,13 @@ final class WalkingCatBreak: BreakMode {
     /// Sit on the title bar, hop onto the middle of the window, grow big and fall asleep.
     private func appendSettle(layout: Layout, sit: TimeInterval, announce: Bool, into steps: inout [Step]) {
         steps.append(Step(.hold(.sitting, duration: 0), completion: { [weak self] in
-            if announce { self?.say("Questa finestra adesso è mia.", duration: max(2.2, sit + 0.6)) }
+            guard let self, announce else { return }
+            self.say(self.entranceLine, duration: max(2.2, sit + 0.6))
         }))
         steps.append(Step(.hold(.sitting, duration: sit)))
         steps.append(Step(.jump(to: layout.sleepPoint, duration: 0.65, height: 40), width: layout.sleepWidth))
         steps.append(Step(.hold(.sitting, duration: 0.45 * holdScale)))
+        if announce { appendMoodBeat(into: &steps) }
         steps.append(Step(.hold(.sleeping, duration: 0), completion: { [weak self] in
             self?.didSettle()
         }))
@@ -665,7 +682,8 @@ final class WalkingCatBreak: BreakMode {
         fadeCat(to: 1, duration: 0.8)
         var steps: [Step] = []
         steps.append(Step(.hold(.sitting, duration: 0), completion: { [weak self] in
-            if announce { self?.say("Questa finestra adesso è mia.", duration: 2.6) }
+            guard let self, announce else { return }
+            self.say(self.entranceLine, duration: 2.6)
         }))
         steps.append(Step(.hold(.sitting, duration: 1.8 * holdScale)))
         steps.append(Step(.hold(.sleeping, duration: 0), completion: { [weak self] in
@@ -702,7 +720,7 @@ final class WalkingCatBreak: BreakMode {
     }
 
     private func checkTarget() {
-        guard !ended, began else { return }
+        guard !ended, began, !dragging else { return }
         guard let found = WalkingCatWindowFinder.frontmostWindow() else { return }
         if found.windowNumber == target.windowNumber {
             let old = target.frame
@@ -770,10 +788,20 @@ final class WalkingCatBreak: BreakMode {
 
     private func catTapped() {
         guard !ended else { return }
+        spawnHearts(3)
+        purr()
+        if let reaction = CatCompanionStore.shared.pet() {
+            if !dragging { say(reaction, duration: 2.4) }
+        } else if settled && cat.bubble == nil && Double.random(in: 0...1) < 0.4 {
+            say(["Mrrr.", "Prrr…", "Ancora coccole."].randomElement() ?? "Mrrr.", duration: 2.2)
+        }
+    }
+
+    private func spawnHearts(_ count: Int) {
         let body = cat.bodyRect
         let headX = cat.facingLeft ? body.minX + body.width * 0.25 : body.maxX - body.width * 0.25
         let time = now
-        for index in 0..<3 {
+        for index in 0..<count {
             let heart = WalkingCatHeart(
                 id: nextHeartID,
                 origin: CGPoint(x: headX + CGFloat.random(in: -16...16), y: body.maxY - 6),
@@ -787,10 +815,80 @@ final class WalkingCatBreak: BreakMode {
         if cat.hearts.count > 24 {
             cat.hearts.removeFirst(cat.hearts.count - 24)
         }
-        purr()
-        if settled && cat.bubble == nil && Double.random(in: 0...1) < 0.4 {
-            say(["Mrrr.", "Prrr…", "Ancora coccole."].randomElement() ?? "Mrrr.", duration: 2.2)
+    }
+
+    /// "Il tuo gatto": a fond cat stretches and sends hearts before curling up, a grumpy one
+    /// turns its back for a moment. Skipped with Reduce Motion.
+    private func appendMoodBeat(into steps: inout [Step]) {
+        guard !calm else { return }
+        if mood.isHappy {
+            steps.append(Step(.hold(.stretching, duration: 0), completion: { [weak self] in
+                self?.spawnHearts(self?.mood == .delighted ? 4 : 2)
+            }))
+            steps.append(Step(.hold(.stretching, duration: 0.9 * holdScale)))
+        } else if mood.isGrumpy {
+            steps.append(Step(.hold(.sitting, duration: 0), completion: { [weak self] in
+                self?.cat.facingLeft.toggle()
+            }))
+            steps.append(Step(.hold(.sitting, duration: 0.9 * holdScale)))
         }
+    }
+
+    // MARK: - Dragging
+
+    /// The cat can be picked up once it has arrived, while "Il tuo gatto" is on.
+    private var canDragCat: Bool {
+        began && !ended && !finished && CatCompanionStore.shared.isEnabled
+    }
+
+    private func dragBegan(at mouse: CGPoint) {
+        guard canDragCat else { return }
+        dragging = true
+        queue.removeAll()
+        running = nil
+        settled = false
+        cat.opacity = 1
+        fadeDuration = 0
+        cat.pose = calm ? .sitting : .walking(step: Double.pi / 2)
+        dragOffset = CGPoint(x: cat.position.x - mouse.x, y: cat.position.y - mouse.y)
+        CatSounds.shared.chirp()
+    }
+
+    private func dragMoved(to mouse: CGPoint) {
+        guard dragging, !ended else { return }
+        cat.position = CGPoint(x: mouse.x + dragOffset.x, y: mouse.y + dragOffset.y)
+        model.snapshot = cat
+        updateHitWindow()
+    }
+
+    /// Dropped: the cat comments, then goes back to the window it is guarding.
+    private func dragEnded() {
+        guard dragging else { return }
+        dragging = false
+        guard !ended else { return }
+        say(CatCompanionText.dropLines.randomElement() ?? "Wheee!", duration: 2.2)
+        let layout = makeLayout(for: target)
+        if calm {
+            after(1.2) { [weak self] in
+                guard let self, !self.ended, !self.dragging else { return }
+                self.planCalmArrival(layout, announce: false)
+            }
+            cat.pose = .sitting
+            return
+        }
+        let distance = hypot(layout.sleepPoint.x - cat.position.x, layout.sleepPoint.y - cat.position.y)
+        var steps: [Step] = []
+        steps.append(Step(.hold(.sitting, duration: 0.6)))
+        steps.append(Step(
+            .jump(to: layout.sleepPoint, duration: min(1.2, 0.5 + Double(distance) / 1500), height: 50),
+            width: layout.sleepWidth
+        ))
+        steps.append(Step(.hold(.sitting, duration: 0.35)))
+        steps.append(Step(.hold(.sleeping, duration: 0), completion: { [weak self] in
+            self?.didSettle()
+        }))
+        queue = steps
+        running = nil
     }
 
     private func purr() {

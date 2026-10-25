@@ -48,6 +48,11 @@ final class CatPileScene: SKScene {
     private var isScattering = false
 
     private let calm: Bool
+    /// Called when a cat is clicked; returns the companion's reaction when the pet counted.
+    var onPet: (() -> String?)?
+    /// Whether a clicked cat can be grabbed and dragged (never with Reduce Motion).
+    var canDrag: () -> Bool = { false }
+    private var grabbed: SKNode?
     /// Calm stacking: where the next cat goes in the current row.
     private var calmX: CGFloat = 0
     private var calmRowBase: CGFloat = 0
@@ -278,9 +283,9 @@ final class CatPileScene: SKScene {
         meow(at: cat)
     }
 
-    private func meow(at cat: SKNode) {
-        let text = Self.meows.randomElement() ?? "Miao!"
-        let fontSize = CGFloat.random(in: 26...38) * min(1.3, sizeFactor)
+    private func meow(at cat: SKNode, saying line: String? = nil) {
+        let text = line ?? Self.meows.randomElement() ?? "Miao!"
+        let fontSize = (line == nil ? CGFloat.random(in: 26...38) : 24) * min(1.3, sizeFactor)
         let font = NSFont(name: "AvenirNext-Heavy", size: fontSize) ?? NSFont.boldSystemFont(ofSize: fontSize)
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,
@@ -294,7 +299,8 @@ final class CatPileScene: SKScene {
         label.verticalAlignmentMode = .center
 
         let height = cat.calculateAccumulatedFrame().height
-        let x = min(max(cat.position.x, 70), size.width - 70)
+        let margin = min(size.width / 2, max(70, label.frame.width / 2 + 16))
+        let x = min(max(cat.position.x, margin), size.width - margin)
         let y = min(cat.position.y + height / 2 + 12, size.height - 40)
         label.position = CGPoint(x: x, y: y)
         label.zPosition = 1000
@@ -336,16 +342,44 @@ final class CatPileScene: SKScene {
                 hit = cat
             }
         }
+        let reaction = hit == nil ? nil : onPet?()
         if calm, let cat = hit {
-            meow(at: cat)
+            meow(at: cat, saying: reaction)
             return
         }
         guard let cat = hit, let body = cat.physicsBody else { return }
         body.velocity = CGVector(dx: CGFloat.random(in: -160...160), dy: CGFloat.random(in: 650...900))
         body.angularVelocity = CGFloat.random(in: -5...5)
-        meow(at: cat)
+        meow(at: cat, saying: reaction)
         activeUntil = lastScan + 3
         setFrameRate(Self.activeFPS)
+        if canDrag() {
+            grabbed = cat
+        }
+    }
+
+    /// Carries the grabbed cat towards the mouse through its physics body, so it still
+    /// bumps into the others.
+    override func mouseDragged(with event: NSEvent) {
+        guard !isScattering, let cat = grabbed, let body = cat.physicsBody else { return }
+        let point = event.location(in: self)
+        let limit: CGFloat = 1600
+        let dx = min(limit, max(-limit, (point.x - cat.position.x) * 14))
+        let dy = min(limit, max(-limit, (point.y - cat.position.y) * 14))
+        body.affectedByGravity = false
+        body.velocity = CGVector(dx: dx, dy: dy)
+        body.angularVelocity *= 0.8
+        activeUntil = lastScan + 3
+        setFrameRate(Self.activeFPS)
+    }
+
+    override func mouseUp(with event: NSEvent) {
+        releaseGrabbedCat()
+    }
+
+    private func releaseGrabbedCat() {
+        grabbed?.physicsBody?.affectedByGravity = true
+        grabbed = nil
     }
 
     private func setFrameRate(_ fps: Int) {
@@ -359,6 +393,7 @@ final class CatPileScene: SKScene {
     func scatter() {
         guard !isScattering else { return }
         isScattering = true
+        releaseGrabbedCat()
         if calm {
             // Reduce Motion: the pile fades away instead of falling apart.
             for cat in cats {

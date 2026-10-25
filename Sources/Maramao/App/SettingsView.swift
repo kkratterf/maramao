@@ -73,6 +73,8 @@ struct SettingsView: View {
                 }
             }
 
+            CatCompanionSection()
+
             Section("Accessibilità") {
                 Picker("Animazioni delle pause", selection: $settings.motionPreferenceRaw) {
                     ForEach(MotionPreference.allCases, id: \.self) { preference in
