@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maramao · Il Pomodoro che ti ferma coi gatti</title>
+  <meta name="description" content="Maramao è un timer Pomodoro per la barra dei menu di macOS. Lavori 25 minuti, poi arriva un gatto e ti costringe a fare una pausa vera. Gratis e open source.">
+  <meta name="theme-color" content="#FFF5E9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1C1210" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://kkratterf.github.io/maramao/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Maramao">
+  <meta property="og:title" content="Maramao · Il Pomodoro che ti ferma coi gatti">
+  <meta property="og:description" content="Un timer Pomodoro per macOS. Quando è ora di staccare, arriva un gatto e si siede sulla tua finestra.">
+  <meta property="og:url" content="https://kkratterf.github.io/maramao/">
+  <meta property="og:image" content="https://kkratterf.github.io/maramao/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Maramao: un gatto arancione seduto su una finestra del Mac, accanto alla scritta Il Pomodoro che ti ferma coi gatti.">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,600..800,100;1,9..144,600..800,100&family=Nunito:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#contenuto">Vai al contenuto</a>
+
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="#" aria-label="Maramao, torna all'inizio">
+        <img src="favicon.svg" alt="" width="36" height="36">
+        <span>Maramao</span>
+      </a>
+      <nav aria-label="Sezioni">
+        <ul>
+          <li><a href="#come-funziona">Come funziona</a></li>
+          <li><a href="#gatti">I gatti</a></li>
+          <li><a href="#installa">Installa</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <a class="gh" href="https://github.com/kkratterf/maramao">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenuto">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="titolo">
+      <div class="wrap hero-in">
+        <div class="hero-copy">
+          <p class="eyebrow">Un timer Pomodoro per la barra dei menu del Mac</p>
+          <h1 id="titolo">Maramao</h1>
+          <p class="tagline">Il Pomodoro che ti ferma <em>coi gatti</em>.</p>
+          <p class="lead">Lavori 25 minuti. Poi arriva un gatto, si siede sulla tua finestra e non si sposta finché non hai fatto una pausa vera. Come succede a casa, ma con un timer.</p>
+          <div class="ctas">
+            <a class="btn btn-primary" href="https://github.com/kkratterf/maramao/releases/latest">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Scarica per macOS
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/kkratterf/maramao">Vedi su GitHub</a>
+          </div>
+          <ul class="reqs" aria-label="Requisiti">
+            <li>macOS 13 o successivo</li>
+            <li>Apple Silicon e Intel</li>
+            <li>Gratis e open source</li>
+            <li>Nessun permesso speciale</li>
+          </ul>
+        </div>
+
+        <figure class="hero-art">
+          <div class="tomato" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="stage play" role="img" aria-label="Animazione: il timer nella barra dei menu arriva a zero, un gatto arancione attraversa lo schermo, salta sulla finestra del documento e ci si siede sopra. Comincia la pausa.">
+            <div class="desk" aria-hidden="true">
+              <div class="menubar">
+                <span class="mb-apple"></span><b>Pages</b><span>File</span><span>Modifica</span><span class="mb-hide">Vista</span>
+                <span class="clock"><span>🍅 00:03</span><span>🍅 00:02</span><span>🍅 00:01</span><span>😾 04:59</span></span>
+              </div>
+              <div class="win">
+                <div class="win-bar"><i></i><i></i><i></i><span>relazione_DEFINITIVA_v7.pages</span></div>
+                <div class="win-body">
+                  <b class="ln ln-h"></b><b class="ln"></b><b class="ln"></b><b class="ln ln-s"></b>
+                  <b class="ln"></b><b class="ln ln-m"></b><b class="ln"></b><b class="ln ln-s"></b>
+                </div>
+                <div class="win-veil"><span>Pausa. Lo dice il gatto.</span></div>
+              </div>
+              <div class="hud"><span class="hud-t">Pausa · 04:59</span><span class="hud-b">Salta</span></div>
+            </div>
+            <div class="hero-cat" aria-hidden="true">
+              <span class="cat pose-walk" data-cat="walking orange"></span>
+              <span class="cat pose-sit" data-cat="sitting orange"></span>
+            </div>
+          </div>
+          <figcaption>
+            <button class="replay" type="button" data-replay>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Rivedi il gatto
+            </button>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="come-funziona" class="how" aria-labelledby="h-how">
+      <div class="wrap">
+        <p class="kicker">Come funziona</p>
+        <h2 id="h-how">Tre passi. Uno lo fa il gatto.</h2>
+        <ol class="steps">
+          <li class="step">
+            <div class="step-art"><span class="pill">🍅 24:59</span></div>
+            <h3><span class="num">1</span> Lavori 25 minuti</h3>
+            <p>Avvii il timer dalla barra dei menu e ti concentri. Il conto alla rovescia resta lì, discreto, accanto all'orologio.</p>
+          </li>
+          <li class="step">
+            <div class="step-art"><span class="cat mini-walk" data-cat="walking gray"></span></div>
+            <h3><span class="num">2</span> Il gatto arriva</h3>
+            <p>Allo scadere un gatto entra in scena e si prende lo schermo. Non chiede il permesso: è un gatto.</p>
+          </li>
+          <li class="step">
+            <div class="step-art"><span class="cat" data-cat="stretching cream"></span></div>
+            <h3><span class="num">3</span> Pausa vera</h3>
+            <p>Cinque minuti per alzarti, bere, guardare fuori. Ogni quattro pomodori arriva una pausa lunga. Poi si riparte.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- The cats -->
+    <section id="gatti" class="cats" aria-labelledby="h-cats">
+      <div class="wrap">
+        <p class="kicker">I gatti</p>
+        <h2 id="h-cats">Scegli chi ti interrompe.</h2>
+        <p class="section-lead">Quattro modi diversi di dirti “basta”. Li scegli dal menu e puoi provarli subito da <b>Prova un concept</b>, senza aspettare 25 minuti.</p>
+
+        <ul class="cards">
+          <li class="card">
+            <div class="scene sc-window" aria-hidden="true">
+              <div class="mini-win"><i></i><b></b><b></b><b></b></div>
+              <span class="cat s-walk" data-cat="walking orange"></span>
+              <span class="cat s-sit" data-cat="sitting orange"></span>
+            </div>
+            <h3><span class="emo" aria-hidden="true">🐈</span> Il gatto sulla finestra</h3>
+            <p>Un gatto attraversa lo schermo e si siede proprio sulla finestra su cui lavori. Cambi finestra? Ti segue.</p>
+          </li>
+          <li class="card">
+            <div class="scene sc-memes" data-loop="5200" aria-hidden="true">
+              <div class="meme m1"><span class="cat" data-cat="sitting black"></span><b>NO.</b></div>
+              <div class="meme m2"><span class="cat" data-cat="sitting orange" data-flags="closed"></span><b>DOPO</b></div>
+              <div class="meme m3"><span class="cat" data-cat="sitting cream"></span><b>MIAO?</b></div>
+              <div class="meme m4"><span class="cat" data-cat="sitting gray"></span><b>PAUSA</b></div>
+              <div class="meme m5"><span class="cat" data-cat="sleeping orange"></span><b>ZZZ</b></div>
+              <div class="meme m6"><span class="cat" data-cat="sitting black" data-flags="closed"></span><b>BASTA</b></div>
+            </div>
+            <h3><span class="emo" aria-hidden="true">😹</span> Muro di meme</h3>
+            <p>Lo schermo si riempie di meme di gatti finché la pausa non è finita. Lavorare diventa fisicamente impossibile.</p>
+          </li>
+          <li class="card">
+            <div class="scene sc-sleepy" aria-hidden="true">
+              <span class="zzz"><i>z</i><i>z</i><i>Z</i></span>
+              <span class="cat s-sleep" data-cat="sleeping gray"></span>
+              <span class="cat s-awake" data-cat="sitting gray"></span>
+              <span class="judge">😾</span>
+              <svg class="cursor" viewBox="0 0 20 28"><path d="M2 2v21l5.5-5 3.6 8 3.4-1.6-3.6-7.8H18Z" fill="#fff" stroke="#000" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </div>
+            <h3><span class="emo" aria-hidden="true">😴</span> Non svegliare il gatto</h3>
+            <p>Un gatto dorme sullo schermo. Se tocchi il mouse si sveglia e ti giudica. Molto.</p>
+          </li>
+          <li class="card">
+            <div class="scene sc-pile" data-loop="5400" aria-hidden="true">
+              <span class="cat f1" data-cat="sleeping orange"></span>
+              <span class="cat f2" data-cat="sleeping black"></span>
+              <span class="cat f3" data-cat="sleeping cream"></span>
+              <span class="cat f4" data-cat="sitting gray"></span>
+              <span class="cat f5" data-cat="sleeping gray"></span>
+              <span class="cat f6" data-cat="sitting orange" data-flags="flip"></span>
+              <span class="cat f7" data-cat="sitting cream"></span>
+            </div>
+            <h3><span class="emo" aria-hidden="true">🐾</span> Invasione di gatti</h3>
+            <p>Piovono gatti dall'alto e si accumulano fino a seppellire tutto lo schermo. Resistere è inutile.</p>
+          </li>
+        </ul>
+
+        <div class="surprise">
+          <div class="dice" aria-hidden="true">
+            <span class="slot"><span class="reel"><i>🐈</i><i>😹</i><i>😴</i><i>🐾</i><i>🐈</i></span></span>
+          </div>
+          <div>
+            <h3><span class="emo" aria-hidden="true">🎲</span> Sorpresa</h3>
+            <p>Non riesci a scegliere? Ogni pausa un gatto diverso. Non saprai mai chi arriva, ed è questo il bello.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" aria-labelledby="h-feat">
+      <div class="wrap">
+        <p class="kicker">Il resto</p>
+        <h2 id="h-feat">Piccolo, nativo, senza fronzoli.</h2>
+        <ul class="feat-grid">
+          <li>
+            <span class="f-icon" aria-hidden="true">🍅</span>
+            <h3>Vive nella barra dei menu</h3>
+            <p>Niente icona nel Dock, niente finestre di troppo. Un pomodoro e un conto alla rovescia, accanto all'orologio.</p>
+          </li>
+          <li>
+            <span class="f-icon" aria-hidden="true">🔒</span>
+            <h3>Modalità severa</h3>
+            <p>Di solito la pausa si salta dopo un minuto. Con la modalità severa non si salta mai. Te la sei cercata.</p>
+          </li>
+          <li>
+            <span class="f-icon" aria-hidden="true">🌅</span>
+            <h3>Avvio al login</h3>
+            <p>Un interruttore nelle impostazioni e Maramao parte da solo ogni volta che accendi il Mac.</p>
+          </li>
+          <li>
+            <span class="f-icon" aria-hidden="true">🖥️</span>
+            <h3>Tutti i monitor</h3>
+            <p>Hai due schermi? Il gatto lo sa. Le pause coprono ogni display collegato, non ci sono vie di fuga.</p>
+          </li>
+          <li>
+            <span class="f-icon" aria-hidden="true">⏱️</span>
+            <h3>Tempi su misura</h3>
+            <p>Lavoro, pausa breve, pausa lunga e ogni quanti pomodori: decidi tu. Anche ripartire da soli dopo la pausa.</p>
+          </li>
+          <li>
+            <span class="f-icon" aria-hidden="true">🐱</span>
+            <h3>Gatti fatti a mano</h3>
+            <p>Ogni gatto è disegnato in codice. Niente GIF rubate, niente immagini scaricate, niente tracciamento.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Install -->
+    <section id="installa" class="install" aria-labelledby="h-install">
+      <div class="wrap">
+        <p class="kicker">Installa</p>
+        <h2 id="h-install">Un minuto, e il gatto è tuo.</h2>
+        <ol class="install-steps">
+          <li>
+            <div class="i-art" aria-hidden="true"><span class="dmg">.dmg</span></div>
+            <h3>Scarica il DMG</h3>
+            <p>Prendi l'ultima versione dalla <a href="https://github.com/kkratterf/maramao/releases/latest">pagina delle release</a> su GitHub.</p>
+          </li>
+          <li>
+            <div class="i-art i-drag" aria-hidden="true">
+              <img src="favicon.svg" alt="" width="44" height="44"><span class="arrow">→</span><span class="folder"></span>
+            </div>
+            <h3>Trascinalo in Applicazioni</h3>
+            <p>Apri il DMG e trascina Maramao nella cartella <b>Applicazioni</b>. Fatto.</p>
+          </li>
+          <li>
+            <div class="i-art" aria-hidden="true"><span class="pill">🍅 25:00</span></div>
+            <h3>Aprilo la prima volta</h3>
+            <p>L'app non è ancora notarizzata da Apple, quindi al primo avvio macOS fa il diffidente. Ecco come convincerlo.</p>
+          </li>
+        </ol>
+
+        <div class="install-more">
+          <div class="panel">
+            <h3>Primo avvio, se macOS lo blocca</h3>
+            <ol class="numbered">
+              <li>In <b>Applicazioni</b>, fai clic col <b>tasto destro</b> (o Ctrl-clic) su Maramao e scegli <b>Apri</b>.</li>
+              <li>Nella finestra che compare, clicca di nuovo <b>Apri</b>.</li>
+            </ol>
+            <p class="or"><span>oppure</span></p>
+            <ol class="numbered" start="1">
+              <li>Prova ad aprire Maramao una volta, poi vai in <b>Impostazioni di Sistema → Privacy e sicurezza</b>.</li>
+              <li>Scorri in basso e clicca <b>Apri comunque</b> accanto al messaggio su Maramao.</li>
+            </ol>
+            <p class="note">Serve solo la prima volta. Dopo, Maramao si apre come qualsiasi altra app.</p>
+          </div>
+          <div class="panel panel-term">
+            <h3>Preferisci il Terminale?</h3>
+            <p>Una riga scarica l'ultima versione e la mette in Applicazioni.</p>
+            <div class="term">
+              <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <pre><code id="cmd">curl -fsSL https://raw.githubusercontent.com/kkratterf/maramao/main/install.sh | sh</code></pre>
+              <button class="copy" type="button" data-copy="cmd" aria-label="Copia il comando di installazione">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                <span aria-live="polite">Copia</span>
+              </button>
+            </div>
+            <p class="note">Come sempre con <code>curl | sh</code>: se vuoi, <a href="https://github.com/kkratterf/maramao/blob/main/install.sh">leggi lo script</a> prima.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq" aria-labelledby="h-faq">
+      <div class="wrap faq-in">
+        <div class="faq-side">
+          <div>
+            <p class="kicker">FAQ</p>
+            <h2 id="h-faq">Domande frequenti.</h2>
+          </div>
+          <span class="cat faq-cat" data-cat="sleeping orange"></span>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>Perché i gatti?</summary>
+            <p>Perché chiunque abbia un gatto lo sa: quando decide che è ora di smettere, si sdraia sulla tastiera e il lavoro è finito. Maramao fa lo stesso, ma con un orario. E perché le notifiche si ignorano, i gatti no.</p>
+          </details>
+          <details>
+            <summary>Serve dare permessi all'app?</summary>
+            <p>No. Maramao non chiede l'accesso all'Accessibilità né alla registrazione dello schermo, non legge quello che scrivi e non manda dati da nessuna parte. Disegna gatti sopra le finestre, tutto qui.</p>
+          </details>
+          <details>
+            <summary>Posso saltare la pausa?</summary>
+            <p>Sì, dopo un minuto compare il pulsante <b>Salta</b> (il tempo si cambia nelle impostazioni). Se ti conosci bene, attiva la <b>modalità severa</b>: la pausa non si salta mai.</p>
+          </details>
+          <details>
+            <summary>Funziona con più monitor?</summary>
+            <p>Sì. Le pause coprono tutti gli schermi collegati, così il gatto non ti lascia un monitor libero su cui continuare a lavorare.</p>
+          </details>
+          <details>
+            <summary>Come lo disinstallo?</summary>
+            <p>Esci da Maramao dal suo menu (<b>Esci</b>) e trascina <b>Maramao</b> da Applicazioni al Cestino. Se avevi attivato l'avvio al login, spegnilo prima nelle impostazioni dell'app. Nessun residuo strano.</p>
+          </details>
+          <details>
+            <summary>È gratis?</summary>
+            <p>Sì, gratis e open source con licenza MIT. Il codice è <a href="https://github.com/kkratterf/maramao">su GitHub</a>: se vuoi aggiungere un gatto, le pull request sono benvenute.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="outro" aria-labelledby="h-outro">
+      <div class="wrap outro-in">
+        <span class="cat outro-cat" data-cat="sitting black"></span>
+        <h2 id="h-outro">Il gatto ti aspetta.</h2>
+        <p>Venticinque minuti di lavoro, cinque di gatto. Prova per un giorno.</p>
+        <a class="btn btn-primary" href="https://github.com/kkratterf/maramao/releases/latest">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Scarica per macOS
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <p class="foot-brand"><img src="favicon.svg" alt="" width="28" height="28"> Maramao</p>
+      <ul>
+        <li><a href="https://github.com/kkratterf/maramao">GitHub</a></li>
+        <li><a href="https://github.com/kkratterf/maramao/blob/main/LICENSE">Licenza MIT</a></li>
+        <li><a href="https://github.com/kkratterf/maramao/issues/new/choose">Segnala un problema</a></li>
+      </ul>
+      <p class="made">Fatto con Claude e gatti · <span data-year>2026</span></p>
+    </div>
+  </footer>
+
+  <script src="cats.js"></script>
+</body>
+</html>
