@@ -13,9 +13,9 @@ public enum MotionPreference: String, CaseIterable, Sendable {
 
     public var label: String {
         switch self {
-        case .system: return "Come il sistema"
-        case .reduced: return "Ridotte"
-        case .full: return "Complete"
+        case .system: return String(localized: "Come il sistema")
+        case .reduced: return String(localized: "Ridotte")
+        case .full: return String(localized: "Complete")
         }
     }
 
@@ -36,11 +36,11 @@ public enum BreakSpeech {
         let s = max(0, seconds)
         let minutes = s / 60
         let rest = s % 60
-        let minutePart = minutes == 1 ? "1 minuto" : "\(minutes) minuti"
-        let secondPart = rest == 1 ? "1 secondo" : "\(rest) secondi"
+        let minutePart = minutes == 1 ? String(localized: "1 minuto") : String(localized: "\(minutes) minuti")
+        let secondPart = rest == 1 ? String(localized: "1 secondo") : String(localized: "\(rest) secondi")
         if minutes == 0 { return secondPart }
         if rest == 0 { return minutePart }
-        return "\(minutePart) e \(secondPart)"
+        return String(localized: "\(minutePart) e \(secondPart)")
     }
 
     /// Announced when the overlays appear: "Pausa: 5 minuti. Il gatto sulla finestra."
@@ -50,24 +50,24 @@ public enum BreakSpeech {
         let spoken: String
         if total >= 60 {
             let minutes = max(1, Int((Double(total) / 60).rounded()))
-            spoken = minutes == 1 ? "1 minuto" : "\(minutes) minuti"
+            spoken = minutes == 1 ? String(localized: "1 minuto") : String(localized: "\(minutes) minuti")
         } else {
             spoken = BreakSpeech.duration(seconds: total)
         }
-        var text = "Pausa: \(spoken)."
+        var text = String(localized: "Pausa: \(spoken).")
         if let modeTitle, !modeTitle.isEmpty {
             text += " \(modeTitle)."
         }
         return text
     }
 
-    public static let breakEnded = "Pausa finita. Puoi tornare al lavoro."
+    public static let breakEnded = String(localized: "Pausa finita. Puoi tornare al lavoro.")
 
     /// "Mancano 4 minuti" / "Manca 1 minuto" / "Mancano 30 secondi".
     public static func remaining(seconds: Int) -> String {
         let text = duration(seconds: seconds)
         let singular = seconds == 60 || seconds == 1
-        return (singular ? "Manca " : "Mancano ") + text
+        return singular ? String(localized: "Manca \(text)") : String(localized: "Mancano \(text)")
     }
 
     /// Value of the countdown for VoiceOver: whole seconds left, spoken.
@@ -78,15 +78,15 @@ public enum BreakSpeech {
     /// Hint for the skip control: when it unlocks, or that it is locked for good.
     public static func skipHint(secondsUntilUnlock: Int?, shortcut: String?) -> String {
         guard let wait = secondsUntilUnlock else {
-            return "Modalità severa: la pausa non si salta."
+            return String(localized: "Modalità severa: la pausa non si salta.")
         }
         if wait > 0 {
-            return "Potrai saltare la pausa tra \(duration(seconds: wait))."
+            return String(localized: "Potrai saltare la pausa tra \(duration(seconds: wait)).")
         }
         if let shortcut, !shortcut.isEmpty {
-            return "Puoi saltare la pausa, anche con \(shortcut)."
+            return String(localized: "Puoi saltare la pausa, anche con \(shortcut).")
         }
-        return "Puoi saltare la pausa."
+        return String(localized: "Puoi saltare la pausa.")
     }
 
     /// Whether to announce the time left, so VoiceOver speaks sparingly: once per whole minute

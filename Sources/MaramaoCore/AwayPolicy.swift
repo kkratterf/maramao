@@ -17,9 +17,9 @@ public enum AwayBehavior: String, CaseIterable, Identifiable, Sendable {
     /// Italian label in Settings.
     public var title: String {
         switch self {
-        case .countAsBreak: return "Considera pausa fatta"
-        case .pause: return "Metti in pausa"
-        case .ignore: return "Ignora"
+        case .countAsBreak: return String(localized: "Considera pausa fatta")
+        case .pause: return String(localized: "Metti in pausa")
+        case .ignore: return String(localized: "Ignora")
         }
     }
 }
@@ -127,9 +127,9 @@ public enum AwayPolicy {
     public static func message(for action: AwayReturnAction) -> String? {
         switch action {
         case .none, .resume: return nil
-        case .stayPaused: return "Bentornato! Il timer ti aspetta in pausa"
-        case .resetRested: return "Bentornato! Ti sei già riposato"
-        case .skipBreakRested: return "Bentornato! La pausa l'hai già fatta"
+        case .stayPaused: return String(localized: "Bentornato! Il timer ti aspetta in pausa")
+        case .resetRested: return String(localized: "Bentornato! Ti sei già riposato")
+        case .skipBreakRested: return String(localized: "Bentornato! La pausa l'hai già fatta")
         }
     }
 }

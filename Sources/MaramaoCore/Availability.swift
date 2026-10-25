@@ -67,10 +67,10 @@ public enum SnoozeOption: String, CaseIterable, Identifiable, Sendable {
 
     public var title: String {
         switch self {
-        case .thirtyMinutes: return "30 minuti"
-        case .oneHour: return "1 ora"
-        case .twoHours: return "2 ore"
-        case .untilTomorrow: return "Fino a domani"
+        case .thirtyMinutes: return String(localized: "30 minuti")
+        case .oneHour: return String(localized: "1 ora")
+        case .twoHours: return String(localized: "2 ore")
+        case .untilTomorrow: return String(localized: "Fino a domani")
         }
     }
 
@@ -102,28 +102,21 @@ public enum AvailabilityText {
     /// Italian weekday names indexed by `Calendar` weekday (1 = Sunday).
     public static func weekdayName(_ weekday: Int) -> String {
         switch weekday {
-        case 1: return "domenica"
-        case 2: return "lunedì"
-        case 3: return "martedì"
-        case 4: return "mercoledì"
-        case 5: return "giovedì"
-        case 6: return "venerdì"
-        case 7: return "sabato"
+        case 1: return String(localized: "domenica")
+        case 2: return String(localized: "lunedì")
+        case 3: return String(localized: "martedì")
+        case 4: return String(localized: "mercoledì")
+        case 5: return String(localized: "giovedì")
+        case 6: return String(localized: "venerdì")
+        case 7: return String(localized: "sabato")
         default: return ""
         }
     }
 
-    /// One-letter label for the weekday picker.
+    /// One-letter label for the weekday picker: the first letter of the localized name
+    /// (L M M G V S D in Italian, M T W T F S S in English).
     public static func weekdayInitial(_ weekday: Int) -> String {
-        switch weekday {
-        case 1: return "D"
-        case 2: return "L"
-        case 3, 4: return "M"
-        case 5: return "G"
-        case 6: return "V"
-        case 7: return "S"
-        default: return ""
-        }
+        String(weekdayName(weekday).prefix(1)).uppercased()
     }
 
     /// "9:00", "13:30".
@@ -145,14 +138,24 @@ public enum AvailabilityText {
     /// "fino alle 10:30", "fino a domani alle 9:00", "fino a lunedì alle 9:00".
     public static func until(_ resume: Date, now: Date, calendar: Calendar = .current) -> String {
         let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: calendar.startOfDay(for: resume)).day ?? 0
-        let time = atTime(resume, calendar: calendar)
+        let time = clock(resume, calendar: calendar)
+        // Italian elides "alle" before 1 o'clock ("all'1:15"): a separate string per case.
+        let elided = calendar.component(.hour, from: resume) == 1
         switch days {
-        case ..<1: return "fino \(time)"
-        case 1: return "fino a domani \(time)"
-        case 2...6: return "fino a \(weekdayName(calendar.component(.weekday, from: resume))) \(time)"
+        case ..<1:
+            return elided ? String(localized: "fino all'\(time)") : String(localized: "fino alle \(time)")
+        case 1:
+            return elided ? String(localized: "fino a domani all'\(time)") : String(localized: "fino a domani alle \(time)")
+        case 2...6:
+            let weekday = weekdayName(calendar.component(.weekday, from: resume))
+            return elided ? String(localized: "fino a \(weekday) all'\(time)") : String(localized: "fino a \(weekday) alle \(time)")
         default:
             let parts = calendar.dateComponents([.day, .month], from: resume)
-            return "fino al \(parts.day ?? 0)/\(parts.month ?? 0) \(time)"
+            let day = parts.day ?? 0
+            let month = parts.month ?? 0
+            return elided
+                ? String(localized: "fino al \(day)/\(month) all'\(time)")
+                : String(localized: "fino al \(day)/\(month) alle \(time)")
         }
     }
 
@@ -161,7 +164,7 @@ public enum AvailabilityText {
         let days = WorkingHours.weekdaysMondayFirst
             .filter { hours.weekdays.contains($0) }
             .map { String(weekdayName($0).prefix(3)) }
-        if days.isEmpty { return "Nessun giorno selezionato" }
+        if days.isEmpty { return String(localized: "Nessun giorno selezionato") }
         return "\(days.joined(separator: ", ")) · \(clock(minute: hours.startMinute))–\(clock(minute: hours.endMinute))"
     }
 }

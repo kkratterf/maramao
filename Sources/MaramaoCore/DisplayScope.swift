@@ -14,9 +14,9 @@ public enum DisplayScope: String, CaseIterable, Sendable {
     /// Italian label for Settings.
     public var label: String {
         switch self {
-        case .all: return "Tutti gli schermi"
-        case .main: return "Solo lo schermo principale"
-        case .mouse: return "Solo lo schermo con il mouse"
+        case .all: return String(localized: "Tutti gli schermi")
+        case .main: return String(localized: "Solo lo schermo principale")
+        case .mouse: return String(localized: "Solo lo schermo con il mouse")
         }
     }
 
