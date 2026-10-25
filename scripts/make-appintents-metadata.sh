@@ -50,6 +50,7 @@ rm -rf "$OUT/Metadata.appintents"
 # --force: there is no Xcode dependency file to compare against, always regenerate.
 "$PROCESSOR" \
   --toolchain-dir "$TOOLCHAIN" \
+  --output "$OUT" \
   --module-name Maramao \
   --sdk-root "$SDK" \
   --xcode-version "$XCODE_BUILD" \
