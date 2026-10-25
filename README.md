@@ -24,6 +24,12 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 
 Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
 
+### Emergency exit
+
+If a break ever gets stuck, or you really have to stop it, press **⌃⌥⌘⌫** (Control-Option-Command-Delete) to end it right away, **modalità severa included**. No shortcut at hand? Click five times quickly in the **top-left corner** of any screen. Neither needs any permission.
+
+As a safety net, Maramao also closes every cat window by force if a break is still on screen 30 seconds after it should have ended.
+
 ### Keyboard shortcuts
 
 They work from any app and need no special permission. Turn each one on or off in Settings → **Scorciatoie**.
