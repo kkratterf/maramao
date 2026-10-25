@@ -37,6 +37,8 @@ xattr -dr com.apple.quarantine /Applications/Maramao.app
 
 Maramao needs macOS 13 Ventura or later and no special permissions.
 
+To start Maramao every time you log in, turn on **Apri Maramao all'avvio del Mac** in Settings. It works when Maramao runs from `Maramao.app`; macOS may ask you to allow it in System Settings → General → Login Items.
+
 ### Build from source
 
 Needs Xcode 15 or later.
