@@ -10,9 +10,14 @@ import MaramaoCore
 /// not on every 0.25 s engine tick.
 struct MenuBarLabel: View {
     @StateObject private var model = MenuBarModel()
+    @ObservedObject private var availability = AvailabilityStore.shared
 
     var body: some View {
-        if let ring = model.content.ring {
+        if let until = availability.snoozedUntil, PomodoroEngine.shared.phase == .idle {
+            // "Pausa per…": a sleeping cat and the resume time, whatever the style.
+            Text("😴 \(AvailabilityText.clock(until))")
+                .monospacedDigit()
+        } else if let ring = model.content.ring {
             Image(nsImage: MenuBarRingRenderer.image(for: ring))
                 .renderingMode(.template)
         } else {

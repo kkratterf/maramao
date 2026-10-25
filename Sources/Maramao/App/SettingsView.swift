@@ -9,6 +9,7 @@ struct SettingsView: View {
     @State private var launchAtLoginNeedsApproval = false
     @EnvironmentObject private var stats: StatsStore
     @State private var confirmStatsReset = false
+    @ObservedObject private var updater = AppUpdater.shared
 
     var body: some View {
         Form {
@@ -36,6 +37,8 @@ struct SettingsView: View {
                 }
                 Toggle("Riparti a lavorare da solo dopo la pausa", isOn: $settings.autoStartWork)
             }
+
+            WorkingHoursSection()
 
             Section("Gatti") {
                 Picker("Modalità pausa", selection: $settings.breakModeRaw) {
@@ -103,6 +106,21 @@ struct SettingsView: View {
                 Text("Le modifiche ai tempi valgono dal prossimo pomodoro.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+            }
+
+            if updater.isAvailable {
+                Section("Aggiornamenti") {
+                    Toggle("Aggiorna automaticamente", isOn: $updater.automaticallyChecksForUpdates)
+                    HStack {
+                        Text("Maramao controlla una volta al giorno se c'è una nuova versione e te la propone.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer()
+                        Button("Controlla ora") { updater.checkForUpdates() }
+                            .disabled(!updater.canCheckForUpdates)
+                    }
+                }
             }
 
             Section("Info") {

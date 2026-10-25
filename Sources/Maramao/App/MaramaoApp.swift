@@ -59,6 +59,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Runs the user's Shortcuts on phase changes (off unless turned on in Settings).
         Task { @MainActor in ShortcutAutomations.shared.activate() }
         Task { @MainActor in MeasurementHooks.run() }
+        // Sparkle auto-update; a no-op until Info.plist has a real public key.
+        Task { @MainActor in AppUpdater.shared.start() }
     }
 
     /// Never leave a cat behind: close every break window before quitting.

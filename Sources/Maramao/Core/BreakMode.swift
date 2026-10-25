@@ -12,6 +12,8 @@ final class BreakContext {
     /// When the skip button may appear. `nil` means the break cannot be skipped.
     let skipUnlockDate: Date?
     private let onSkip: () -> Void
+    /// The cat's suggestion for this break, picked once and shared by every screen.
+    lazy var tip: String = BreakTipStore.shared.nextTip(isLongBreak: isLongBreak)
 
     init(duration: TimeInterval, isLongBreak: Bool, isPreview: Bool, skipUnlockDate: Date?, onSkip: @escaping () -> Void) {
         self.duration = duration
