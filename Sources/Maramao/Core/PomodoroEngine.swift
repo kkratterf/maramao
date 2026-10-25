@@ -383,7 +383,11 @@ final class PomodoroEngine: ObservableObject {
             )
             breakContext = context
             companion.breakBegan()
-            breaks.start(mode: settings.breakMode, context: context)
+            // A Focus filter may change the mode, or turn the cats off: the break
+            // then only counts down in the menu bar.
+            if let mode = FocusFilterState.shared.breakMode(default: settings.breakMode) {
+                breaks.start(mode: mode, context: context)
+            }
             activeBreakMode = breaks.currentModeID
         }
     }
@@ -427,7 +431,7 @@ final class PomodoroEngine: ObservableObject {
     /// Lets a cat peek from the bottom of the screen shortly before the break.
     private func checkBreakWarning() {
         // A break preview is on screen: the user is looking at cats already.
-        guard previewTimer == nil else { return }
+        guard previewTimer == nil, FocusFilterState.shared.policy.catsEnabled else { return }
         breakWarning.leadTime = TimeInterval(settings.breakWarningSeconds)
         guard breakWarning.shouldWarn(
             phase: phase,
