@@ -18,6 +18,8 @@ final class PomodoroEngine: ObservableObject {
     @Published private(set) var awayNotice: String?
     /// True while "Riprendi da dove ero" can undo a reset caused by being away.
     @Published private(set) var canUndoAwayReset = false
+    /// True while the break is held back because the user is in a call or presenting.
+    @Published private(set) var isBreakPostponed = false
 
     private let settings: AppSettings
     private let stats: StatsStore
@@ -31,6 +33,7 @@ final class PomodoroEngine: ObservableObject {
     private var breakWarning = BreakWarning()
     private let peekingCat = PeekingCatWarning()
     private let presence = PresenceMonitor()
+    private var postponer = BreakPostponer()
     /// True while a work session is paused because the user is away (not by the user).
     private var frozenByAway = false
     /// Work time left when a session was reset by an absence, for "Riprendi da dove ero".
@@ -234,6 +237,29 @@ final class PomodoroEngine: ObservableObject {
         enterCurrentPhase()
     }
 
+    // MARK: - Calls and presentations
+
+    /// The work session just ran out. While the user is in a call or presenting, keeps it
+    /// going one more minute (up to the maximum in Settings) and returns true.
+    private func postponeBreakIfBusy() -> Bool {
+        postponer.isEnabled = settings.dontInterruptCalls
+        postponer.maxPostpone = TimeInterval(settings.maxPostponeMinutes * 60)
+        guard postponer.isEnabled else { return false }
+        switch postponer.decide(busy: BusyDetector.current()) {
+        case .startBreak:
+            return false
+        case .postpone(let seconds, let announce):
+            isBreakPostponed = true
+            remaining = seconds
+            endDate = Date().addingTimeInterval(seconds)
+            startTicker()
+            if announce {
+                peekingCat.show(message: BreakPostponer.announcement)
+            }
+            return true
+        }
+    }
+
     // MARK: - Away from the Mac
 
     private var awayBehavior: AwayBehavior {
@@ -350,6 +376,8 @@ final class PomodoroEngine: ObservableObject {
         completedWorkSessions = cycle.completedWorkSessions
         isPaused = false
         frozenByAway = false
+        postponer.reset()
+        isBreakPostponed = false
         breakWarning.reset()
         if phase != .work { peekingCat.dismiss() }
         if phase != .idle { canUndoAwayReset = false }
@@ -422,6 +450,7 @@ final class PomodoroEngine: ObservableObject {
         if remaining <= 0 {
             // Never start a break nobody can see: wait for the wake or unlock.
             if phase == .work, presence.isScreenUnavailable { return }
+            if phase == .work, postponeBreakIfBusy() { return }
             advance()
             return
         }
