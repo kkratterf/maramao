@@ -148,6 +148,7 @@ final class PomodoroEngine: ObservableObject {
         if context.isPreview {
             endPreview()
         } else if let breakContext, breakContext === context, phase.isBreak {
+            if emergency { stats.recordEmergencyExit() }
             advance()
         }
         if emergency {
