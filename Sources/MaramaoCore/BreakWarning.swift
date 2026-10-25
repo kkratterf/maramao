@@ -53,17 +53,17 @@ public struct BreakWarning: Equatable, Sendable {
     /// The Italian speech bubble text for a warning given `seconds` before the break.
     public static func message(seconds: Int) -> String {
         let s = max(1, seconds)
-        if s == 60 { return "Miao, tra un minuto pausa" }
-        if s % 60 == 0 { return "Miao, tra \(s / 60) minuti pausa" }
-        if s == 1 { return "Miao, tra un secondo pausa" }
-        return "Miao, tra \(s) secondi pausa"
+        if s == 60 { return String(localized: "Miao, tra un minuto pausa") }
+        if s % 60 == 0 { return String(localized: "Miao, tra \(s / 60) minuti pausa") }
+        if s == 1 { return String(localized: "Miao, tra un secondo pausa") }
+        return String(localized: "Miao, tra \(s) secondi pausa")
     }
 
     /// Italian label for a lead time option in Settings.
     public static func optionLabel(seconds: Int) -> String {
-        if seconds <= 0 { return "Mai" }
-        if seconds == 60 { return "1 minuto prima" }
-        if seconds % 60 == 0 { return "\(seconds / 60) minuti prima" }
-        return "\(seconds) secondi prima"
+        if seconds <= 0 { return String(localized: "Mai") }
+        if seconds == 60 { return String(localized: "1 minuto prima") }
+        if seconds % 60 == 0 { return String(localized: "\(seconds / 60) minuti prima") }
+        return String(localized: "\(seconds) secondi prima")
     }
 }

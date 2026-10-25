@@ -10,9 +10,9 @@ public enum AutomationTrigger: String, CaseIterable, Identifiable, Sendable {
 
     public var title: String {
         switch self {
-        case .workStarts: return "Quando inizia il lavoro"
-        case .breakStarts: return "Quando inizia la pausa"
-        case .breakEnds: return "Quando finisce la pausa"
+        case .workStarts: return String(localized: "Quando inizia il lavoro")
+        case .breakStarts: return String(localized: "Quando inizia la pausa")
+        case .breakEnds: return String(localized: "Quando finisce la pausa")
         }
     }
 

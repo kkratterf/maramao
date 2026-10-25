@@ -54,6 +54,31 @@ jobs:
           echo "Maramao.app launched and stayed up"
           echo "::notice::Maramao.app $(lipo -archs "$app/Contents/MacOS/Maramao"), bundle $(du -sk "$app" | cut -f1) KB, Sparkle.framework $(du -sk "$app/Contents/Frameworks/Sparkle.framework" | cut -f1) KB"
 
+      - name: Check the translations in the app bundle
+        run: |
+          app=dist/Maramao.app
+          res="$app/Contents/Resources"
+          ls -la "$res"
+          plutil -convert json -o - "$res/en.lproj/Localizable.strings" | grep -q "Start working"
+          # Runs the app with each language; MARAMAO_L10N_PROBE prints a few strings and quits.
+          probe() {
+            MARAMAO_L10N_PROBE=1 "$app/Contents/MacOS/Maramao" -AppleLanguages "($1)" > "probe-$1.txt" 2>/dev/null &
+            pid=$!
+            for _ in $(seq 1 30); do kill -0 "$pid" 2>/dev/null || break; sleep 0.5; done
+            kill "$pid" 2>/dev/null || true
+            echo "--- $1"; cat "probe-$1.txt"
+          }
+          probe en
+          probe it
+          status=0
+          for want in "Start working" "1 pomodoro" "4 pomodoros" "Cat on your window"; do
+            grep -qxF "$want" probe-en.txt || { echo "::error::English string missing at runtime: $want"; status=1; }
+          done
+          for want in "Inizia a lavorare" "1 pomodoro" "4 pomodori" "Il gatto sulla finestra"; do
+            grep -qxF "$want" probe-it.txt || { echo "::error::Italian string missing at runtime: $want"; status=1; }
+          done
+          exit $status
+
       - name: Check the App Intents metadata
         run: |
           meta=dist/Maramao.app/Contents/Resources/Metadata.appintents
@@ -110,6 +135,9 @@ jobs:
           shellcheck --shell=sh install.sh
           sh -n install.sh
 
+      - name: String Catalog
+        run: python3 scripts/check-strings.py
+
       - name: Appcast script
         run: |
           tmp=$(mktemp -d)
@@ -119,3 +147,34 @@ jobs:
             --url https://example.com/Maramao-0.3.0.zip --signature 'sparkle:edSignature="BBBB" length="20"'
           cat "$tmp/appcast.xml"
           test "$(grep -c '<item>' "$tmp/appcast.xml")" = 2
+
+  cask:
+    name: Homebrew cask
+    runs-on: macos-15
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+      HOMEBREW_NO_ENV_HINTS: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: brew style
+        run: brew style Casks/maramao.rb
+
+      # The audit runs offline (no --online, no --new): those checks download
+      # the DMG and query GitHub for notability, and the version in the cask may
+      # point at a release that has no DMG yet (it is bumped by release.yml).
+      - name: brew audit
+        run: |
+          brew tap-new --no-git maramao/ci
+          tap="$(brew --repository)/Library/Taps/maramao/homebrew-ci"
+          mkdir -p "$tap/Casks"
+          cp Casks/maramao.rb "$tap/Casks/maramao.rb"
+          if ! brew audit --cask --strict maramao/ci/maramao > audit.log 2>&1; then
+            cat audit.log
+            # Surface the findings as annotations, so they show on the PR.
+            grep -v '^$' audit.log | while IFS= read -r line; do echo "::error file=Casks/maramao.rb::$line"; done
+            exit 1
+          fi
+          cat audit.log

@@ -84,10 +84,10 @@ struct CatView: View {
     /// What VoiceOver says about the drawing.
     private var accessibilityDescription: String {
         switch pose {
-        case .walking: return "Un gatto che cammina"
-        case .sitting: return "Un gatto seduto"
-        case .sleeping: return "Un gatto che dorme"
-        case .stretching: return "Un gatto che si stiracchia"
+        case .walking: return String(localized: "Un gatto che cammina")
+        case .sitting: return String(localized: "Un gatto seduto")
+        case .sleeping: return String(localized: "Un gatto che dorme")
+        case .stretching: return String(localized: "Un gatto che si stiracchia")
         }
     }
 

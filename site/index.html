@@ -297,6 +297,15 @@
               </button>
             </div>
             <p class="note">Come sempre con <code>curl | sh</code>: se vuoi, <a href="https://github.com/kkratterf/maramao/blob/main/install.sh">leggi lo script</a> prima.</p>
+            <p class="term-lead">Usi Homebrew? C'è anche il cask.</p>
+            <div class="term">
+              <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <pre><code id="cmd-brew">brew tap kkratterf/maramao https://github.com/kkratterf/maramao &amp;&amp; brew install --cask maramao</code></pre>
+              <button class="copy" type="button" data-copy="cmd-brew" aria-label="Copia il comando Homebrew">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                <span aria-live="polite">Copia</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -333,6 +342,7 @@
             <summary>Come lo disinstallo?</summary>
             <p>Esci da Maramao dal suo menu (<b>Esci</b>) e trascina <b>Maramao</b> da Applicazioni al Cestino. Se avevi attivato l'avvio al login, spegnilo prima nelle impostazioni dell'app. Dal Terminale fa tutto una riga, impostazioni comprese:</p>
             <pre class="faq-cmd"><code>curl -fsSL https://raw.githubusercontent.com/kkratterf/maramao/main/install.sh | sh -s -- --uninstall</code></pre>
+            <p>Se l'hai installato con Homebrew: <code>brew uninstall --zap --cask maramao</code>.</p>
           </details>
           <details>
             <summary>È gratis?</summary>

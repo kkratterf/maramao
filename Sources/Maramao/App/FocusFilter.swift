@@ -63,14 +63,14 @@ struct MaramaoFocusFilter: SetFocusFilterIntent {
 
     /// One line for the Focus settings, e.g. "Niente gatti" or "Invasione di gatti · senza suoni".
     private var summary: String {
-        guard catsEnabled else { return "Niente gatti: la pausa resta solo nella barra dei menu" }
+        guard catsEnabled else { return String(localized: "Niente gatti: la pausa resta solo nella barra dei menu") }
         var parts: [String] = []
         if breakMode != .unchanged, let mode = BreakModeID(rawValue: breakMode.rawValue) {
             parts.append(mode.title)
         } else {
-            parts.append("Gatti come al solito")
+            parts.append(String(localized: "Gatti come al solito"))
         }
-        if !soundsEnabled { parts.append("senza suoni") }
+        if !soundsEnabled { parts.append(String(localized: "senza suoni")) }
         return parts.joined(separator: " · ")
     }
 
