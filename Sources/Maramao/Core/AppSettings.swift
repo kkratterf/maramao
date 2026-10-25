@@ -22,6 +22,8 @@ final class AppSettings: ObservableObject {
     @Published var soundVolume: Double { didSet { defaults.set(soundVolume, forKey: Keys.soundVolume) } }
     /// Seconds before the end of a work session when a cat peeks to warn about the break. 0 = off.
     @Published var breakWarningSeconds: Int { didSet { defaults.set(breakWarningSeconds, forKey: Keys.breakWarningSeconds) } }
+    /// What happens to a work session while the Mac is asleep, locked or idle (`AwayBehavior`).
+    @Published var awayBehaviorRaw: String { didSet { defaults.set(awayBehaviorRaw, forKey: Keys.awayBehavior) } }
     /// Which displays the cats cover (`DisplayScope` raw value).
     @Published var displayScopeRaw: String { didSet { defaults.set(displayScopeRaw, forKey: Keys.displayScope) } }
     /// Raw `MenuBarStyle`: what the menu bar item shows.
@@ -45,6 +47,7 @@ final class AppSettings: ObservableObject {
         static let soundEnabled = "soundEnabled"
         static let soundVolume = "soundVolume"
         static let breakWarningSeconds = "breakWarningSeconds"
+        static let awayBehavior = "awayBehavior"
         static let displayScope = "displayScope"
         static let menuBarStyle = "menuBarStyle"
         static let menuBarHideSeconds = "menuBarHideSeconds"
@@ -66,6 +69,7 @@ final class AppSettings: ObservableObject {
             Keys.soundEnabled: true,
             Keys.soundVolume: 0.7,
             Keys.breakWarningSeconds: BreakWarning.defaultLeadTime,
+            Keys.awayBehavior: AwayBehavior.defaultBehavior.rawValue,
             Keys.displayScope: DisplayScope.defaultScope.rawValue,
             Keys.menuBarStyle: MenuBarStyle.defaultStyle.rawValue,
             Keys.menuBarHideSeconds: false,
@@ -83,6 +87,7 @@ final class AppSettings: ObservableObject {
         soundEnabled = defaults.bool(forKey: Keys.soundEnabled)
         soundVolume = min(1, max(0, defaults.double(forKey: Keys.soundVolume)))
         breakWarningSeconds = defaults.integer(forKey: Keys.breakWarningSeconds)
+        awayBehaviorRaw = defaults.string(forKey: Keys.awayBehavior) ?? AwayBehavior.defaultBehavior.rawValue
         displayScopeRaw = defaults.string(forKey: Keys.displayScope) ?? DisplayScope.defaultScope.rawValue
         menuBarStyleRaw = defaults.string(forKey: Keys.menuBarStyle) ?? MenuBarStyle.defaultStyle.rawValue
         menuBarHideSeconds = defaults.bool(forKey: Keys.menuBarHideSeconds)

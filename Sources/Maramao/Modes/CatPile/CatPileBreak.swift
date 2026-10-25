@@ -102,7 +102,7 @@ final class CatPileBreak: BreakMode {
             height: size.height
         )
         let window = OverlayWindow(frame: frame, level: level, clickThrough: false)
-        let hud = BreakHUD(context: context, message: "Invasione di gatti in corso.")
+        let hud = BreakHUD(context: context, message: String(localized: "Invasione di gatti in corso."))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         let hosting = CatPileHUDHostingView(rootView: AnyView(hud))
         hosting.frame = NSRect(origin: .zero, size: size)

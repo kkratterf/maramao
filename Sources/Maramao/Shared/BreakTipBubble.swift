@@ -41,7 +41,7 @@ struct BreakTipBubble: View {
         .shadow(color: .black.opacity(0.22), radius: 8, y: 3)
         .allowsHitTesting(false)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Consiglio del gatto: " + text)
+        .accessibilityLabel(String(localized: "Consiglio del gatto: \(text)"))
     }
 
     @Environment(\.colorSchemeContrast) private var contrast

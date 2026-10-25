@@ -70,13 +70,13 @@ final class WalkingCatBreak: BreakMode {
     private static let hudLevel = NSWindow.Level(rawValue: NSWindow.Level.screenSaver.rawValue + 1)
     /// Tall enough for the cat's tip under the pill (see BreakHUD); the empty part is transparent.
     private static let hudSize = NSSize(width: 460, height: 200)
-    private static let defaultEntranceLine = "Questa finestra adesso è mia."
+    private static let defaultEntranceLine = String(localized: "Questa finestra adesso è mia.")
     private static let lines = [
-        "Questa finestra adesso è mia.",
-        "Riposati, umano.",
-        "Mrrr.",
-        "Niente lavoro, solo coccole.",
-        "Fai due passi, io resto qui.",
+        String(localized: "Questa finestra adesso è mia."),
+        String(localized: "Riposati, umano."),
+        String(localized: "Mrrr."),
+        String(localized: "Niente lavoro, solo coccole."),
+        String(localized: "Fai due passi, io resto qui."),
     ]
 
     // MARK: - State
@@ -177,7 +177,7 @@ final class WalkingCatBreak: BreakMode {
         hitWindow = hit
 
         let hud = OverlayWindow(frame: layout.hudFrame, level: Self.hudLevel, clickThrough: false)
-        let hudView = BreakHUD(context: context, message: "Il gatto ha preso la tua finestra.")
+        let hudView = BreakHUD(context: context, message: String(localized: "Il gatto ha preso la tua finestra."))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         let hosting = WalkingCatFirstMouseHostingView(rootView: hudView)
         hosting.frame = NSRect(origin: .zero, size: layout.hudFrame.size)
@@ -793,7 +793,7 @@ final class WalkingCatBreak: BreakMode {
         if let reaction = CatCompanionStore.shared.pet() {
             if !dragging { say(reaction, duration: 2.4) }
         } else if settled && cat.bubble == nil && Double.random(in: 0...1) < 0.4 {
-            say(["Mrrr.", "Prrr…", "Ancora coccole."].randomElement() ?? "Mrrr.", duration: 2.2)
+            say([String(localized: "Mrrr."), String(localized: "Prrr…"), String(localized: "Ancora coccole.")].randomElement() ?? String(localized: "Mrrr."), duration: 2.2)
         }
     }
 

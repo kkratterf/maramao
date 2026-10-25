@@ -59,6 +59,31 @@ cp "$ROOT/Resources/Info.plist" "$APP/Contents/Info.plist"
 SHORT_VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP/Contents/Info.plist")"
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $SHORT_VERSION" "$APP/Contents/Info.plist"
 
+# Localizations (issue #30): Italian is the source language, English comes from
+# the String Catalog. SwiftPM compiles it into the target's resource bundle; the
+# .lproj folders go into Contents/Resources so Bundle.main (SwiftUI Text,
+# String(localized:)) finds them. Falls back to xcstringstool if SwiftPM did not.
+CATALOG="$ROOT/Sources/Maramao/Resources/Localizable.xcstrings"
+RES="$APP/Contents/Resources"
+found_lproj=0
+while IFS= read -r lproj; do
+  [ -n "$lproj" ] || continue
+  ditto "$lproj" "$RES/$(basename "$lproj")"
+  found_lproj=1
+done < <(find "$BIN_DIR" -path '*Maramao_Maramao.bundle*' -type d -name '*.lproj' 2>/dev/null)
+if [ ! -f "$RES/en.lproj/Localizable.strings" ]; then
+  echo "No compiled en.lproj in the SwiftPM bundle (found: $found_lproj), compiling $CATALOG with xcstringstool"
+  xcrun xcstringstool compile "$CATALOG" --output-directory "$RES" \
+    || { xcrun xcstringstool compile --help || true; exit 1; }
+fi
+# Italian strings are the keys themselves; the folder tells macOS the app speaks Italian.
+mkdir -p "$RES/it.lproj"
+if [ ! -f "$RES/en.lproj/Localizable.strings" ]; then
+  echo "error: en.lproj/Localizable.strings missing from $APP" >&2
+  exit 1
+fi
+echo "Localizations: $(cd "$RES" && ls -d ./*.lproj | sed 's|^\./||' | tr '\n' ' ')"
+
 # App icon: drawn in code by scripts/make-icon.swift, so no binary is
 # committed. A failure here only costs the icon, never the build.
 ICON_DIR="$ROOT/.build/icon"

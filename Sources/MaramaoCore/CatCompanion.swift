@@ -21,11 +21,11 @@ public enum CatMood: String, CaseIterable, Sendable {
     /// Short Italian label, worded so it works whatever the cat's name.
     public var label: String {
         switch self {
-        case .grumpy: return "Ti tiene il muso"
-        case .sulky: return "Un po' di malumore"
-        case .calm: return "In pace col mondo"
-        case .happy: return "Di buon umore"
-        case .delighted: return "Al settimo cielo"
+        case .grumpy: return String(localized: "Ti tiene il muso")
+        case .sulky: return String(localized: "Un po' di malumore")
+        case .calm: return String(localized: "In pace col mondo")
+        case .happy: return String(localized: "Di buon umore")
+        case .delighted: return String(localized: "Al settimo cielo")
         }
     }
 
@@ -200,47 +200,80 @@ public enum CatCompanionText {
     public static func greetings(mood: CatMood, name: String) -> [String] {
         switch mood {
         case .delighted:
-            return ["Eccoti! Ti aspettavo.", "Pausa con te? Il mio momento preferito.", "\(name) è tutto per te."]
+            return [
+                String(localized: "Eccoti! Ti aspettavo."),
+                String(localized: "Pausa con te? Il mio momento preferito."),
+                String(localized: "\(name) è tutto per te."),
+            ]
         case .happy:
-            return ["Ciao umano, pausa insieme?", "Questa finestra adesso è mia.", "Mrrr, finalmente."]
+            return [
+                String(localized: "Ciao umano, pausa insieme?"),
+                String(localized: "Questa finestra adesso è mia."),
+                String(localized: "Mrrr, finalmente."),
+            ]
         case .calm:
-            return ["Questa finestra adesso è mia.", "Riposati, umano."]
+            return [String(localized: "Questa finestra adesso è mia."), String(localized: "Riposati, umano.")]
         case .sulky:
-            return ["Ah, adesso ti ricordi di me.", "Questa finestra è mia. E basta."]
+            return [
+                String(localized: "Ah, adesso ti ricordi di me."),
+                String(localized: "Questa finestra è mia. E basta."),
+            ]
         case .grumpy:
-            return ["Hmpf. Vediamo se stavolta la pausa la fai.", "Ti tengo il muso. Però resto qui."]
+            return [
+                String(localized: "Hmpf. Vediamo se stavolta la pausa la fai."),
+                String(localized: "Ti tengo il muso. Però resto qui."),
+            ]
         }
     }
 
     /// What the cat says when it is petted (and the pet counted).
     public static func petReactions(mood: CatMood) -> [String] {
         switch mood {
-        case .delighted: return ["Prrrrr ❤︎", "Ancora, ancora!", "Sei il mio umano preferito."]
-        case .happy: return ["Mrrr.", "Prrr…", "Ancora coccole."]
-        case .calm: return ["Mrrr.", "Prrr…"]
-        case .sulky: return ["Mh. Va bene, continua.", "Non ti ho ancora perdonato. Prrr."]
-        case .grumpy: return ["…ok, solo un attimo.", "Non pensare che basti. Prrr."]
+        case .delighted: return [
+            String(localized: "Prrrrr ❤︎"),
+            String(localized: "Ancora, ancora!"),
+            String(localized: "Sei il mio umano preferito."),
+        ]
+        case .happy: return [
+            String(localized: "Mrrr."),
+            String(localized: "Prrr…"),
+            String(localized: "Ancora coccole."),
+        ]
+        case .calm: return [String(localized: "Mrrr."), String(localized: "Prrr…")]
+        case .sulky: return [
+            String(localized: "Mh. Va bene, continua."),
+            String(localized: "Non ti ho ancora perdonato. Prrr."),
+        ]
+        case .grumpy: return [
+            String(localized: "…ok, solo un attimo."),
+            String(localized: "Non pensare che basti. Prrr."),
+        ]
         }
     }
 
     /// What the cat says when it gets a treat.
     public static func treatReaction(mood: CatMood) -> String {
         switch mood {
-        case .grumpy, .sulky: return "Gnam. Ti perdono, forse. 🐟"
-        case .calm: return "Gnam! 🐟"
-        case .happy, .delighted: return "Gnam gnam! Ti voglio bene. 🐟"
+        case .grumpy, .sulky: return String(localized: "Gnam. Ti perdono, forse. 🐟")
+        case .calm: return String(localized: "Gnam! 🐟")
+        case .happy, .delighted: return String(localized: "Gnam gnam! Ti voglio bene. 🐟")
         }
     }
 
     /// What the cat says when dropped after being dragged.
-    public static let dropLines = ["Ehi! Mettimi giù piano.", "Wheee!", "Lo sapevo che volevi giocare.", "Torno al mio posto."]
+    public static let dropLines = [
+        String(localized: "Ehi! Mettimi giù piano."),
+        String(localized: "Wheee!"),
+        String(localized: "Lo sapevo che volevi giocare."),
+        String(localized: "Torno al mio posto."),
+    ]
 
     /// "3 croccantini", for the menu and Settings.
     public static func treatsLine(_ treats: Int) -> String {
         switch treats {
-        case ..<1: return "Nessun croccantino"
-        case 1: return "1 croccantino"
-        default: return "\(treats) croccantini"
+        case ..<1: return String(localized: "Nessun croccantino")
+        case 1: return String(localized: "1 croccantino")
+        default: return String(localized: "\(treats) croccantini")
         }
     }
 
@@ -249,10 +282,5 @@ public enum CatCompanionText {
         "\(companion.mood.label) \(companion.mood.emoji)"
     }
 
-    public static func streakLine(_ companion: CatCompanion) -> String {
-        "Pause rispettate di fila: \(companion.streak) (record \(companion.bestStreak))"
-    }
-
-    public static let earnTreatHint = "Rispetta una pausa per guadagnare un croccantino."
-    public static let treatsFullHint = "Ciotola piena: dagli un croccantino!"
+    public static let earnTreatHint = String(localized: "Rispetta una pausa per guadagnare un croccantino.")
 }

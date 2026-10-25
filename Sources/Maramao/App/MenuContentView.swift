@@ -16,6 +16,9 @@ struct MenuContentView: View {
         VStack(alignment: .leading, spacing: 14) {
             header
             timer
+            if let notice = engine.awayNotice {
+                awayRow(notice)
+            }
             controls
             snoozeRow
             todayRow
@@ -51,12 +54,12 @@ struct MenuContentView: View {
     private var phaseTitle: String {
         switch engine.phase {
         case .idle:
-            if availability.isSnoozed { return "Il gatto dorme \(availability.untilText())" }
-            if !availability.isWorkingTime() { return "Fuori orario: niente partenze automatiche" }
-            return "Pronto quando lo sei tu"
-        case .work: return engine.isPaused ? "In pausa (tu, non il gatto)" : "Concentrazione"
-        case .shortBreak: return "Pausa breve"
-        case .longBreak: return "Pausa lunga"
+            if availability.isSnoozed { return String(localized: "Il gatto dorme \(availability.untilText())") }
+            if !availability.isWorkingTime() { return String(localized: "Fuori orario: niente partenze automatiche") }
+            return String(localized: "Pronto quando lo sei tu")
+        case .work: return engine.isPaused ? String(localized: "In pausa (tu, non il gatto)") : String(localized: "Concentrazione")
+        case .shortBreak: return String(localized: "Pausa breve")
+        case .longBreak: return String(localized: "Pausa lunga")
         }
     }
 
@@ -88,16 +91,16 @@ struct MenuContentView: View {
             case .idle:
                 Button("Inizia a lavorare") { engine.startWork() }
                     .keyboardShortcut(.defaultAction)
-                    .help("Inizia un pomodoro" + shortcuts.hint(.startPause))
+                    .help(String(localized: "Inizia un pomodoro") + shortcuts.hint(.startPause))
             case .work:
-                Button(engine.isPaused ? "Riprendi" : "Pausa") { engine.togglePause() }
-                    .help((engine.isPaused ? "Riprendi il pomodoro" : "Metti in pausa il pomodoro") + shortcuts.hint(.startPause))
+                Button(engine.isPaused ? LocalizedStringKey("Riprendi") : LocalizedStringKey("Pausa")) { engine.togglePause() }
+                    .help((engine.isPaused ? String(localized: "Riprendi il pomodoro") : String(localized: "Metti in pausa il pomodoro")) + shortcuts.hint(.startPause))
                 Button("Pausa gatto ora") { engine.takeBreakNow() }
-                    .help("Fai subito la pausa" + shortcuts.hint(.takeBreak))
+                    .help(String(localized: "Fai subito la pausa") + shortcuts.hint(.takeBreak))
             case .shortBreak, .longBreak:
                 Button("Salta pausa") { engine.skip() }
                     .disabled(!engine.canSkipBreak)
-                    .help((settings.strictMode ? "Modalità severa: non si salta" : "Disponibile dopo \(Int(settings.skipUnlockSeconds)) secondi") + shortcuts.hint(.skip))
+                    .help((settings.strictMode ? String(localized: "Modalità severa: non si salta") : String(localized: "Disponibile dopo \(Int(settings.skipUnlockSeconds)) secondi")) + shortcuts.hint(.skip))
             }
             Spacer()
             if engine.phase != .idle {
@@ -110,6 +113,30 @@ struct MenuContentView: View {
             }
         }
         .controlSize(.large)
+    }
+
+    /// "Bentornato! Ti sei già riposato", with a way to undo the guess.
+    private func awayRow(_ notice: String) -> some View {
+        HStack(spacing: 8) {
+            Text("😺")
+            Text(notice)
+                .font(.caption)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 4)
+            if engine.canUndoAwayReset {
+                Button("Riprendi da dove ero") { engine.undoAwayReset() }
+                    .font(.caption)
+            }
+            Button {
+                engine.dismissAwayNotice()
+            } label: {
+                Image(systemName: "xmark")
+            }
+            .buttonStyle(.borderless)
+            .help("Ok")
+        }
+        .padding(8)
+        .background(RoundedRectangle(cornerRadius: 8).fill(Color.orange.opacity(0.12)))
     }
 
     /// "Pausa per…" while not in a break; "Riprendi ora" while snoozed.
@@ -155,7 +182,7 @@ struct MenuContentView: View {
                     .font(.caption.weight(.semibold))
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
-                Text("\(cat.mood.label) · \(CatCompanionText.treatsLine(cat.treats))")
+                Text(verbatim: "\(cat.mood.label) · \(CatCompanionText.treatsLine(cat.treats))")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
@@ -170,7 +197,7 @@ struct MenuContentView: View {
             }
             .controlSize(.small)
             .disabled(!cat.canGiveTreat)
-            .help(cat.canGiveTreat ? "Dai un croccantino a \(cat.name)" : CatCompanionText.earnTreatHint)
+            .help(cat.canGiveTreat ? String(localized: "Dai un croccantino a \(cat.name)") : CatCompanionText.earnTreatHint)
         }
     }
 

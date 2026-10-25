@@ -25,11 +25,11 @@ struct CatCompanionSection: View {
                             reaction = store.giveTreat()
                         }
                         .disabled(!cat.canGiveTreat)
-                        .help(cat.canGiveTreat ? "\(cat.name) ne sarà felice" : CatCompanionText.earnTreatHint)
+                        .help(cat.canGiveTreat ? String(localized: "\(cat.name) ne sarà felice") : CatCompanionText.earnTreatHint)
                     }
                 }
                 if let reaction {
-                    Text("\(cat.name): \(reaction)")
+                    Text(verbatim: "\(cat.name): \(reaction)")
                         .font(.caption)
                 }
                 LabeledContent("Pause rispettate di fila") {
@@ -37,7 +37,7 @@ struct CatCompanionSection: View {
                 }
                 if let favourite = cat.favouriteMode.flatMap(BreakModeID.init(rawValue:)) {
                     LabeledContent("Concept preferito") {
-                        Text("\(favourite.emoji) \(favourite.title)")
+                        Text(verbatim: "\(favourite.emoji) \(favourite.title)")
                     }
                 }
                 Text("Ogni pausa rispettata vale un croccantino (fino a \(CatCompanion.maxTreats)). Se salti una pausa il gatto ci resta un po' male, ma gli passa presto. Durante le pause puoi accarezzarlo con un clic e, nel gatto sulla finestra e nell'invasione di gatti, trascinarlo.")

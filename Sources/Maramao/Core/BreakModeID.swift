@@ -29,25 +29,25 @@ enum BreakModeID: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .walkingCat: return "Il gatto sulla finestra"
-        case .memeWall: return "Muro di meme"
-        case .sleepyCat: return "Non svegliare il gatto"
-        case .catPile: return "Invasione di gatti"
-        case .laserChase: return "Caccia al laser"
-        case .keyboardCat: return "Il gatto sulla tastiera"
-        case .random: return "Sorpresa"
+        case .walkingCat: return String(localized: "Il gatto sulla finestra")
+        case .memeWall: return String(localized: "Muro di meme")
+        case .sleepyCat: return String(localized: "Non svegliare il gatto")
+        case .catPile: return String(localized: "Invasione di gatti")
+        case .laserChase: return String(localized: "Caccia al laser")
+        case .keyboardCat: return String(localized: "Il gatto sulla tastiera")
+        case .random: return String(localized: "Sorpresa")
         }
     }
 
     var subtitle: String {
         switch self {
-        case .walkingCat: return "Un gatto attraversa lo schermo e si siede proprio sulla finestra su cui lavori."
-        case .memeWall: return "Lo schermo si riempie di GIF e meme di gatti finché la pausa non è finita."
-        case .sleepyCat: return "Un gatto dorme sullo schermo: se tocchi il mouse si sveglia e ti giudica."
-        case .catPile: return "Piovono gatti dall'alto fino a seppellire tutto lo schermo."
-        case .laserChase: return "Il mouse diventa un puntino laser e il gatto lo insegue per tutto lo schermo."
-        case .keyboardCat: return "Un gatto dorme sulla tastiera: qualunque cosa scrivi, la scrive lui."
-        case .random: return "Ogni pausa un concept diverso."
+        case .walkingCat: return String(localized: "Un gatto attraversa lo schermo e si siede proprio sulla finestra su cui lavori.")
+        case .memeWall: return String(localized: "Lo schermo si riempie di GIF e meme di gatti finché la pausa non è finita.")
+        case .sleepyCat: return String(localized: "Un gatto dorme sullo schermo: se tocchi il mouse si sveglia e ti giudica.")
+        case .catPile: return String(localized: "Piovono gatti dall'alto fino a seppellire tutto lo schermo.")
+        case .laserChase: return String(localized: "Il mouse diventa un puntino laser e il gatto lo insegue per tutto lo schermo.")
+        case .keyboardCat: return String(localized: "Un gatto dorme sulla tastiera: qualunque cosa scrivi, la scrive lui.")
+        case .random: return String(localized: "Ogni pausa un concept diverso.")
         }
     }
 

@@ -67,7 +67,7 @@ final class StatsStore: ObservableObject {
             return ""
         }
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "it_IT")
+        formatter.locale = Locale(identifier: Bundle.main.preferredLocalizations.first ?? "it")
         formatter.calendar = calendar
         formatter.timeZone = calendar.timeZone
         formatter.dateFormat = "EEE"
