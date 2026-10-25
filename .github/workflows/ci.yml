@@ -36,7 +36,11 @@ jobs:
       - name: Check the Shortcuts actions metadata
         run: |
           data=dist/Maramao.app/Contents/Resources/Metadata.appintents/extract.actionsdata
-          test -f "$data" || { echo "::error::Metadata.appintents missing from the app bundle"; exit 1; }
+          if [ ! -f "$data" ]; then
+            log=$(tail -n 40 .build/appintents.log 2>/dev/null | sed -e 's/%/%25/g' | awk 'BEGIN{ORS="%0A"} {print}')
+            echo "::error title=Metadata.appintents missing from the app bundle::$log"
+            exit 1
+          fi
           for intent in StartFocusIntent PauseIntent TakeBreakIntent SetBreakModeIntent GetStatusIntent; do
             grep -q "\"$intent\"" "$data" || { echo "::error::$intent missing from Metadata.appintents"; exit 1; }
           done

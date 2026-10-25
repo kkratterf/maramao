@@ -60,8 +60,11 @@ fi
 
 # Shortcuts actions (App Intents): SwiftPM does not generate the metadata Xcode
 # would. A failure here only costs the Shortcuts actions; maramao:// URLs still work.
-if ! "$ROOT/scripts/make-appintents-metadata.sh" "$APP/Contents/Resources" "$CONFIG"; then
+mkdir -p "$ROOT/.build"
+if ! "$ROOT/scripts/make-appintents-metadata.sh" "$APP/Contents/Resources" "$CONFIG" 2>&1 \
+  | tee "$ROOT/.build/appintents.log"; then
   echo "warning: could not generate the App Intents metadata, no Shortcuts actions" >&2
+  echo "         (see .build/appintents.log)" >&2
 fi
 
 # Signature. Ad-hoc by default: enough to run locally, not notarized.
