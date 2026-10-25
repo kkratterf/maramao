@@ -23,6 +23,8 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 
 Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
 
+In Settings → **Barra dei menu** you choose what the menu bar shows: cat and countdown (default), only the cat, only the countdown, or the cat inside a ring that fills up as the session goes on. The countdown can also drop the seconds (`24m`).
+
 ---
 
 ## Install
