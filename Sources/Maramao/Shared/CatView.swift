@@ -34,7 +34,10 @@ struct CatPalette: Equatable {
     )
 
     static let all: [CatPalette] = [.orange, .black, .gray, .cream]
-    static func random() -> CatPalette { all.randomElement() ?? .orange }
+    /// A random built-in palette, or one from an enabled cat pack.
+    static func random() -> CatPalette {
+        (all + CatPackRuntime.shared.content.palettes).randomElement() ?? .orange
+    }
 }
 
 /// What the cat is doing.

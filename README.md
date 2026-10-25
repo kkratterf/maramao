@@ -93,6 +93,44 @@ A Raycast script command, for example:
 open "maramao://toggle"
 ```
 
+### Cat packs
+
+A cat pack adds your own cats without touching the code: fur colours for the drawn cat, cat names, meme captions and pictures for **Muro di meme**, and tips for the break bubble. Packs are plain folders in `~/Library/Application Support/Maramao/Cats/`; Settings → **Pacchetti di gatti** has **Apri cartella**, **Ricarica** and a switch per pack. To start, copy [`packs/example`](packs/example) there.
+
+```
+Cats/
+  my-cats/
+    pack.json
+    images/micio.png
+```
+
+`pack.json` (only `schemaVersion`, `id`, `name` and `license` are required):
+
+```json
+{
+  "schemaVersion": 1,
+  "id": "my-cats",
+  "name": "I miei gatti",
+  "author": "Your name",
+  "license": "CC0-1.0",
+  "description": "Optional, up to 300 characters.",
+  "palettes": [
+    { "name": "Micio", "fur": "#F0963C", "stripes": "#C8641E", "belly": "#FAE6C8", "eyes": "#6EBE50", "nose": "#F28C99" }
+  ],
+  "catNames": ["Micio"],
+  "captions": [{ "top": "QUANDO IL TIMER SUONA", "bottom": "E IL GATTO SORRIDE" }],
+  "images": ["images/micio.png"],
+  "tips": { "short": ["Guarda lontano per venti secondi."], "long": ["Fai due passi."] }
+}
+```
+
+Rules, checked when the pack loads (a pack that breaks one is skipped and its error shown in Settings; it never stops a break):
+
+- `license` is `CC0-1.0` or `CC-BY-4.0`; CC-BY needs an `author`. Only art you made or that is under one of these licenses.
+- `id`: lower-case letters, digits and dashes, up to 40 characters. Colours are `#RRGGBB`; `stripes` and `nose` are optional.
+- `images` are PNG, GIF or JPEG files **inside the pack folder**: no web addresses, no `..`, at most 5 MB each, 50 images and 30 MB per pack.
+- Text limits: names 30 characters, captions 80 per line, tips 160; at most 16 palettes, 50 names, 200 captions, 100 tips per kind. `pack.json` up to 256 KB.
+
 ---
 
 ## Install
@@ -191,6 +229,7 @@ Contributions are welcome, from a new cat to a timer fix.
 
 - **Found a bug or have an idea?** [Open an issue](https://github.com/kkratterf/maramao/issues/new/choose): there are forms for bugs, features and new break concepts.
 - **Want to add a cat?** Every break mode is a `BreakMode` in `Sources/Maramao/Modes/`. The shared `CatView` draws the cat, `OverlayWindow` and `BreakHUD` do the rest.
+- **Made a cat pack?** Share it by pull request: add it as `packs/<id>/` (the folder name must match the `id`) with a `pack.json` that declares `CC0-1.0` or `CC-BY-4.0` and only art you have the right to share under it. `swift test` validates every pack in `packs/`, so CI tells you if something is off.
 - **Before a PR**, read [`AGENTS.md`](AGENTS.md): it lists the checks to run, the commit format and the rules for break modes. It is written for AI agents and humans alike.
 
 ---
@@ -198,6 +237,8 @@ Contributions are welcome, from a new cat to a timer fix.
 ## Art
 
 Every cat in Maramao is drawn in code (`Sources/Maramao/Shared/CatView.swift`). No third-party images, memes or GIFs are bundled. Any future CC0 or public-domain asset will be credited here.
+
+The pictures in `packs/example/images` were drawn for this repository by a small script and are CC0, like the rest of that pack. Community packs declare their own license (CC0 or CC-BY) in `pack.json`; Maramao shows it in Settings.
 
 ---
 

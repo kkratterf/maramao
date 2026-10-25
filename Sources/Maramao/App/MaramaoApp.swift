@@ -56,6 +56,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         // System-wide shortcuts (Carbon hot keys, no permission needed).
         Task { @MainActor in GlobalShortcuts.shared.activate() }
+        // Community cat packs from ~/Library/Application Support/Maramao/Cats.
+        Task { @MainActor in CatPackLibrary.shared.reload() }
         // Runs the user's Shortcuts on phase changes (off unless turned on in Settings).
         Task { @MainActor in ShortcutAutomations.shared.activate() }
         Task { @MainActor in MeasurementHooks.run() }

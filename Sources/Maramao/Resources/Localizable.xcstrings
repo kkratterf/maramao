@@ -6060,6 +6060,472 @@
           }
         }
       }
+    },
+    "Pacchetti di gatti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat packs"
+          }
+        }
+      }
+    },
+    "Nessun pacchetto installato. Metti una cartella con un file pack.json in Maramao/Cats e premi Ricarica.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No packs installed. Put a folder with a pack.json file in Maramao/Cats and press Reload."
+          }
+        }
+      }
+    },
+    "Apri cartella": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open folder"
+          }
+        }
+      }
+    },
+    "Ricarica": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reload"
+          }
+        }
+      }
+    },
+    "Un pacchetto aggiunge colori per i gatti, nomi, meme e consigli per le pause. Solo licenze CC0 o CC-BY, niente link dal web.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A pack adds cat colours, names, memes and break tips. CC0 or CC-BY licenses only, no links to the web."
+          }
+        }
+      }
+    },
+    "Pacchetto non valido.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid pack."
+          }
+        }
+      }
+    },
+    "Troppi pacchetti: Maramao ne legge al massimo %lld.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too many packs: Maramao reads at most %lld."
+          }
+        }
+      }
+    },
+    "di %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "by %@"
+          }
+        }
+      }
+    },
+    "%lld gatti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld cat"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld cats"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld meme": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld meme"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld memes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld immagini": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld image"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld images"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld consigli": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld tip"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld tips"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "nomi: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "names: %@"
+          }
+        }
+      }
+    },
+    "%@ dice: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ says: %2$@"
+          }
+        }
+      }
+    },
+    "Manca il file %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The %@ file is missing."
+          }
+        }
+      }
+    },
+    "%@ è troppo grande (%lld KB, massimo %lld KB).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ is too large (%2$lld KB, at most %3$lld KB)."
+          }
+        }
+      }
+    },
+    "%@ non è un JSON valido: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ is not valid JSON: %2$@"
+          }
+        }
+      }
+    },
+    "Versione dello schema %lld non supportata (Maramao legge la %lld).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schema version %1$lld is not supported (Maramao reads version %2$lld)."
+          }
+        }
+      }
+    },
+    "Campo \"%@\": %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field \"%1$@\": %2$@"
+          }
+        }
+      }
+    },
+    "Licenza \"%@\" non ammessa: usa %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "License \"%1$@\" is not allowed: use %2$@."
+          }
+        }
+      }
+    },
+    "Troppi elementi in \"%@\": %lld, massimo %lld.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too many items in \"%1$@\": %2$lld, at most %3$lld."
+          }
+        }
+      }
+    },
+    "Niente indirizzi web: \"%@\" deve essere un file dentro il pacchetto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No web addresses: \"%@\" must be a file inside the pack."
+          }
+        }
+      }
+    },
+    "Percorso non valido: \"%@\" deve restare dentro la cartella del pacchetto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid path: \"%@\" must stay inside the pack folder."
+          }
+        }
+      }
+    },
+    "\"%@\": sono ammesse solo immagini PNG, GIF o JPEG.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\"%@\": only PNG, GIF or JPEG images are allowed."
+          }
+        }
+      }
+    },
+    "Immagine non trovata: \"%@\".": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image not found: \"%@\"."
+          }
+        }
+      }
+    },
+    "\"%@\" è troppo grande (%lld MB, massimo %lld MB).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\"%1$@\" is too large (%2$lld MB, at most %3$lld MB)."
+          }
+        }
+      }
+    },
+    "Il pacchetto è troppo grande (%lld MB, massimo %lld MB).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The pack is too large (%1$lld MB, at most %2$lld MB)."
+          }
+        }
+      }
+    },
+    "obbligatorio.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "required."
+          }
+        }
+      }
+    },
+    "tipo sbagliato.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "wrong type."
+          }
+        }
+      }
+    },
+    "valore mancante.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "missing value."
+          }
+        }
+      }
+    },
+    "solo lettere minuscole, cifre e trattini, massimo 40.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "lower-case letters, digits and dashes only, at most 40."
+          }
+        }
+      }
+    },
+    "obbligatorio con una licenza CC-BY.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "required with a CC-BY license."
+          }
+        }
+      }
+    },
+    "serve almeno \"top\" o \"bottom\".": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "needs at least \"top\" or \"bottom\"."
+          }
+        }
+      }
+    },
+    "non può essere vuoto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "cannot be empty."
+          }
+        }
+      }
+    },
+    "troppo lungo (massimo %lld caratteri).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "too long (at most %lld characters)."
+          }
+        }
+      }
+    },
+    "colore nel formato \"#RRGGBB\".": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "a colour in the \"#RRGGBB\" format."
+          }
+        }
+      }
+    },
+    "controlla virgole e parentesi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "check commas and brackets."
+          }
+        }
+      }
+    },
+    "non riesco a leggere il file.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "the file cannot be read."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

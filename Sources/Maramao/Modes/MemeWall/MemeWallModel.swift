@@ -245,20 +245,22 @@ final class MemeWallUserImages {
 
     static func load() -> MemeWallUserImages {
         let fm = FileManager.default
+        // Images from enabled cat packs (already validated: inside the pack, size-capped).
+        let packImages = CatPackRuntime.shared.content.imageURLs
         guard let pictures = fm.urls(for: .picturesDirectory, in: .userDomainMask).first else {
-            return MemeWallUserImages(urls: [])
+            return MemeWallUserImages(urls: Array(packImages.shuffled().prefix(60)))
         }
         let folder = pictures.appendingPathComponent("Maramao", isDirectory: true)
         var isDirectory: ObjCBool = false
         guard fm.fileExists(atPath: folder.path, isDirectory: &isDirectory), isDirectory.boolValue else {
-            return MemeWallUserImages(urls: [])
+            return MemeWallUserImages(urls: Array(packImages.shuffled().prefix(60)))
         }
         guard let items = try? fm.contentsOfDirectory(
             at: folder,
             includingPropertiesForKeys: [.fileSizeKey],
             options: [.skipsHiddenFiles]
         ) else {
-            return MemeWallUserImages(urls: [])
+            return MemeWallUserImages(urls: Array(packImages.shuffled().prefix(60)))
         }
         let allowed: Set<String> = ["gif", "png", "jpg", "jpeg"]
         let usable = items.filter { url in
@@ -266,7 +268,7 @@ final class MemeWallUserImages {
             let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
             return size > 0 && size < 20_000_000
         }
-        return MemeWallUserImages(urls: Array(usable.shuffled().prefix(60)))
+        return MemeWallUserImages(urls: Array((usable + packImages).shuffled().prefix(60)))
     }
 
     /// About one card in four shows a user picture, when there are any.

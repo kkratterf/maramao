@@ -13,7 +13,10 @@ struct MemeWallCaption {
     let bottom: String
     var kind: Kind = .joke
 
-    static let all: [MemeWallCaption] = jokes + tips
+    /// Built-in captions plus those of the enabled cat packs.
+    static var all: [MemeWallCaption] { builtIn + CatPackRuntime.shared.content.captions }
+
+    static let builtIn: [MemeWallCaption] = jokes + tips
 
     static let jokes: [MemeWallCaption] = [
         MemeWallCaption(top: String(localized: "QUANDO DICI 'ANCORA UN'EMAIL'"), bottom: String(localized: "E IL GATTO DICE NO")),
