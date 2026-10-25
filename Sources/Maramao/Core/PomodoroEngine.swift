@@ -72,6 +72,12 @@ final class PomodoroEngine: ObservableObject {
 
     /// Skips the current phase. Work ends straight into a break; a break only ends when skipping is allowed.
     func skip() {
+        // During a "Prova un concept" preview, skipping closes the preview (e.g. from the
+        // global skip shortcut) instead of touching the real cycle.
+        if previewTimer != nil {
+            endPreview()
+            return
+        }
         switch phase {
         case .idle:
             break
@@ -148,6 +154,7 @@ final class PomodoroEngine: ObservableObject {
         if context.isPreview {
             endPreview()
         } else if let breakContext, breakContext === context, phase.isBreak {
+            if emergency { stats.recordEmergencyExit() }
             advance()
         }
         if emergency {

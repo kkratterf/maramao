@@ -130,18 +130,20 @@ struct MemeWallSlotView: View {
 
     var body: some View {
         let visible = revealed && !exiting
-        let direction: CGFloat = index % 2 == 0 ? -1 : 1
+        // Reduce Motion: cards only fade in, swap and fade out.
+        let calm = BreakAccessibility.reduceMotion
+        let direction: CGFloat = calm ? 0 : (index % 2 == 0 ? -1 : 1)
         ZStack {
             MemeWallCardView(meme: card.meme, side: side)
                 .id(card.meme.id)
-                .transition(card.meme.transition.anyTransition)
+                .transition(calm ? AnyTransition.opacity : card.meme.transition.anyTransition)
         }
         .frame(width: side, height: side)
         .rotationEffect(.degrees(card.tilt))
-        .scaleEffect(visible ? 1 : (exiting ? 0.5 : 0.15))
+        .scaleEffect(visible || calm ? 1 : (exiting ? 0.5 : 0.15))
         .opacity(visible ? 1 : 0)
         .rotationEffect(.degrees(exiting ? Double(direction) * 25 : 0))
-        .offset(x: exiting ? direction * side * 0.5 : 0, y: exiting ? side * 1.3 : 0)
+        .offset(x: exiting ? direction * side * 0.5 : 0, y: exiting && !calm ? side * 1.3 : 0)
         .animation(.easeIn(duration: 0.4).delay(Double(index) * 0.04), value: exiting)
     }
 }
@@ -161,7 +163,7 @@ struct MemeWallCardView: View {
             ZStack {
                 LinearGradient(colors: meme.backdrop, startPoint: .topLeading, endPoint: .bottomTrailing)
                 if let image = meme.image {
-                    MemeWallAnimatedImage(image: image)
+                    MemeWallAnimatedImage(image: image, animates: !BreakAccessibility.reduceMotion)
                         .frame(width: inner, height: inner)
                 } else {
                     MemeWallCatStage(meme: meme, side: inner)
@@ -191,6 +193,8 @@ struct MemeWallCardView: View {
             }
         }
         .shadow(color: .black.opacity(0.35), radius: 14, x: 0, y: 8)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Meme di gatti: " + meme.caption.top + " " + meme.caption.bottom)
     }
 }
 
@@ -241,19 +245,38 @@ struct MemeWallCatStage: View {
     let side: CGFloat
 
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: false)) { timeline in
-            MemeWallAnimatedCat(
-                meme: meme,
-                side: side,
-                t: max(0, timeline.date.timeIntervalSince(meme.shownAt))
-            )
+        if BreakAccessibility.reduceMotion {
+            // Reduce Motion: a still picture instead of a looping "GIF".
+            MemeWallAnimatedCat(meme: meme, side: side, t: 0, still: true)
+                .frame(width: side, height: side)
+        } else {
+            TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: false)) { timeline in
+                MemeWallAnimatedCat(
+                    meme: meme,
+                    side: side,
+                    t: max(0, timeline.date.timeIntervalSince(meme.shownAt))
+                )
+            }
+            .frame(width: side, height: side)
         }
-        .frame(width: side, height: side)
     }
 }
 
 /// Where the cat is at time `t` for a given template.
 struct MemeWallMotion {
+    /// A calm still frame for the template, used with Reduce Motion.
+    static func still(template: MemeWallTemplate) -> MemeWallMotion {
+        var motion = MemeWallMotion(template: .bobbing, t: 0, seed: 0)
+        motion.eyesClosed = false
+        motion.tailWag = 0
+        switch template {
+        case .sleepy: motion.pose = .sleeping
+        case .stretch: motion.pose = .stretching
+        default: motion.pose = .sitting
+        }
+        return motion
+    }
+
     var pose: CatPose = .sitting
     var eyesClosed = false
     var tailWag: Double = 0
@@ -329,9 +352,11 @@ struct MemeWallAnimatedCat: View {
     let meme: MemeWallMeme
     let side: CGFloat
     let t: Double
+    /// A still frame for Reduce Motion: the cat sits (or sleeps) in the middle of the card.
+    var still = false
 
     var body: some View {
-        let motion = MemeWallMotion(template: meme.template, t: t, seed: meme.seed)
+        let motion = still ? MemeWallMotion.still(template: meme.template) : MemeWallMotion(template: meme.template, t: t, seed: meme.seed)
         // The slide template always walks across in the direction the cat faces (left to right).
         let facingLeft = meme.template == .slide ? false : meme.facingLeft
         let catWidth = side * 0.64
@@ -394,11 +419,13 @@ struct MemeWallAnimatedCat: View {
 /// Shows a user picture; GIFs keep animating.
 struct MemeWallAnimatedImage: NSViewRepresentable {
     let image: NSImage
+    /// False with Reduce Motion: GIFs show their first frame.
+    var animates = true
 
     func makeNSView(context: Context) -> NSImageView {
         let view = NSImageView()
         view.imageScaling = .scaleProportionallyUpOrDown
-        view.animates = true
+        view.animates = animates
         view.image = image
         view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
@@ -418,42 +445,58 @@ struct MemeWallAnimatedImage: NSViewRepresentable {
 
 /// Slowly shifting gradient with a tiled paw pattern drifting diagonally.
 struct MemeWallBackground: View {
-    var body: some View {
-        // The paws drift ~14 pt/s and the hue shifts over minutes: 15 fps is plenty for a
-        // full-screen canvas redrawn on every display.
-        TimelineView(.animation(minimumInterval: 1.0 / 15.0, paused: false)) { timeline in
-            Canvas { ctx, size in
-                let t = timeline.date.timeIntervalSinceReferenceDate
-                let hue = (t * 0.015).truncatingRemainder(dividingBy: 1)
-                let first = Color(hue: hue, saturation: 0.55, brightness: 0.42)
-                let second = Color(hue: (hue + 0.17).truncatingRemainder(dividingBy: 1), saturation: 0.65, brightness: 0.3)
-                ctx.fill(
-                    Path(CGRect(origin: .zero, size: size)),
-                    with: .linearGradient(
-                        Gradient(colors: [first, second]),
-                        startPoint: .zero,
-                        endPoint: CGPoint(x: size.width, y: size.height)
-                    )
-                )
+    @Environment(\.colorSchemeContrast) private var contrast
 
-                let spacing: CGFloat = 130
-                // Drift over two rows so the alternating row offset never jumps.
-                let drift = CGFloat((t * 14).truncatingRemainder(dividingBy: Double(spacing * 2)))
-                var row = 0
-                var y = -spacing * 2 + drift
-                while y < size.height + spacing {
-                    var x = -spacing + drift.truncatingRemainder(dividingBy: spacing) + (row % 2 == 0 ? 0 : spacing / 2)
-                    while x < size.width + spacing {
-                        Self.drawPaw(&ctx, at: CGPoint(x: x, y: y), size: 26, angle: row % 2 == 0 ? -0.35 : 0.35)
-                        x += spacing
-                    }
-                    y += spacing
-                    row += 1
+    var body: some View {
+        let dim = contrast == .increased
+        if BreakAccessibility.reduceMotion {
+            // Reduce Motion: the same wallpaper, standing still.
+            Canvas { ctx, size in
+                Self.draw(&ctx, size: size, t: 0, dim: dim)
+            }
+            .background(Color.black)
+        } else {
+            // The paws drift ~14 pt/s and the hue shifts over minutes: 15 fps is plenty for a
+            // full-screen canvas redrawn on every display.
+            TimelineView(.animation(minimumInterval: 1.0 / 15.0, paused: false)) { timeline in
+                Canvas { ctx, size in
+                    Self.draw(&ctx, size: size, t: timeline.date.timeIntervalSinceReferenceDate, dim: dim)
                 }
             }
+            .opacity(0.97)
+            .background(Color.black)
         }
-        .opacity(0.97)
-        .background(Color.black)
+    }
+
+    /// Increase Contrast (`dim`): a darker wallpaper without paws, so cards and captions stand out.
+    private static func draw(_ ctx: inout GraphicsContext, size: CGSize, t: Double, dim: Bool) {
+        let hue = (t * 0.015).truncatingRemainder(dividingBy: 1)
+        let first = Color(hue: hue, saturation: 0.55, brightness: dim ? 0.2 : 0.42)
+        let second = Color(hue: (hue + 0.17).truncatingRemainder(dividingBy: 1), saturation: 0.65, brightness: dim ? 0.12 : 0.3)
+        ctx.fill(
+            Path(CGRect(origin: .zero, size: size)),
+            with: .linearGradient(
+                Gradient(colors: [first, second]),
+                startPoint: .zero,
+                endPoint: CGPoint(x: size.width, y: size.height)
+            )
+        )
+
+        if dim { return }
+        let spacing: CGFloat = 130
+        // Drift over two rows so the alternating row offset never jumps.
+        let drift = CGFloat((t * 14).truncatingRemainder(dividingBy: Double(spacing * 2)))
+        var row = 0
+        var y = -spacing * 2 + drift
+        while y < size.height + spacing {
+            var x = -spacing + drift.truncatingRemainder(dividingBy: spacing) + (row % 2 == 0 ? 0 : spacing / 2)
+            while x < size.width + spacing {
+                Self.drawPaw(&ctx, at: CGPoint(x: x, y: y), size: 26, angle: row % 2 == 0 ? -0.35 : 0.35)
+                x += spacing
+            }
+            y += spacing
+            row += 1
+        }
     }
 
     private static func drawPaw(_ ctx: inout GraphicsContext, at point: CGPoint, size s: CGFloat, angle: Double) {
