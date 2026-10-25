@@ -11,6 +11,14 @@ A native macOS menu bar app for the Pomodoro technique. Work for 25 minutes, the
 
 **Website:** [kkratterf.github.io/maramao](https://kkratterf.github.io/maramao/)
 
+**Install** (macOS 13+, free, no special permissions):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/kkratterf/maramao/main/install.sh | sh
+```
+
+or download the DMG from the [latest release](https://github.com/kkratterf/maramao/releases/latest), or use [Homebrew](#3-homebrew). Maramao is not notarized yet: see [first launch](#4-first-launch-and-gatekeeper) if macOS blocks it.
+
 ---
 
 ## The cats
@@ -172,12 +180,15 @@ The tap lives in this repository (`Casks/maramao.rb`) and is updated by every re
 
 ### 4. First launch and Gatekeeper
 
-Maramao is not notarized by Apple yet, so the first time you open a copy from the DMG or the zip macOS says it cannot verify the developer. Either:
+Maramao is not notarized by Apple yet, so the first time you open a copy from the DMG or the zip macOS says it cannot verify the developer and offers only **Fine** (Done) or the Bin. To open it anyway:
 
-- right-click `Maramao.app` in Applications → **Apri** (Open) → **Apri** again, or
-- try to open it once, then go to **System Settings → Privacy & Security** and click **Apri comunque** (Open Anyway).
+1. Try to open it once and close the warning with **Fine** (Done).
+2. Go to **System Settings → Privacy & Security**, scroll down and click **Apri comunque** (Open Anyway) next to the message about Maramao.
+3. Enter your Mac password and confirm with **Apri** (Open).
 
-If macOS still refuses, clear the quarantine flag by hand:
+On macOS 13 and 14 the old shortcut also works: right-click `Maramao.app` in Applications → **Apri** (Open) → **Apri** again. macOS 15 Sequoia removed it.
+
+Or skip all that and clear the quarantine flag in Terminal:
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/Maramao.app

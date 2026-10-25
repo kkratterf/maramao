@@ -33,7 +33,8 @@ cask "maramao" do
 
   caveats <<~EOS
     Maramao is not notarized by Apple yet, so macOS may block the first launch.
-    Right-click Maramao in Applications and choose Open, or run:
+    Open it once, then click Open Anyway in System Settings > Privacy & Security,
+    or run:
       xattr -dr com.apple.quarantine #{appdir}/Maramao.app
   EOS
 end
