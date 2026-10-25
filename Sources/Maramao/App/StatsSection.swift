@@ -38,7 +38,7 @@ struct StatsSection: View {
             text += " · " + String(localized: "\(total.breaksCompleted)/\(total.breaksTotal) pause rispettate")
         }
         if total.emergencyExits > 0 {
-            let exits = total.emergencyExits == 1 ? "1 uscita di emergenza" : "\(total.emergencyExits) uscite di emergenza"
+            let exits = String(localized: "\(total.emergencyExits) uscite di emergenza")
             text += " · \(exits)"
         }
         return text

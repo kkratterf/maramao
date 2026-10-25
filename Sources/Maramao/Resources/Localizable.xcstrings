@@ -75,6 +75,47 @@
         }
       }
     },
+    "%lld uscite di emergenza": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld emergency exit"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld emergency exits"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld uscita di emergenza"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld uscite di emergenza"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld/%lld pause rispettate": {
       "extractionState": "manual",
       "localizations": {
