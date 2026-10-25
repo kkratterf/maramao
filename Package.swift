@@ -3,6 +3,8 @@ import PackageDescription
 
 let package = Package(
     name: "Maramao",
+    // Italian is the source language of the UI; English comes from the String Catalog.
+    defaultLocalization: "it",
     platforms: [.macOS(.v13)],
     products: [
         .executable(name: "Maramao", targets: ["Maramao"])
@@ -23,7 +25,14 @@ let package = Package(
                 "MaramaoCore",
                 .product(name: "Sparkle", package: "Sparkle"),
             ],
-            path: "Sources/Maramao"
+            path: "Sources/Maramao",
+            // Italian keys, English translations (issue #30). build-app.sh copies the
+            // compiled .lproj folders into Maramao.app, where SwiftUI and
+            // String(localized:) look them up in Bundle.main.
+            resources: [
+                .process("Resources/Localizable.xcstrings"),
+                .process("Resources/AppShortcuts.xcstrings"),
+            ]
         ),
         .testTarget(
             name: "MaramaoCoreTests",

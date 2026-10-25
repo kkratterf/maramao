@@ -1,0 +1,5230 @@
+{
+  "sourceLanguage": "it",
+  "strings": {
+    "%@ e %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ and %2$@"
+          }
+        }
+      }
+    },
+    "%@: %lld pause rispettate su %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: %2$lld of %3$lld breaks taken"
+          }
+        }
+      }
+    },
+    "%lld minuti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld minutes"
+          }
+        }
+      }
+    },
+    "%lld minuti prima": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld minutes before"
+          }
+        }
+      }
+    },
+    "%lld pomodori": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodoro"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodoros"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodoro"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodori"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld pomodori oggi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodoro today"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodoros today"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodoro oggi"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pomodori oggi"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld secondi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld seconds"
+          }
+        }
+      }
+    },
+    "%lld secondi prima": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld seconds before"
+          }
+        }
+      }
+    },
+    "%lld uscite di emergenza": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld emergency exit"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld emergency exits"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld uscita di emergenza"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld uscite di emergenza"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld/%lld pause rispettate": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld/%2$lld breaks taken"
+          }
+        }
+      }
+    },
+    "'DOMANI LO FINISCO'": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "'I'LL FINISH IT TOMORROW'"
+          }
+        }
+      }
+    },
+    "'FINISCO SOLO QUESTA COSA'": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "'LET ME JUST FINISH THIS'"
+          }
+        }
+      }
+    },
+    "1 minuto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 minute"
+          }
+        }
+      }
+    },
+    "1 minuto prima": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 minute before"
+          }
+        }
+      }
+    },
+    "1 ora": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 hour"
+          }
+        }
+      }
+    },
+    "1 secondo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 second"
+          }
+        }
+      }
+    },
+    "2 ore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 hours"
+          }
+        }
+      }
+    },
+    "2. DORMIRE DI NUOVO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2. SLEEP AGAIN"
+          }
+        }
+      }
+    },
+    "25 MINUTI DI LAVORO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "25 MINUTES OF WORK"
+          }
+        }
+      }
+    },
+    "30 minuti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 minutes"
+          }
+        }
+      }
+    },
+    "5 MINUTI DI ME. NON TRATTABILE.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 MINUTES OF ME. NON-NEGOTIABLE."
+          }
+        }
+      }
+    },
+    "Accessibilità": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accessibility"
+          }
+        }
+      }
+    },
+    "Aggiorna automaticamente": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update automatically"
+          }
+        }
+      }
+    },
+    "Aggiornamenti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updates"
+          }
+        }
+      }
+    },
+    "ALLA SIESTA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TO THE NAP"
+          }
+        }
+      }
+    },
+    "Alle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To"
+          }
+        }
+      }
+    },
+    "Allunga le dita all'indietro, una mano alla volta, per dieci secondi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gently bend your fingers back, one hand at a time, for ten seconds."
+          }
+        }
+      }
+    },
+    "Alzati e gira per la stanza come se fosse tua.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get up and patrol the room like you own it."
+          }
+        }
+      }
+    },
+    "Alzati e sgranchisciti, umano.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get up and stretch, human."
+          }
+        }
+      }
+    },
+    "Alzati in piedi e allunga le braccia verso il soffitto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stand up and reach for the ceiling."
+          }
+        }
+      }
+    },
+    "ALZATI, FAI DUE PASSI": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GET UP, TAKE A WALK"
+          }
+        }
+      }
+    },
+    "ANCH'IO. E NON HO FATTO NIENTE.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ME TOO. AND I DID NOTHING."
+          }
+        }
+      }
+    },
+    "Ancora coccole.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More cuddles."
+          }
+        }
+      }
+    },
+    "ANCORA SULLA TASTIERA?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "STILL ON THE KEYBOARD?"
+          }
+        }
+      }
+    },
+    "Animazioni delle pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break animations"
+          }
+        }
+      }
+    },
+    "Annaffia le piante o sistema qualcosa in casa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water the plants or tidy something up."
+          }
+        }
+      }
+    },
+    "Annulla": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "Apri e chiudi le mani, poi scuoti i polsi. Zampe nuove.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open and close your hands, then shake out your wrists. Fresh paws."
+          }
+        }
+      }
+    },
+    "APRI LA FINESTRA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OPEN THE WINDOW"
+          }
+        }
+      }
+    },
+    "Apri la finestra e cambia l'aria nella stanza.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the window and let some fresh air in."
+          }
+        }
+      }
+    },
+    "Apri Maramao all'avvio del Mac": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Maramao at login"
+          }
+        }
+      }
+    },
+    "ARIA FRESCA E UN PICCIONE DA FISSARE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FRESH AIR AND A PIGEON TO STARE AT"
+          }
+        }
+      }
+    },
+    "Attenzione… sta per saltare!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Careful… it's about to pounce!"
+          }
+        }
+      }
+    },
+    "Automazioni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automations"
+          }
+        }
+      }
+    },
+    "Azzera": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        }
+      }
+    },
+    "Azzera statistiche…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset statistics…"
+          }
+        }
+      }
+    },
+    "Azzerare le statistiche?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset statistics?"
+          }
+        }
+      }
+    },
+    "BACKUP FATTO?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BACKED UP?"
+          }
+        }
+      }
+    },
+    "Barra dei menu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu bar"
+          }
+        }
+      }
+    },
+    "Bella pausa, quasi perfetta 😺": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nice break, almost purrfect 😺"
+          }
+        }
+      }
+    },
+    "Bentornato! Il timer ti aspetta in pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome back! The timer is paused, waiting for you"
+          }
+        }
+      }
+    },
+    "Bentornato! La pausa l'hai già fatta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome back! You already took your break"
+          }
+        }
+      }
+    },
+    "Bentornato! Ti sei già riposato": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome back! You've already had your rest"
+          }
+        }
+      }
+    },
+    "BEVI UN BICCHIERE D'ACQUA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DRINK A GLASS OF WATER"
+          }
+        }
+      }
+    },
+    "Bevi un po' d'acqua. Io bevo dal rubinetto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink some water. I drink straight from the tap."
+          }
+        }
+      }
+    },
+    "Caccia al laser": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laser chase"
+          }
+        }
+      }
+    },
+    "Catture: %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catches: %lld"
+          }
+        }
+      }
+    },
+    "Catture: %lld! Cacciatore provetto 😻": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catches: %lld! Seasoned hunter 😻"
+          }
+        }
+      }
+    },
+    "Catture: 0. Il puntino era troppo veloce 😼": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catches: 0. The dot was too fast 😼"
+          }
+        }
+      }
+    },
+    "Catture: 1. Il gatto è fiero di sé 😺": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catches: 1. The cat is proud of itself 😺"
+          }
+        }
+      }
+    },
+    "Cerca una nuova versione di Maramao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look for a new version of Maramao"
+          }
+        }
+      }
+    },
+    "CHE PECCATO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HOW SAD"
+          }
+        }
+      }
+    },
+    "Chiama o scrivi a qualcuno a cui vuoi bene.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Call or text someone you love."
+          }
+        }
+      }
+    },
+    "Chiudi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        }
+      }
+    },
+    "Chiudi gli occhi e conta dieci respiri lenti.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close your eyes and count ten slow breaths."
+          }
+        }
+      }
+    },
+    "Chiudi l'anteprima": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close the preview"
+          }
+        }
+      }
+    },
+    "Combinazione già usata da un'altra app.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Another app already uses this combination."
+          }
+        }
+      }
+    },
+    "Come il sistema": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same as system"
+          }
+        }
+      }
+    },
+    "Come ti fermano i gatti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How the cats stop you"
+          }
+        }
+      }
+    },
+    "Complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full"
+          }
+        }
+      }
+    },
+    "CON IL SEDERE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WITH MY BUTT"
+          }
+        }
+      }
+    },
+    "Con le animazioni ridotte i gatti appaiono con una dissolvenza: niente passeggiate, salti o gatti che cadono. \"Come il sistema\" segue Riduci movimento in Impostazioni di Sistema → Accessibilità → Schermo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With reduced animations the cats fade in: no walking, jumping or falling cats. \"Same as system\" follows Reduce motion in System Settings → Accessibility → Display."
+          }
+        }
+      }
+    },
+    "Concentrazione": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus"
+          }
+        }
+      }
+    },
+    "Concentrazione, %@ rimasti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus, %@ left"
+          }
+        }
+      }
+    },
+    "Consenti Maramao in Impostazioni di Sistema → Generale → Elementi login.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Maramao in System Settings → General → Login Items."
+          }
+        }
+      }
+    },
+    "Considera pausa fatta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count it as a break"
+          }
+        }
+      }
+    },
+    "Consiglio del gatto: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat's advice: %@"
+          }
+        }
+      }
+    },
+    "Controlla aggiornamenti…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check for updates…"
+          }
+        }
+      }
+    },
+    "Controlla ora": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check now"
+          }
+        }
+      }
+    },
+    "Cos'è quel puntino rosso?!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What is that red dot?!"
+          }
+        }
+      }
+    },
+    "CTRL+S": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CTRL+S"
+          }
+        }
+      }
+    },
+    "CTRL+SONNELLINO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CTRL+SNOOZE"
+          }
+        }
+      }
+    },
+    "Dalle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From"
+          }
+        }
+      }
+    },
+    "DEADLINE?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DEADLINE?"
+          }
+        }
+      }
+    },
+    "DEL GOMITOLO. E DEL DISCORSO.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OF THE YARN BALL. AND THE CONVERSATION."
+          }
+        }
+      }
+    },
+    "DESTRA... SINISTRA... CROCCHETTA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RIGHT... LEFT... KIBBLE"
+          }
+        }
+      }
+    },
+    "Di nuovo? Sul serio?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Again? Seriously?"
+          }
+        }
+      }
+    },
+    "Dice la fase attuale, il tempo rimasto e i pomodori di oggi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tells the current phase, the time left and today's pomodoros."
+          }
+        }
+      }
+    },
+    "Disponibile dopo %lld secondi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Available after %lld second"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Available after %lld seconds"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Disponibile dopo %lld secondo"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Disponibile dopo %lld secondi"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Documento senza titolo — modificato dal gatto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Untitled document — edited by the cat"
+          }
+        }
+      }
+    },
+    "domenica": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sunday"
+          }
+        }
+      }
+    },
+    "DORMIRE E GIUDICARTI INSIEME": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NAPPING AND JUDGING YOU AT ONCE"
+          }
+        }
+      }
+    },
+    "Dov'è finito?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Where did it go?"
+          }
+        }
+      }
+    },
+    "E IL GATTO DICE NO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AND THE CAT SAYS NO"
+          }
+        }
+      }
+    },
+    "E TU FAI FINTA DI NIENTE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AND YOU PRETEND YOU DIDN'T HEAR"
+          }
+        }
+      }
+    },
+    "Eccolo di nuovo!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There it is again!"
+          }
+        }
+      }
+    },
+    "Era qui un attimo fa…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It was right here a second ago…"
+          }
+        }
+      }
+    },
+    "ERA.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WAS."
+          }
+        }
+      }
+    },
+    "Esc? Non c'è via di fuga.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esc? There is no escape."
+          }
+        }
+      }
+    },
+    "Esci": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit"
+          }
+        }
+      }
+    },
+    "Esci a prendere un po' d'aria e di luce.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step outside for some air and daylight."
+          }
+        }
+      }
+    },
+    "Esci sul balcone e guarda il cielo per un minuto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step onto the balcony and look at the sky for a minute."
+          }
+        }
+      }
+    },
+    "Esegui un Comando Rapido": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run a Shortcut"
+          }
+        }
+      }
+    },
+    "Fa partire un pomodoro, o lo riprende se è in pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starts a pomodoro, or resumes it if it's paused."
+          }
+        }
+      }
+    },
+    "Fai due passi, io resto qui.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go for a walk. I'll stay here."
+          }
+        }
+      }
+    },
+    "Fai due respiri profondi. Poi lasciami dormire.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take two deep breaths. Then let me sleep."
+          }
+        }
+      }
+    },
+    "Fai le fusa: un respiro lungo dal naso, fuori piano dalla bocca.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Purr: a long breath in through the nose, slowly out through the mouth."
+          }
+        }
+      }
+    },
+    "Fai le scale su e giù un paio di volte.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take the stairs up and down a couple of times."
+          }
+        }
+      }
+    },
+    "Fai merenda. I gatti approvano gli snack.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Have a snack. Cats approve of snacks."
+          }
+        }
+      }
+    },
+    "Fai subito la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take the break now"
+          }
+        }
+      }
+    },
+    "Fai una passeggiata, anche solo intorno all'isolato.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go for a walk, even just around the block."
+          }
+        }
+      }
+    },
+    "Fai una serie di stiramenti per gambe, schiena e collo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Do a round of stretches for legs, back and neck."
+          }
+        }
+      }
+    },
+    "Ferma Maramao per un po': riparte da solo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause Maramao for a while: it comes back on its own"
+          }
+        }
+      }
+    },
+    "Fermo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopped"
+          }
+        }
+      }
+    },
+    "Finisce il pomodoro e fa partire subito la pausa coi gatti.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ends the pomodoro and starts the cat break right away."
+          }
+        }
+      }
+    },
+    "fino a %@ all'%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until %1$@ at %2$@"
+          }
+        }
+      }
+    },
+    "fino a %@ alle %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until %1$@ at %2$@"
+          }
+        }
+      }
+    },
+    "Fino a domani": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Until tomorrow"
+          }
+        }
+      }
+    },
+    "fino a domani all'%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until tomorrow at %@"
+          }
+        }
+      }
+    },
+    "fino a domani alle %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until tomorrow at %@"
+          }
+        }
+      }
+    },
+    "fino al %lld/%lld all'%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until %1$lld/%2$lld at %3$@"
+          }
+        }
+      }
+    },
+    "fino al %lld/%lld alle %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until %1$lld/%2$lld at %3$@"
+          }
+        }
+      }
+    },
+    "fino all'%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until %@"
+          }
+        }
+      }
+    },
+    "fino alle %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until %@"
+          }
+        }
+      }
+    },
+    "Funzionano da qualsiasi app, senza permessi speciali.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "They work from any app, no special permissions needed."
+          }
+        }
+      }
+    },
+    "Fuori orario la ripartenza automatica dopo la pausa è spenta e \"Pausa per…\" non fa ripartire il timer. %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outside working hours the timer won't restart on its own after a break, and \"Pause for…\" won't restart it either. %@."
+          }
+        }
+      }
+    },
+    "Fuori orario: niente partenze automatiche": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off hours: no automatic starts"
+          }
+        }
+      }
+    },
+    "Gatti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cats"
+          }
+        }
+      }
+    },
+    "Gatto + countdown": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat + countdown"
+          }
+        }
+      }
+    },
+    "Gatto che avvisa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heads-up cat"
+          }
+        }
+      }
+    },
+    "Gatto con anello di progresso": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat with progress ring"
+          }
+        }
+      }
+    },
+    "Generale": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        }
+      }
+    },
+    "Giorni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Days"
+          }
+        }
+      }
+    },
+    "giovedì": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thursday"
+          }
+        }
+      }
+    },
+    "GIT COMMIT": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GIT COMMIT"
+          }
+        }
+      }
+    },
+    "Gli schermi senza gatti vengono solo un po' oscurati. Il gatto sulla finestra segue sempre la finestra attiva.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Displays without cats just get dimmed a little. The cat on your window always follows the active window."
+          }
+        }
+      }
+    },
+    "Guarda fuori dalla finestra e cerca qualcosa che si muove.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look out the window and find something that moves."
+          }
+        }
+      }
+    },
+    "Guarda fuori dalla finestra, non lo schermo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look out the window, not at the screen."
+          }
+        }
+      }
+    },
+    "GUARDA LONTANO 20 SECONDI": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LOOK FAR AWAY FOR 20 SECONDS"
+          }
+        }
+      }
+    },
+    "HAI 47 TAB APERTE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOU HAVE 47 TABS OPEN"
+          }
+        }
+      }
+    },
+    "HAI SCRITTO 'ASDFGHJKL'?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DID YOU TYPE 'ASDFGHJKL'?"
+          }
+        }
+      }
+    },
+    "HO CHIUSO IL TUO LAPTOP": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I CLOSED YOUR LAPTOP"
+          }
+        }
+      }
+    },
+    "Ho detto PAUSA.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I said BREAK."
+          }
+        }
+      }
+    },
+    "HO LETTO IL TUO CODICE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I READ YOUR CODE"
+          }
+        }
+      }
+    },
+    "HO MESSO LA ZAMPA SU INVIO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I PUT MY PAW ON ENTER"
+          }
+        }
+      }
+    },
+    "HO PERSO IL FILO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I LOST THE THREAD"
+          }
+        }
+      }
+    },
+    "hud.accessibility.break": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausa"
+          }
+        }
+      }
+    },
+    "Ignora": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignore"
+          }
+        }
+      }
+    },
+    "IL BUG NON SPARISCE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE BUG WON'T GO AWAY"
+          }
+        }
+      }
+    },
+    "IL CODICE COMPILA?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DOES THE CODE COMPILE?"
+          }
+        }
+      }
+    },
+    "IL FILE ERA SALVATO?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WAS THE FILE SAVED?"
+          }
+        }
+      }
+    },
+    "Il gatto dorme %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat is asleep %@"
+          }
+        }
+      }
+    },
+    "Il gatto dorme sull'altro schermo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat is asleep on the other screen."
+          }
+        }
+      }
+    },
+    "Il gatto dorme sulla tastiera dell'altro schermo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat is asleep on the keyboard over on the other screen."
+          }
+        }
+      }
+    },
+    "Il gatto dorme sulla tastiera.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat is asleep on the keyboard."
+          }
+        }
+      }
+    },
+    "Il gatto ha dormito il %lld%% della pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat slept through %lld%% of the break"
+          }
+        }
+      }
+    },
+    "Il gatto ha preso il telecomando.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat has the remote."
+          }
+        }
+      }
+    },
+    "Il gatto ha preso la tua finestra.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat took your window."
+          }
+        }
+      }
+    },
+    "Il gatto ha sonnecchiato a tratti 😼": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat dozed on and off 😼"
+          }
+        }
+      }
+    },
+    "Il gatto insegue il puntino. Tu riposa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat chases the dot. You rest."
+          }
+        }
+      }
+    },
+    "Il gatto non ha chiuso occhio 🙀": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat didn't sleep a wink 🙀"
+          }
+        }
+      }
+    },
+    "Il gatto non ti lascia uscire 😼": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat won't let you quit 😼"
+          }
+        }
+      }
+    },
+    "Il gatto si alza. Pausa finita.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat gets up. Break's over."
+          }
+        }
+      }
+    },
+    "Il gatto si lecca la zampa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat licks its paw."
+          }
+        }
+      }
+    },
+    "Il gatto si stiracchia. Pausa finita.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat stretches. Break's over."
+          }
+        }
+      }
+    },
+    "Il gatto sulla finestra": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat on your window"
+          }
+        }
+      }
+    },
+    "Il gatto sulla tastiera": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat on the keyboard"
+          }
+        }
+      }
+    },
+    "Il lavoro può aspettare. Io no.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Work can wait. I can't."
+          }
+        }
+      }
+    },
+    "Il lavoro sarà ancora lì tra cinque minuti.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Work will still be there in five minutes."
+          }
+        }
+      }
+    },
+    "Il mouse diventa un puntino laser e il gatto lo insegue per tutto lo schermo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your pointer turns into a laser dot and the cat chases it all over the screen."
+          }
+        }
+      }
+    },
+    "Il mouse non scappa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The mouse isn't going anywhere."
+          }
+        }
+      }
+    },
+    "IL POMODORO È FINITO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE POMODORO IS OVER"
+          }
+        }
+      }
+    },
+    "Il timer continua a correre, ma la pausa non parte mai a schermo bloccato: aspetta che torni.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The timer keeps running, but a break never starts while the screen is locked: it waits for you to come back."
+          }
+        }
+      }
+    },
+    "Il timer si ferma e ti aspetta in pausa finché non riprendi tu.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The timer stops and waits, paused, until you resume it."
+          }
+        }
+      }
+    },
+    "Il timer si ferma e, se sei stato via almeno una pausa breve, al ritorno riparti da capo: la pausa l'hai già fatta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The timer stops, and if you were away for at least a short break, it starts over when you're back: you've had your break."
+          }
+        }
+      }
+    },
+    "IL TIMER SUONA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE TIMER RINGS"
+          }
+        }
+      }
+    },
+    "IL TUO CAPO TI CERCA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOUR BOSS IS LOOKING FOR YOU"
+          }
+        }
+      }
+    },
+    "IL TUO GATTO TI HA TROVATO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOUR CAT FOUND YOU FIRST"
+          }
+        }
+      }
+    },
+    "IL TUO MOUSE È UN GIOCATTOLO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOUR MOUSE IS A TOY"
+          }
+        }
+      }
+    },
+    "IL TUO POMODORO È SCADUTO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOUR POMODORO HAS EXPIRED"
+          }
+        }
+      }
+    },
+    "IL WI-FI È LENTO?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SLOW WI-FI?"
+          }
+        }
+      }
+    },
+    "Impostazioni di Maramao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maramao Settings"
+          }
+        }
+      }
+    },
+    "Impostazioni…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings…"
+          }
+        }
+      }
+    },
+    "IN ONDA · MARAMAO TV": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ON AIR · MARAMAO TV"
+          }
+        }
+      }
+    },
+    "In pausa (tu, non il gatto)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused (you, not the cat)"
+          }
+        }
+      }
+    },
+    "In pausa, %@ rimasti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused, %@ left"
+          }
+        }
+      }
+    },
+    "Inclina la testa a destra e a sinistra, piano, come un gatto curioso.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tilt your head left and right, slowly, like a curious cat."
+          }
+        }
+      }
+    },
+    "Info": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        }
+      }
+    },
+    "Inizia / metti in pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start / pause"
+          }
+        }
+      }
+    },
+    "Inizia a lavorare": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start working"
+          }
+        }
+      }
+    },
+    "Inizia un pomodoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start a pomodoro"
+          }
+        }
+      }
+    },
+    "INSPIRA... ESPIRA... MIAO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IN... OUT... MEOW"
+          }
+        }
+      }
+    },
+    "Invasione di gatti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat invasion"
+          }
+        }
+      }
+    },
+    "Invasione di gatti in corso.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat invasion in progress."
+          }
+        }
+      }
+    },
+    "IO GUARDO TE. E GIUDICO.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I STARE AT YOU. AND JUDGE."
+          }
+        }
+      }
+    },
+    "IO HO FATTO LE FUSA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I PURRED. SAME THING."
+          }
+        }
+      }
+    },
+    "IO HO GIÀ BEVUTO DAL TUO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I ALREADY DRANK FROM YOURS"
+          }
+        }
+      }
+    },
+    "IO MIAGOLO PIÙ FORTE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I MEOW LOUDER"
+          }
+        }
+      }
+    },
+    "IO NON HO MAI INIZIATO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I NEVER EVEN STARTED"
+          }
+        }
+      }
+    },
+    "IO SONO SDRAIATO, GRAZIE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'LL BE LYING DOWN, THANKS"
+          }
+        }
+      }
+    },
+    "IO SÌ. SOTTO IL LETTO.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I WILL. UNDER THE BED."
+          }
+        }
+      }
+    },
+    "IO TI SEGUO. OVVIAMENTE.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'LL FOLLOW YOU. OBVIOUSLY."
+          }
+        }
+      }
+    },
+    "IO ZERO. E STO BENISSIMO.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I HAVE ZERO. LIVING MY BEST LIFE."
+          }
+        }
+      }
+    },
+    "IO: DORMO 16 ORE AL GIORNO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ME: SLEEPS 16 HOURS A DAY"
+          }
+        }
+      }
+    },
+    "L'ALGORITMO È SEMPLICE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE ALGORITHM IS SIMPLE"
+          }
+        }
+      }
+    },
+    "L'EMAIL POTEVA ESSERE UN PISOLINO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE EMAIL COULD HAVE BEEN A NAP"
+          }
+        }
+      }
+    },
+    "L'hai svegliato! Giù le mani.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You woke it up! Hands off."
+          }
+        }
+      }
+    },
+    "La compilation dei gatti che ti vogliono lontano dalla tastiera": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Greatest hits of cats who want you away from the keyboard"
+          }
+        }
+      }
+    },
+    "LA RIUNIONE POTEVA ESSERE UN'EMAIL": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THIS MEETING COULD HAVE BEEN AN EMAIL"
+          }
+        }
+      }
+    },
+    "LA SCRIVANIA È MIA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE DESK IS MINE"
+          }
+        }
+      }
+    },
+    "LA SEDIA ERA TUA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE CHAIR WAS YOURS"
+          }
+        }
+      }
+    },
+    "LA TASTIERA È CALDA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE KEYBOARD IS WARM"
+          }
+        }
+      }
+    },
+    "LAVORI DA CASA?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WORKING FROM HOME?"
+          }
+        }
+      }
+    },
+    "Lavoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Work"
+          }
+        }
+      }
+    },
+    "Le email possono aspettare. Io no.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emails can wait. I can't."
+          }
+        }
+      }
+    },
+    "Le modifiche ai tempi valgono dal prossimo pomodoro.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timing changes apply from the next pomodoro."
+          }
+        }
+      }
+    },
+    "LO SCHERMO NON SCAPPA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE SCREEN ISN'T GOING ANYWHERE"
+          }
+        }
+      }
+    },
+    "Lo schermo si riempie di GIF e meme di gatti finché la pausa non è finita.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your screen fills up with cat memes until the break is over."
+          }
+        }
+      }
+    },
+    "LONTANO DALLO SCHERMO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AWAY FROM THE SCREEN"
+          }
+        }
+      }
+    },
+    "lunedì": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monday"
+          }
+        }
+      }
+    },
+    "Mac in stop, schermo bloccato o %lld min senza toccare niente.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac asleep, screen locked, or %lld min without touching anything."
+          }
+        }
+      }
+    },
+    "Mai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Never"
+          }
+        }
+      }
+    },
+    "MAI SENTITA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NEVER HEARD OF HER"
+          }
+        }
+      }
+    },
+    "Manca %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left"
+          }
+        }
+      }
+    },
+    "Mancano %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left"
+          }
+        }
+      }
+    },
+    "Mancato!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missed!"
+          }
+        }
+      }
+    },
+    "Mangia qualcosa di buono, lontano dalla scrivania.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eat something nice, away from the desk."
+          }
+        }
+      }
+    },
+    "Maramao controlla una volta al giorno se c'è una nuova versione e te la propone.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maramao checks for a new version once a day and offers it to you."
+          }
+        }
+      }
+    },
+    "martedì": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tuesday"
+          }
+        }
+      }
+    },
+    "MEGLIO DI QUALSIASI UFFICIO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BEATS ANY CORNER OFFICE"
+          }
+        }
+      }
+    },
+    "Meme di gatti: %@ %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat meme: %1$@ %2$@"
+          }
+        }
+      }
+    },
+    "mercoledì": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wednesday"
+          }
+        }
+      }
+    },
+    "MERITA UN GRATTINO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DESERVES A CHIN SCRATCH"
+          }
+        }
+      }
+    },
+    "Mette in pausa il pomodoro in corso, o lo riprende.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pauses the running pomodoro, or resumes it."
+          }
+        }
+      }
+    },
+    "Metti in pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "Metti in pausa il pomodoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause the pomodoro"
+          }
+        }
+      }
+    },
+    "Metti in pausa o riprendi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause or resume"
+          }
+        }
+      }
+    },
+    "Metti una canzone e muoviti un po'. Nessuno ti guarda (tranne me).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Put on a song and move a little. Nobody's watching (except me)."
+          }
+        }
+      }
+    },
+    "MI SERVE UN PISOLINO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I NEED A NAP"
+          }
+        }
+      }
+    },
+    "MIAAAO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MEEEOW"
+          }
+        }
+      }
+    },
+    "Miao!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meow!"
+          }
+        }
+      }
+    },
+    "Miao, tra %lld minuti pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meow. Break in %lld minutes."
+          }
+        }
+      }
+    },
+    "Miao, tra %lld secondi pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meow. Break in %lld seconds."
+          }
+        }
+      }
+    },
+    "Miao, tra un minuto pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meow. Break in one minute."
+          }
+        }
+      }
+    },
+    "Miao, tra un secondo pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meow. Break in one second."
+          }
+        }
+      }
+    },
+    "Miao?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meow?"
+          }
+        }
+      }
+    },
+    "Modalità": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode"
+          }
+        }
+      }
+    },
+    "MODALITÀ FOCUS": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FOCUS MODE"
+          }
+        }
+      }
+    },
+    "Modalità pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break mode"
+          }
+        }
+      }
+    },
+    "Modalità severa: la pausa non si salta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strict mode: no skipping this break"
+          }
+        }
+      }
+    },
+    "Modalità severa: la pausa non si salta mai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strict mode: breaks can never be skipped"
+          }
+        }
+      }
+    },
+    "Modalità severa: la pausa non si salta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strict mode: this break can't be skipped."
+          }
+        }
+      }
+    },
+    "Modalità severa: non si salta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strict mode: no skipping"
+          }
+        }
+      }
+    },
+    "MORBIDEZZA: %lld%%": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FLUFFINESS: %lld%%"
+          }
+        }
+      }
+    },
+    "Mostra l'aggiornamento": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the update"
+          }
+        }
+      }
+    },
+    "MOTTO UFFICIALE DEI GATTI": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OFFICIAL CAT MOTTO"
+          }
+        }
+      }
+    },
+    "Mrr?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrr?"
+          }
+        }
+      }
+    },
+    "Mrrp!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrrp!"
+          }
+        }
+      }
+    },
+    "Mrrr.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrrr."
+          }
+        }
+      }
+    },
+    "Mrrr. Tastiera occupata.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrrr. Keyboard occupied."
+          }
+        }
+      }
+    },
+    "Mrrr? Ti avevo detto di riposare.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrrr? I told you to rest."
+          }
+        }
+      }
+    },
+    "Mrrr?!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrrr?!"
+          }
+        }
+      }
+    },
+    "Mrrrao!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrrrow!"
+          }
+        }
+      }
+    },
+    "Mrrrau. Ultimo avvertimento… forse.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrrrow. Final warning… probably."
+          }
+        }
+      }
+    },
+    "Mrrr… lo vedo, sai.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrrr… I can see it, you know."
+          }
+        }
+      }
+    },
+    "MULTITASKING:": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MULTITASKING:"
+          }
+        }
+      }
+    },
+    "Muovi il mouse… il gatto aspetta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move the mouse… the cat is waiting"
+          }
+        }
+      }
+    },
+    "Muro di meme": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meme wall"
+          }
+        }
+      }
+    },
+    "Nascondi i secondi (24m invece di 24:59)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide seconds (24m instead of 24:59)"
+          }
+        }
+      }
+    },
+    "Nella barra dei menu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In the menu bar"
+          }
+        }
+      }
+    },
+    "Nessun giorno selezionato": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No days selected"
+          }
+        }
+      }
+    },
+    "Nessuno": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        }
+      }
+    },
+    "Niente Esc. Solo pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Esc. Only break."
+          }
+        }
+      }
+    },
+    "Niente lavoro, solo coccole.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No work, just cuddles."
+          }
+        }
+      }
+    },
+    "Niente lavoro. Solo meme.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No work. Only memes."
+          }
+        }
+      }
+    },
+    "NIENTE NOTIFICHE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NO NOTIFICATIONS"
+          }
+        }
+      }
+    },
+    "NO, SONO PASSATO IO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NO, I WALKED BY"
+          }
+        }
+      }
+    },
+    "NO. LAVORI A CASA MIA.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NO. YOU'RE WORKING IN MY HOME."
+          }
+        }
+      }
+    },
+    "NON MI INTERESSA. CROCCHETTE.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DON'T CARE. KIBBLE."
+          }
+        }
+      }
+    },
+    "Non riesco a cambiare l'avvio automatico: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't change the login item: %@"
+          }
+        }
+      }
+    },
+    "Non svegliare il gatto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't wake the cat"
+          }
+        }
+      }
+    },
+    "NON È PIGRIZIA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IT'S NOT LAZINESS"
+          }
+        }
+      }
+    },
+    "O LA TAZZA CADE DAL TAVOLO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OR THE MUG FALLS OFF THE TABLE"
+          }
+        }
+      }
+    },
+    "Oggi: 🍅 %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today: 🍅 %lld"
+          }
+        }
+      }
+    },
+    "Ogni pausa un concept diverso.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A different cat every break."
+          }
+        }
+      }
+    },
+    "OGNI POMODORO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EVERY POMODORO"
+          }
+        }
+      }
+    },
+    "Ogni volta che tocchi il mouse un gatto perde un pisolino.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every time you touch the mouse, a cat loses a nap."
+          }
+        }
+      }
+    },
+    "Ok, ora puoi lavorare.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okay, you may work now."
+          }
+        }
+      }
+    },
+    "Ok, ti lascio andare… stavolta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fine, you can go… this time"
+          }
+        }
+      }
+    },
+    "ORA SI FANNO LE FUSA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NOW WE PURR"
+          }
+        }
+      }
+    },
+    "Orario di lavoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Working hours"
+          }
+        }
+      }
+    },
+    "ORMAI È TARDI": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TOO LATE NOW"
+          }
+        }
+      }
+    },
+    "Pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "Pausa breve": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short break"
+          }
+        }
+      }
+    },
+    "Pausa breve, %@ rimasti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short break, %@ left"
+          }
+        }
+      }
+    },
+    "Pausa finita. Il gatto è fiero di sé.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break's over. The cat is very proud of itself."
+          }
+        }
+      }
+    },
+    "Pausa finita. Puoi tornare al lavoro.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break's over. You can get back to work."
+          }
+        }
+      }
+    },
+    "Pausa gatto ora": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat break now"
+          }
+        }
+      }
+    },
+    "Pausa lunga": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long break"
+          }
+        }
+      }
+    },
+    "Pausa lunga ogni %lld pomodori": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Long break after every pomodoro"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Long break every %lld pomodoros"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Pausa lunga dopo ogni pomodoro"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Pausa lunga ogni %lld pomodori"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Pausa lunga, %@ rimasti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long break, %@ left"
+          }
+        }
+      }
+    },
+    "Pausa perfetta! 😻": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Purrfect break! 😻"
+          }
+        }
+      }
+    },
+    "Pausa per…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause for…"
+          }
+        }
+      }
+    },
+    "PAUSA.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BREAK."
+          }
+        }
+      }
+    },
+    "Pausa. Il gatto ha deciso.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break time. The cat has spoken."
+          }
+        }
+      }
+    },
+    "Pausa: %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break: %@."
+          }
+        }
+      }
+    },
+    "PAUSA?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BREAK?"
+          }
+        }
+      }
+    },
+    "PERFETTO PER UN PISOLINO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PERFECT NAP WEATHER"
+          }
+        }
+      }
+    },
+    "PERFETTO, ARRIVO IN CAMERA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PERFECT, ENTERING STAGE LEFT"
+          }
+        }
+      }
+    },
+    "PIANO. COME UN GATTO CHE TI VUOLE BENE.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SLOWLY. LIKE A CAT THAT LOVES YOU."
+          }
+        }
+      }
+    },
+    "Piovono gatti dall'alto fino a seppellire tutto lo schermo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It's raining cats until your whole screen is buried."
+          }
+        }
+      }
+    },
+    "POI LA PAUSA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THEN, ANOTHER BREAK"
+          }
+        }
+      }
+    },
+    "Pomodori completati in questo giro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pomodoros done in this round"
+          }
+        }
+      }
+    },
+    "Pomodori completati oggi, pause rispettate e giorni di fila con almeno un pomodoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pomodoros done today, breaks taken, and days in a row with at least one pomodoro"
+          }
+        }
+      }
+    },
+    "Pomodori, pause e giorni di fila verranno cancellati. Il gatto dimentica tutto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pomodoros, breaks and streaks will be deleted. The cat forgets everything."
+          }
+        }
+      }
+    },
+    "Potrai saltare la pausa tra %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can skip the break in %@."
+          }
+        }
+      }
+    },
+    "Prepara un tè o un caffè, senza telefono in mano.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make a tea or a coffee, phone not included."
+          }
+        }
+      }
+    },
+    "PRESENTAZIONE ALLE 15?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PRESENTATION AT 3 PM?"
+          }
+        }
+      }
+    },
+    "Preso! Muovi il puntino per un'altra caccia.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Got it! Move the dot for another round."
+          }
+        }
+      }
+    },
+    "Preso! 🐾": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Got it! 🐾"
+          }
+        }
+      }
+    },
+    "PRIMA LA PAUSA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FIRST, A BREAK"
+          }
+        }
+      }
+    },
+    "PRODUTTIVITÀ: %lld%%": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PRODUCTIVITY: %lld%%"
+          }
+        }
+      }
+    },
+    "Pronto quando lo sei tu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready when you are"
+          }
+        }
+      }
+    },
+    "Prova": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try it"
+          }
+        }
+      }
+    },
+    "Prova a scrivere qualcosa… il gatto non si sposta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go on, type something… the cat isn't moving."
+          }
+        }
+      }
+    },
+    "Prova i suoni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try the sounds"
+          }
+        }
+      }
+    },
+    "Prova un concept": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try a cat"
+          }
+        }
+      }
+    },
+    "Prrr": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prrr"
+          }
+        }
+      }
+    },
+    "Prrr…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prrr…"
+          }
+        }
+      }
+    },
+    "Prrr… scrivo io per te.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prrr… I'll type for you."
+          }
+        }
+      }
+    },
+    "Pulsante \"Salta\" dopo %lld secondi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "\"Skip\" button after %lld second"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "\"Skip\" button after %lld seconds"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Pulsante \"Salta\" dopo %lld secondo"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Pulsante \"Salta\" dopo %lld secondi"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Puoi saltare la pausa, anche con %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can skip the break, or press %@."
+          }
+        }
+      }
+    },
+    "Puoi saltare la pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can skip the break."
+          }
+        }
+      }
+    },
+    "QUANDO DICI 'ANCORA UN'EMAIL'": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEN YOU SAY 'JUST ONE MORE EMAIL'"
+          }
+        }
+      }
+    },
+    "Quando finisce la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When a break ends"
+          }
+        }
+      }
+    },
+    "QUANDO IL TIMER FA DRIN": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEN THE TIMER GOES DING"
+          }
+        }
+      }
+    },
+    "Quando inizia il lavoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When work starts"
+          }
+        }
+      }
+    },
+    "Quando inizia la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When a break starts"
+          }
+        }
+      }
+    },
+    "Quando sei via": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When you're away"
+          }
+        }
+      }
+    },
+    "Questa finestra adesso è mia.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This window is mine now."
+          }
+        }
+      }
+    },
+    "Questa tastiera è calda. È mia.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This keyboard is warm. Therefore it is mine."
+          }
+        }
+      }
+    },
+    "Questa è la mia pausa. E anche la tua.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is my break. And yours."
+          }
+        }
+      }
+    },
+    "QUINDI È UN LETTO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THEREFORE IT IS A BED"
+          }
+        }
+      }
+    },
+    "Raddrizza la schiena e rilassa la mascella. Così.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Straighten your back and unclench your jaw. Like that."
+          }
+        }
+      }
+    },
+    "Regola 20-20-20: guarda lontano, almeno 6 metri, per 20 secondi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "20-20-20 rule: look at something 20 feet away for 20 seconds."
+          }
+        }
+      }
+    },
+    "Ricomincia da capo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start over"
+          }
+        }
+      }
+    },
+    "Ridotte": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reduced"
+          }
+        }
+      }
+    },
+    "Riempi la borraccia e bevi un bicchiere intero d'acqua.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refill your bottle and drink a whole glass of water."
+          }
+        }
+      }
+    },
+    "Rilassa le spalle. Ecco, così.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relax your shoulders. There you go."
+          }
+        }
+      }
+    },
+    "Riparti a lavorare da solo dopo la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start working again automatically after a break"
+          }
+        }
+      }
+    },
+    "Riposati, umano.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rest, human."
+          }
+        }
+      }
+    },
+    "Riprendi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
+          }
+        }
+      }
+    },
+    "Riprendi da dove ero": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick up where I left off"
+          }
+        }
+      }
+    },
+    "Riprendi il pomodoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume the pomodoro"
+          }
+        }
+      }
+    },
+    "Riprendi ora": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume now"
+          }
+        }
+      }
+    },
+    "Rispetta un orario di lavoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stick to working hours"
+          }
+        }
+      }
+    },
+    "RUOTA IL COLLO PIANO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ROLL YOUR NECK SLOWLY"
+          }
+        }
+      }
+    },
+    "Ruota piano le spalle: cinque volte avanti, cinque indietro.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roll your shoulders slowly: five times forward, five back."
+          }
+        }
+      }
+    },
+    "sabato": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saturday"
+          }
+        }
+      }
+    },
+    "Salta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip"
+          }
+        }
+      }
+    },
+    "Salta (quando si può)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip (when allowed)"
+          }
+        }
+      }
+    },
+    "Salta la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip the break"
+          }
+        }
+      }
+    },
+    "Salta pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip break"
+          }
+        }
+      }
+    },
+    "SBATTI LE PALPEBRE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BLINK"
+          }
+        }
+      }
+    },
+    "Sbatti le palpebre venti volte: gli occhi ringraziano.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blink twenty times. Your eyes will thank you."
+          }
+        }
+      }
+    },
+    "Scegli la modalità pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the break mode"
+          }
+        }
+      }
+    },
+    "Scegli tra i tuoi Comandi Rapidi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick one of your Shortcuts"
+          }
+        }
+      }
+    },
+    "Sceglie come i gatti ti fermeranno alla prossima pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chooses how the cats will stop you at the next break."
+          }
+        }
+      }
+    },
+    "Schermi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Displays"
+          }
+        }
+      }
+    },
+    "SCHIENA IN SU, ZAMPE AVANTI": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BACK UP, PAWS FORWARD"
+          }
+        }
+      }
+    },
+    "Scorciatoie": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts"
+          }
+        }
+      }
+    },
+    "Scrivi il nome di un comando dell'app Comandi Rapidi (es. \"Pausa musica\"). Riceve come input un piccolo JSON con evento, fase e gatto. Se il comando non esiste, Maramao lo ignora.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type the name of a shortcut from the Shortcuts app (e.g. \"Pause music\"). It gets a small JSON input with the event, phase and cat. If the shortcut doesn't exist, Maramao just ignores it."
+          }
+        }
+      }
+    },
+    "Scrivi pure… se ci riesci.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type away… if you can."
+          }
+        }
+      }
+    },
+    "Sdraiati cinque minuti e non fare niente. Da professionisti.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lie down for five minutes and do nothing. Like a pro."
+          }
+        }
+      }
+    },
+    "SE C'È SOLE, CI DORMO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IF THERE'S SUN, I NAP IN IT"
+          }
+        }
+      }
+    },
+    "SEI IN CALL?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ON A CALL?"
+          }
+        }
+      }
+    },
+    "SEI STANCO?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TIRED?"
+          }
+        }
+      }
+    },
+    "Severità": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strictness"
+          }
+        }
+      }
+    },
+    "Shhh. Cinque minuti ancora.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shhh. Five more minutes."
+          }
+        }
+      }
+    },
+    "Shhh… il gatto dorme. Non svegliarlo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shhh… the cat is asleep. Don't wake it."
+          }
+        }
+      }
+    },
+    "Shh… stavo sognando un tonno.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shh… I was dreaming of tuna."
+          }
+        }
+      }
+    },
+    "Si muove!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It moves!"
+          }
+        }
+      }
+    },
+    "Si sta riaddormentando… piano.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It's dozing off again… gently."
+          }
+        }
+      }
+    },
+    "Solo countdown": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Countdown only"
+          }
+        }
+      }
+    },
+    "Solo gatto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat only"
+          }
+        }
+      }
+    },
+    "Solo lo schermo con il mouse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only the display with the pointer"
+          }
+        }
+      }
+    },
+    "Solo lo schermo principale": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Main display only"
+          }
+        }
+      }
+    },
+    "SOLO MIAGOLII": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ONLY MEOWS"
+          }
+        }
+      }
+    },
+    "SONNELLINO ALLE 15.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NAP AT 3 PM."
+          }
+        }
+      }
+    },
+    "SONO 3 POMODORI CHE LO DICI": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOU'VE SAID THAT FOR 3 POMODOROS"
+          }
+        }
+      }
+    },
+    "Sorpresa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Surprise me"
+          }
+        }
+      }
+    },
+    "SPALLE GIÙ, RESPIRA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SHOULDERS DOWN, BREATHE"
+          }
+        }
+      }
+    },
+    "Spazio": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Space"
+          }
+        }
+      }
+    },
+    "SPERO NON FOSSE IMPORTANTE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HOPE IT WASN'T IMPORTANT"
+          }
+        }
+      }
+    },
+    "SPOSTATI. TOCCA A ME.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MOVE. MY TURN."
+          }
+        }
+      }
+    },
+    "Stai guardando Maramao TV.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're watching Maramao TV."
+          }
+        }
+      }
+    },
+    "STANDUP MEETING?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "STANDUP MEETING?"
+          }
+        }
+      }
+    },
+    "Statistiche": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Statistics"
+          }
+        }
+      }
+    },
+    "Stato di Maramao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maramao status"
+          }
+        }
+      }
+    },
+    "STAVI LAVORANDO?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WERE YOU WORKING?"
+          }
+        }
+      }
+    },
+    "Stiracchiati come un gatto: braccia avanti, schiena ad arco.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stretch like a cat: arms forward, back arched."
+          }
+        }
+      }
+    },
+    "STIRATI COME UN GATTO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "STRETCH LIKE A CAT"
+          }
+        }
+      }
+    },
+    "Sto dormendo qui.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'm sleeping here."
+          }
+        }
+      }
+    },
+    "SULLA CIOTOLA VUOTA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ON THE EMPTY BOWL"
+          }
+        }
+      }
+    },
+    "Suoni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sounds"
+          }
+        }
+      }
+    },
+    "Suoni dei gatti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat sounds"
+          }
+        }
+      }
+    },
+    "Tempi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timing"
+          }
+        }
+      }
+    },
+    "Tempo rimanente": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time left"
+          }
+        }
+      }
+    },
+    "TI HO PORTATO UN REGALO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I BROUGHT YOU A GIFT"
+          }
+        }
+      }
+    },
+    "Ti vedo, sai. Dormo con un occhio solo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I can see you. I sleep with one eye open."
+          }
+        }
+      }
+    },
+    "TIPO VERSO IL FRIGO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TOWARDS THE FRIDGE, FOR EXAMPLE"
+          }
+        }
+      }
+    },
+    "TO-DO LIST: 1. DORMIRE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TO-DO LIST: 1. SLEEP"
+          }
+        }
+      }
+    },
+    "Torna quando il gatto lo dice.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Come back when the cat says so."
+          }
+        }
+      }
+    },
+    "TU GUARDI LO SCHERMO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOU STARE AT THE SCREEN"
+          }
+        }
+      }
+    },
+    "TU: 'SONO PRODUTTIVO'": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOU: 'I'M BEING PRODUCTIVE'"
+          }
+        }
+      }
+    },
+    "Tutti gli schermi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All displays"
+          }
+        }
+      }
+    },
+    "Ultimi 7 giorni: %@ · %@ di concentrazione": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last 7 days: %1$@ · %2$@ of focus"
+          }
+        }
+      }
+    },
+    "UN ALTRO CAFFÈ?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ANOTHER COFFEE?"
+          }
+        }
+      }
+    },
+    "UN ALTRO PISOLINO.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ANOTHER NAP."
+          }
+        }
+      }
+    },
+    "Un gattino sbuca dal bordo dello schermo poco prima della pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A little cat peeks up from the edge of the screen just before the break."
+          }
+        }
+      }
+    },
+    "Un gatto attraversa lo schermo e si siede proprio sulla finestra su cui lavori.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cat strolls across the screen and sits right on the window you're working in."
+          }
+        }
+      }
+    },
+    "Un gatto che cammina": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A walking cat"
+          }
+        }
+      }
+    },
+    "Un gatto che dorme": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A sleeping cat"
+          }
+        }
+      }
+    },
+    "Un gatto che si stiracchia": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cat stretching"
+          }
+        }
+      }
+    },
+    "Un gatto dorme sulla tastiera: qualunque cosa scrivi, la scrive lui.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cat sleeps on your keyboard. Whatever you type, it types instead."
+          }
+        }
+      }
+    },
+    "Un gatto dorme sullo schermo: se tocchi il mouse si sveglia e ti giudica.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cat naps on your screen. Touch the mouse and it wakes up to judge you."
+          }
+        }
+      }
+    },
+    "Un gatto seduto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A sitting cat"
+          }
+        }
+      }
+    },
+    "Un puntino rosso! Il gatto lo vuole.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A red dot! The cat wants it."
+          }
+        }
+      }
+    },
+    "Un puntino! È mio!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A dot! It's mine!"
+          }
+        }
+      }
+    },
+    "UNA SCATOLA DI CARTONE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A CARDBOARD BOX"
+          }
+        }
+      }
+    },
+    "Uscita di emergenza: %@ chiude subito qualsiasi pausa, anche in modalità severa. Funziona anche cliccando %lld volte di fila nell'angolo in alto a sinistra dello schermo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emergency exit: %1$@ closes any break right away, even in strict mode. Clicking %2$lld times in a row in the top-left corner of the screen works too."
+          }
+        }
+      }
+    },
+    "Vai a bere un bicchiere d'acqua.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go drink a glass of water."
+          }
+        }
+      }
+    },
+    "Vai a fare due passi. Lontano dalla scrivania.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go for a little walk. Away from the desk."
+          }
+        }
+      }
+    },
+    "VAI IN PAUSA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TAKE A BREAK"
+          }
+        }
+      }
+    },
+    "venerdì": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Friday"
+          }
+        }
+      }
+    },
+    "Volume": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volume"
+          }
+        }
+      }
+    },
+    "È RISPARMIO ENERGETICO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IT'S ENERGY SAVING MODE"
+          }
+        }
+      }
+    },
+    "È UN CALZINO. È TUO.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IT'S A SOCK. IT'S YOURS."
+          }
+        }
+      }
+    },
+    "🎁 Nuova versione %@ disponibile": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎁 Version %@ is available"
+          }
+        }
+      }
+    },
+    "🐈 %lld/%lld pausa rispettata": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🐈 %1$lld/%2$lld break taken"
+          }
+        }
+      }
+    },
+    "🐈 %lld/%lld pause rispettate": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🐈 %1$lld/%2$lld breaks taken"
+          }
+        }
+      }
+    },
+    "🐱 Miao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🐱 Meow"
+          }
+        }
+      }
+    },
+    "💡 CONSIGLIO DEL GATTO": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "💡 CAT'S ADVICE"
+          }
+        }
+      }
+    },
+    "📺 MARAMAO TV · PAUSA LUNGA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📺 MARAMAO TV · LONG BREAK"
+          }
+        }
+      }
+    },
+    "🔔 Fine pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔔 Break over"
+          }
+        }
+      }
+    },
+    "🔥 %lld giorni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔥 %lld days"
+          }
+        }
+      }
+    },
+    "🔥 %lld giorno": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔥 %lld day"
+          }
+        }
+      }
+    },
+    "😴 Fermo %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😴 Paused %@"
+          }
+        }
+      }
+    },
+    "😺 Fusa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😺 Purr"
+          }
+        }
+      }
+    },
+    "😾 Basta! Sto cercando di dormire!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😾 Enough! I'm trying to sleep!"
+          }
+        }
+      }
+    },
+    "😾 HSSSS!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😾 HSSSS!"
+          }
+        }
+      }
+    },
+    "😾 L'hai svegliato!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😾 You woke it up!"
+          }
+        }
+      }
+    },
+    "😾 Mani lontane dalla tastiera. Subito.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😾 Hands off the keyboard. Now."
+          }
+        }
+      }
+    },
+    "😾 Mi siedo sulla tastiera, giuro.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😾 I will sit on the keyboard. I swear."
+          }
+        }
+      }
+    },
+    "😾 Pausa vuol dire PAUSA, umano.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😾 Break means BREAK, human."
+          }
+        }
+      }
+    },
+    "😾 Stanotte ti miagolo alle quattro.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😾 Tonight I'm meowing at 4 a.m."
+          }
+        }
+      }
+    },
+    "😾 Sto contando fino a nove. Come le mie vite.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😾 I'm counting to nine. Like my lives."
+          }
+        }
+      }
+    },
+    "😾 Un'altra mossa e ti butto il caffè dalla scrivania.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "😾 One more move and your coffee goes off the desk."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

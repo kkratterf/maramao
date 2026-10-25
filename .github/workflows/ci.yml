@@ -67,6 +67,31 @@ jobs:
           done
           echo "Metadata.appintents OK ($(wc -c < "$data" | tr -d ' ') bytes)"
 
+      - name: Check the translations in the app bundle
+        run: |
+          app=dist/Maramao.app
+          res="$app/Contents/Resources"
+          ls -la "$res"
+          plutil -convert json -o - "$res/en.lproj/Localizable.strings" | grep -q "Start working"
+          # Runs the app with each language; MARAMAO_L10N_PROBE prints a few strings and quits.
+          probe() {
+            MARAMAO_L10N_PROBE=1 "$app/Contents/MacOS/Maramao" -AppleLanguages "($1)" > "probe-$1.txt" 2>/dev/null &
+            pid=$!
+            for _ in $(seq 1 30); do kill -0 "$pid" 2>/dev/null || break; sleep 0.5; done
+            kill "$pid" 2>/dev/null || true
+            echo "--- $1"; cat "probe-$1.txt"
+          }
+          probe en
+          probe it
+          status=0
+          for want in "Start working" "1 pomodoro" "4 pomodoros" "Cat on your window"; do
+            grep -qxF "$want" probe-en.txt || { echo "::error::English string missing at runtime: $want"; status=1; }
+          done
+          for want in "Inizia a lavorare" "1 pomodoro" "4 pomodori" "Il gatto sulla finestra"; do
+            grep -qxF "$want" probe-it.txt || { echo "::error::Italian string missing at runtime: $want"; status=1; }
+          done
+          exit $status
+
       - name: Upload Maramao.app
         uses: actions/upload-artifact@v4
         with:
@@ -111,6 +136,9 @@ jobs:
           shellcheck --version
           shellcheck --shell=sh install.sh
           sh -n install.sh
+
+      - name: String Catalog
+        run: python3 scripts/check-strings.py
 
       - name: Appcast script
         run: |

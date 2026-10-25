@@ -64,19 +64,22 @@ enum AutomationRunner {
         return BreakModeID.allCases.first { $0.rawValue.lowercased() == wanted }
     }
 
-    /// One Italian line with the current state, e.g. "Concentrazione, 12:34 rimasti · 3 pomodori oggi".
+    /// One localized line with the current state, e.g. "Concentrazione, 12:34 rimasti · 3 pomodori oggi".
     static func statusLine() -> String {
         let engine = PomodoroEngine.shared
         let clock = formatClock(engine.remaining)
         let state: String
         switch engine.phase {
-        case .idle: state = "Fermo"
-        case .work: state = engine.isPaused ? "In pausa, \(clock) rimasti" : "Concentrazione, \(clock) rimasti"
-        case .shortBreak: state = "Pausa breve, \(clock) rimasti"
-        case .longBreak: state = "Pausa lunga, \(clock) rimasti"
+        case .idle: state = String(localized: "Fermo")
+        case .work:
+            state = engine.isPaused
+                ? String(localized: "In pausa, \(clock) rimasti")
+                : String(localized: "Concentrazione, \(clock) rimasti")
+        case .shortBreak: state = String(localized: "Pausa breve, \(clock) rimasti")
+        case .longBreak: state = String(localized: "Pausa lunga, \(clock) rimasti")
         }
         let today = StatsStore.shared.today.workSessions
-        let count = today == 1 ? "1 pomodoro oggi" : "\(today) pomodori oggi"
+        let count = String(localized: "\(today) pomodori oggi")
         return "\(state) · \(count)"
     }
 }

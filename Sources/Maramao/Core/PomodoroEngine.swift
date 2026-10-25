@@ -206,7 +206,7 @@ final class PomodoroEngine: ObservableObject {
             advance()
         }
         if emergency {
-            peekingCat.show(message: "Ok, ti lascio andare… stavolta")
+            peekingCat.show(message: String(localized: "Ok, ti lascio andare… stavolta"))
         }
     }
 

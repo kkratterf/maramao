@@ -40,7 +40,7 @@ struct MemeWallView: View {
     private var header: some View {
         if context.isLongBreak {
             VStack(spacing: 4) {
-                MemeWallOutlinedText(text: "📺 MARAMAO TV · PAUSA LUNGA", size: 40, outline: 2.5)
+                MemeWallOutlinedText(text: String(localized: "📺 MARAMAO TV · PAUSA LUNGA"), size: 40, outline: 2.5)
                 Text("La compilation dei gatti che ti vogliono lontano dalla tastiera")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundColor(.white.opacity(0.85))
@@ -194,7 +194,7 @@ struct MemeWallCardView: View {
         }
         .shadow(color: .black.opacity(0.35), radius: 14, x: 0, y: 8)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Meme di gatti: " + meme.caption.top + " " + meme.caption.bottom)
+        .accessibilityLabel(String(localized: "Meme di gatti: \(meme.caption.top) \(meme.caption.bottom)"))
     }
 }
 
