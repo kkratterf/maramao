@@ -815,7 +815,40 @@ h3 { font-size: 1.22rem; font-weight: 800; letter-spacing: -.005em; }
   50%, 100% { transform: scaleX(1); }
 }
 
-/* 6. Surprise */
+/* 6. Keyboard cat */
+.typed {
+  position: absolute;
+  left: 10cqw;
+  top: 9cqw;
+  width: 80cqw;
+  padding: 2.4cqw 3cqw;
+  border-radius: 2.4cqw;
+  background: var(--win);
+  box-shadow: 0 2cqw 4cqw rgb(80 20 10 / .2);
+  font-family: var(--mono);
+  font-size: 5.2cqw;
+  color: var(--ink);
+}
+.typed span { display: inline-block; vertical-align: bottom; width: 0; overflow: hidden; white-space: nowrap; border-right: .5cqw solid var(--tomato); animation: typing 4.5s steps(14, end) infinite; }
+@keyframes typing { 0%, 8% { width: 0; } 70%, 100% { width: 14ch; } }
+.kbd {
+  position: absolute;
+  left: 8cqw;
+  top: 46cqw;
+  width: 84cqw;
+  height: 28cqw;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 1.2cqw;
+  padding: 2cqw;
+  border-radius: 3cqw;
+  background: var(--win-bar);
+  box-shadow: 0 3cqw 6cqw rgb(80 20 10 / .25);
+}
+.kbd i { border-radius: 1cqw; background: var(--win); box-shadow: 0 .4cqw 0 var(--win-line); }
+.sc-keys .s-kbd { left: 22cqw; top: 33cqw; width: 56cqw; }
+
+/* 7. Surprise */
 .sc-dice { display: grid; place-items: center; }
 .dice {
   display: grid;
@@ -826,25 +859,33 @@ h3 { font-size: 1.22rem; font-weight: 800; letter-spacing: -.005em; }
   background: var(--surface);
   box-shadow: 0 .12em .4em rgb(80 20 10 / .25);
   font-size: 18cqw;
-  animation: dice-tilt 5s ease-in-out infinite;
+  animation: dice-tilt 6s ease-in-out infinite;
 }
 .slot { height: 1.25em; overflow: hidden; line-height: 1.25em; }
-.reel { display: flex; flex-direction: column; animation: reel 5s cubic-bezier(.5, -.4, .4, 1.4) infinite; }
+.reel { display: flex; flex-direction: column; animation: reel 6s cubic-bezier(.5, -.4, .4, 1.4) infinite; }
 .reel i { font-style: normal; height: 1.25em; text-align: center; }
 @keyframes reel {
-  0%, 14% { transform: translateY(0); }
-  20%, 34% { transform: translateY(-1.25em); }
-  40%, 54% { transform: translateY(-2.5em); }
-  60%, 74% { transform: translateY(-3.75em); }
-  80%, 94% { transform: translateY(-5em); }
-  100% { transform: translateY(-6.25em); }
+  0%, 12% { transform: translateY(0); }
+  17%, 29% { transform: translateY(-1.25em); }
+  33%, 45% { transform: translateY(-2.5em); }
+  50%, 62% { transform: translateY(-3.75em); }
+  67%, 79% { transform: translateY(-5em); }
+  83%, 95% { transform: translateY(-6.25em); }
+  100% { transform: translateY(-7.5em); }
 }
 @keyframes dice-tilt {
-  0%, 14%, 20%, 34%, 40%, 54%, 60%, 74%, 80%, 94% { transform: rotate(0deg); }
-  17%, 37%, 57%, 77%, 97% { transform: rotate(-10deg) scale(1.08); }
+  0%, 12%, 17%, 29%, 33%, 45%, 50%, 62%, 67%, 79%, 83%, 95% { transform: rotate(0deg); }
+  14%, 31%, 47%, 64%, 81%, 97% { transform: rotate(-10deg) scale(1.08); }
 }
 .card-surprise { background: transparent; box-shadow: none; outline: 2px dashed color-mix(in srgb, var(--tomato) 55%, transparent); outline-offset: -2px; }
 .card-surprise .scene { background: var(--bg-2); }
+/* Seventh card: a full-width row, so it does not sit alone in the grid. */
+@media (min-width: 601px) {
+  .card-surprise { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 1rem; }
+  .card-surprise .scene { flex: 0 0 clamp(12rem, 30%, 22rem); }
+  .card-surprise > div:last-child { flex: 1; }
+  .card-surprise h3 { margin-top: 0; }
+}
 
 /* ---------- Features ---------- */
 
@@ -1164,6 +1205,7 @@ details p { padding: 0 3rem 1.4rem 0; color: var(--muted); max-width: 44rem; }
   .sc-window .s-sit { transform: translate(32cqw, 8.3cqw); }
   .step-art .mini-walk { transform: none; }
   .cursor { transform: translate(108cqw, 70cqw); }
+  .typed span { width: 14ch; }
   .stage .clock > span:nth-child(-n + 3) { opacity: 0 !important; }
   .stage .clock > span:nth-child(4) { opacity: 1 !important; }
 }
