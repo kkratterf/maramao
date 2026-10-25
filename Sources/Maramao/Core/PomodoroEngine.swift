@@ -29,6 +29,12 @@ final class PomodoroEngine: ObservableObject {
         self.settings = settings
         self.cycle = PomodoroCycle(config: settings.pomodoroConfig)
         self.remaining = settings.pomodoroConfig.work
+        breaks.onEmergencyExit = { [weak self] context in
+            self?.breakForceEnded(context, emergency: true)
+        }
+        breaks.onWatchdogFired = { [weak self] context in
+            self?.breakForceEnded(context, emergency: false)
+        }
     }
 
     var isRunning: Bool { phase != .idle && !isPaused }
@@ -119,7 +125,29 @@ final class PomodoroEngine: ObservableObject {
         playSound("Tink")
     }
 
+    /// Closes every break window right away. Called when the app quits.
+    func shutdown() {
+        previewTimer?.invalidate()
+        previewTimer = nil
+        breaks.forceEnd()
+        OverlayWindow.closeAllBreakOverlays()
+        peekingCat.close()
+    }
+
     // MARK: - Internals
+
+    /// The coordinator closed a break by force: the emergency exit or the watchdog.
+    /// Moves the cycle on as if the break had been skipped, whatever the skip rules say.
+    private func breakForceEnded(_ context: BreakContext, emergency: Bool) {
+        if context.isPreview {
+            endPreview()
+        } else if let breakContext, breakContext === context, phase.isBreak {
+            advance()
+        }
+        if emergency {
+            peekingCat.show(message: "Ok, ti lascio andare… stavolta")
+        }
+    }
 
     private func endPreview() {
         guard let timer = previewTimer else { return }

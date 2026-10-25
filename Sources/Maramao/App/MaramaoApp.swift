@@ -45,6 +45,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
     }
 
+    /// Never leave a cat behind: close every break window before quitting.
+    @MainActor
+    func applicationWillTerminate(_ notification: Notification) {
+        PomodoroEngine.shared.shutdown()
+    }
+
     /// Opens the settings window. A plain NSWindow, because `Settings` scenes
     /// cannot be opened reliably from a MenuBarExtra on every macOS version.
     @MainActor

@@ -27,6 +27,7 @@ final class PeekingCatWarning {
             height: size.height
         )
         let window = OverlayWindow(frame: frame, level: .statusBar, clickThrough: true)
+        window.isBreakOverlay = false
         let model = PeekingCatModel(message: message, palette: CatPalette.random())
         window.host(PeekingCatView(model: model))
         window.show()
