@@ -23,7 +23,7 @@ final class CatPileBreak: BreakMode {
         guard !hasBegun, !hasEnded else { return }
         hasBegun = true
 
-        let screens = NSScreen.screens
+        let screens = BreakScreens.current()
         guard !screens.isEmpty else { return }
 
         // Render the cats once, at the sharpest backing scale in use.

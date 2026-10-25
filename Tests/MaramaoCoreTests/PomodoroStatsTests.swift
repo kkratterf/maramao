@@ -196,4 +196,29 @@ final class PomodoroStatsTests: XCTestCase {
         XCTAssertEqual(StatsText.duration(minutes: 65), "1 h 05 min")
         XCTAssertEqual(StatsText.duration(minutes: -3), "0 min")
     }
+
+    func testEmergencyExitsAreCountedAndSummed() {
+        var stats = PomodoroStats()
+        let calendar = Calendar(identifier: .gregorian)
+        let now = Date(timeIntervalSinceReferenceDate: 800_000_000)
+        stats.recordEmergencyExit(at: now, calendar: calendar)
+        stats.recordEmergencyExit(at: now, calendar: calendar)
+        XCTAssertEqual(stats.day(now, calendar: calendar).emergencyExits, 2)
+        let yesterday = now.addingTimeInterval(-86_400)
+        stats.recordEmergencyExit(at: yesterday, calendar: calendar)
+        XCTAssertEqual(stats.total(ofLast: 7, endingAt: now, calendar: calendar).emergencyExits, 3)
+    }
+
+    func testDecodesStatsSavedWithoutEmergencyExits() throws {
+        let json = """
+        {"days":{"2026-10-20":{"day":"2026-10-20","workSessions":3,"focusSeconds":4500,\
+        "breaksCompleted":2,"breaksSkipped":1,"modes":{"catPile":{"completed":2,"skipped":1}}}}}
+        """
+        let stats = try JSONDecoder().decode(PomodoroStats.self, from: Data(json.utf8))
+        let day = try XCTUnwrap(stats.days["2026-10-20"])
+        XCTAssertEqual(day.workSessions, 3)
+        XCTAssertEqual(day.breaksSkipped, 1)
+        XCTAssertEqual(day.emergencyExits, 0)
+        XCTAssertEqual(day.modes["catPile"], BreakModeCounts(completed: 2, skipped: 1))
+    }
 }

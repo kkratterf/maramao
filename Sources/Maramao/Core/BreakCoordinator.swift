@@ -49,6 +49,7 @@ final class BreakCoordinator {
         emergencyExit.arm()
         startWatchdog()
         BreakAccessibility.beginBreak()
+        BreakScreens.beginBreak()
         breakMode.begin(context: context)
         announcer.start(context: context, modeTitle: resolved.title)
     }
@@ -64,6 +65,7 @@ final class BreakCoordinator {
         announcer.stop()
         BreakAccessibility.announce(BreakSpeech.breakEnded)
         BreakAccessibility.endBreak()
+        BreakScreens.endBreak()
         scheduleSweep()
     }
 
