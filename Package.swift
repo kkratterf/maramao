@@ -31,7 +31,10 @@ let package = Package(
             // String(localized:) look them up in Bundle.main.
             resources: [
                 .process("Resources/Localizable.xcstrings"),
-                .process("Resources/AppShortcuts.xcstrings"),
+                // App Shortcut phrases: a .strings table, since AppShortcuts.xcstrings
+                // needs macOS 14 and Maramao supports macOS 13.
+                .process("Resources/en.lproj/AppShortcuts.strings"),
+                .process("Resources/it.lproj/AppShortcuts.strings"),
             ]
         ),
         .testTarget(

@@ -16,10 +16,15 @@ FLAGS=""
 if [ "$CONFIG" = "release" ]; then
   FLAGS="-Xswiftc -Osize"
 fi
-swift build -c "$CONFIG" $FLAGS --arch arm64 --arch x86_64 2>/dev/null \
-  || swift build -c "$CONFIG" $FLAGS
-BIN_DIR="$(swift build -c "$CONFIG" $FLAGS --arch arm64 --arch x86_64 --show-bin-path 2>/dev/null \
-  || swift build -c "$CONFIG" $FLAGS --show-bin-path)"
+# Universal when the toolchain can; otherwise the host architecture only. The bin path
+# must come from the same kind of build, or cp below looks in the wrong folder.
+ARCH_FLAGS="--arch arm64 --arch x86_64"
+if ! swift build -c "$CONFIG" $FLAGS $ARCH_FLAGS; then
+  echo "warning: universal build failed, building for the host architecture only" >&2
+  ARCH_FLAGS=""
+  swift build -c "$CONFIG" $FLAGS
+fi
+BIN_DIR="$(swift build -c "$CONFIG" $FLAGS $ARCH_FLAGS --show-bin-path)"
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
@@ -73,9 +78,11 @@ while IFS= read -r lproj; do
 done < <(find "$BIN_DIR" -path '*Maramao_Maramao.bundle*' -type d -name '*.lproj' 2>/dev/null)
 if [ ! -f "$RES/en.lproj/Localizable.strings" ]; then
   echo "No compiled en.lproj in the SwiftPM bundle (found: $found_lproj), compiling $CATALOG with xcstringstool"
-  for catalog in "$CATALOG" "$ROOT/Sources/Maramao/Resources/AppShortcuts.xcstrings"; do
-    xcrun xcstringstool compile "$catalog" --output-directory "$RES" \
-      || { xcrun xcstringstool compile --help || true; exit 1; }
+  xcrun xcstringstool compile "$CATALOG" --output-directory "$RES" \
+    || { xcrun xcstringstool compile --help || true; exit 1; }
+  for lproj in en it; do
+    mkdir -p "$RES/$lproj.lproj"
+    cp "$ROOT/Sources/Maramao/Resources/$lproj.lproj/AppShortcuts.strings" "$RES/$lproj.lproj/"
   done
 fi
 # Italian strings are the keys themselves; the folder tells macOS the app speaks Italian.
