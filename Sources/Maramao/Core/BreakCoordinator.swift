@@ -31,6 +31,7 @@ final class BreakCoordinator {
         case .sleepyCat: return SleepyCatBreak()
         case .catPile: return CatPileBreak()
         case .laserChase: return LaserChaseBreak()
+        case .keyboardCat: return KeyboardCatBreak()
         case .random: return WalkingCatBreak()
         }
     }
