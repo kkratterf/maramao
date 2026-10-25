@@ -117,6 +117,22 @@ struct SettingsView: View {
                     Stepper(value: $settings.skipUnlockSeconds, in: 0...600, step: 15) {
                         Text("Pulsante \"Salta\" dopo \(Int(settings.skipUnlockSeconds)) secondi")
                     }
+                    Picker("Ancora qualche minuto", selection: $settings.breakSnoozeDailyLimit) {
+                        ForEach(BreakSnooze.dailyLimitOptions, id: \.self) { limit in
+                            Text(BreakSnooze.dailyLimitLabel(limit)).tag(limit)
+                        }
+                    }
+                    if settings.breakSnoozeDailyLimit > 0 {
+                        Picker("Di quanto", selection: $settings.breakSnoozeMinutes) {
+                            ForEach(BreakSnooze.minutesOptions, id: \.self) { minutes in
+                                Text(minutes == 1 ? String(localized: "1 minuto") : String(localized: "\(minutes) minuti")).tag(minutes)
+                            }
+                        }
+                        Text("Durante la pausa compare \"\(BreakSnooze.buttonLabel(minutes: settings.breakSnoozeMinutes))\". Il gatto lo concede, ma ogni volta è un po' più offeso.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
                 Text("Uscita di emergenza: \(EmergencyExitGuard.shortcutLabel) chiude subito qualsiasi pausa, anche in modalità severa. Funziona anche cliccando \(EmergencyExitGuard.cornerClicks) volte di fila nell'angolo in alto a sinistra dello schermo.")
                     .font(.caption)

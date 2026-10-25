@@ -2,7 +2,7 @@ import SwiftUI
 import MaramaoCore
 
 /// The countdown pill every break mode shows: remaining time, a line of text and,
-/// when allowed, the skip button.
+/// when allowed, the skip and snooze buttons.
 struct BreakHUD: View {
     let context: BreakContext
     var message: String = String(localized: "Pausa. Il gatto ha deciso.")
@@ -41,27 +41,37 @@ struct BreakHUD: View {
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .opacity(isHighContrast ? 1 : 0.8)
                 }
-                if context.canSkipNow {
-                    VStack(spacing: 3) {
-                        Button {
-                            context.requestSkip()
-                        } label: {
-                            Text(context.isPreview ? LocalizedStringKey("Chiudi") : LocalizedStringKey("Salta"))
-                                .font(.system(size: 12, weight: .semibold, design: .rounded))
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .background(skipBackground)
+                if context.canSkipNow || context.canSnooze {
+                    VStack(alignment: .trailing, spacing: 4) {
+                        if context.canSkipNow {
+                            VStack(spacing: 3) {
+                                Button {
+                                    context.requestSkip()
+                                } label: {
+                                    Text(context.isPreview ? LocalizedStringKey("Chiudi") : LocalizedStringKey("Salta"))
+                                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 6)
+                                        .background(skipBackground)
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityLabel(context.isPreview ? LocalizedStringKey("Chiudi l'anteprima") : LocalizedStringKey("Salta la pausa"))
+                                .accessibilityHint(skipHint)
+                                .help(skipHint)
+                                if let shortcut = BreakAccessibility.skipShortcutLabel {
+                                    // Overlays never take the keyboard focus: the global shortcut is the keyboard path.
+                                    Text(shortcut)
+                                        .font(.system(size: 10, weight: .medium, design: .rounded))
+                                        .opacity(isHighContrast ? 1 : 0.65)
+                                        .accessibilityHidden(true)
+                                }
+                            }
                         }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(context.isPreview ? LocalizedStringKey("Chiudi l'anteprima") : LocalizedStringKey("Salta la pausa"))
-                        .accessibilityHint(skipHint)
-                        .help(skipHint)
-                        if let shortcut = BreakAccessibility.skipShortcutLabel {
-                            // Overlays never take the keyboard focus: the global shortcut is the keyboard path.
-                            Text(shortcut)
-                                .font(.system(size: 10, weight: .medium, design: .rounded))
-                                .opacity(isHighContrast ? 1 : 0.65)
-                                .accessibilityHidden(true)
+                        if let minutes = context.snoozeMinutes {
+                            pillButton(BreakSnooze.buttonLabel(minutes: minutes)) {
+                                context.requestSnooze()
+                            }
+                            .help("Rimanda la pausa e lavora ancora un po'")
                         }
                     }
                 } else if context.skipUnlockDate == nil {
@@ -123,6 +133,19 @@ struct BreakHUD: View {
     /// before `endDate`.
     private var clockTickStart: Date {
         context.endDate.addingTimeInterval(0.01 - context.duration.rounded(.up))
+    }
+
+    private func pillButton(_ title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                .lineLimit(1)
+                .fixedSize()
+                .padding(.horizontal, 12)
+                .padding(.vertical, 5)
+                .background(skipBackground)
+        }
+        .buttonStyle(.plain)
     }
 
     private var foreground: Color { style == .dark ? .white : .black }

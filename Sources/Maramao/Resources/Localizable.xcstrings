@@ -5700,6 +5700,149 @@
           }
         }
       }
+    },
+    "Ancora 1 minuto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 more minute"
+          }
+        }
+      }
+    },
+    "Ancora %lld minuti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld more minutes"
+          }
+        }
+      }
+    },
+    "un minuto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "one minute"
+          }
+        }
+      }
+    },
+    "Va bene, %@. Ma solo %@. 😼": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fine, %1$@. But only %2$@. 😼"
+          }
+        }
+      }
+    },
+    "Ancora? Il gatto prende nota. 😾": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Again? The cat is taking notes. 😾"
+          }
+        }
+      }
+    },
+    "Ultima volta, eh. Il gatto non dimentica. 🙀": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last time, okay? The cat never forgets. 🙀"
+          }
+        }
+      }
+    },
+    "Il gatto è molto deluso da te. 😿": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat is very disappointed in you. 😿"
+          }
+        }
+      }
+    },
+    "1 volta al giorno": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Once a day"
+          }
+        }
+      }
+    },
+    "%lld volte al giorno": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld times a day"
+          }
+        }
+      }
+    },
+    "Rimanda la pausa e lavora ancora un po'": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Put the break off and work a little longer"
+          }
+        }
+      }
+    },
+    "Ancora qualche minuto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A few more minutes"
+          }
+        }
+      }
+    },
+    "Di quanto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How long"
+          }
+        }
+      }
+    },
+    "Durante la pausa compare \"%@\". Il gatto lo concede, ma ogni volta è un po' più offeso.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "During the break you get \"%@\". The cat allows it, but takes it a little more personally every time."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

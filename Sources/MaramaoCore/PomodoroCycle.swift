@@ -81,6 +81,14 @@ public struct PomodoroCycle: Equatable, Sendable {
         return phase
     }
 
+    /// Puts a break off: back to work, and the session that led to the break is not counted
+    /// yet, so the next `advance()` brings the same break back and counts it once.
+    public mutating func snoozeBreak() {
+        guard phase.isBreak else { return }
+        phase = .work
+        completedWorkSessions = max(0, completedWorkSessions - 1)
+    }
+
     /// Leaves a work session without counting it (e.g. the user rested while away).
     /// Keeps the sessions completed so far.
     public mutating func abandonWork() {

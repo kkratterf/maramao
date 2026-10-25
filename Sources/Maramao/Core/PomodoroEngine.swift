@@ -34,6 +34,9 @@ final class PomodoroEngine: ObservableObject {
     private let peekingCat = PeekingCatWarning()
     private let presence = PresenceMonitor()
     private var postponer = BreakPostponer()
+    /// True during the extra minutes of work after a snooze: that session was counted already.
+    private var isSnoozeWork = false
+    private static let snoozeLedgerKey = "breakSnoozeLedger.v1"
     /// True while a work session is paused because the user is away (not by the user).
     private var frozenByAway = false
     /// Work time left when a session was reset by an absence, for "Riprendi da dove ero".
@@ -237,6 +240,55 @@ final class PomodoroEngine: ObservableObject {
         enterCurrentPhase()
     }
 
+    // MARK: - Snooze
+
+    private var snoozeLedger: BreakSnoozeLedger? {
+        get {
+            guard let data = UserDefaults.standard.data(forKey: Self.snoozeLedgerKey) else { return nil }
+            return try? JSONDecoder().decode(BreakSnoozeLedger.self, from: data)
+        }
+        set {
+            guard let newValue, let data = try? JSONEncoder().encode(newValue) else { return }
+            UserDefaults.standard.set(data, forKey: Self.snoozeLedgerKey)
+        }
+    }
+
+    private var todayKey: String { PomodoroStats.key(for: Date()) }
+
+    private var snoozesUsedToday: Int { snoozeLedger?.used(on: todayKey) ?? 0 }
+
+    /// Whether a break starting now may offer "Ancora N minuti".
+    private var canSnoozeNow: Bool {
+        BreakSnooze.canSnooze(
+            strictMode: settings.strictMode,
+            isPreview: false,
+            usedToday: snoozesUsedToday,
+            dailyLimit: settings.breakSnoozeDailyLimit
+        )
+    }
+
+    /// "Ancora 5 minuti": ends the break mode, gives some more work time, then the same
+    /// break comes back. Limited per day, never in strict mode.
+    func snoozeBreak() {
+        guard phase.isBreak, let context = breakContext, context.canSnooze, !settings.strictMode else { return }
+        let ledger = (snoozeLedger ?? BreakSnoozeLedger(day: todayKey)).recording(on: todayKey)
+        snoozeLedger = ledger
+        let minutes = context.snoozeMinutes ?? settings.breakSnoozeMinutes
+
+        breaks.end()
+        breakContext = nil
+        activeBreakMode = nil
+        cycle.snoozeBreak()
+        enterCurrentPhase()
+        isSnoozeWork = true
+        let seconds = TimeInterval(max(1, minutes) * 60)
+        phaseDuration = seconds
+        remaining = seconds
+        endDate = Date().addingTimeInterval(seconds)
+        startTicker()
+        peekingCat.show(message: BreakSnooze.catLine(count: ledger.count, minutes: minutes))
+    }
+
     // MARK: - Calls and presentations
 
     /// The work session just ran out. While the user is in a call or presenting, keeps it
@@ -355,7 +407,8 @@ final class PomodoroEngine: ObservableObject {
             break
         case .work:
             let focused = finished ? phaseDuration : phaseDuration - remaining
-            stats.recordWork(completed: finished, focusSeconds: max(0, focused))
+            // The minutes after a snooze add focus, but the pomodoro was counted before.
+            stats.recordWork(completed: finished && !isSnoozeWork, focusSeconds: max(0, focused))
         case .shortBreak, .longBreak:
             if let mode = activeBreakMode, breakContext != nil {
                 stats.recordBreak(completed: finished, mode: mode)
@@ -376,6 +429,7 @@ final class PomodoroEngine: ObservableObject {
         completedWorkSessions = cycle.completedWorkSessions
         isPaused = false
         frozenByAway = false
+        isSnoozeWork = false
         postponer.reset()
         isBreakPostponed = false
         breakWarning.reset()
@@ -402,12 +456,18 @@ final class PomodoroEngine: ObservableObject {
             peekingCat.close()
             CatSounds.shared.randomMeow()
             let unlock: Date? = settings.strictMode ? nil : Date().addingTimeInterval(settings.skipUnlockSeconds)
+            var snoozeAction: (() -> Void)?
+            if canSnoozeNow {
+                snoozeAction = { [weak self] in self?.snoozeBreak() }
+            }
             let context = BreakContext(
                 duration: duration,
                 isLongBreak: phase == .longBreak,
                 isPreview: false,
                 skipUnlockDate: unlock,
-                onSkip: { [weak self] in self?.skip() }
+                snoozeMinutes: settings.breakSnoozeMinutes,
+                onSkip: { [weak self] in self?.skip() },
+                onSnooze: snoozeAction
             )
             breakContext = context
             companion.breakBegan()

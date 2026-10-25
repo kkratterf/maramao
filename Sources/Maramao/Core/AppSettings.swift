@@ -30,6 +30,10 @@ final class AppSettings: ObservableObject {
     @Published var dontInterruptCalls: Bool { didSet { defaults.set(dontInterruptCalls, forKey: Keys.dontInterruptCalls) } }
     /// Longest hold, in minutes. 0 = wait as long as the call lasts.
     @Published var maxPostponeMinutes: Int { didSet { defaults.set(maxPostponeMinutes, forKey: Keys.maxPostponeMinutes) } }
+    /// Snoozes ("Ancora N minuti") allowed per day. 0 = off.
+    @Published var breakSnoozeDailyLimit: Int { didSet { defaults.set(breakSnoozeDailyLimit, forKey: Keys.breakSnoozeDailyLimit) } }
+    /// Minutes of work one snooze gives.
+    @Published var breakSnoozeMinutes: Int { didSet { defaults.set(breakSnoozeMinutes, forKey: Keys.breakSnoozeMinutes) } }
     /// Raw `MenuBarStyle`: what the menu bar item shows.
     @Published var menuBarStyleRaw: String { didSet { defaults.set(menuBarStyleRaw, forKey: Keys.menuBarStyle) } }
     /// Shows "24m" instead of "24:59" in the menu bar.
@@ -55,6 +59,8 @@ final class AppSettings: ObservableObject {
         static let displayScope = "displayScope"
         static let dontInterruptCalls = "dontInterruptCalls"
         static let maxPostponeMinutes = "maxPostponeMinutes"
+        static let breakSnoozeDailyLimit = "breakSnoozeDailyLimit"
+        static let breakSnoozeMinutes = "breakSnoozeMinutes"
         static let menuBarStyle = "menuBarStyle"
         static let menuBarHideSeconds = "menuBarHideSeconds"
         static let motionPreference = "motionPreference"
@@ -79,6 +85,8 @@ final class AppSettings: ObservableObject {
             Keys.displayScope: DisplayScope.defaultScope.rawValue,
             Keys.dontInterruptCalls: true,
             Keys.maxPostponeMinutes: BreakPostponer.defaultMaxMinutes,
+            Keys.breakSnoozeDailyLimit: BreakSnooze.defaultDailyLimit,
+            Keys.breakSnoozeMinutes: BreakSnooze.defaultMinutes,
             Keys.menuBarStyle: MenuBarStyle.defaultStyle.rawValue,
             Keys.menuBarHideSeconds: false,
             Keys.motionPreference: MotionPreference.defaultPreference.rawValue,
@@ -99,6 +107,8 @@ final class AppSettings: ObservableObject {
         displayScopeRaw = defaults.string(forKey: Keys.displayScope) ?? DisplayScope.defaultScope.rawValue
         dontInterruptCalls = defaults.bool(forKey: Keys.dontInterruptCalls)
         maxPostponeMinutes = defaults.integer(forKey: Keys.maxPostponeMinutes)
+        breakSnoozeDailyLimit = defaults.integer(forKey: Keys.breakSnoozeDailyLimit)
+        breakSnoozeMinutes = max(1, defaults.integer(forKey: Keys.breakSnoozeMinutes))
         menuBarStyleRaw = defaults.string(forKey: Keys.menuBarStyle) ?? MenuBarStyle.defaultStyle.rawValue
         menuBarHideSeconds = defaults.bool(forKey: Keys.menuBarHideSeconds)
         motionPreferenceRaw = defaults.string(forKey: Keys.motionPreference) ?? MotionPreference.defaultPreference.rawValue

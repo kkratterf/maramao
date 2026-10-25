@@ -11,17 +11,31 @@ final class BreakContext {
     let isPreview: Bool
     /// When the skip button may appear. `nil` means the break cannot be skipped.
     let skipUnlockDate: Date?
+    /// Minutes of work a snooze gives ("Ancora 5 minuti"), or `nil` when this break cannot be
+    /// snoozed (strict mode, preview, daily limit reached, snoozing off).
+    let snoozeMinutes: Int?
     private let onSkip: () -> Void
+    private let onSnooze: (() -> Void)?
     /// The cat's suggestion for this break, picked once and shared by every screen.
     lazy var tip: String = BreakTipStore.shared.nextTip(isLongBreak: isLongBreak)
 
-    init(duration: TimeInterval, isLongBreak: Bool, isPreview: Bool, skipUnlockDate: Date?, onSkip: @escaping () -> Void) {
+    init(
+        duration: TimeInterval,
+        isLongBreak: Bool,
+        isPreview: Bool,
+        skipUnlockDate: Date?,
+        snoozeMinutes: Int? = nil,
+        onSkip: @escaping () -> Void,
+        onSnooze: (() -> Void)? = nil
+    ) {
         self.duration = duration
         self.endDate = Date().addingTimeInterval(duration)
         self.isLongBreak = isLongBreak
         self.isPreview = isPreview
         self.skipUnlockDate = skipUnlockDate
+        self.snoozeMinutes = onSnooze == nil ? nil : snoozeMinutes
         self.onSkip = onSkip
+        self.onSnooze = onSnooze
     }
 
     var remaining: TimeInterval { max(0, endDate.timeIntervalSinceNow) }
@@ -37,6 +51,16 @@ final class BreakContext {
     func requestSkip() {
         guard canSkipNow else { return }
         onSkip()
+    }
+
+    /// True when the HUD may offer "Ancora N minuti".
+    var canSnooze: Bool { snoozeMinutes != nil }
+
+    /// Asks to put the break off for `snoozeMinutes` of work. Ignored when `canSnooze` is false.
+    /// The coordinator then calls `end()` on the mode, and the break comes back later.
+    func requestSnooze() {
+        guard canSnooze, let onSnooze else { return }
+        onSnooze()
     }
 }
 

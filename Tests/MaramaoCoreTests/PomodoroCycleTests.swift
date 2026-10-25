@@ -101,3 +101,29 @@ final class PomodoroCycleAbandonTests: XCTestCase {
         XCTAssertEqual(cycle.phase, .shortBreak)
     }
 }
+
+final class PomodoroCycleSnoozeTests: XCTestCase {
+    func testSnoozeBringsTheSameBreakBackAndCountsOnce() {
+        var cycle = PomodoroCycle(config: PomodoroConfig(sessionsBeforeLongBreak: 2))
+        cycle.startWork()
+        XCTAssertEqual(cycle.advance(), .shortBreak)
+        cycle.startWork()
+        XCTAssertEqual(cycle.advance(), .longBreak)
+        XCTAssertEqual(cycle.completedWorkSessions, 2)
+        cycle.snoozeBreak()
+        XCTAssertEqual(cycle.phase, .work)
+        XCTAssertEqual(cycle.completedWorkSessions, 1)
+        XCTAssertEqual(cycle.advance(), .longBreak)
+        XCTAssertEqual(cycle.completedWorkSessions, 2)
+    }
+
+    func testSnoozeOutsideABreakDoesNothing() {
+        var cycle = PomodoroCycle()
+        cycle.snoozeBreak()
+        XCTAssertEqual(cycle.phase, .idle)
+        cycle.startWork()
+        cycle.snoozeBreak()
+        XCTAssertEqual(cycle.phase, .work)
+        XCTAssertEqual(cycle.completedWorkSessions, 0)
+    }
+}

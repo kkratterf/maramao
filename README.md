@@ -26,7 +26,7 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 | 🔴 | **Caccia al laser** | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops. Leave the mouse alone and the cat sits down to groom. |
 | ⌨️ | **Il gatto sulla tastiera** | A cat falls asleep on a big keyboard. Every key you press ends up as cat-typing ("mmmmrrrrrooooow"), and Cmd-Q won't get you out. |
 
-Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
+Breaks can be skipped after a minute (configurable), or never in **modalità severa**. Need to finish a sentence? **Ancora 5 minuti** on the break puts it off for a few minutes, up to 3 times a day (both configurable, never in modalità severa). The cat allows it, but it gets grumpier every time.
 
 With more than one display, **Schermi** in Settings picks where the cats appear: every display, only the main one, or the one with the mouse. The others are just dimmed a little.
 
