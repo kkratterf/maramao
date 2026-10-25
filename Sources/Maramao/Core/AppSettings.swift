@@ -20,6 +20,8 @@ final class AppSettings: ObservableObject {
     @Published var soundEnabled: Bool { didSet { defaults.set(soundEnabled, forKey: Keys.soundEnabled) } }
     /// Seconds before the end of a work session when a cat peeks to warn about the break. 0 = off.
     @Published var breakWarningSeconds: Int { didSet { defaults.set(breakWarningSeconds, forKey: Keys.breakWarningSeconds) } }
+    /// Which displays the cats cover (`DisplayScope` raw value).
+    @Published var displayScopeRaw: String { didSet { defaults.set(displayScopeRaw, forKey: Keys.displayScope) } }
 
     private enum Keys {
         static let workMinutes = "workMinutes"
@@ -32,6 +34,7 @@ final class AppSettings: ObservableObject {
         static let autoStartWork = "autoStartWork"
         static let soundEnabled = "soundEnabled"
         static let breakWarningSeconds = "breakWarningSeconds"
+        static let displayScope = "displayScope"
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -47,6 +50,7 @@ final class AppSettings: ObservableObject {
             Keys.autoStartWork: false,
             Keys.soundEnabled: true,
             Keys.breakWarningSeconds: BreakWarning.defaultLeadTime,
+            Keys.displayScope: DisplayScope.defaultScope.rawValue,
         ])
         workMinutes = defaults.double(forKey: Keys.workMinutes)
         shortBreakMinutes = defaults.double(forKey: Keys.shortBreakMinutes)
@@ -58,11 +62,17 @@ final class AppSettings: ObservableObject {
         autoStartWork = defaults.bool(forKey: Keys.autoStartWork)
         soundEnabled = defaults.bool(forKey: Keys.soundEnabled)
         breakWarningSeconds = defaults.integer(forKey: Keys.breakWarningSeconds)
+        displayScopeRaw = defaults.string(forKey: Keys.displayScope) ?? DisplayScope.defaultScope.rawValue
     }
 
     var breakMode: BreakModeID {
         get { BreakModeID(rawValue: breakModeRaw) ?? .random }
         set { breakModeRaw = newValue.rawValue }
+    }
+
+    var displayScope: DisplayScope {
+        get { DisplayScope(rawValue: displayScopeRaw) ?? .defaultScope }
+        set { displayScopeRaw = newValue.rawValue }
     }
 
     var pomodoroConfig: PomodoroConfig {

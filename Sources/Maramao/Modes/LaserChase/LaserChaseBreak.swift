@@ -87,7 +87,7 @@ final class LaserChaseBreak: BreakMode {
         began = true
         self.context = context
 
-        let screens = NSScreen.screens
+        let screens = BreakScreens.current()
         guard !screens.isEmpty else { return }
 
         mouse = NSEvent.mouseLocation
@@ -101,7 +101,7 @@ final class LaserChaseBreak: BreakMode {
         cat.dot = mouse
         cat.trail = [mouse]
 
-        let mainScreen = NSScreen.main ?? screens[0]
+        let mainScreen = BreakScreens.primary(in: screens) ?? screens[0]
         let fadeIn = min(0.6, context.duration / 40)
         for screen in screens {
             let window = OverlayWindow(screen: screen)
@@ -614,9 +614,9 @@ final class LaserChaseBreak: BreakMode {
 
     // MARK: - Screens
 
-    /// The screen containing `point`, or the closest one.
+    /// The covered screen containing `point`, or the closest one (see `BreakScreens`).
     private static func screen(containing point: CGPoint) -> NSScreen? {
-        let screens = NSScreen.screens
+        let screens = BreakScreens.current()
         if let hit = screens.first(where: { $0.frame.contains(point) }) { return hit }
         var best: NSScreen?
         var bestDistance = CGFloat.greatestFiniteMagnitude
