@@ -1110,6 +1110,7 @@ details p { padding: 0 3rem 1.4rem 0; color: var(--muted); max-width: 44rem; }
 @media (prefers-color-scheme: dark) { .outro-in { background: radial-gradient(circle at 30% 20%, #7A2A1E, #5A1E15 55%, #3A120C); } }
 .outro-cat { width: 11rem; margin-bottom: .5rem; }
 .outro h2 { margin-top: 0; color: #fff; }
+.outro h1 { margin-top: 0; color: #fff; font-size: clamp(2.6rem, 6vw, 4.4rem); } /* 404 page */
 .outro p { margin-top: .8rem; font-size: 1.15rem; color: rgb(255 255 255 / .92); }
 .outro .btn { margin-top: 1.8rem; }
 .outro .btn-primary { background: #fff; color: #A82615; box-shadow: 0 4px 0 #7E1D10, 0 14px 30px rgb(60 10 5 / .35); }
