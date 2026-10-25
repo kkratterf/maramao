@@ -53,7 +53,7 @@ The website has no build step: preview it with `python3 -m http.server -d site 8
 - Keep PRs small and focused: one issue, one PR. Do not mix refactors with behaviour changes.
 - No third-party dependencies without a reason written in the PR description.
 - Match the style of the surrounding code.
-- **Every new UI string needs an English translation** in `Sources/Maramao/Resources/Localizable.xcstrings` (String Catalog). Italian is the source language: the key is the Italian text. SwiftUI literals (`Text("…")`, `Button("…")`) are looked up automatically; a plain `String` shown to the user must use `String(localized: "…")`. Counts get plural variants (`one`/`other`) in the catalog, for both `it` and `en`. Translate cat lines with personality, not word for word. CI runs `scripts/check-strings.py`, which fails on a missing English entry or a `String(localized:)` key that is not in the catalog.
+- **Every new UI string needs an English translation** in `Sources/Maramao/Resources/Localizable.xcstrings` (String Catalog). Italian is the source language: the key is the Italian text. SwiftUI literals (`Text("…")`, `Button("…")`) are looked up automatically; a plain `String` shown to the user must use `String(localized: "…")`. Counts get plural variants (`one`/`other`) in the catalog, for both `it` and `en`. Translate cat lines with personality, not word for word. CI runs `scripts/check-strings.py`, which fails on a missing English entry, or on a `String(localized:)` key or a SwiftUI literal (`Text`, `Button`, `Toggle`, `Label`, `Section`, `Picker`, `.help`, ...) that is not in the catalog. Text that must never be translated (version lines, "z" for a snoring cat) uses `Text(verbatim:)`.
 
 ## Docs, roadmap and planning
 

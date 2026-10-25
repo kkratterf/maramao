@@ -154,7 +154,7 @@ struct SettingsView: View {
             }
 
             Section("Info") {
-                Text("Maramao \(appVersion) · MIT · github.com/kkratterf/maramao")
+                Text(verbatim: "Maramao \(appVersion) · MIT · github.com/kkratterf/maramao")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .textSelection(.enabled)

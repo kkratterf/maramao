@@ -12,6 +12,17 @@
         }
       }
     },
+    "%@: %lld min": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: %2$lld min"
+          }
+        }
+      }
+    },
     "%@: %lld pause rispettate su %lld": {
       "extractionState": "manual",
       "localizations": {
@@ -3155,6 +3166,17 @@
         }
       }
     },
+    "Ok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dismiss"
+          }
+        }
+      }
+    },
     "Ok, ora puoi lavorare.": {
       "extractionState": "manual",
       "localizations": {
@@ -4168,6 +4190,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Strictness"
+          }
+        }
+      }
+    },
+    "Shhh 🤫": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shhh 🤫"
           }
         }
       }
