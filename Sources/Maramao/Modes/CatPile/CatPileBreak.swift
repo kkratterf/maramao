@@ -43,6 +43,13 @@ final class CatPileBreak: BreakMode {
             view.ignoresSiblingOrder = true
             view.preferredFramesPerSecond = 60
             let scene = CatPileScene(size: size, artworks: artworks, fillTime: fillTime, calm: BreakAccessibility.reduceMotion)
+            // "Il tuo gatto": clicks count as pets, and cats can be dragged around the pile.
+            scene.onPet = {
+                guard let reaction = CatCompanionStore.shared.pet() else { return nil }
+                CatSounds.shared.purr(duration: 1.5)
+                return reaction
+            }
+            scene.canDrag = { CatCompanionStore.shared.isEnabled }
             window.contentView = view
             view.presentScene(scene)
             window.show()
