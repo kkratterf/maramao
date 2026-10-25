@@ -8,9 +8,23 @@ struct BreakHUD: View {
     var message: String = String(localized: "Pausa. Il gatto ha deciso.")
     var style: Style = .dark
 
+    /// Shows the cat's break tip under the pill when there is room for it.
+    var showsTip = true
+
     enum Style { case dark, light }
 
     var body: some View {
+        // The tip only appears where it fits: modes that host the HUD in a small window keep the pill alone.
+        ViewThatFits(in: .vertical) {
+            VStack(spacing: 6) {
+                pill
+                if showsTip { BreakTipBubble(text: context.tip, style: style) }
+            }
+            pill
+        }
+    }
+
+    private var pill: some View {
         // Redraws once a second, right after the countdown text changes (it counts down to
         // `endDate`), instead of polling: the HUD sits on every screen for the whole break.
         TimelineView(.periodic(from: clockTickStart, by: 1)) { _ in
