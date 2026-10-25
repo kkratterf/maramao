@@ -4,7 +4,15 @@ name: Release
 # The version must already be set in Resources/Info.plist (CFBundleShortVersionString).
 #
 # Publishes Maramao-<version>.zip, Maramao-<version>.dmg and SHA256SUMS.txt,
-# then (for stable releases) bumps version and sha256 in Casks/maramao.rb on main.
+# with release notes grouped by PR label (.github/release.yml), then (for
+# stable releases) bumps version and sha256 in Casks/maramao.rb on main.
+#
+# Dry run (dry_run: true): runs the whole pipeline (checks, tests, build,
+# signing, DMG, checksums, sign_update, appcast and cask edits, release notes)
+# but creates no release or tag and pushes nothing to main. The zip, the DMG,
+# SHA256SUMS.txt, the release notes, appcast.xml, the cask and their diffs are
+# uploaded as the "maramao-<version>-dry-run" artifact, and the job summary
+# shows the notes and the diffs.
 #
 # Signing and notarization (optional). Without these repository secrets the
 # app and the DMG are signed ad-hoc, exactly as before. When ALL of them are
@@ -40,6 +48,11 @@ on:
         required: false
         type: boolean
         default: false
+      dry_run:
+        description: "Dry run: build and sign everything, publish nothing (files go to the workflow artifacts)"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -54,7 +67,7 @@ env:
 
 jobs:
   release:
-    name: Build, tag and publish
+    name: ${{ inputs.dry_run && 'Dry run (publishes nothing)' || 'Build, tag and publish' }}
     runs-on: macos-15
     permissions:
       contents: write
@@ -223,7 +236,74 @@ jobs:
           echo "enabled=true" >> "$GITHUB_OUTPUT"
           echo "zip_signature=$zip_signature" >> "$GITHUB_OUTPUT"
 
+      - name: Prepare the appcast and cask updates
+        id: updates
+        env:
+          PRERELEASE: ${{ inputs.prerelease }}
+          SPARKLE_ENABLED: ${{ steps.sparkle.outputs.enabled }}
+          ZIP_SIGNATURE: ${{ steps.sparkle.outputs.zip_signature }}
+        run: |
+          # Both edits are committed on a local branch from the latest main;
+          # "Push the updates to main" publishes it, except in a dry run.
+          out="$RUNNER_TEMP/release-out"
+          mkdir -p "$out"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B release-updates origin/main
+          base=$(git rev-parse HEAD)
+          appcast=false
+          if [ "$PRERELEASE" = "true" ]; then
+            echo "::notice::Pre-release: the appcast and the Homebrew cask keep the previous version"
+          else
+            if [ "$SPARKLE_ENABLED" = "true" ]; then
+              mkdir -p site
+              python3 scripts/update-appcast.py \
+                --appcast site/appcast.xml \
+                --version "$VERSION" \
+                --url "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/Maramao-$VERSION.zip" \
+                --signature "$ZIP_SIGNATURE"
+              git add site/appcast.xml
+              git commit -m "chore(release): add Maramao $VERSION to the appcast"
+              git diff HEAD~1 HEAD -- site/appcast.xml > "$out/appcast.diff"
+              cp site/appcast.xml "$out/appcast.xml"
+              appcast=true
+            else
+              echo "::notice::No Sparkle key: the appcast is not updated"
+            fi
+            sha=$(shasum -a 256 "dist/Maramao-$VERSION.dmg" | cut -d' ' -f1)
+            sed -i '' -E \
+              -e "s/^  version \".*\"$/  version \"$VERSION\"/" \
+              -e "s/^  sha256 .*$/  sha256 \"$sha\"/" \
+              Casks/maramao.rb
+            git add Casks/maramao.rb
+            if git diff --cached --quiet; then
+              echo "::notice::The Homebrew cask is already at $VERSION"
+            else
+              git commit -m "chore(release): bump the Homebrew cask to $VERSION"
+              git diff HEAD~1 HEAD -- Casks/maramao.rb > "$out/cask.diff"
+            fi
+            cp Casks/maramao.rb "$out/maramao.rb"
+          fi
+          commits=$(git rev-list --count "$base"..HEAD)
+          echo "commits=$commits" >> "$GITHUB_OUTPUT"
+          echo "appcast=$appcast" >> "$GITHUB_OUTPUT"
+          git log --oneline "$base"..HEAD
+
+      # Explicitly from .github/release.yml, so the notes are grouped by PR label.
+      - name: Generate the release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X POST "repos/$GITHUB_REPOSITORY/releases/generate-notes" \
+            -f tag_name="$TAG" \
+            -f target_commitish="$GITHUB_SHA" \
+            -f configuration_file_path=.github/release.yml \
+            --jq .body > "$RUNNER_TEMP/release-out/release-notes.md"
+          cat "$RUNNER_TEMP/release-out/release-notes.md"
+
       - name: Create the release
+        if: inputs.dry_run != true
         env:
           GH_TOKEN: ${{ github.token }}
           PRERELEASE: ${{ inputs.prerelease }}
@@ -236,67 +316,76 @@ jobs:
             dist/SHA256SUMS.txt \
             --target "$GITHUB_SHA" \
             --title "Maramao $TAG" \
-            --generate-notes \
+            --notes-file "$RUNNER_TEMP/release-out/release-notes.md" \
             "${flags[@]}"
 
-      - name: Publish the appcast
-        if: steps.sparkle.outputs.enabled == 'true'
+      # After the release, so the appcast and the cask never point at missing assets.
+      - name: Push the updates to main
+        if: inputs.dry_run != true && steps.updates.outputs.commits != '0'
         env:
           GH_TOKEN: ${{ github.token }}
-          PRERELEASE: ${{ inputs.prerelease }}
-          ZIP_SIGNATURE: ${{ steps.sparkle.outputs.zip_signature }}
+          APPCAST: ${{ steps.updates.outputs.appcast }}
         run: |
-          if [ "$PRERELEASE" = "true" ]; then
-            echo "::notice::Pre-release: not offered to users through the appcast"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
-          git checkout -B appcast-update origin/main
-          mkdir -p site
-          python3 scripts/update-appcast.py \
-            --appcast site/appcast.xml \
-            --version "$VERSION" \
-            --url "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/Maramao-$VERSION.zip" \
-            --signature "$ZIP_SIGNATURE"
-          git add site/appcast.xml
-          git commit -m "chore(release): add Maramao $VERSION to the appcast"
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then break; fi
-            if [ "$attempt" = 3 ]; then echo "::error::Could not push the appcast to main"; exit 1; fi
+            if [ "$attempt" = 3 ]; then echo "::error::Could not push the appcast and cask updates to main"; exit 1; fi
             sleep $((attempt * 5))
             git fetch origin main
             git rebase origin/main
           done
-          if ! gh workflow run pages.yml --ref main; then
+          if [ "$APPCAST" = "true" ] && ! gh workflow run pages.yml --ref main; then
             echo "::warning::Could not start the Pages deploy: run the Pages workflow by hand to publish appcast.xml"
           fi
 
-      - name: Bump the Homebrew cask
+      - name: Summary
+        if: always()
         env:
-          PRERELEASE: ${{ inputs.prerelease }}
+          DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          if [ "$PRERELEASE" = "true" ]; then
-            echo "::notice::Pre-release: the Homebrew cask keeps the previous version"
-            exit 0
-          fi
-          sha=$(shasum -a 256 "dist/Maramao-$VERSION.dmg" | cut -d' ' -f1)
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
-          git checkout -B cask-update origin/main
-          sed -i '' -E \
-            -e "s/^  version \".*\"$/  version \"$VERSION\"/" \
-            -e "s/^  sha256 .*$/  sha256 \"$sha\"/" \
-            Casks/maramao.rb
-          grep -E '^  (version|sha256) ' Casks/maramao.rb
-          git add Casks/maramao.rb
-          git commit -m "chore(release): bump the Homebrew cask to $VERSION"
-          for attempt in 1 2 3; do
-            if git push origin HEAD:main; then break; fi
-            if [ "$attempt" = 3 ]; then echo "::error::Could not push the cask bump to main"; exit 1; fi
-            sleep $((attempt * 5))
-            git fetch origin main
-            git rebase origin/main
-          done
+          out="$RUNNER_TEMP/release-out"
+          fence='```'
+          {
+            if [ "$DRY_RUN" = "true" ]; then
+              echo "## Maramao $TAG: dry run"
+              echo
+              echo "Nothing was published: no GitHub release, no tag, no commits to main. The files are in the workflow artifacts."
+            else
+              echo "## Maramao $TAG"
+            fi
+            echo
+            if [ -f dist/SHA256SUMS.txt ]; then
+              echo "### SHA256SUMS.txt"
+              echo "$fence"; cat dist/SHA256SUMS.txt; echo "$fence"
+            fi
+            if [ -f "$out/release-notes.md" ]; then
+              echo "### Release notes"
+              echo
+              cat "$out/release-notes.md"
+              echo
+            fi
+            for name in appcast cask; do
+              echo "### ${name} diff"
+              if [ -s "$out/$name.diff" ]; then
+                echo "${fence}diff"; cat "$out/$name.diff"; echo "$fence"
+              else
+                echo "_No change._"
+              fi
+              echo
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Collect the dry-run files
+        if: always() && inputs.dry_run == true
+        run: |
+          mkdir -p "$RUNNER_TEMP/release-out"
+          cp dist/Maramao-*.zip dist/Maramao-*.dmg dist/SHA256SUMS.txt "$RUNNER_TEMP/release-out/" 2>/dev/null || true
+          ls -la "$RUNNER_TEMP/release-out"
+
+      - name: Upload the dry-run files
+        if: always() && inputs.dry_run == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: maramao-${{ inputs.version }}-dry-run
+          path: ${{ runner.temp }}/release-out/
+          if-no-files-found: warn
+          retention-days: 14

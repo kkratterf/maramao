@@ -57,11 +57,7 @@ jobs:
       - name: Check the Shortcuts actions metadata
         run: |
           data=dist/Maramao.app/Contents/Resources/Metadata.appintents/extract.actionsdata
-          if [ ! -f "$data" ]; then
-            log=$(tail -n 40 .build/appintents.log 2>/dev/null | sed -e 's/%/%25/g' | awk 'BEGIN{ORS="%0A"} {print}')
-            echo "::error title=Metadata.appintents missing from the app bundle::$log"
-            exit 1
-          fi
+          [ -f "$data" ] || { echo "::error::Metadata.appintents missing from the app bundle (see the build-app.sh output)"; exit 1; }
           for intent in StartFocusIntent PauseIntent TakeBreakIntent SetBreakModeIntent GetStatusIntent; do
             grep -q "\"$intent\"" "$data" || { echo "::error::$intent missing from Metadata.appintents"; exit 1; }
           done
@@ -91,6 +87,17 @@ jobs:
             grep -qxF "$want" probe-it.txt || { echo "::error::Italian string missing at runtime: $want"; status=1; }
           done
           exit $status
+
+      - name: Check the App Intents metadata
+        run: |
+          meta=dist/Maramao.app/Contents/Resources/Metadata.appintents
+          if [ ! -f "$meta/extract.actionsdata" ]; then
+            echo "::error::Metadata.appintents is missing from Maramao.app: the Focus filter would not show up"
+            exit 1
+          fi
+          grep -q "MaramaoFocusFilter" "$meta/extract.actionsdata" \
+            || { echo "::error::the Focus filter intent is missing from Metadata.appintents"; exit 1; }
+          echo "::notice::Metadata.appintents: $(ls "$meta" | tr '\n' ' ')($(wc -c < "$meta/extract.actionsdata" | tr -d ' ') bytes of actions data)"
 
       - name: Upload Maramao.app
         uses: actions/upload-artifact@v4

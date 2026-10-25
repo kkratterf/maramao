@@ -37,7 +37,11 @@ struct TakeBreakIntent: AppIntent {
     }
 }
 
-/// Break modes as Shortcuts sees them. Mirrors `BreakModeID` (raw values must match).
+/// Break modes for the "Scegli la modalità pausa" action. Kept apart from
+/// `FocusFilterBreakMode` on purpose: that one adds `unchanged`, which means nothing
+/// for an action that sets a mode, and App Intents reads these display names at
+/// compile time, so they must stay literal constants rather than a shared table.
+/// Raw values must match `BreakModeID`.
 enum BreakModeAppEnum: String, AppEnum {
     case walkingCat
     case memeWall

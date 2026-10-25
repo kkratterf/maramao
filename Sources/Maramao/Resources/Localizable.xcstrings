@@ -938,6 +938,17 @@
         }
       }
     },
+    "Come nelle impostazioni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As in Settings"
+          }
+        }
+      }
+    },
     "Come ti fermano i gatti": {
       "extractionState": "manual",
       "localizations": {
@@ -1712,6 +1723,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cats"
+          }
+        }
+      }
+    },
+    "Gatti come al solito": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cats as usual"
+          }
+        }
+      }
+    },
+    "Gatti di Maramao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maramao's cats"
+          }
+        }
+      }
+    },
+    "Gatti nelle pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cats during breaks"
           }
         }
       }
@@ -3427,6 +3471,17 @@
         }
       }
     },
+    "Niente gatti: la pausa resta solo nella barra dei menu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No cats: the break stays in the menu bar"
+          }
+        }
+      }
+    },
     "Niente lavoro, solo coccole.": {
       "extractionState": "manual",
       "localizations": {
@@ -4598,6 +4653,17 @@
         }
       }
     },
+    "Scegli come si comportano i gatti durante questa modalità Full immersion.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose how the cats behave during this Focus."
+          }
+        }
+      }
+    },
     "Scegli la modalità pausa": {
       "extractionState": "manual",
       "localizations": {
@@ -4737,6 +4803,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "TIRED?"
+          }
+        }
+      }
+    },
+    "senza suoni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no sounds"
           }
         }
       }
