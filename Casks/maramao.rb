@@ -7,8 +7,7 @@ cask "maramao" do
   version "0.1.0"
   sha256 :no_check
 
-  url "https://github.com/kkratterf/maramao/releases/download/v#{version}/Maramao-#{version}.dmg",
-      verified: "github.com/kkratterf/maramao/"
+  url "https://github.com/kkratterf/maramao/releases/download/v#{version}/Maramao-#{version}.dmg"
   name "Maramao"
   desc "Pomodoro timer for the menu bar that stops you with cats"
   homepage "https://kkratterf.github.io/maramao/"
