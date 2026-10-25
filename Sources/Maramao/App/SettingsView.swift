@@ -7,6 +7,8 @@ struct SettingsView: View {
     @State private var launchAtLogin = false
     @State private var launchAtLoginError: String?
     @State private var launchAtLoginNeedsApproval = false
+    @EnvironmentObject private var stats: StatsStore
+    @State private var confirmStatsReset = false
 
     var body: some View {
         Form {
@@ -67,6 +69,16 @@ struct SettingsView: View {
                     }
                 }
                 Toggle("Suoni", isOn: $settings.soundEnabled)
+                Text("Uscita di emergenza: \(EmergencyExitGuard.shortcutLabel) chiude subito qualsiasi pausa, anche in modalità severa. Funziona anche cliccando \(EmergencyExitGuard.cornerClicks) volte di fila nell'angolo in alto a sinistra dello schermo.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            ShortcutsSettingsSection()
+
+            Section("Statistiche") {
+                StatsSection(stats: stats, confirmReset: $confirmStatsReset)
             }
 
             Section {
@@ -85,6 +97,12 @@ struct SettingsView: View {
         .formStyle(.grouped)
         .frame(width: 520, height: 560)
         .onAppear(perform: refreshLaunchAtLogin)
+        .alert("Azzerare le statistiche?", isPresented: $confirmStatsReset) {
+            Button("Azzera", role: .destructive) { stats.reset() }
+            Button("Annulla", role: .cancel) {}
+        } message: {
+            Text("Pomodori, pause e giorni di fila verranno cancellati. Il gatto dimentica tutto.")
+        }
     }
 
     /// Version from the bundle, or "dev" when running outside the .app.

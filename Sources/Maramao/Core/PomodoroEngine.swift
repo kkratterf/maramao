@@ -16,6 +16,7 @@ final class PomodoroEngine: ObservableObject {
     @Published private(set) var activeBreakMode: BreakModeID?
 
     private let settings: AppSettings
+    private let stats: StatsStore
     private let breaks = BreakCoordinator()
     private var cycle: PomodoroCycle
     private var endDate: Date?
@@ -25,10 +26,17 @@ final class PomodoroEngine: ObservableObject {
     private var breakWarning = BreakWarning()
     private let peekingCat = PeekingCatWarning()
 
-    init(settings: AppSettings = .shared) {
+    init(settings: AppSettings = .shared, stats: StatsStore? = nil) {
         self.settings = settings
+        self.stats = stats ?? StatsStore.shared
         self.cycle = PomodoroCycle(config: settings.pomodoroConfig)
         self.remaining = settings.pomodoroConfig.work
+        breaks.onEmergencyExit = { [weak self] context in
+            self?.breakForceEnded(context, emergency: true)
+        }
+        breaks.onWatchdogFired = { [weak self] context in
+            self?.breakForceEnded(context, emergency: false)
+        }
     }
 
     var isRunning: Bool { phase != .idle && !isPaused }
@@ -39,6 +47,7 @@ final class PomodoroEngine: ObservableObject {
     // MARK: - Commands
 
     func startWork() {
+        recordAbandonedBreak()
         endPreview()
         breaks.end()
         cycle.config = settings.pomodoroConfig
@@ -52,9 +61,11 @@ final class PomodoroEngine: ObservableObject {
         if isPaused {
             endDate = Date().addingTimeInterval(remaining)
             isPaused = false
+            startTicker()
         } else {
             tick()
             isPaused = true
+            stopTicker()
             peekingCat.dismiss()
         }
     }
@@ -78,6 +89,7 @@ final class PomodoroEngine: ObservableObject {
     }
 
     func reset() {
+        recordAbandonedBreak()
         endPreview()
         breaks.end()
         breakContext = nil
@@ -119,7 +131,29 @@ final class PomodoroEngine: ObservableObject {
         playSound("Tink")
     }
 
+    /// Closes every break window right away. Called when the app quits.
+    func shutdown() {
+        previewTimer?.invalidate()
+        previewTimer = nil
+        breaks.forceEnd()
+        OverlayWindow.closeAllBreakOverlays()
+        peekingCat.close()
+    }
+
     // MARK: - Internals
+
+    /// The coordinator closed a break by force: the emergency exit or the watchdog.
+    /// Moves the cycle on as if the break had been skipped, whatever the skip rules say.
+    private func breakForceEnded(_ context: BreakContext, emergency: Bool) {
+        if context.isPreview {
+            endPreview()
+        } else if let breakContext, breakContext === context, phase.isBreak {
+            advance()
+        }
+        if emergency {
+            peekingCat.show(message: "Ok, ti lascio andare… stavolta")
+        }
+    }
 
     private func endPreview() {
         guard let timer = previewTimer else { return }
@@ -130,6 +164,7 @@ final class PomodoroEngine: ObservableObject {
     }
 
     private func advance() {
+        recordEndOfPhase()
         let wasBreak = cycle.phase.isBreak
         cycle.advance(autoStartWork: settings.autoStartWork)
         if wasBreak {
@@ -139,6 +174,31 @@ final class PomodoroEngine: ObservableObject {
             playSound("Glass")
         }
         enterCurrentPhase()
+    }
+
+    // MARK: - Stats
+
+    /// Records the phase that is ending. The tick sets `remaining` to 0 before advancing,
+    /// so a phase that ends with time left was ended early by the user.
+    private func recordEndOfPhase() {
+        let finished = remaining <= 0
+        switch phase {
+        case .idle:
+            break
+        case .work:
+            let focused = finished ? phaseDuration : phaseDuration - remaining
+            stats.recordWork(completed: finished, focusSeconds: max(0, focused))
+        case .shortBreak, .longBreak:
+            if let mode = activeBreakMode, breakContext != nil {
+                stats.recordBreak(completed: finished, mode: mode)
+            }
+        }
+    }
+
+    /// A real break left through "start work" or "reset" counts as skipped.
+    private func recordAbandonedBreak() {
+        guard phase.isBreak, breakContext != nil, let mode = activeBreakMode else { return }
+        stats.recordBreak(completed: false, mode: mode)
     }
 
     private func enterCurrentPhase() {
@@ -185,11 +245,21 @@ final class PomodoroEngine: ObservableObject {
         NSSound(named: name)?.play()
     }
 
+    /// Ticks once a second, right after the clock in the menu bar changes, instead of
+    /// polling: the Mac can stay asleep in between. Restarted on every phase change and
+    /// resume, so the ticks stay aligned with the new countdown.
     private func startTicker() {
-        guard ticker == nil else { return }
-        let timer = Timer(timeInterval: 0.25, repeats: true) { [weak self] _ in
+        stopTicker()
+        guard let endDate else { return }
+        // A few milliseconds past the change, so the tick never lands just before it.
+        let firstTick = Date().addingTimeInterval(
+            secondsUntilClockChanges(remaining: endDate.timeIntervalSinceNow) + 0.01
+        )
+        let timer = Timer(fire: firstTick, interval: 1, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.tick() }
         }
+        // Lets macOS coalesce this wakeup with others; 50 ms late is invisible in a clock.
+        timer.tolerance = 0.05
         RunLoop.main.add(timer, forMode: .common)
         ticker = timer
     }

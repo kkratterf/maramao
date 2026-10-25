@@ -6,12 +6,14 @@ struct MaramaoApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var engine = PomodoroEngine.shared
     @StateObject private var settings = AppSettings.shared
+    @StateObject private var stats = StatsStore.shared
 
     var body: some Scene {
         MenuBarExtra {
             MenuContentView()
                 .environmentObject(engine)
                 .environmentObject(settings)
+                .environmentObject(stats)
         } label: {
             MenuBarLabel()
         }
@@ -25,6 +27,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Menu bar only: no Dock icon (also set via LSUIElement in the bundle).
         NSApp.setActivationPolicy(.accessory)
+        // System-wide shortcuts (Carbon hot keys, no permission needed).
+        Task { @MainActor in GlobalShortcuts.shared.activate() }
+        Task { @MainActor in MeasurementHooks.run() }
+    }
+
+    /// Never leave a cat behind: close every break window before quitting.
+    @MainActor
+    func applicationWillTerminate(_ notification: Notification) {
+        PomodoroEngine.shared.shutdown()
     }
 
     /// Opens the settings window. A plain NSWindow, because `Settings` scenes
@@ -44,6 +55,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 rootView: SettingsView()
                     .environmentObject(AppSettings.shared)
                     .environmentObject(PomodoroEngine.shared)
+                    .environmentObject(StatsStore.shared)
             )
             window.center()
             settingsWindow = window
