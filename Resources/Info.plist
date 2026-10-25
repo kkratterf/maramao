@@ -28,5 +28,11 @@
     <true/>
     <key>NSHumanReadableCopyright</key>
     <string>MIT License</string>
+    <key>SUFeedURL</key>
+    <string>https://kkratterf.github.io/maramao/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>SPARKLE_PUBLIC_ED_KEY_PLACEHOLDER</string>
+    <key>SUEnableAutomaticChecks</key>
+    <true/>
 </dict>
 </plist>

@@ -28,6 +28,10 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 
 Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
 
+With more than one display, **Schermi** in Settings picks where the cats appear: every display, only the main one, or the one with the mouse. The others are just dimmed a little.
+
+In Settings → **Barra dei menu** you choose what the menu bar shows: cat and countdown (default), only the cat, only the countdown, or the cat inside a ring that fills up as the session goes on. The countdown can also drop the seconds (`24m`).
+
 ### Emergency exit
 
 If a break ever gets stuck, or you really have to stop it, press **⌃⌥⌘⌫** (Control-Option-Command-Delete) to end it right away, **modalità severa included**. No shortcut at hand? Click five times quickly in the **top-left corner** of any screen. Neither needs any permission.

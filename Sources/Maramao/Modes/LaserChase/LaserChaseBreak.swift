@@ -77,6 +77,7 @@ final class LaserChaseBreak: BreakMode {
     private var catchPoint: CGPoint = .zero
     private var catches = 0
     private var bubbleStart: TimeInterval = 0
+    private var frameCount = 0
     private var bubbleEnd: TimeInterval = 0
     private var nextHeartID = 0
 
@@ -87,7 +88,7 @@ final class LaserChaseBreak: BreakMode {
         began = true
         self.context = context
 
-        let screens = NSScreen.screens
+        let screens = BreakScreens.current()
         guard !screens.isEmpty else { return }
 
         mouse = NSEvent.mouseLocation
@@ -101,7 +102,7 @@ final class LaserChaseBreak: BreakMode {
         cat.dot = mouse
         cat.trail = [mouse]
 
-        let mainScreen = NSScreen.main ?? screens[0]
+        let mainScreen = BreakScreens.primary(in: screens) ?? screens[0]
         let fadeIn = min(0.6, context.duration / 40)
         for screen in screens {
             let window = OverlayWindow(screen: screen)
@@ -286,6 +287,13 @@ final class LaserChaseBreak: BreakMode {
         step(at: time, dt: dt)
         movedThisTick = false
         updateDerivedState(at: time)
+
+        // While the cat grooms (mouse idle), 15 fps is plenty: only the paw and the blinks
+        // move, and every snapshot redraws a full-screen stage on each display.
+        frameCount += 1
+        let idle = state == .grooming && hypot(vx, vy) < 1
+            && (cat.bubble == nil || (cat.bubbleAge > 0.3 && cat.bubbleRemaining > 0.4))
+        if idle && frameCount % 4 != 0 { return }
         model.snapshot = cat
         syncStatus()
     }
@@ -612,9 +620,9 @@ final class LaserChaseBreak: BreakMode {
 
     // MARK: - Screens
 
-    /// The screen containing `point`, or the closest one.
+    /// The covered screen containing `point`, or the closest one (see `BreakScreens`).
     private static func screen(containing point: CGPoint) -> NSScreen? {
-        let screens = NSScreen.screens
+        let screens = BreakScreens.current()
         if let hit = screens.first(where: { $0.frame.contains(point) }) { return hit }
         var best: NSScreen?
         var bestDistance = CGFloat.greatestFiniteMagnitude

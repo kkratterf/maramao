@@ -9,6 +9,7 @@ struct SettingsView: View {
     @State private var launchAtLoginNeedsApproval = false
     @EnvironmentObject private var stats: StatsStore
     @State private var confirmStatsReset = false
+    @ObservedObject private var updater = AppUpdater.shared
 
     var body: some View {
         Form {
@@ -25,6 +26,8 @@ struct SettingsView: View {
                 }
             }
 
+            MenuBarSettingsSection()
+
             Section("Tempi") {
                 minutesStepper("Lavoro", value: $settings.workMinutes, range: 1...120)
                 minutesStepper("Pausa breve", value: $settings.shortBreakMinutes, range: 1...30)
@@ -35,6 +38,8 @@ struct SettingsView: View {
                 Toggle("Riparti a lavorare da solo dopo la pausa", isOn: $settings.autoStartWork)
             }
 
+            WorkingHoursSection()
+
             Section("Gatti") {
                 Picker("Modalità pausa", selection: $settings.breakModeRaw) {
                     ForEach(BreakModeID.allCases) { mode in
@@ -44,6 +49,15 @@ struct SettingsView: View {
                 Text(settings.breakMode.subtitle)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                Picker("Schermi", selection: $settings.displayScopeRaw) {
+                    ForEach(DisplayScope.allCases, id: \.self) { scope in
+                        Text(scope.label).tag(scope.rawValue)
+                    }
+                }
+                Text("Gli schermi senza gatti vengono solo un po' oscurati. Il gatto sulla finestra segue sempre la finestra attiva.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 Picker("Gatto che avvisa", selection: $settings.breakWarningSeconds) {
                     ForEach(BreakWarning.leadTimeOptions, id: \.self) { seconds in
                         Text(BreakWarning.optionLabel(seconds: seconds)).tag(seconds)
@@ -101,6 +115,21 @@ struct SettingsView: View {
                 Text("Le modifiche ai tempi valgono dal prossimo pomodoro.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+            }
+
+            if updater.isAvailable {
+                Section("Aggiornamenti") {
+                    Toggle("Aggiorna automaticamente", isOn: $updater.automaticallyChecksForUpdates)
+                    HStack {
+                        Text("Maramao controlla una volta al giorno se c'è una nuova versione e te la propone.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer()
+                        Button("Controlla ora") { updater.checkForUpdates() }
+                            .disabled(!updater.canCheckForUpdates)
+                    }
+                }
             }
 
             Section("Info") {
