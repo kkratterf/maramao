@@ -58,6 +58,12 @@ if [ -n "$ICNS" ]; then
     || /usr/libexec/PlistBuddy -c "Add :CFBundleIconFile string AppIcon" "$APP/Contents/Info.plist" || true
 fi
 
+# Shortcuts actions (App Intents): SwiftPM does not generate the metadata Xcode
+# would. A failure here only costs the Shortcuts actions; maramao:// URLs still work.
+if ! "$ROOT/scripts/make-appintents-metadata.sh" "$APP/Contents/Resources" "$CONFIG"; then
+  echo "warning: could not generate the App Intents metadata, no Shortcuts actions" >&2
+fi
+
 # Signature. Ad-hoc by default: enough to run locally, not notarized.
 # SIGN_IDENTITY="Developer ID Application: ..." signs for distribution with
 # the hardened runtime and a secure timestamp, as notarization requires.

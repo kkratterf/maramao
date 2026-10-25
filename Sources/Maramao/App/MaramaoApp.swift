@@ -1,4 +1,6 @@
 import SwiftUI
+import AppKit
+import CoreServices
 import MaramaoCore
 
 @main
@@ -23,6 +25,31 @@ struct MaramaoApp: App {
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var settingsWindow: NSWindow?
+
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        // maramao:// URLs. Installed before launch finishes so the URL that
+        // launched the app is not lost, and handled here directly so SwiftUI
+        // never tries to open a window for it.
+        NSAppleEventManager.shared().setEventHandler(
+            self,
+            andSelector: #selector(handleGetURLEvent(_:withReplyEvent:)),
+            forEventClass: AEEventClass(kInternetEventClass),
+            andEventID: AEEventID(kAEGetURL)
+        )
+    }
+
+    /// Fallback path for URLs, in case AppKit routes them to the delegate.
+    func application(_ application: NSApplication, open urls: [URL]) {
+        Task { @MainActor in
+            for url in urls { AutomationRunner.handle(url) }
+        }
+    }
+
+    @objc private func handleGetURLEvent(_ event: NSAppleEventDescriptor, withReplyEvent reply: NSAppleEventDescriptor) {
+        guard let string = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue,
+              let url = URL(string: string) else { return }
+        Task { @MainActor in AutomationRunner.handle(url) }
+    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Menu bar only: no Dock icon (also set via LSUIElement in the bundle).

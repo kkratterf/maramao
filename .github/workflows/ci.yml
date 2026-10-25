@@ -33,6 +33,15 @@ jobs:
       - name: Build the app bundle
         run: scripts/build-app.sh release
 
+      - name: Check the Shortcuts actions metadata
+        run: |
+          data=dist/Maramao.app/Contents/Resources/Metadata.appintents/extract.actionsdata
+          test -f "$data" || { echo "::error::Metadata.appintents missing from the app bundle"; exit 1; }
+          for intent in StartFocusIntent PauseIntent TakeBreakIntent SetBreakModeIntent GetStatusIntent; do
+            grep -q "\"$intent\"" "$data" || { echo "::error::$intent missing from Metadata.appintents"; exit 1; }
+          done
+          echo "Metadata.appintents OK ($(wc -c < "$data" | tr -d ' ') bytes)"
+
       - name: Upload Maramao.app
         uses: actions/upload-artifact@v4
         with:

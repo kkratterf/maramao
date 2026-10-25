@@ -46,6 +46,40 @@ They work from any app and need no special permission. Turn each one on or off i
 | ⌃⌥⌘B | Take the cat break now |
 | ⌃⌥⌘S | Skip the current phase (a break only once skipping is allowed) |
 
+### Automation
+
+Maramao answers to `maramao://` URLs, so Shortcuts ("Open URLs"), Raycast, Alfred, a Stream Deck or the terminal can drive it:
+
+```bash
+open maramao://start
+```
+
+| URL | What it does |
+| --- | --- |
+| `maramao://start` | Start a pomodoro (or resume a paused one) |
+| `maramao://pause` | Pause the running pomodoro |
+| `maramao://resume` | Resume a paused pomodoro |
+| `maramao://toggle` | Start, pause or resume, like the main button |
+| `maramao://break` | Take the cat break now |
+| `maramao://skip` | Skip the current phase |
+| `maramao://reset` | Stop and go back to idle |
+| `maramao://mode/<id>` | Choose the break mode for the next breaks |
+| `maramao://preview/<id>` | Try a break mode for 30 seconds |
+
+Mode ids: `walkingCat`, `memeWall`, `sleepyCat`, `catPile`, `laserChase`, `keyboardCat`, or `random` (🎲 Sorpresa). URLs that would end a break early (`start`, `skip`, `reset`) only work once the break may be skipped, so **modalità severa** still wins.
+
+The **Shortcuts** app also lists Maramao actions: *Inizia un pomodoro*, *Metti in pausa o riprendi*, *Pausa gatto ora*, *Scegli la modalità pausa* and *Stato di Maramao* (returns the phase, the time left and today's pomodori as text). Siri and Spotlight know phrases like "Inizia un pomodoro con Maramao". They show up once `Maramao.app` has been opened from `Applications`.
+
+A Raycast script command, for example:
+
+```bash
+#!/bin/bash
+# @raycast.schemaVersion 1
+# @raycast.title Maramao: start / pause
+# @raycast.mode silent
+open "maramao://toggle"
+```
+
 ---
 
 ## Install
