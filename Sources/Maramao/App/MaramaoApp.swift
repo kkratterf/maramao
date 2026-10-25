@@ -48,6 +48,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // System-wide shortcuts (Carbon hot keys, no permission needed).
         Task { @MainActor in GlobalShortcuts.shared.activate() }
         Task { @MainActor in MeasurementHooks.run() }
+        // Sparkle auto-update; a no-op until Info.plist has a real public key.
+        Task { @MainActor in AppUpdater.shared.start() }
     }
 
     /// Never leave a cat behind: close every break window before quitting.
