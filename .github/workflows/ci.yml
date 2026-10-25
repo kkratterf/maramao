@@ -132,4 +132,10 @@ jobs:
           tap="$(brew --repository)/Library/Taps/maramao/homebrew-ci"
           mkdir -p "$tap/Casks"
           cp Casks/maramao.rb "$tap/Casks/maramao.rb"
-          brew audit --cask --strict maramao/ci/maramao
+          if ! brew audit --cask --strict maramao/ci/maramao > audit.log 2>&1; then
+            cat audit.log
+            # Surface the findings as annotations, so they show on the PR.
+            grep -v '^$' audit.log | while IFS= read -r line; do echo "::error file=Casks/maramao.rb::$line"; done
+            exit 1
+          fi
+          cat audit.log
