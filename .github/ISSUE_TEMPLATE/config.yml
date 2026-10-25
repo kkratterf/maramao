@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "⬇️ Scarica l'ultima versione"
+    url: https://github.com/kkratterf/maramao/releases/latest
+    about: Try the latest release before opening an issue.

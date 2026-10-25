@@ -1,0 +1,27 @@
+name: "🐈 Gatto nuovo: a new break concept"
+description: Propose a new way for a cat to stop you from working.
+labels: ["cats"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every break mode is a `BreakMode` in `Sources/Maramao/Modes/`. Cats are drawn in code or come from CC0 art: no copyrighted memes or GIFs.
+  - type: input
+    id: name
+    attributes:
+      label: Name of the concept
+      placeholder: "e.g. Il gatto sulla tastiera"
+    validations:
+      required: true
+  - type: textarea
+    id: story
+    attributes:
+      label: What the cat does
+      description: From the first second of the break to the last. How does it stop you from working? How does it leave?
+    validations:
+      required: true
+  - type: textarea
+    id: permissions
+    attributes:
+      label: macOS permissions
+      description: Does it need Accessibility, Screen Recording or anything else? Concepts that work without permissions are preferred.

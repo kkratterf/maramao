@@ -1,0 +1,192 @@
+import AppKit
+import Combine
+import MaramaoCore
+
+/// Drives the Pomodoro cycle with a real clock and hands breaks to the cats.
+@MainActor
+final class PomodoroEngine: ObservableObject {
+    static let shared = PomodoroEngine()
+
+    @Published private(set) var phase: PomodoroPhase = .idle
+    @Published private(set) var remaining: TimeInterval = 0
+    @Published private(set) var phaseDuration: TimeInterval = 0
+    @Published private(set) var isPaused = false
+    @Published private(set) var completedWorkSessions = 0
+    /// Mode of the break on screen, when there is one (also during previews).
+    @Published private(set) var activeBreakMode: BreakModeID?
+
+    private let settings: AppSettings
+    private let breaks = BreakCoordinator()
+    private var cycle: PomodoroCycle
+    private var endDate: Date?
+    private var ticker: Timer?
+    private var breakContext: BreakContext?
+    private var previewTimer: Timer?
+
+    init(settings: AppSettings = .shared) {
+        self.settings = settings
+        self.cycle = PomodoroCycle(config: settings.pomodoroConfig)
+        self.remaining = settings.pomodoroConfig.work
+    }
+
+    var isRunning: Bool { phase != .idle && !isPaused }
+    var progress: Double { phaseDuration > 0 ? min(1, 1 - remaining / phaseDuration) : 0 }
+    var sessionsInCurrentSet: Int { cycle.sessionsInCurrentSet }
+    var canSkipBreak: Bool { breakContext?.canSkipNow ?? false }
+
+    // MARK: - Commands
+
+    func startWork() {
+        endPreview()
+        breaks.end()
+        cycle.config = settings.pomodoroConfig
+        cycle.startWork()
+        enterCurrentPhase()
+    }
+
+    /// Pauses or resumes a work session. Breaks cannot be paused: the cat does not negotiate.
+    func togglePause() {
+        guard phase == .work else { return }
+        if isPaused {
+            endDate = Date().addingTimeInterval(remaining)
+            isPaused = false
+        } else {
+            tick()
+            isPaused = true
+        }
+    }
+
+    /// Skips the current phase. Work ends straight into a break; a break only ends when skipping is allowed.
+    func skip() {
+        switch phase {
+        case .idle:
+            break
+        case .work:
+            advance()
+        case .shortBreak, .longBreak:
+            if canSkipBreak { advance() }
+        }
+    }
+
+    /// "I want my break now": ends the work session early.
+    func takeBreakNow() {
+        if phase == .idle { cycle.startWork() }
+        if cycle.phase == .work { advance() }
+    }
+
+    func reset() {
+        endPreview()
+        breaks.end()
+        breakContext = nil
+        activeBreakMode = nil
+        stopTicker()
+        cycle.reset()
+        cycle.config = settings.pomodoroConfig
+        phase = .idle
+        isPaused = false
+        completedWorkSessions = 0
+        phaseDuration = 0
+        remaining = settings.pomodoroConfig.work
+    }
+
+    /// Shows a break mode for a few seconds without touching the cycle.
+    func preview(_ mode: BreakModeID, seconds: TimeInterval = 30) {
+        guard !phase.isBreak else { return }
+        endPreview()
+        let context = BreakContext(
+            duration: seconds,
+            isLongBreak: false,
+            isPreview: true,
+            skipUnlockDate: Date(),
+            onSkip: { [weak self] in self?.endPreview() }
+        )
+        breaks.start(mode: mode, context: context)
+        activeBreakMode = breaks.currentModeID
+        previewTimer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: false) { [weak self] _ in
+            Task { @MainActor in self?.endPreview() }
+        }
+    }
+
+    // MARK: - Internals
+
+    private func endPreview() {
+        guard let timer = previewTimer else { return }
+        timer.invalidate()
+        previewTimer = nil
+        breaks.end()
+        activeBreakMode = nil
+    }
+
+    private func advance() {
+        let wasBreak = cycle.phase.isBreak
+        cycle.advance(autoStartWork: settings.autoStartWork)
+        if wasBreak {
+            breaks.end()
+            breakContext = nil
+            activeBreakMode = nil
+            playSound("Glass")
+        }
+        enterCurrentPhase()
+    }
+
+    private func enterCurrentPhase() {
+        phase = cycle.phase
+        completedWorkSessions = cycle.completedWorkSessions
+        isPaused = false
+
+        guard phase != .idle else {
+            stopTicker()
+            endDate = nil
+            phaseDuration = 0
+            remaining = settings.pomodoroConfig.work
+            return
+        }
+
+        let duration = cycle.currentDuration
+        phaseDuration = duration
+        remaining = duration
+        endDate = Date().addingTimeInterval(duration)
+        startTicker()
+
+        if phase.isBreak {
+            endPreview()
+            playSound("Purr")
+            let unlock: Date? = settings.strictMode ? nil : Date().addingTimeInterval(settings.skipUnlockSeconds)
+            let context = BreakContext(
+                duration: duration,
+                isLongBreak: phase == .longBreak,
+                isPreview: false,
+                skipUnlockDate: unlock,
+                onSkip: { [weak self] in self?.skip() }
+            )
+            breakContext = context
+            breaks.start(mode: settings.breakMode, context: context)
+            activeBreakMode = breaks.currentModeID
+        }
+    }
+
+    private func playSound(_ name: NSSound.Name) {
+        guard settings.soundEnabled else { return }
+        NSSound(named: name)?.play()
+    }
+
+    private func startTicker() {
+        guard ticker == nil else { return }
+        let timer = Timer(timeInterval: 0.25, repeats: true) { [weak self] _ in
+            Task { @MainActor in self?.tick() }
+        }
+        RunLoop.main.add(timer, forMode: .common)
+        ticker = timer
+    }
+
+    private func stopTicker() {
+        ticker?.invalidate()
+        ticker = nil
+    }
+
+    private func tick() {
+        guard let endDate, !isPaused else { return }
+        remaining = max(0, endDate.timeIntervalSinceNow)
+        if remaining <= 0 { advance() }
+    }
+}

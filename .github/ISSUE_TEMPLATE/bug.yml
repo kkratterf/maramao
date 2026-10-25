@@ -1,0 +1,41 @@
+name: "🙀 Bug: il gatto ha fatto un disastro"
+description: Something crashes, a break never ends, a window stays stuck on screen, the timer is wrong.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did and what went wrong. Screenshots or a screen recording help a lot.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Break mode
+      options:
+        - Il gatto sulla finestra
+        - Muro di meme
+        - Non svegliare il gatto
+        - Invasione di gatti
+        - Not related to a break
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version and Mac
+      placeholder: "e.g. macOS 15.1, MacBook Air M2, two displays"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Maramao version
+      description: From the release you downloaded, or the commit you built.

@@ -1,0 +1,21 @@
+# Groups the auto-generated release notes by PR label.
+changelog:
+  exclude:
+    labels:
+      - skip-changelog
+  categories:
+    - title: Gatti nuovi
+      labels:
+        - cats
+    - title: Timer e app
+      labels:
+        - app
+    - title: Correzioni
+      labels:
+        - bug
+    - title: CI e strumenti
+      labels:
+        - ci
+    - title: Altro
+      labels:
+        - "*"
