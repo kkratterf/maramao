@@ -48,9 +48,9 @@ final class KeyboardCatBreak: BreakMode {
             previousApp = front
         }
 
-        let screens = NSScreen.screens
+        let screens = BreakScreens.current()
         guard !screens.isEmpty else { return }
-        let mainScreen = NSScreen.main ?? screens[0]
+        let mainScreen = BreakScreens.primary(in: screens) ?? screens[0]
         let fadeIn = min(0.6, context.duration / 40)
         var keyWindow: OverlayWindow?
         for screen in screens {

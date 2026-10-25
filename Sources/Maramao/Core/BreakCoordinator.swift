@@ -47,6 +47,7 @@ final class BreakCoordinator {
         currentModeID = resolved
         emergencyExit.arm()
         startWatchdog()
+        BreakScreens.beginBreak()
         breakMode.begin(context: context)
     }
 
@@ -58,6 +59,7 @@ final class BreakCoordinator {
         stopWatchdog()
         emergencyExit.disarm()
         breakMode.end()
+        BreakScreens.endBreak()
         scheduleSweep()
     }
 

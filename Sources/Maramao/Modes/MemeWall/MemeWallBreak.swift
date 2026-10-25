@@ -20,7 +20,7 @@ final class MemeWallBreak: BreakMode {
         let userImages = MemeWallUserImages.load()
         // Shorter entrance in a 30 s preview.
         let entranceScale = min(1, max(0.3, context.duration / 60))
-        for screen in NSScreen.screens {
+        for screen in BreakScreens.current() {
             let wall = MemeWallModel(
                 cardCount: Self.cardCount(for: screen.frame.size),
                 deck: deck,
