@@ -184,6 +184,9 @@ if [ "$LAYOUT_OK" = 1 ]; then
 fi
 if [ "$LAYOUT_OK" = 1 ] && [ -f "$MOUNT/.DS_Store" ]; then
   echo "Finder layout: OK (icon view, background, icons placed)"
+  if [ -n "${GITHUB_ACTIONS:-}" ]; then
+    echo "::notice::DMG Finder layout applied (icon view, background, icons placed)"
+  fi
 else
   LAYOUT_OK=0
   warn "Finder layout could not be applied; the DMG works but shows a plain window"

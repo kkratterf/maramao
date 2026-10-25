@@ -8,6 +8,8 @@
 // The design space is 660x400 points, origin bottom-left. Finder places
 // the icons (top-left origin) with Maramao.app centred at (165, 200) and
 // Applications at (495, 200), so the arrow runs between those two slots.
+// Finder's window bounds include the title bar, so the bottom ~28 points
+// may be hidden: nothing important is drawn there.
 
 import CoreGraphics
 import CoreText
@@ -244,13 +246,13 @@ func drawBackground(in ctx: CGContext, scale: CGFloat) {
     ctx.fillPath()
 
     // Small paws in the corners as decoration.
-    drawPaw(in: ctx, center: CGPoint(x: 40, y: 44), angle: 1.2, size: 14, color: rgb(0xF6A04D, 0.35))
-    drawPaw(in: ctx, center: CGPoint(x: 620, y: 52), angle: 1.9, size: 14, color: rgb(0xF6A04D, 0.35))
+    drawPaw(in: ctx, center: CGPoint(x: 44, y: 70), angle: 1.2, size: 14, color: rgb(0xF6A04D, 0.35))
+    drawPaw(in: ctx, center: CGPoint(x: 616, y: 78), angle: 1.9, size: 14, color: rgb(0xF6A04D, 0.35))
 
     // Footer.
     let footerFont = font(["SFProRounded-Medium", "ArialRoundedMTBold", "HelveticaNeue-Medium"], size: 12)
     drawCenteredText("Maramao · il Pomodoro che ti ferma coi gatti", in: ctx, font: footerFont,
-                     color: rgb(0x3A2420, 0.6), centerX: width / 2, baselineY: 30)
+                     color: rgb(0x3A2420, 0.6), centerX: width / 2, baselineY: 42)
 }
 
 // MARK: - Output
