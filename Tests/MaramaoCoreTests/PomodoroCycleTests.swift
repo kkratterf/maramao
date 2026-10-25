@@ -80,3 +80,24 @@ final class PomodoroCycleTests: XCTestCase {
         }
     }
 }
+
+final class PomodoroCycleAbandonTests: XCTestCase {
+    func testAbandonWorkGoesIdleWithoutCounting() {
+        var cycle = PomodoroCycle()
+        cycle.startWork()
+        cycle.advance()
+        cycle.advance(autoStartWork: true)
+        XCTAssertEqual(cycle.phase, .work)
+        cycle.abandonWork()
+        XCTAssertEqual(cycle.phase, .idle)
+        XCTAssertEqual(cycle.completedWorkSessions, 1)
+    }
+
+    func testAbandonWorkIgnoresBreaks() {
+        var cycle = PomodoroCycle()
+        cycle.startWork()
+        cycle.advance()
+        cycle.abandonWork()
+        XCTAssertEqual(cycle.phase, .shortBreak)
+    }
+}

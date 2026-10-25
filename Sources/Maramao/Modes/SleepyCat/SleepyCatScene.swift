@@ -82,11 +82,13 @@ struct SleepyNightSky: View {
 
                 // Stars drift a few points a second: 15 fps looks the same as 30 and halves
                 // the cost of redrawing a full-screen canvas on every display.
+                // Reduce Motion: stars only twinkle in place and the dust is gone.
+                let calm = BreakAccessibility.reduceMotion
                 TimelineView(.animation(minimumInterval: 1.0 / 15.0, paused: false)) { timeline in
                     let t = timeline.date.timeIntervalSinceReferenceDate
                     Canvas { ctx, size in
                         for star in Self.stars {
-                            let x = (star.x + t * star.speed).truncatingRemainder(dividingBy: 1) * size.width
+                            let x = (star.x + (calm ? 0 : t) * star.speed).truncatingRemainder(dividingBy: 1) * size.width
                             let y = star.y * size.height
                             let alpha = 0.3 + 0.7 * (0.5 + 0.5 * sin(t * star.twinkle + star.phase))
                             let r = star.radius
@@ -95,7 +97,7 @@ struct SleepyNightSky: View {
                                 with: .color(.white.opacity(alpha))
                             )
                         }
-                        for speck in Self.dust {
+                        for speck in Self.dust where !calm {
                             // Dust rises slowly from the bottom and sways a little.
                             let rise = (speck.y + t * speck.speed).truncatingRemainder(dividingBy: 1)
                             let y = (1 - rise) * size.height
@@ -233,7 +235,8 @@ struct SleepyCatStage: View {
         case .startled:
             pose = .sitting
             let p = min(1, inPhase / 0.4)
-            jump = -height * 0.12 * CGFloat(sin(Double.pi * p))
+            // Reduce Motion: the cat sits up without jumping.
+            jump = BreakAccessibility.reduceMotion ? 0 : -height * 0.12 * CGFloat(sin(Double.pi * p))
             wag = sin(t * 14) * 0.6
         case .awake:
             pose = .sitting
@@ -280,11 +283,13 @@ struct SleepyCatStage: View {
     private func zLetter(index: Int, t: Double, width: CGFloat, height: CGFloat) -> some View {
         let period = 3.6
         let raw = (t / period + Double(index) / 3).truncatingRemainder(dividingBy: 1)
-        let p = CGFloat(raw)
+        // Reduce Motion: each Z stays in its place and only fades in and out.
+        let calm = BreakAccessibility.reduceMotion
+        let p = calm ? CGFloat(index + 1) / 4 : CGFloat(raw)
         // The sleeping head sits at about (150, 118) in the cat's 200×160 design space.
         let startX = width * 0.25
         let startY = height * 0.18
-        let x = startX + p * width * 0.22 + CGFloat(sin(raw * 2 * Double.pi)) * 8
+        let x = startX + p * width * 0.22 + (calm ? 0 : CGFloat(sin(raw * 2 * Double.pi)) * 8)
         let y = startY - p * height * 0.75
         let size = 20 + 16 * p
         return Text(index == 1 ? "z" : "Z")

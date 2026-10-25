@@ -27,12 +27,16 @@ struct LaserChaseScene: View {
 
 /// A dark room with a faint warm spot on the floor, so the red dot pops.
 struct LaserChaseCurtain: View {
+    @Environment(\.colorSchemeContrast) private var contrast
+
     var body: some View {
-        ZStack {
+        // Increase Contrast: a nearly opaque curtain behind the cat, the dot and the texts.
+        let solid = contrast == .increased
+        return ZStack {
             LinearGradient(
                 colors: [
-                    Color(red: 0.03, green: 0.03, blue: 0.07).opacity(0.86),
-                    Color(red: 0.08, green: 0.06, blue: 0.1).opacity(0.9),
+                    Color(red: 0.03, green: 0.03, blue: 0.07).opacity(solid ? 0.97 : 0.86),
+                    Color(red: 0.08, green: 0.06, blue: 0.1).opacity(solid ? 0.98 : 0.9),
                 ],
                 startPoint: .top,
                 endPoint: .bottom
@@ -142,8 +146,13 @@ struct LaserChaseDot: View {
 
     private static let red = Color(red: 1.0, green: 0.08, blue: 0.12)
 
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
+    @Environment(\.colorSchemeContrast) private var contrast
+
     var body: some View {
-        Canvas { ctx, _ in
+        // Differentiate Without Color / Increase Contrast: a white ring, so the dot does not rely on red.
+        let ringed = differentiateWithoutColor || contrast == .increased
+        return Canvas { ctx, _ in
             let count = points.count
             if count > 1 {
                 for index in 1..<count {
@@ -162,7 +171,7 @@ struct LaserChaseDot: View {
                 }
             }
             guard let dot = points.last else { return }
-            let flicker = CGFloat(1 + 0.07 * sin(time * 37) + 0.04 * sin(time * 23))
+            let flicker = BreakAccessibility.reduceMotion ? CGFloat(1) : CGFloat(1 + 0.07 * sin(time * 37) + 0.04 * sin(time * 23))
             let halo = 30 * flicker
             ctx.fill(
                 Path(ellipseIn: CGRect(x: dot.x - halo, y: dot.y - halo, width: halo * 2, height: halo * 2)),
@@ -183,6 +192,14 @@ struct LaserChaseDot: View {
                 Path(ellipseIn: CGRect(x: dot.x - core, y: dot.y - core, width: core * 2, height: core * 2)),
                 with: .color(Color(red: 1.0, green: 0.85, blue: 0.85))
             )
+            if ringed {
+                let ring: CGFloat = 13
+                ctx.stroke(
+                    Path(ellipseIn: CGRect(x: dot.x - ring, y: dot.y - ring, width: ring * 2, height: ring * 2)),
+                    with: .color(.white),
+                    lineWidth: 2.5
+                )
+            }
         }
     }
 }

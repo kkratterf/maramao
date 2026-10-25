@@ -7,6 +7,8 @@ final class CatPileSKView: SKView {
 }
 
 /// The physics scene: cats fall from above the top edge and pile up until the screen is buried.
+/// With Reduce Motion (`calm`) there is no physics at all: cats fade in already stacked,
+/// row by row from the bottom, and fade out at the end.
 final class CatPileScene: SKScene {
     private struct CatSprite {
         let texture: SKTexture
@@ -45,7 +47,14 @@ final class CatPileScene: SKScene {
     private var activeUntil: TimeInterval = 0
     private var isScattering = false
 
-    init(size: CGSize, artworks: [CatPileArtwork], fillTime: TimeInterval) {
+    private let calm: Bool
+    /// Calm stacking: where the next cat goes in the current row.
+    private var calmX: CGFloat = 0
+    private var calmRowBase: CGFloat = 0
+    private var calmRowHeight: CGFloat = 0
+
+    init(size: CGSize, artworks: [CatPileArtwork], fillTime: TimeInterval, calm: Bool = false) {
+        self.calm = calm
         sprites = artworks.map { CatSprite(texture: SKTexture(cgImage: $0.image), aspect: $0.aspect) }
         self.fillTime = max(5, fillTime)
 
@@ -160,6 +169,14 @@ final class CatPileScene: SKScene {
         }
         cat.addChild(sprite)
 
+        if calm {
+            placeCalmly(cat, spriteSize: spriteSize)
+            cat.zPosition = CGFloat(cats.count) * 0.01
+            addChild(cat)
+            cats.append(cat)
+            return
+        }
+
         let bodySize = CGSize(width: spriteSize.width * 0.85, height: spriteSize.height * 0.82)
         let body = SKPhysicsBody(rectangleOf: bodySize)
         body.restitution = 0.3
@@ -186,8 +203,37 @@ final class CatPileScene: SKScene {
         cats.append(cat)
     }
 
+    /// Reduce Motion: puts the cat straight into the stack and fades it in. Rows overlap a
+    /// little, like a pile, and fill the screen from the bottom up.
+    private func placeCalmly(_ cat: SKNode, spriteSize: CGSize) {
+        if cats.isEmpty {
+            calmX = -spriteSize.width * 0.2
+        }
+        if calmX + spriteSize.width * 0.6 > size.width {
+            calmRowBase += max(30, calmRowHeight * 0.72)
+            calmRowHeight = 0
+            calmX = -spriteSize.width * CGFloat.random(in: 0.1...0.4)
+        }
+        cat.position = CGPoint(x: calmX + spriteSize.width / 2, y: calmRowBase + spriteSize.height / 2)
+        cat.zRotation = CGFloat.random(in: -0.12...0.12)
+        calmX += spriteSize.width * 0.82
+        calmRowHeight = max(calmRowHeight, spriteSize.height)
+        cat.alpha = 0
+        cat.run(SKAction.fadeIn(withDuration: 0.8))
+    }
+
     /// Checks how high the resting pile is, deepens the tint and stops spawning once full.
     private func scanPile() {
+        if calm {
+            let top = calmRowBase + calmRowHeight * 0.5
+            if top >= size.height * 0.92 || cats.count >= Self.maxCats {
+                pileIsFull = true
+            }
+            // Nothing moves but the fades: a low frame rate is plenty.
+            setFrameRate(20)
+            updateTint(fraction: Double(min(1, top / max(1, size.height))))
+            return
+        }
         var top: CGFloat = 0
         for cat in cats {
             guard let body = cat.physicsBody else { continue }
@@ -208,7 +254,10 @@ final class CatPileScene: SKScene {
 
         let byCount = Double(cats.count) / Double(max(1, targetCount))
         let byHeight = Double(top / max(1, size.height))
-        let fraction = min(1, max(byCount, byHeight))
+        updateTint(fraction: min(1, max(byCount, byHeight)))
+    }
+
+    private func updateTint(fraction: Double) {
         let step = min(4, Int(fraction * 4))
         if step > dimStep {
             dimStep = step
@@ -221,7 +270,7 @@ final class CatPileScene: SKScene {
 
     private func autoMeow() {
         let visible = cats.filter { cat in
-            guard let body = cat.physicsBody else { return false }
+            guard let body = cat.physicsBody else { return calm && cat.position.y < size.height - 20 }
             return cat.position.y < size.height - 20 && abs(body.velocity.dy) < 40
         }
         let topOfPile = visible.sorted { $0.position.y > $1.position.y }.prefix(4)
@@ -250,8 +299,19 @@ final class CatPileScene: SKScene {
         label.position = CGPoint(x: x, y: y)
         label.zPosition = 1000
         label.zRotation = CGFloat.random(in: -0.25...0.25)
-        label.setScale(0.3)
         addChild(label)
+        if calm {
+            // Reduce Motion: the meow fades in and out where it is.
+            label.alpha = 0
+            label.run(SKAction.sequence([
+                SKAction.fadeIn(withDuration: 0.25),
+                SKAction.wait(forDuration: 0.9),
+                SKAction.fadeOut(withDuration: 0.4),
+                SKAction.removeFromParent(),
+            ]))
+            return
+        }
+        label.setScale(0.3)
 
         let pop = SKAction.sequence([
             SKAction.scale(to: 1.15, duration: 0.12),
@@ -276,6 +336,10 @@ final class CatPileScene: SKScene {
                 hit = cat
             }
         }
+        if calm, let cat = hit {
+            meow(at: cat)
+            return
+        }
         guard let cat = hit, let body = cat.physicsBody else { return }
         body.velocity = CGVector(dx: CGFloat.random(in: -160...160), dy: CGFloat.random(in: 650...900))
         body.angularVelocity = CGFloat.random(in: -5...5)
@@ -295,6 +359,15 @@ final class CatPileScene: SKScene {
     func scatter() {
         guard !isScattering else { return }
         isScattering = true
+        if calm {
+            // Reduce Motion: the pile fades away instead of falling apart.
+            for cat in cats {
+                cat.run(SKAction.fadeOut(withDuration: 1.0))
+            }
+            tint.removeAllActions()
+            tint.run(SKAction.fadeAlpha(to: 0, duration: 1.0))
+            return
+        }
         setFrameRate(Self.activeFPS)
         walls.physicsBody = nil
         walls.removeFromParent()

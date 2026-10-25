@@ -14,6 +14,9 @@ struct MenuContentView: View {
         VStack(alignment: .leading, spacing: 14) {
             header
             timer
+            if let notice = engine.awayNotice {
+                awayRow(notice)
+            }
             controls
             snoozeRow
             todayRow
@@ -105,6 +108,30 @@ struct MenuContentView: View {
             }
         }
         .controlSize(.large)
+    }
+
+    /// "Bentornato! Ti sei già riposato", with a way to undo the guess.
+    private func awayRow(_ notice: String) -> some View {
+        HStack(spacing: 8) {
+            Text("😺")
+            Text(notice)
+                .font(.caption)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 4)
+            if engine.canUndoAwayReset {
+                Button("Riprendi da dove ero") { engine.undoAwayReset() }
+                    .font(.caption)
+            }
+            Button {
+                engine.dismissAwayNotice()
+            } label: {
+                Image(systemName: "xmark")
+            }
+            .buttonStyle(.borderless)
+            .help("Ok")
+        }
+        .padding(8)
+        .background(RoundedRectangle(cornerRadius: 8).fill(Color.orange.opacity(0.12)))
     }
 
     /// "Pausa per…" while not in a break; "Riprendi ora" while snoozed.

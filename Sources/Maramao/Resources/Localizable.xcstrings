@@ -1,6 +1,17 @@
 {
   "sourceLanguage": "it",
   "strings": {
+    "%@ e %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ and %2$@"
+          }
+        }
+      }
+    },
     "%@: %lld pause rispettate su %lld": {
       "extractionState": "manual",
       "localizations": {
@@ -8,6 +19,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%1$@: %2$lld of %3$lld breaks taken"
+          }
+        }
+      }
+    },
+    "%lld minuti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld minutes"
           }
         }
       }
@@ -60,6 +82,17 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "%lld secondi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld seconds"
           }
         }
       }
@@ -149,6 +182,17 @@
         }
       }
     },
+    "1 minuto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 minute"
+          }
+        }
+      }
+    },
     "1 minuto prima": {
       "extractionState": "manual",
       "localizations": {
@@ -167,6 +211,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 hour"
+          }
+        }
+      }
+    },
+    "1 secondo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 second"
           }
         }
       }
@@ -222,6 +277,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "5 MINUTES OF ME. NON-NEGOTIABLE."
+          }
+        }
+      }
+    },
+    "Accessibilità": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accessibility"
           }
         }
       }
@@ -354,6 +420,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "STILL ON THE KEYBOARD?"
+          }
+        }
+      }
+    },
+    "Animazioni delle pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break animations"
           }
         }
       }
@@ -523,6 +600,39 @@
         }
       }
     },
+    "Bentornato! Il timer ti aspetta in pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome back! The timer is paused, waiting for you"
+          }
+        }
+      }
+    },
+    "Bentornato! La pausa l'hai già fatta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome back! You already took your break"
+          }
+        }
+      }
+    },
+    "Bentornato! Ti sei già riposato": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome back! You've already had your rest"
+          }
+        }
+      }
+    },
     "BEVI UN BICCHIERE D'ACQUA": {
       "extractionState": "manual",
       "localizations": {
@@ -655,6 +765,17 @@
         }
       }
     },
+    "Chiudi l'anteprima": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close the preview"
+          }
+        }
+      }
+    },
     "Combinazione già usata da un'altra app.": {
       "extractionState": "manual",
       "localizations": {
@@ -662,6 +783,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Another app already uses this combination."
+          }
+        }
+      }
+    },
+    "Come il sistema": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same as system"
           }
         }
       }
@@ -677,6 +809,17 @@
         }
       }
     },
+    "Complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full"
+          }
+        }
+      }
+    },
     "CON IL SEDERE": {
       "extractionState": "manual",
       "localizations": {
@@ -684,6 +827,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "WITH MY BUTT"
+          }
+        }
+      }
+    },
+    "Con le animazioni ridotte i gatti appaiono con una dissolvenza: niente passeggiate, salti o gatti che cadono. \"Come il sistema\" segue Riduci movimento in Impostazioni di Sistema → Accessibilità → Schermo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With reduced animations the cats fade in: no walking, jumping or falling cats. \"Same as system\" follows Reduce motion in System Settings → Accessibility → Display."
           }
         }
       }
@@ -706,6 +860,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Allow Maramao in System Settings → General → Login Items."
+          }
+        }
+      }
+    },
+    "Considera pausa fatta": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count it as a break"
+          }
+        }
+      }
+    },
+    "Consiglio del gatto: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat's advice: %@"
           }
         }
       }
@@ -1455,6 +1631,34 @@
         }
       }
     },
+    "hud.accessibility.break": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausa"
+          }
+        }
+      }
+    },
+    "Ignora": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignore"
+          }
+        }
+      }
+    },
     "IL BUG NON SPARISCE": {
       "extractionState": "manual",
       "localizations": {
@@ -1715,6 +1919,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "THE POMODORO IS OVER"
+          }
+        }
+      }
+    },
+    "Il timer continua a correre, ma la pausa non parte mai a schermo bloccato: aspetta che torni.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The timer keeps running, but a break never starts while the screen is locked: it waits for you to come back."
+          }
+        }
+      }
+    },
+    "Il timer si ferma e ti aspetta in pausa finché non riprendi tu.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The timer stops and waits, paused, until you resume it."
+          }
+        }
+      }
+    },
+    "Il timer si ferma e, se sei stato via almeno una pausa breve, al ritorno riparti da capo: la pausa l'hai già fatta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The timer stops, and if you were away for at least a short break, it starts over when you're back: you've had your break."
           }
         }
       }
@@ -2203,6 +2440,17 @@
         }
       }
     },
+    "Mac in stop, schermo bloccato o %lld min senza toccare niente.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac asleep, screen locked, or %lld min without touching anything."
+          }
+        }
+      }
+    },
     "Mai": {
       "extractionState": "manual",
       "localizations": {
@@ -2221,6 +2469,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "NEVER HEARD OF HER"
+          }
+        }
+      }
+    },
+    "Manca %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left"
+          }
+        }
+      }
+    },
+    "Mancano %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left"
           }
         }
       }
@@ -2280,6 +2550,17 @@
         }
       }
     },
+    "Meme di gatti: %@ %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat meme: %1$@ %2$@"
+          }
+        }
+      }
+    },
     "mercoledì": {
       "extractionState": "manual",
       "localizations": {
@@ -2298,6 +2579,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "DESERVES A CHIN SCRATCH"
+          }
+        }
+      }
+    },
+    "Metti in pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
           }
         }
       }
@@ -2463,6 +2755,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Strict mode: breaks can never be skipped"
+          }
+        }
+      }
+    },
+    "Modalità severa: la pausa non si salta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strict mode: this break can't be skipped."
           }
         }
       }
@@ -2940,6 +3243,17 @@
         }
       }
     },
+    "Pausa finita. Puoi tornare al lavoro.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break's over. You can get back to work."
+          }
+        }
+      }
+    },
     "Pausa gatto ora": {
       "extractionState": "manual",
       "localizations": {
@@ -3047,6 +3361,17 @@
         }
       }
     },
+    "Pausa: %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break: %@."
+          }
+        }
+      }
+    },
     "PAUSA?": {
       "extractionState": "manual",
       "localizations": {
@@ -3142,6 +3467,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pomodoros, breaks and streaks will be deleted. The cat forgets everything."
+          }
+        }
+      }
+    },
+    "Potrai saltare la pausa tra %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can skip the break in %@."
           }
         }
       }
@@ -3341,6 +3677,28 @@
         }
       }
     },
+    "Puoi saltare la pausa, anche con %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can skip the break, or press %@."
+          }
+        }
+      }
+    },
+    "Puoi saltare la pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can skip the break."
+          }
+        }
+      }
+    },
     "QUANDO DICI 'ANCORA UN'EMAIL'": {
       "extractionState": "manual",
       "localizations": {
@@ -3392,6 +3750,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "When a break starts"
+          }
+        }
+      }
+    },
+    "Quando sei via": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When you're away"
           }
         }
       }
@@ -3473,6 +3842,17 @@
         }
       }
     },
+    "Ridotte": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reduced"
+          }
+        }
+      }
+    },
     "Riempi la borraccia e bevi un bicchiere intero d'acqua.": {
       "extractionState": "manual",
       "localizations": {
@@ -3524,6 +3904,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Resume"
+          }
+        }
+      }
+    },
+    "Riprendi da dove ero": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick up where I left off"
           }
         }
       }
@@ -3612,6 +4003,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Skip (when allowed)"
+          }
+        }
+      }
+    },
+    "Salta la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip the break"
           }
         }
       }
@@ -4078,6 +4480,17 @@
         }
       }
     },
+    "Tempo rimanente": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time left"
+          }
+        }
+      }
+    },
     "TI HO PORTATO UN REGALO": {
       "extractionState": "manual",
       "localizations": {
@@ -4221,6 +4634,39 @@
         }
       }
     },
+    "Un gatto che cammina": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A walking cat"
+          }
+        }
+      }
+    },
+    "Un gatto che dorme": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A sleeping cat"
+          }
+        }
+      }
+    },
+    "Un gatto che si stiracchia": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cat stretching"
+          }
+        }
+      }
+    },
     "Un gatto dorme sulla tastiera: qualunque cosa scrivi, la scrive lui.": {
       "extractionState": "manual",
       "localizations": {
@@ -4239,6 +4685,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "A cat naps on your screen. Touch the mouse and it wakes up to judge you."
+          }
+        }
+      }
+    },
+    "Un gatto seduto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A sitting cat"
           }
         }
       }
