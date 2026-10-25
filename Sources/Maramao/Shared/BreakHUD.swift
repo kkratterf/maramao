@@ -11,7 +11,9 @@ struct BreakHUD: View {
     enum Style { case dark, light }
 
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 0.5)) { _ in
+        // Redraws once a second, right after the countdown text changes (it counts down to
+        // `endDate`), instead of polling: the HUD sits on every screen for the whole break.
+        TimelineView(.periodic(from: clockTickStart, by: 1)) { _ in
             HStack(spacing: 14) {
                 Text("🐾")
                     .font(.system(size: 22))
@@ -50,6 +52,12 @@ struct BreakHUD: View {
             )
             .shadow(color: .black.opacity(0.25), radius: 12, y: 4)
         }
+    }
+
+    /// A moment when the clock text has just changed: the countdown flips on whole seconds
+    /// before `endDate`.
+    private var clockTickStart: Date {
+        context.endDate.addingTimeInterval(0.01 - context.duration.rounded(.up))
     }
 
     private var foreground: Color { style == .dark ? .white : .black }

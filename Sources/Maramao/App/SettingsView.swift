@@ -66,6 +66,10 @@ struct SettingsView: View {
                         Text("Pulsante \"Salta\" dopo \(Int(settings.skipUnlockSeconds)) secondi")
                     }
                 }
+                Text("Uscita di emergenza: \(EmergencyExitGuard.shortcutLabel) chiude subito qualsiasi pausa, anche in modalità severa. Funziona anche cliccando \(EmergencyExitGuard.cornerClicks) volte di fila nell'angolo in alto a sinistra dello schermo.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             Section("Suoni") {

@@ -1,0 +1,30 @@
+name: Footprint
+
+# Measures bundle size, memory and CPU of the release build (scripts/measure-footprint.sh)
+# and shows them in the run summary. Informational: it never fails on a number.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: footprint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  measure:
+    name: Measure footprint
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the app bundle
+        run: scripts/build-app.sh release
+
+      - name: Measure
+        run: scripts/measure-footprint.sh
