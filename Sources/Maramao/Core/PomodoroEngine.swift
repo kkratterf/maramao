@@ -214,7 +214,7 @@ final class PomodoroEngine: ObservableObject {
     private func advance() {
         recordEndOfPhase()
         let wasBreak = cycle.phase.isBreak
-        cycle.advance(autoStartWork: settings.autoStartWork)
+        cycle.advance(autoStartWork: settings.autoStartWork && mayAutoStartWork)
         if wasBreak {
             breaks.end()
             breakContext = nil

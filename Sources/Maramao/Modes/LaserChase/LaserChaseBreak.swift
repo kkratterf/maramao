@@ -77,6 +77,7 @@ final class LaserChaseBreak: BreakMode {
     private var catchPoint: CGPoint = .zero
     private var catches = 0
     private var bubbleStart: TimeInterval = 0
+    private var frameCount = 0
     private var bubbleEnd: TimeInterval = 0
     private var nextHeartID = 0
 
@@ -286,6 +287,13 @@ final class LaserChaseBreak: BreakMode {
         step(at: time, dt: dt)
         movedThisTick = false
         updateDerivedState(at: time)
+
+        // While the cat grooms (mouse idle), 15 fps is plenty: only the paw and the blinks
+        // move, and every snapshot redraws a full-screen stage on each display.
+        frameCount += 1
+        let idle = state == .grooming && hypot(vx, vy) < 1
+            && (cat.bubble == nil || (cat.bubbleAge > 0.3 && cat.bubbleRemaining > 0.4))
+        if idle && frameCount % 4 != 0 { return }
         model.snapshot = cat
         syncStatus()
     }
