@@ -38,6 +38,8 @@ struct SettingsView: View {
                 Toggle("Riparti a lavorare da solo dopo la pausa", isOn: $settings.autoStartWork)
             }
 
+            WorkingHoursSection()
+
             Section("Gatti") {
                 Picker("Modalità pausa", selection: $settings.breakModeRaw) {
                     ForEach(BreakModeID.allCases) { mode in
