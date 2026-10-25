@@ -33,6 +33,10 @@ jobs:
       - name: Build the app bundle
         run: scripts/build-app.sh release
 
+      - name: Probe App Intents (temporary)
+        run: scripts/probe-appintents.sh
+        continue-on-error: true
+
       - name: Upload Maramao.app
         uses: actions/upload-artifact@v4
         with:
