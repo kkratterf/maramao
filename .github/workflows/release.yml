@@ -18,6 +18,15 @@ name: Release
 #                                   Access > Integrations > Keys, role Developer)
 #   APPLE_NOTARY_ISSUER_ID          issuer ID shown on the same page
 #   APPLE_NOTARY_KEY_P8_BASE64      the downloaded AuthKey_<id>.p8, base64-encoded
+#
+# Auto-update with Sparkle (optional). When the SPARKLE_ED_PRIVATE_KEY secret
+# is set, the zip is signed with Sparkle's sign_update and, for non-pre-release
+# versions, added to site/appcast.xml, committed to main and deployed to
+# GitHub Pages (https://kkratterf.github.io/maramao/appcast.xml). Without the
+# secret these steps are skipped with a warning.
+#   SPARKLE_ED_PRIVATE_KEY          private EdDSA key exported with Sparkle's
+#                                   `generate_keys -x <file>`; its public half
+#                                   goes in SUPublicEDKey in Resources/Info.plist
 on:
   workflow_dispatch:
     inputs:
@@ -48,6 +57,9 @@ jobs:
     runs-on: macos-15
     permissions:
       contents: write
+      # To start the Pages deploy after the appcast commit (pushes made with
+      # GITHUB_TOKEN do not trigger workflows on their own).
+      actions: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -178,6 +190,38 @@ jobs:
           shasum -a 256 "Maramao-$VERSION.zip" "Maramao-$VERSION.dmg" > SHA256SUMS.txt
           cat SHA256SUMS.txt
 
+      - name: Sign the update for Sparkle
+        id: sparkle
+        env:
+          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
+        run: |
+          if [ -z "$SPARKLE_ED_PRIVATE_KEY" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::SPARKLE_ED_PRIVATE_KEY is not set: the update is not signed and the appcast is not updated"
+            exit 0
+          fi
+          public_key=$(/usr/libexec/PlistBuddy -c 'Print :SUPublicEDKey' Resources/Info.plist)
+          if [ "$public_key" = "SPARKLE_PUBLIC_ED_KEY_PLACEHOLDER" ]; then
+            echo "::warning::SUPublicEDKey in Resources/Info.plist is still the placeholder: this build hides the updater, paste the public key to turn it on"
+          fi
+          # Sparkle's tools come with the SwiftPM artifact; download them if
+          # this SwiftPM version did not keep them.
+          sign_update=$(find .build/artifacts -type f -name sign_update -perm -u+x 2>/dev/null | head -n 1)
+          if [ -z "$sign_update" ]; then
+            sparkle_version=$(python3 -c "import json; pins = json.load(open('Package.resolved'))['pins']; print([p['state']['version'] for p in pins if p['identity'] == 'sparkle'][0])")
+            curl -fsSL -o "$RUNNER_TEMP/sparkle.zip" \
+              "https://github.com/sparkle-project/Sparkle/releases/download/$sparkle_version/Sparkle-for-Swift-Package-Manager.zip"
+            unzip -q -o "$RUNNER_TEMP/sparkle.zip" 'bin/*' -d "$RUNNER_TEMP/sparkle"
+            sign_update="$RUNNER_TEMP/sparkle/bin/sign_update"
+          fi
+          echo "Using $sign_update"
+          zip_signature=$(printf '%s' "$SPARKLE_ED_PRIVATE_KEY" | "$sign_update" --ed-key-file - "dist/Maramao-$VERSION.zip")
+          dmg_signature=$(printf '%s' "$SPARKLE_ED_PRIVATE_KEY" | "$sign_update" --ed-key-file - "dist/Maramao-$VERSION.dmg")
+          echo "zip: $zip_signature"
+          echo "dmg: $dmg_signature"
+          echo "enabled=true" >> "$GITHUB_OUTPUT"
+          echo "zip_signature=$zip_signature" >> "$GITHUB_OUTPUT"
+
       - name: Create the release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -193,3 +237,37 @@ jobs:
             --title "Maramao $TAG" \
             --generate-notes \
             "${flags[@]}"
+
+      - name: Publish the appcast
+        if: steps.sparkle.outputs.enabled == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRERELEASE: ${{ inputs.prerelease }}
+          ZIP_SIGNATURE: ${{ steps.sparkle.outputs.zip_signature }}
+        run: |
+          if [ "$PRERELEASE" = "true" ]; then
+            echo "::notice::Pre-release: not offered to users through the appcast"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B appcast-update origin/main
+          mkdir -p site
+          python3 scripts/update-appcast.py \
+            --appcast site/appcast.xml \
+            --version "$VERSION" \
+            --url "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/Maramao-$VERSION.zip" \
+            --signature "$ZIP_SIGNATURE"
+          git add site/appcast.xml
+          git commit -m "chore(release): add Maramao $VERSION to the appcast"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then break; fi
+            if [ "$attempt" = 3 ]; then echo "::error::Could not push the appcast to main"; exit 1; fi
+            sleep $((attempt * 5))
+            git fetch origin main
+            git rebase origin/main
+          done
+          if ! gh workflow run pages.yml --ref main; then
+            echo "::warning::Could not start the Pages deploy: run the Pages workflow by hand to publish appcast.xml"
+          fi
