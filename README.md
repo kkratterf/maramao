@@ -23,6 +23,16 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 
 Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
 
+### Keyboard shortcuts
+
+They work from any app and need no special permission. Turn each one on or off in Settings → **Scorciatoie**.
+
+| Shortcut | Action |
+| --- | --- |
+| ⌃⌥⌘P | Start a pomodoro, or pause / resume it |
+| ⌃⌥⌘B | Take the cat break now |
+| ⌃⌥⌘S | Skip the current phase (a break only once skipping is allowed) |
+
 ---
 
 ## Install

@@ -67,6 +67,8 @@ struct SettingsView: View {
                 Toggle("Suoni", isOn: $settings.soundEnabled)
             }
 
+            ShortcutsSettingsSection()
+
             Section {
                 Text("Le modifiche ai tempi valgono dal prossimo pomodoro.")
                     .font(.caption)
