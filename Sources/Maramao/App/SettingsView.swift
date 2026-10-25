@@ -25,6 +25,8 @@ struct SettingsView: View {
                 }
             }
 
+            MenuBarSettingsSection()
+
             Section("Tempi") {
                 minutesStepper("Lavoro", value: $settings.workMinutes, range: 1...120)
                 minutesStepper("Pausa breve", value: $settings.shortBreakMinutes, range: 1...30)
