@@ -5,8 +5,11 @@
 [![CI](https://github.com/kkratterf/maramao/actions/workflows/ci.yml/badge.svg)](https://github.com/kkratterf/maramao/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/kkratterf/maramao)](https://github.com/kkratterf/maramao/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](#license)
+[![Website](https://img.shields.io/badge/website-kkratterf.github.io%2Fmaramao-E8402F)](https://kkratterf.github.io/maramao/)
 
 A native macOS menu bar app for the Pomodoro technique. Work for 25 minutes, then a cat makes sure you actually take the break. Written in Swift with SwiftUI and AppKit.
+
+**Website:** [kkratterf.github.io/maramao](https://kkratterf.github.io/maramao/)
 
 ---
 
