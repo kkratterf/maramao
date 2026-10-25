@@ -77,7 +77,9 @@ for scenario in "${SCENARIOS[@]}"; do
     | awk -v pid="$pid" '$1 == pid { w = $2 } END { print w + 0 }')
   cpu_end=$(cpu_seconds "$pid")
 
-  footprint_line=$(footprint -p "$pid" 2>/dev/null | awk '/[Ff]ootprint:/ { $1 = ""; print; exit }' || true)
+  # "[pid]: 64-bit Footprint: 12 MB (16384 bytes per page)" -> "12 MB"
+  footprint_line=$(footprint -p "$pid" 2>/dev/null \
+    | sed -n 's/.*Footprint: *\([0-9.]* [KMG]*B\).*/\1/p' | head -n 1 || true)
   rss=$(ps -o rss= -p "$pid" | tr -d ' ')
 
   cpu=$(awk -v a="$cpu_start" -v b="$cpu_end" -v w="$WINDOW" 'BEGIN { printf "%.1f%%", (b - a) / w * 100 }')
