@@ -22,6 +22,8 @@ final class PomodoroEngine: ObservableObject {
     private var ticker: Timer?
     private var breakContext: BreakContext?
     private var previewTimer: Timer?
+    private var breakWarning = BreakWarning()
+    private let peekingCat = PeekingCatWarning()
 
     init(settings: AppSettings = .shared) {
         self.settings = settings
@@ -53,6 +55,7 @@ final class PomodoroEngine: ObservableObject {
         } else {
             tick()
             isPaused = true
+            peekingCat.dismiss()
         }
     }
 
@@ -80,6 +83,7 @@ final class PomodoroEngine: ObservableObject {
         breakContext = nil
         activeBreakMode = nil
         stopTicker()
+        peekingCat.close()
         cycle.reset()
         cycle.config = settings.pomodoroConfig
         phase = .idle
@@ -105,6 +109,14 @@ final class PomodoroEngine: ObservableObject {
         previewTimer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: false) { [weak self] _ in
             Task { @MainActor in self?.endPreview() }
         }
+    }
+
+    /// Shows the peeking cat warning right away, without touching the cycle.
+    func previewBreakWarning() {
+        guard !phase.isBreak else { return }
+        let seconds = settings.breakWarningSeconds > 0 ? settings.breakWarningSeconds : BreakWarning.defaultLeadTime
+        peekingCat.show(message: BreakWarning.message(seconds: seconds))
+        playSound("Tink")
     }
 
     // MARK: - Internals
@@ -133,6 +145,8 @@ final class PomodoroEngine: ObservableObject {
         phase = cycle.phase
         completedWorkSessions = cycle.completedWorkSessions
         isPaused = false
+        breakWarning.reset()
+        if phase != .work { peekingCat.dismiss() }
 
         guard phase != .idle else {
             stopTicker()
@@ -150,6 +164,7 @@ final class PomodoroEngine: ObservableObject {
 
         if phase.isBreak {
             endPreview()
+            peekingCat.close()
             playSound("Purr")
             let unlock: Date? = settings.strictMode ? nil : Date().addingTimeInterval(settings.skipUnlockSeconds)
             let context = BreakContext(
@@ -187,6 +202,26 @@ final class PomodoroEngine: ObservableObject {
     private func tick() {
         guard let endDate, !isPaused else { return }
         remaining = max(0, endDate.timeIntervalSinceNow)
-        if remaining <= 0 { advance() }
+        if remaining <= 0 {
+            advance()
+            return
+        }
+        checkBreakWarning()
+    }
+
+    /// Lets a cat peek from the bottom of the screen shortly before the break.
+    private func checkBreakWarning() {
+        // A break preview is on screen: the user is looking at cats already.
+        guard previewTimer == nil else { return }
+        breakWarning.leadTime = TimeInterval(settings.breakWarningSeconds)
+        guard breakWarning.shouldWarn(
+            phase: phase,
+            isPaused: isPaused,
+            remaining: remaining,
+            phaseDuration: phaseDuration
+        ) else { return }
+        let seconds = breakWarning.announcedSeconds(remaining: remaining)
+        peekingCat.show(message: BreakWarning.message(seconds: seconds))
+        playSound("Tink")
     }
 }
