@@ -18,6 +18,9 @@ final class PomodoroEngine: ObservableObject {
     @Published private(set) var awayNotice: String?
     /// True while "Riprendi da dove ero" can undo a reset caused by being away.
     @Published private(set) var canUndoAwayReset = false
+    /// True while a break postponed with "Rimanda" waits to come back. The phase stays the
+    /// break's; the countdown is the snooze.
+    @Published private(set) var isBreakSnoozed = false
     /// True while the break is held back because the user is in a call or presenting.
     @Published private(set) var isBreakPostponed = false
 
@@ -33,6 +36,8 @@ final class PomodoroEngine: ObservableObject {
     private var breakWarning = BreakWarning()
     private let peekingCat = PeekingCatWarning()
     private let presence = PresenceMonitor()
+    /// The mode of the snoozed break: the same cat comes back.
+    private var snoozedMode: BreakModeID?
     private var postponer = BreakPostponer()
     /// True while a work session is paused because the user is away (not by the user).
     private var frozenByAway = false
@@ -66,7 +71,11 @@ final class PomodoroEngine: ObservableObject {
     var isRunning: Bool { phase != .idle && !isPaused }
     var progress: Double { phaseDuration > 0 ? min(1, 1 - remaining / phaseDuration) : 0 }
     var sessionsInCurrentSet: Int { cycle.sessionsInCurrentSet }
-    var canSkipBreak: Bool { breakContext?.canSkipNow ?? false }
+    var canSkipBreak: Bool {
+        if isBreakSnoozed { return !settings.strictMode }
+        return breakContext?.canSkipNow ?? false
+    }
+    var canSnoozeBreak: Bool { breakContext?.canSnoozeNow ?? false }
 
     // MARK: - Commands
 
@@ -115,8 +124,43 @@ final class PomodoroEngine: ObservableObject {
         }
     }
 
-    /// "I want my break now": ends the work session early.
+    /// "Rimanda": ends the break on screen and brings the same break back, from the top,
+    /// after the snooze length. Limited per day; never in strict mode or previews.
+    func snoozeBreak() {
+        guard previewTimer == nil, phase.isBreak, !isBreakSnoozed,
+              let context = breakContext, context.canSnoozeNow,
+              settings.snoozePolicy.canOffer(usedToday: stats.today.breaksSnoozed, isPreview: false, strictMode: settings.strictMode)
+        else { return }
+        let seconds = settings.snoozePolicy.seconds
+        snoozedMode = activeBreakMode
+        breaks.end()
+        breakContext = nil
+        activeBreakMode = nil
+        isBreakSnoozed = true
+        // The call postponer gets a fresh maximum for the return of this break.
+        postponer.reset()
+        isBreakPostponed = false
+        stats.recordSnooze()
+        phaseDuration = seconds
+        remaining = seconds
+        endDate = Date().addingTimeInterval(seconds)
+        startTicker()
+        peekingCat.show(message: BreakSnoozeText.snoozed(minutes: settings.snoozePolicy.minutes))
+    }
+
+    /// The snooze is over, or the user asked for the break now: the cat comes back.
+    private func resumeSnoozedBreak() {
+        guard isBreakSnoozed else { return }
+        let mode = snoozedMode
+        enterCurrentPhase(breakMode: mode)
+    }
+
+    /// "I want my break now": ends the work session early (or a snooze).
     func takeBreakNow() {
+        if isBreakSnoozed {
+            resumeSnoozedBreak()
+            return
+        }
         if phase == .idle { cycle.startWork() }
         if cycle.phase == .work { advance() }
     }
@@ -128,6 +172,8 @@ final class PomodoroEngine: ObservableObject {
         breaks.end()
         breakContext = nil
         activeBreakMode = nil
+        isBreakSnoozed = false
+        snoozedMode = nil
         stopTicker()
         peekingCat.close()
         cycle.reset()
@@ -241,6 +287,15 @@ final class PomodoroEngine: ObservableObject {
 
     /// The work session just ran out. While the user is in a call or presenting, keeps it
     /// going one more minute (up to the maximum in Settings) and returns true.
+    /// The checks before a break appears, when work runs out or a snooze ends. Never start
+    /// a break nobody can see (asleep, locked: wait for the wake or unlock, the ticker keeps
+    /// asking), and hold it back during a call or presentation.
+    private func breakMayStartNow() -> Bool {
+        if presence.isScreenUnavailable { return false }
+        if postponeBreakIfBusy() { return false }
+        return true
+    }
+
     private func postponeBreakIfBusy() -> Bool {
         postponer.isEnabled = settings.dontInterruptCalls
         postponer.maxPostpone = TimeInterval(settings.maxPostponeMinutes * 60)
@@ -357,21 +412,31 @@ final class PomodoroEngine: ObservableObject {
             let focused = finished ? phaseDuration : phaseDuration - remaining
             stats.recordWork(completed: finished, focusSeconds: max(0, focused))
         case .shortBreak, .longBreak:
-            if let mode = activeBreakMode, breakContext != nil {
-                stats.recordBreak(completed: finished, mode: mode)
-                companion.recordBreak(respected: finished, mode: mode)
+            if let mode = realBreakMode {
+                // A snoozed break that ends now was skipped while it waited.
+                let respected = finished && !isBreakSnoozed
+                stats.recordBreak(completed: respected, mode: mode)
+                companion.recordBreak(respected: respected, mode: mode)
             }
         }
     }
 
     /// A real break left through "start work" or "reset" counts as skipped.
     private func recordAbandonedBreak() {
-        guard phase.isBreak, breakContext != nil, let mode = activeBreakMode else { return }
+        guard phase.isBreak, let mode = realBreakMode else { return }
         stats.recordBreak(completed: false, mode: mode)
         companion.recordBreak(respected: false, mode: mode)
     }
 
-    private func enterCurrentPhase() {
+    /// The mode of the real (not preview) break in progress, on screen or snoozed.
+    private var realBreakMode: BreakModeID? {
+        if isBreakSnoozed { return snoozedMode ?? settings.breakMode.resolved() }
+        return breakContext != nil ? activeBreakMode : nil
+    }
+
+    private func enterCurrentPhase(breakMode: BreakModeID? = nil) {
+        isBreakSnoozed = false
+        snoozedMode = nil
         phase = cycle.phase
         completedWorkSessions = cycle.completedWorkSessions
         isPaused = false
@@ -402,18 +467,25 @@ final class PomodoroEngine: ObservableObject {
             peekingCat.close()
             CatSounds.shared.randomMeow()
             let unlock: Date? = settings.strictMode ? nil : Date().addingTimeInterval(settings.skipUnlockSeconds)
+            let snooze = settings.snoozePolicy
+            let usedToday = stats.today.breaksSnoozed
+            let offersSnooze = snooze.canOffer(usedToday: usedToday, isPreview: false, strictMode: settings.strictMode)
             let context = BreakContext(
                 duration: duration,
                 isLongBreak: phase == .longBreak,
                 isPreview: false,
                 skipUnlockDate: unlock,
-                onSkip: { [weak self] in self?.skip() }
+                onSkip: { [weak self] in self?.skip() },
+                snoozeMinutes: snooze.minutes,
+                snoozeDeadline: offersSnooze ? Date().addingTimeInterval(snooze.offerDuration(breakDuration: duration)) : nil,
+                snoozesLeft: snooze.snoozesLeft(usedToday: usedToday),
+                onSnooze: { [weak self] in self?.snoozeBreak() }
             )
             breakContext = context
             companion.breakBegan()
             // A Focus filter may change the mode, or turn the cats off: the break
-            // then only counts down in the menu bar.
-            if let mode = FocusFilterState.shared.breakMode(default: settings.breakMode) {
+            // then only counts down in the menu bar. A snoozed break brings its own cat back.
+            if let mode = breakMode ?? FocusFilterState.shared.breakMode(default: settings.breakMode) {
                 breaks.start(mode: mode, context: context)
             }
             activeBreakMode = breaks.currentModeID
@@ -448,9 +520,12 @@ final class PomodoroEngine: ObservableObject {
         guard let endDate, !isPaused else { return }
         remaining = max(0, endDate.timeIntervalSinceNow)
         if remaining <= 0 {
-            // Never start a break nobody can see: wait for the wake or unlock.
-            if phase == .work, presence.isScreenUnavailable { return }
-            if phase == .work, postponeBreakIfBusy() { return }
+            if isBreakSnoozed {
+                // The snooze is over: the cat comes back through the same gate as a new break.
+                if breakMayStartNow() { resumeSnoozedBreak() }
+                return
+            }
+            if phase == .work, !breakMayStartNow() { return }
             advance()
             return
         }

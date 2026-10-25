@@ -37,6 +37,12 @@ struct StatsSection: View {
         if total.breaksTotal > 0 {
             text += " · " + String(localized: "\(total.breaksCompleted)/\(total.breaksTotal) pause rispettate")
         }
+        if total.breaksSnoozed > 0 {
+            let snoozed = total.breaksSnoozed == 1
+                ? String(localized: "1 pausa rimandata")
+                : String(localized: "\(total.breaksSnoozed) pause rimandate")
+            text += " · \(snoozed)"
+        }
         if total.emergencyExits > 0 {
             let exits = String(localized: "\(total.emergencyExits) uscite di emergenza")
             text += " · \(exits)"

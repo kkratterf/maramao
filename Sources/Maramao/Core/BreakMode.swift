@@ -12,16 +12,36 @@ final class BreakContext {
     /// When the skip button may appear. `nil` means the break cannot be skipped.
     let skipUnlockDate: Date?
     private let onSkip: () -> Void
+    /// "Rimanda": how long a snooze lasts, and until when it is offered (`nil`: never).
+    let snoozeMinutes: Int
+    let snoozeDeadline: Date?
+    /// Snoozes left today, for the button's hint.
+    let snoozesLeft: Int
+    private let onSnooze: () -> Void
     /// The cat's suggestion for this break, picked once and shared by every screen.
     lazy var tip: String = BreakTipStore.shared.nextTip(isLongBreak: isLongBreak)
 
-    init(duration: TimeInterval, isLongBreak: Bool, isPreview: Bool, skipUnlockDate: Date?, onSkip: @escaping () -> Void) {
+    init(
+        duration: TimeInterval,
+        isLongBreak: Bool,
+        isPreview: Bool,
+        skipUnlockDate: Date?,
+        onSkip: @escaping () -> Void,
+        snoozeMinutes: Int = 0,
+        snoozeDeadline: Date? = nil,
+        snoozesLeft: Int = 0,
+        onSnooze: @escaping () -> Void = {}
+    ) {
         self.duration = duration
         self.endDate = Date().addingTimeInterval(duration)
         self.isLongBreak = isLongBreak
         self.isPreview = isPreview
         self.skipUnlockDate = skipUnlockDate
         self.onSkip = onSkip
+        self.snoozeMinutes = snoozeMinutes
+        self.snoozeDeadline = snoozeDeadline
+        self.snoozesLeft = snoozesLeft
+        self.onSnooze = onSnooze
     }
 
     var remaining: TimeInterval { max(0, endDate.timeIntervalSinceNow) }
@@ -30,6 +50,18 @@ final class BreakContext {
     var canSkipNow: Bool {
         guard let skipUnlockDate else { return false }
         return Date() >= skipUnlockDate
+    }
+
+    /// True while "Rimanda" may postpone this break (first part of the break, daily limit left).
+    var canSnoozeNow: Bool {
+        guard let snoozeDeadline, snoozeMinutes > 0 else { return false }
+        return Date() < snoozeDeadline
+    }
+
+    /// Asks to postpone the break. Ignored unless `canSnoozeNow`.
+    func requestSnooze() {
+        guard canSnoozeNow else { return }
+        onSnooze()
     }
 
     /// Asks to end the break early. Ignored until `canSkipNow` is true.
