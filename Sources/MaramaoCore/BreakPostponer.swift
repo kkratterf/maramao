@@ -1,4 +1,5 @@
 import Foundation
+import CoreGraphics
 
 /// What is keeping the user busy right now. Read from device state, no permissions.
 public struct BusySignals: Equatable, Sendable {
