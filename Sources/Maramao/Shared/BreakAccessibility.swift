@@ -49,6 +49,13 @@ enum BreakAccessibility {
         guard shortcuts.enabled.contains(.skip), !shortcuts.failed.contains(.skip) else { return nil }
         return GlobalShortcut.skip.combo.displayString
     }
+
+    /// The global "Rimanda" shortcut ("⌃⌥⌘R") when it is on and registered.
+    static var snoozeShortcutLabel: String? {
+        let shortcuts = GlobalShortcuts.shared
+        guard shortcuts.enabled.contains(.snooze), !shortcuts.failed.contains(.snooze) else { return nil }
+        return GlobalShortcut.snooze.combo.displayString
+    }
 }
 
 /// Speaks the break to VoiceOver: "Pausa: 5 minuti" when it starts, the time left once a

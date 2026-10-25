@@ -38,6 +38,9 @@ final class AppSettings: ObservableObject {
     @Published var motionPreferenceRaw: String { didSet { defaults.set(motionPreferenceRaw, forKey: Keys.motionPreference) } }
     /// "Il tuo gatto": the cat remembers you, can be petted and fed with treats.
     @Published var companionEnabled: Bool { didSet { defaults.set(companionEnabled, forKey: Keys.companionEnabled) } }
+    /// "Rimanda": minutes a break is postponed by, and how many times a day (0 = never).
+    @Published var snoozeMinutes: Int { didSet { defaults.set(snoozeMinutes, forKey: Keys.snoozeMinutes) } }
+    @Published var snoozeDailyLimit: Int { didSet { defaults.set(snoozeDailyLimit, forKey: Keys.snoozeDailyLimit) } }
 
     private enum Keys {
         static let workMinutes = "workMinutes"
@@ -59,6 +62,8 @@ final class AppSettings: ObservableObject {
         static let menuBarHideSeconds = "menuBarHideSeconds"
         static let motionPreference = "motionPreference"
         static let companionEnabled = "companionEnabled"
+        static let snoozeMinutes = "snoozeMinutes"
+        static let snoozeDailyLimit = "snoozeDailyLimit"
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -83,6 +88,8 @@ final class AppSettings: ObservableObject {
             Keys.menuBarHideSeconds: false,
             Keys.motionPreference: MotionPreference.defaultPreference.rawValue,
             Keys.companionEnabled: true,
+            Keys.snoozeMinutes: BreakSnoozePolicy.defaultMinutes,
+            Keys.snoozeDailyLimit: BreakSnoozePolicy.defaultDailyLimit,
         ])
         workMinutes = defaults.double(forKey: Keys.workMinutes)
         shortBreakMinutes = defaults.double(forKey: Keys.shortBreakMinutes)
@@ -103,6 +110,12 @@ final class AppSettings: ObservableObject {
         menuBarHideSeconds = defaults.bool(forKey: Keys.menuBarHideSeconds)
         motionPreferenceRaw = defaults.string(forKey: Keys.motionPreference) ?? MotionPreference.defaultPreference.rawValue
         companionEnabled = defaults.bool(forKey: Keys.companionEnabled)
+        snoozeMinutes = defaults.integer(forKey: Keys.snoozeMinutes)
+        snoozeDailyLimit = defaults.integer(forKey: Keys.snoozeDailyLimit)
+    }
+
+    var snoozePolicy: BreakSnoozePolicy {
+        BreakSnoozePolicy(minutes: snoozeMinutes, dailyLimit: snoozeDailyLimit)
     }
 
     var breakMode: BreakModeID {

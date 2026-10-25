@@ -1,6 +1,17 @@
 {
   "sourceLanguage": "it",
   "strings": {
+    "\"Rimanda\" compare nella prima metà della pausa: il gatto se ne va e torna dopo, con la pausa intera. Non è \"Pausa per…\", che addormenta tutta l'app.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\"Snooze\" shows up during the first half of a break: the cat leaves and comes back later with the whole break. It is not \"Pause for…\", which puts the whole app to sleep."
+          }
+        }
+      }
+    },
     "%@ e %@": {
       "extractionState": "manual",
       "localizations": {
@@ -85,6 +96,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld minutes before"
+          }
+        }
+      }
+    },
+    "%lld pause rimandate": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld breaks snoozed"
           }
         }
       }
@@ -234,6 +256,17 @@
         }
       }
     },
+    "%lld volte al giorno": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld times a day"
+          }
+        }
+      }
+    },
     "%lld/%lld pause rispettate": {
       "extractionState": "manual",
       "localizations": {
@@ -311,6 +344,17 @@
         }
       }
     },
+    "1 pausa rimandata": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 break snoozed"
+          }
+        }
+      }
+    },
     "1 secondo": {
       "extractionState": "manual",
       "localizations": {
@@ -318,6 +362,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 second"
+          }
+        }
+      }
+    },
+    "1 volta al giorno": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Once a day"
           }
         }
       }
@@ -421,6 +476,17 @@
         }
       }
     },
+    "Al massimo %lld min": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "At most %lld min"
+          }
+        }
+      }
+    },
     "Al settimo cielo": {
       "extractionState": "manual",
       "localizations": {
@@ -516,6 +582,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "ME TOO. AND I DID NOTHING."
+          }
+        }
+      }
+    },
+    "Ancora %lld rinvii oggi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld snoozes left today"
+          }
+        }
+      }
+    },
+    "Ancora 1 rinvio oggi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 snooze left today"
           }
         }
       }
@@ -637,6 +725,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "FRESH AIR AND A PIGEON TO STARE AT"
+          }
+        }
+      }
+    },
+    "Aspetta sempre": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait as long as it takes"
           }
         }
       }
@@ -791,6 +890,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Laser chase"
+          }
+        }
+      }
+    },
+    "Call e presentazioni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calls and presentations"
           }
         }
       }
@@ -1220,6 +1330,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Again? Seriously?"
+          }
+        }
+      }
+    },
+    "Di quanto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze length"
           }
         }
       }
@@ -3548,6 +3669,17 @@
         }
       }
     },
+    "Non interrompere call e presentazioni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't interrupt calls and presentations"
+          }
+        }
+      }
+    },
     "NON MI INTERESSA. CROCCHETTE.": {
       "extractionState": "manual",
       "localizations": {
@@ -3812,6 +3944,17 @@
         }
       }
     },
+    "Pausa in attesa: sei in call": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break on hold: you're in a call"
+          }
+        }
+      }
+    },
     "Pausa lunga": {
       "extractionState": "manual",
       "localizations": {
@@ -3893,6 +4036,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pause for…"
+          }
+        }
+      }
+    },
+    "Pausa rimandata: il gatto torna presto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break snoozed: the cat will be back soon"
           }
         }
       }
@@ -4466,6 +4620,39 @@
         }
       }
     },
+    "Rimanda %lld min": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze %lld min"
+          }
+        }
+      }
+    },
+    "Rimanda la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold the break"
+          }
+        }
+      }
+    },
+    "Rimanda la pausa (quando si può)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze the break (when allowed)"
+          }
+        }
+      }
+    },
     "Riparti a lavorare da solo dopo la pausa": {
       "extractionState": "manual",
       "localizations": {
@@ -4770,6 +4957,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "IF THERE'S SUN, I NAP IN IT"
+          }
+        }
+      }
+    },
+    "Se il microfono o la videocamera sono in uso, o hai a tutto schermo Keynote, PowerPoint, un video o una call, la pausa aspetta un minuto alla volta. Nessun permesso richiesto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When the microphone or camera is in use, or Keynote, PowerPoint, a video or a call is fullscreen, the break waits one minute at a time. No permission needed."
           }
         }
       }
@@ -5159,6 +5357,17 @@
         }
       }
     },
+    "Ti aspetto dopo la call 🐈": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'll wait until your call is over 🐈"
+          }
+        }
+      }
+    },
     "TI HO PORTATO UN REGALO": {
       "extractionState": "manual",
       "localizations": {
@@ -5478,6 +5687,28 @@
         }
       }
     },
+    "Va bene, torno tra %lld minuti 🐾": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fine, I'll be back in %lld minutes 🐾"
+          }
+        }
+      }
+    },
+    "Va bene, torno tra un minuto 🐾": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fine, I'll be back in a minute 🐾"
+          }
+        }
+      }
+    },
     "Vai a bere un bicchiere d'acqua.": {
       "extractionState": "manual",
       "localizations": {
@@ -5793,94 +6024,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "😾 One more move and your coffee goes off the desk."
-          }
-        }
-      }
-    },
-    "Ti aspetto dopo la call 🐈": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "I'll wait until your call is over 🐈"
-          }
-        }
-      }
-    },
-    "Aspetta sempre": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Wait as long as it takes"
-          }
-        }
-      }
-    },
-    "Al massimo %lld min": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "At most %lld min"
-          }
-        }
-      }
-    },
-    "Pausa in attesa: sei in call": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Break on hold: you're in a call"
-          }
-        }
-      }
-    },
-    "Call e presentazioni": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calls and presentations"
-          }
-        }
-      }
-    },
-    "Non interrompere call e presentazioni": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Don't interrupt calls and presentations"
-          }
-        }
-      }
-    },
-    "Rimanda la pausa": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hold the break"
-          }
-        }
-      }
-    },
-    "Se il microfono o la videocamera sono in uso, o hai a tutto schermo Keynote, PowerPoint, un video o una call, la pausa aspetta un minuto alla volta. Nessun permesso richiesto.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "When the microphone or camera is in use, or Keynote, PowerPoint, a video or a call is fullscreen, the break waits one minute at a time. No permission needed."
           }
         }
       }

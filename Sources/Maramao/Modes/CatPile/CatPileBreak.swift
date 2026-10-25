@@ -93,7 +93,8 @@ final class CatPileBreak: BreakMode {
 
     private func makeHUDWindow(on screen: NSScreen, level: NSWindow.Level, context: BreakContext) -> OverlayWindow {
         // Tall enough for the cat's tip under the pill (see BreakHUD); the empty part is transparent.
-        let size = NSSize(width: 480, height: 210)
+        // Wide enough for the pill with both "Rimanda" and "Salta".
+        let size = NSSize(width: 560, height: 210)
         let visible = screen.visibleFrame
         let frame = NSRect(
             x: screen.frame.midX - size.width / 2,
