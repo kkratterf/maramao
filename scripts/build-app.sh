@@ -10,14 +10,29 @@ DIST="$ROOT/dist"
 APP="$DIST/Maramao.app"
 
 cd "$ROOT"
-swift build -c "$CONFIG" --arch arm64 --arch x86_64 2>/dev/null \
-  || swift build -c "$CONFIG"
-BIN_DIR="$(swift build -c "$CONFIG" --arch arm64 --arch x86_64 --show-bin-path 2>/dev/null \
-  || swift build -c "$CONFIG" --show-bin-path)"
+# Release builds are optimised for size: the app is a timer that sleeps most of the
+# time, so a smaller binary (less to load and page in) beats the last bit of speed.
+FLAGS=""
+if [ "$CONFIG" = "release" ]; then
+  FLAGS="-Xswiftc -Osize"
+fi
+swift build -c "$CONFIG" $FLAGS --arch arm64 --arch x86_64 2>/dev/null \
+  || swift build -c "$CONFIG" $FLAGS
+BIN_DIR="$(swift build -c "$CONFIG" $FLAGS --arch arm64 --arch x86_64 --show-bin-path 2>/dev/null \
+  || swift build -c "$CONFIG" $FLAGS --show-bin-path)"
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN_DIR/Maramao" "$APP/Contents/MacOS/Maramao"
+if [ "$CONFIG" = "release" ]; then
+  # Drop debug info, local and Swift-internal symbols: only crash symbolication
+  # needs them, and an ad-hoc build has no dSYM workflow anyway. Must run before
+  # codesign. -T (Swift symbols) needs Xcode 15's strip; fall back without it.
+  BEFORE=$(wc -c < "$APP/Contents/MacOS/Maramao" | tr -d ' ')
+  strip -S -T -x "$APP/Contents/MacOS/Maramao" 2>/dev/null || strip -S -x "$APP/Contents/MacOS/Maramao"
+  AFTER=$(wc -c < "$APP/Contents/MacOS/Maramao" | tr -d ' ')
+  echo "Stripped the executable: $BEFORE -> $AFTER bytes"
+fi
 cp "$ROOT/Resources/Info.plist" "$APP/Contents/Info.plist"
 
 # App icon: drawn in code by scripts/make-icon.swift, so no binary is

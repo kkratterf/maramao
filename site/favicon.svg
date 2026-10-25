@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="100 100 824 824">
+  <!-- The Maramao app icon (scripts/make-icon.swift), redrawn in SVG. -->
+  <defs>
+    <linearGradient id="t" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF7A5C"/><stop offset=".55" stop-color="#F04A36"/><stop offset="1" stop-color="#D62F25"/>
+    </linearGradient>
+    <linearGradient id="f" x1="0" y1="324" x2="0" y2="944" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFC27A"/><stop offset=".5" stop-color="#F6A04D"/><stop offset="1" stop-color="#E98A3A"/>
+    </linearGradient>
+    <clipPath id="c"><rect x="100" y="100" width="824" height="824" rx="236"/></clipPath>
+    <path id="leaf" d="M0 0Q41 26 92 0Q41-26 0 0Z"/>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="236" fill="url(#t)"/>
+  <g clip-path="url(#c)">
+    <ellipse cx="300" cy="260" rx="120" ry="52" fill="#fff" opacity=".22" transform="rotate(-31 300 260)"/>
+    <path fill="url(#f)" d="M236 614L262 324L430 489ZM788 614L762 324L594 489Z"/>
+    <ellipse cx="512" cy="724" rx="305" ry="245" fill="url(#f)"/>
+    <path fill="#F7A8A0" d="M280 569L292 384L400 499ZM744 569L732 384L624 499Z"/>
+    <path stroke="#DB7A2E" stroke-width="20" stroke-linecap="round" d="M432 526L446 569M592 526L578 569M512 536L512 576"/>
+    <ellipse cx="512" cy="789" rx="200" ry="130" fill="#FFF1DC"/>
+    <g fill="#F27A7A" opacity=".45"><ellipse cx="330" cy="724" rx="40" ry="24"/><ellipse cx="694" cy="724" rx="40" ry="24"/></g>
+    <g fill="#3A2420"><ellipse cx="398" cy="646" rx="44" ry="54"/><ellipse cx="626" cy="646" rx="44" ry="54"/></g>
+    <g fill="#fff"><circle cx="412" cy="626" r="15"/><circle cx="385" cy="664" r="7"/><circle cx="640" cy="626" r="15"/><circle cx="613" cy="664" r="7"/></g>
+    <path fill="#EE6F7A" d="M484 702Q512 690 540 702Q532 724 512 730Q492 724 484 702Z"/>
+    <path fill="none" stroke="#3A2420" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" d="M512 728L512 748M462 740Q484 774 512 748Q540 774 562 740"/>
+    <path stroke="#5A3328" stroke-opacity=".75" stroke-width="7" stroke-linecap="round" d="M330 762L168 732M330 778L162 778M334 794L176 828M694 762L856 732M694 778L862 778M690 794L848 828"/>
+    <g fill="#3FA34D" transform="translate(512 476)">
+      <use href="#leaf" transform="rotate(-54)"/><use href="#leaf" transform="rotate(-126)"/><use href="#leaf" transform="rotate(-198)"/><use href="#leaf" transform="rotate(-342)"/>
+      <use href="#leaf" transform="rotate(90) scale(.76 1)"/><ellipse rx="24" ry="20"/>
+    </g>
+    <path fill="none" stroke="#2E8B3E" stroke-width="18" stroke-linecap="round" d="M512 470Q508 426 534 402"/>
+  </g>
+</svg>
