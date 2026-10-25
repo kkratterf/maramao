@@ -7,12 +7,14 @@ struct MenuContentView: View {
     @EnvironmentObject private var settings: AppSettings
     @EnvironmentObject private var stats: StatsStore
     @ObservedObject private var shortcuts = GlobalShortcuts.shared
+    @ObservedObject private var availability = AvailabilityStore.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             header
             timer
             controls
+            snoozeRow
             todayRow
             Divider()
             modePicker
@@ -39,7 +41,10 @@ struct MenuContentView: View {
 
     private var phaseTitle: String {
         switch engine.phase {
-        case .idle: return "Pronto quando lo sei tu"
+        case .idle:
+            if availability.isSnoozed { return "Il gatto dorme \(availability.untilText())" }
+            if !availability.isWorkingTime() { return "Fuori orario: niente partenze automatiche" }
+            return "Pronto quando lo sei tu"
         case .work: return engine.isPaused ? "In pausa (tu, non il gatto)" : "Concentrazione"
         case .shortBreak: return "Pausa breve"
         case .longBreak: return "Pausa lunga"
@@ -96,6 +101,37 @@ struct MenuContentView: View {
             }
         }
         .controlSize(.large)
+    }
+
+    /// "Pausa per…" while not in a break; "Riprendi ora" while snoozed.
+    @ViewBuilder
+    private var snoozeRow: some View {
+        if availability.isSnoozed && engine.phase == .idle {
+            HStack {
+                Text("😴 Fermo \(availability.untilText())")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Button("Riprendi ora") {
+                    availability.endSnooze()
+                    engine.startWork()
+                }
+            }
+        } else if !engine.phase.isBreak {
+            HStack {
+                Menu {
+                    ForEach(SnoozeOption.allCases) { option in
+                        Button(option.title) { engine.snooze(option) }
+                    }
+                } label: {
+                    Label("Pausa per…", systemImage: "moon.zzz")
+                }
+                .menuStyle(.borderlessButton)
+                .fixedSize()
+                .help("Ferma Maramao per un po': riparte da solo")
+                Spacer()
+            }
+        }
     }
 
     private var todayRow: some View {

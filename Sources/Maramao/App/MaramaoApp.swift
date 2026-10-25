@@ -24,11 +24,17 @@ struct MaramaoApp: App {
 /// The text next to the cat in the menu bar.
 struct MenuBarLabel: View {
     @ObservedObject var engine: PomodoroEngine
+    @ObservedObject private var availability = AvailabilityStore.shared
 
     var body: some View {
         switch engine.phase {
         case .idle:
-            Text("🐱")
+            if let until = availability.snoozedUntil {
+                Text("😴 \(AvailabilityText.clock(until))")
+                    .monospacedDigit()
+            } else {
+                Text("🐱")
+            }
         case .work:
             Text("\(engine.isPaused ? "⏸" : "🍅") \(formatClock(engine.remaining))")
                 .monospacedDigit()
