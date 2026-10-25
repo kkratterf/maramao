@@ -18,10 +18,10 @@ public enum MenuBarStyle: String, CaseIterable, Identifiable, Sendable {
     /// Italian label for Settings.
     public var title: String {
         switch self {
-        case .catAndCountdown: return "Gatto + countdown"
-        case .catOnly: return "Solo gatto"
-        case .countdownOnly: return "Solo countdown"
-        case .catWithRing: return "Gatto con anello di progresso"
+        case .catAndCountdown: return String(localized: "Gatto + countdown")
+        case .catOnly: return String(localized: "Solo gatto")
+        case .countdownOnly: return String(localized: "Solo countdown")
+        case .catWithRing: return String(localized: "Gatto con anello di progresso")
         }
     }
 

@@ -55,7 +55,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 backing: .buffered,
                 defer: false
             )
-            window.title = "Impostazioni di Maramao"
+            window.title = String(localized: "Impostazioni di Maramao")
             window.isReleasedWhenClosed = false
             window.contentView = NSHostingView(
                 rootView: SettingsView()

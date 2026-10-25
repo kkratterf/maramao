@@ -1040,6 +1040,7 @@ h3 { font-size: 1.22rem; font-weight: 800; letter-spacing: -.005em; }
 .copy.copied { background: #2E7D3A; }
 .copy svg { width: .95rem; height: .95rem; }
 code { font-family: var(--mono); font-size: .9em; }
+.panel-term .term-lead { margin-top: 1.4rem; }
 .panel-term .note code { padding: .1rem .35rem; border-radius: 6px; background: var(--bg-2); }
 
 /* ---------- FAQ ---------- */

@@ -17,7 +17,7 @@ final class CatPileScene: SKScene {
 
     private static let catName = "cat"
     private static let catSpriteName = "catSprite"
-    private static let meows = ["Miao!", "Mrrp!", "Prrr", "MIAAAO", "Miao?", "Mrrrao!"]
+    private static let meows = [String(localized: "Miao!"), String(localized: "Mrrp!"), String(localized: "Prrr"), String(localized: "MIAAAO"), String(localized: "Miao?"), String(localized: "Mrrrao!")]
 
     /// Most cats on one screen, for performance.
     private static let maxCats = 250

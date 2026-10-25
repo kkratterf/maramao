@@ -176,14 +176,14 @@ struct SettingsView: View {
     /// Explains the "Quando sei via" choice.
     private var awayCaption: String {
         let minutes = Int(AwayPolicy.idleThreshold(shortBreak: settings.shortBreakMinutes * 60) / 60)
-        let away = "Mac in stop, schermo bloccato o \(minutes) min senza toccare niente."
+        let away = String(localized: "Mac in stop, schermo bloccato o \(minutes) min senza toccare niente.")
         switch AwayBehavior(rawValue: settings.awayBehaviorRaw) ?? .defaultBehavior {
         case .countAsBreak:
-            return "\(away) Il timer si ferma e, se sei stato via almeno una pausa breve, al ritorno riparti da capo: la pausa l'hai già fatta."
+            return away + " " + String(localized: "Il timer si ferma e, se sei stato via almeno una pausa breve, al ritorno riparti da capo: la pausa l'hai già fatta.")
         case .pause:
-            return "\(away) Il timer si ferma e ti aspetta in pausa finché non riprendi tu."
+            return away + " " + String(localized: "Il timer si ferma e ti aspetta in pausa finché non riprendi tu.")
         case .ignore:
-            return "Il timer continua a correre, ma la pausa non parte mai a schermo bloccato: aspetta che torni."
+            return String(localized: "Il timer continua a correre, ma la pausa non parte mai a schermo bloccato: aspetta che torni.")
         }
     }
 
@@ -214,14 +214,14 @@ struct SettingsView: View {
             refreshLaunchAtLogin()
         } catch {
             // Revert the toggle to the real state and explain why.
-            launchAtLoginError = "Non riesco a cambiare l'avvio automatico: \(error.localizedDescription)"
+            launchAtLoginError = String(localized: "Non riesco a cambiare l'avvio automatico: \(error.localizedDescription)")
             refreshLaunchAtLogin()
         }
     }
 
-    private func minutesStepper(_ title: String, value: Binding<Double>, range: ClosedRange<Double>) -> some View {
+    private func minutesStepper(_ title: LocalizedStringKey, value: Binding<Double>, range: ClosedRange<Double>) -> some View {
         Stepper(value: value, in: range, step: 1) {
-            Text("\(title): \(Int(value.wrappedValue)) min")
+            Text("\(Text(title)): \(Int(value.wrappedValue)) min")
         }
     }
 }

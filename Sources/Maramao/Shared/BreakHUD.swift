@@ -5,7 +5,7 @@ import MaramaoCore
 /// when allowed, the skip button.
 struct BreakHUD: View {
     let context: BreakContext
-    var message: String = "Pausa. Il gatto ha deciso."
+    var message: String = String(localized: "Pausa. Il gatto ha deciso.")
     var style: Style = .dark
 
     /// Shows the cat's break tip under the pill when there is room for it.
@@ -46,14 +46,14 @@ struct BreakHUD: View {
                         Button {
                             context.requestSkip()
                         } label: {
-                            Text(context.isPreview ? "Chiudi" : "Salta")
+                            Text(context.isPreview ? LocalizedStringKey("Chiudi") : LocalizedStringKey("Salta"))
                                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 6)
                                 .background(skipBackground)
                         }
                         .buttonStyle(.plain)
-                        .accessibilityLabel(context.isPreview ? "Chiudi l'anteprima" : "Salta la pausa")
+                        .accessibilityLabel(context.isPreview ? LocalizedStringKey("Chiudi l'anteprima") : LocalizedStringKey("Salta la pausa"))
                         .accessibilityHint(skipHint)
                         .help(skipHint)
                         if let shortcut = BreakAccessibility.skipShortcutLabel {
@@ -78,7 +78,8 @@ struct BreakHUD: View {
             .background(pillBackground)
             .shadow(color: .black.opacity(0.25), radius: 12, y: 4)
             .accessibilityElement(children: .contain)
-            .accessibilityLabel("Pausa")
+            // Own key: "Pausa" alone is the menu's "Pause" button.
+            .accessibilityLabel(String(localized: "hud.accessibility.break", defaultValue: "Pausa"))
             .accessibilityHint(context.canSkipNow ? "" : skipHint)
         }
     }

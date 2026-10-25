@@ -8,6 +8,7 @@ enum MeasurementHooks {
     /// shows that break as a long preview.
     @MainActor
     static func run() {
+        probeLocalization()
         guard let value = ProcessInfo.processInfo.environment["MARAMAO_MEASURE"] else { return }
         let engine = PomodoroEngine.shared
         if value == "work" {
@@ -15,5 +16,20 @@ enum MeasurementHooks {
         } else if let mode = BreakModeID(rawValue: value) {
             engine.preview(mode, seconds: 600)
         }
+    }
+
+    /// `MARAMAO_L10N_PROBE=1` prints a few localized strings and quits. CI runs the built app
+    /// with `-AppleLanguages "(en)"` and `"(it)"` to check that the translations are in the bundle.
+    private static func probeLocalization() {
+        guard ProcessInfo.processInfo.environment["MARAMAO_L10N_PROBE"] != nil else { return }
+        let lines = [
+            String(localized: "Inizia a lavorare"),
+            String(localized: "\(1) pomodori"),
+            String(localized: "\(4) pomodori"),
+            BreakModeID.walkingCat.title,
+        ]
+        print(lines.joined(separator: "\n"))
+        fflush(stdout)
+        exit(0)
     }
 }
