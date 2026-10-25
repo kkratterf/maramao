@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "example",
+  "name": "Gatti di esempio",
+  "author": "Maramao contributors",
+  "license": "CC0-1.0",
+  "description": "Un pacchetto da copiare per fare il tuo: tre gatti, qualche meme e qualche consiglio.",
+  "palettes": [
+    { "name": "Micio", "fur": "#F0963C", "stripes": "#C8641E", "belly": "#FAE6C8", "eyes": "#6EBE50" },
+    { "name": "Pisolo", "fur": "#5A5A64", "belly": "#8C8C96", "eyes": "#F0C83C", "nose": "#C8AAB4" },
+    { "name": "Neve", "fur": "#FAF8F0", "stripes": "#E6DCC8", "belly": "#FFFFFF", "eyes": "#64A0F0" }
+  ],
+  "catNames": ["Micio", "Pisolo", "Neve"],
+  "captions": [
+    { "top": "HO TROVATO UN PACCHETTO", "bottom": "ERA PIENO DI GATTI" },
+    { "top": "CC0", "bottom": "COME LE MIE FUSA: GRATIS" },
+    { "top": "IL TUO GATTO", "bottom": "ORA È NELLA PAUSA" }
+  ],
+  "images": [
+    "images/micio.png",
+    "images/pisolo.png",
+    "images/neve.png"
+  ],
+  "tips": {
+    "short": [
+      "Guarda il gatto più vicino a te (anche quello nello schermo) per venti secondi.",
+      "Fai un respiro profondo e stiracchia la coda. Ah, non ce l'hai."
+    ],
+    "long": [
+      "Vai a salutare un gatto vero, se ne conosci uno."
+    ]
+  }
+}

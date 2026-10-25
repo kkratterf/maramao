@@ -7,9 +7,22 @@ final class BreakTipStore {
     static let shared = BreakTipStore()
 
     private var picker = BreakTipPicker()
+    private var packGeneration = 0
 
     func nextTip(isLongBreak: Bool) -> String {
-        picker.next(isLongBreak: isLongBreak)
+        // Cat packs can add tips and cat names; rebuild the picker when they change.
+        let packs = CatPackRuntime.shared.content
+        if packs.generation != packGeneration {
+            packGeneration = packs.generation
+            picker = BreakTipPicker(
+                shortTips: BreakTips.short + packs.shortTips,
+                longTips: BreakTips.long + packs.longTips,
+                last: picker.last
+            )
+        }
+        let tip = picker.next(isLongBreak: isLongBreak)
+        guard !tip.isEmpty, let name = packs.catNames.randomElement() else { return tip }
+        return "\(name) dice: \(tip)"
     }
 }
 
