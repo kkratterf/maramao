@@ -3,7 +3,8 @@ name: Release
 # Started by hand with the version to publish (e.g. 0.2.0).
 # The version must already be set in Resources/Info.plist (CFBundleShortVersionString).
 #
-# Publishes Maramao-<version>.zip, Maramao-<version>.dmg and SHA256SUMS.txt.
+# Publishes Maramao-<version>.zip, Maramao-<version>.dmg and SHA256SUMS.txt,
+# then (for stable releases) bumps version and sha256 in Casks/maramao.rb on main.
 #
 # Signing and notarization (optional). Without these repository secrets the
 # app and the DMG are signed ad-hoc, exactly as before. When ALL of them are
@@ -271,3 +272,31 @@ jobs:
           if ! gh workflow run pages.yml --ref main; then
             echo "::warning::Could not start the Pages deploy: run the Pages workflow by hand to publish appcast.xml"
           fi
+
+      - name: Bump the Homebrew cask
+        env:
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          if [ "$PRERELEASE" = "true" ]; then
+            echo "::notice::Pre-release: the Homebrew cask keeps the previous version"
+            exit 0
+          fi
+          sha=$(shasum -a 256 "dist/Maramao-$VERSION.dmg" | cut -d' ' -f1)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B cask-update origin/main
+          sed -i '' -E \
+            -e "s/^  version \".*\"$/  version \"$VERSION\"/" \
+            -e "s/^  sha256 .*$/  sha256 \"$sha\"/" \
+            Casks/maramao.rb
+          grep -E '^  (version|sha256) ' Casks/maramao.rb
+          git add Casks/maramao.rb
+          git commit -m "chore(release): bump the Homebrew cask to $VERSION"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then break; fi
+            if [ "$attempt" = 3 ]; then echo "::error::Could not push the cask bump to main"; exit 1; fi
+            sleep $((attempt * 5))
+            git fetch origin main
+            git rebase origin/main
+          done
