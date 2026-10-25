@@ -137,6 +137,9 @@ final class PomodoroEngine: ObservableObject {
         breakContext = nil
         activeBreakMode = nil
         isBreakSnoozed = true
+        // The call postponer gets a fresh maximum for the return of this break.
+        postponer.reset()
+        isBreakPostponed = false
         stats.recordSnooze()
         phaseDuration = seconds
         remaining = seconds
@@ -284,6 +287,15 @@ final class PomodoroEngine: ObservableObject {
 
     /// The work session just ran out. While the user is in a call or presenting, keeps it
     /// going one more minute (up to the maximum in Settings) and returns true.
+    /// The checks before a break appears, when work runs out or a snooze ends. Never start
+    /// a break nobody can see (asleep, locked: wait for the wake or unlock, the ticker keeps
+    /// asking), and hold it back during a call or presentation.
+    private func breakMayStartNow() -> Bool {
+        if presence.isScreenUnavailable { return false }
+        if postponeBreakIfBusy() { return false }
+        return true
+    }
+
     private func postponeBreakIfBusy() -> Bool {
         postponer.isEnabled = settings.dontInterruptCalls
         postponer.maxPostpone = TimeInterval(settings.maxPostponeMinutes * 60)
@@ -509,12 +521,11 @@ final class PomodoroEngine: ObservableObject {
         remaining = max(0, endDate.timeIntervalSinceNow)
         if remaining <= 0 {
             if isBreakSnoozed {
-                resumeSnoozedBreak()
+                // The snooze is over: the cat comes back through the same gate as a new break.
+                if breakMayStartNow() { resumeSnoozedBreak() }
                 return
             }
-            // Never start a break nobody can see: wait for the wake or unlock.
-            if phase == .work, presence.isScreenUnavailable { return }
-            if phase == .work, postponeBreakIfBusy() { return }
+            if phase == .work, !breakMayStartNow() { return }
             advance()
             return
         }

@@ -52,7 +52,9 @@ struct MenuContentView: View {
     }
 
     private var phaseTitle: String {
-        if engine.isBreakSnoozed { return BreakSnoozeText.waiting }
+        if engine.isBreakSnoozed {
+            return engine.isBreakPostponed ? String(localized: "Pausa in attesa: sei in call") : BreakSnoozeText.waiting
+        }
         switch engine.phase {
         case .idle:
             if availability.isSnoozed { return String(localized: "Il gatto dorme \(availability.untilText())") }
