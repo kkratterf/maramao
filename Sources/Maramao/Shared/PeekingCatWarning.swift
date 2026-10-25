@@ -33,6 +33,7 @@ final class PeekingCatWarning {
         window.show()
         self.window = window
         self.model = model
+        BreakAccessibility.announce(message)
 
         sequence = Task { @MainActor [weak self] in
             guard await PeekingCatWarning.wait(0.05) else { return }
@@ -119,19 +120,23 @@ struct PeekingCatView: View {
     /// How far below its resting place the cat sits while peeking: only head and shoulders show.
     private let peekOffset: CGFloat = 48
 
+    /// Reduce Motion: the cat and its bubble fade in place instead of sliding and popping.
+    private var calm: Bool { BreakAccessibility.currentReduceMotion }
+
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             Color.clear
             bubble
                 .padding(.trailing, 92)
                 .padding(.bottom, catSize.height - peekOffset + 4)
-                .scaleEffect(model.bubbleVisible ? 1 : 0.6, anchor: .bottomTrailing)
+                .scaleEffect(model.bubbleVisible || calm ? 1 : 0.6, anchor: .bottomTrailing)
                 .opacity(model.bubbleVisible ? 1 : 0)
             CatView(pose: .sitting, palette: model.palette, eyesClosed: model.eyesClosed)
                 .frame(width: catSize.width, height: catSize.height)
                 .shadow(color: .black.opacity(0.2), radius: 6, y: 2)
                 .padding(.trailing, 8)
-                .offset(y: model.peeking ? peekOffset : catSize.height + 12)
+                .offset(y: model.peeking || calm ? peekOffset : catSize.height + 12)
+                .opacity(calm && !model.peeking ? 0 : 1)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipped()

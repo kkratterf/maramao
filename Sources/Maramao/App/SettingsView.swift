@@ -64,6 +64,18 @@ struct SettingsView: View {
                 }
             }
 
+            Section("Accessibilità") {
+                Picker("Animazioni delle pause", selection: $settings.motionPreferenceRaw) {
+                    ForEach(MotionPreference.allCases, id: \.self) { preference in
+                        Text(preference.label).tag(preference.rawValue)
+                    }
+                }
+                Text("Con le animazioni ridotte i gatti appaiono con una dissolvenza: niente passeggiate, salti o gatti che cadono. \"Come il sistema\" segue Riduci movimento in Impostazioni di Sistema → Accessibilità → Schermo.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
             Section("Severità") {
                 Toggle("Modalità severa: la pausa non si salta mai", isOn: $settings.strictMode)
                 if !settings.strictMode {

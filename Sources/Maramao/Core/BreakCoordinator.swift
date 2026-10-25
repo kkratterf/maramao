@@ -23,6 +23,7 @@ final class BreakCoordinator {
     private var currentContext: BreakContext?
     private(set) var currentModeID: BreakModeID?
     private var watchdog: Timer?
+    private let announcer = BreakAnnouncer()
     /// Bumped on every start, so a late sweep never closes the windows of a newer break.
     private var generation = 0
     private lazy var emergencyExit = EmergencyExitGuard { [weak self] in
@@ -47,7 +48,9 @@ final class BreakCoordinator {
         currentModeID = resolved
         emergencyExit.arm()
         startWatchdog()
+        BreakAccessibility.beginBreak()
         breakMode.begin(context: context)
+        announcer.start(context: context, modeTitle: resolved.title)
     }
 
     func end() {
@@ -58,6 +61,9 @@ final class BreakCoordinator {
         stopWatchdog()
         emergencyExit.disarm()
         breakMode.end()
+        announcer.stop()
+        BreakAccessibility.announce(BreakSpeech.breakEnded)
+        BreakAccessibility.endBreak()
         scheduleSweep()
     }
 
