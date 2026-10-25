@@ -19,6 +19,10 @@ final class CatPileScene: SKScene {
 
     /// Most cats on one screen, for performance.
     private static let maxCats = 250
+    /// Frame rate while cats fall or jump, and once the full pile has settled. A buried
+    /// screen barely moves, so it does not need to be redrawn 60 times a second.
+    private static let activeFPS = 60
+    private static let restingFPS = 30
 
     private let sprites: [CatSprite]
     private let fillTime: TimeInterval
@@ -37,6 +41,8 @@ final class CatPileScene: SKScene {
     private var nextAutoMeow: TimeInterval = 4
     private var dimStep = 0
     private var pileIsFull = false
+    /// Until when to stay at full frame rate after a click on a cat.
+    private var activeUntil: TimeInterval = 0
     private var isScattering = false
 
     init(size: CGSize, artworks: [CatPileArtwork], fillTime: TimeInterval) {
@@ -194,6 +200,11 @@ final class CatPileScene: SKScene {
         if top >= size.height * 0.92 || cats.count >= Self.maxCats {
             pileIsFull = true
         }
+        let settled = pileIsFull && lastScan > activeUntil && cats.allSatisfy { cat in
+            guard let v = cat.physicsBody?.velocity else { return true }
+            return abs(v.dx) < 8 && abs(v.dy) < 8
+        }
+        setFrameRate(settled ? Self.restingFPS : Self.activeFPS)
 
         let byCount = Double(cats.count) / Double(max(1, targetCount))
         let byHeight = Double(top / max(1, size.height))
@@ -269,6 +280,13 @@ final class CatPileScene: SKScene {
         body.velocity = CGVector(dx: CGFloat.random(in: -160...160), dy: CGFloat.random(in: 650...900))
         body.angularVelocity = CGFloat.random(in: -5...5)
         meow(at: cat)
+        activeUntil = lastScan + 3
+        setFrameRate(Self.activeFPS)
+    }
+
+    private func setFrameRate(_ fps: Int) {
+        guard let view, view.preferredFramesPerSecond != fps else { return }
+        view.preferredFramesPerSecond = fps
     }
 
     // MARK: - Exit
@@ -277,6 +295,7 @@ final class CatPileScene: SKScene {
     func scatter() {
         guard !isScattering else { return }
         isScattering = true
+        setFrameRate(Self.activeFPS)
         walls.physicsBody = nil
         walls.removeFromParent()
         physicsWorld.gravity = CGVector(dx: 0, dy: -22)
