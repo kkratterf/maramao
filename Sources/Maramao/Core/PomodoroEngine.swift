@@ -21,6 +21,8 @@ final class PomodoroEngine: ObservableObject {
     /// True while a break postponed with "Rimanda" waits to come back. The phase stays the
     /// break's; the countdown is the snooze.
     @Published private(set) var isBreakSnoozed = false
+    /// True while the break is held back because the user is in a call or presenting.
+    @Published private(set) var isBreakPostponed = false
 
     private let settings: AppSettings
     private let stats: StatsStore
@@ -36,6 +38,7 @@ final class PomodoroEngine: ObservableObject {
     private let presence = PresenceMonitor()
     /// The mode of the snoozed break: the same cat comes back.
     private var snoozedMode: BreakModeID?
+    private var postponer = BreakPostponer()
     /// True while a work session is paused because the user is away (not by the user).
     private var frozenByAway = false
     /// Work time left when a session was reset by an absence, for "Riprendi da dove ero".
@@ -277,6 +280,29 @@ final class PomodoroEngine: ObservableObject {
         enterCurrentPhase()
     }
 
+    // MARK: - Calls and presentations
+
+    /// The work session just ran out. While the user is in a call or presenting, keeps it
+    /// going one more minute (up to the maximum in Settings) and returns true.
+    private func postponeBreakIfBusy() -> Bool {
+        postponer.isEnabled = settings.dontInterruptCalls
+        postponer.maxPostpone = TimeInterval(settings.maxPostponeMinutes * 60)
+        guard postponer.isEnabled else { return false }
+        switch postponer.decide(busy: BusyDetector.current()) {
+        case .startBreak:
+            return false
+        case .postpone(let seconds, let announce):
+            isBreakPostponed = true
+            remaining = seconds
+            endDate = Date().addingTimeInterval(seconds)
+            startTicker()
+            if announce {
+                peekingCat.show(message: BreakPostponer.announcement)
+            }
+            return true
+        }
+    }
+
     // MARK: - Away from the Mac
 
     private var awayBehavior: AwayBehavior {
@@ -403,6 +429,8 @@ final class PomodoroEngine: ObservableObject {
         completedWorkSessions = cycle.completedWorkSessions
         isPaused = false
         frozenByAway = false
+        postponer.reset()
+        isBreakPostponed = false
         breakWarning.reset()
         if phase != .work { peekingCat.dismiss() }
         if phase != .idle { canUndoAwayReset = false }
@@ -443,7 +471,11 @@ final class PomodoroEngine: ObservableObject {
             )
             breakContext = context
             companion.breakBegan()
-            breaks.start(mode: breakMode ?? settings.breakMode, context: context)
+            // A Focus filter may change the mode, or turn the cats off: the break
+            // then only counts down in the menu bar. A snoozed break brings its own cat back.
+            if let mode = breakMode ?? FocusFilterState.shared.breakMode(default: settings.breakMode) {
+                breaks.start(mode: mode, context: context)
+            }
             activeBreakMode = breaks.currentModeID
         }
     }
@@ -482,6 +514,7 @@ final class PomodoroEngine: ObservableObject {
             }
             // Never start a break nobody can see: wait for the wake or unlock.
             if phase == .work, presence.isScreenUnavailable { return }
+            if phase == .work, postponeBreakIfBusy() { return }
             advance()
             return
         }
@@ -491,7 +524,7 @@ final class PomodoroEngine: ObservableObject {
     /// Lets a cat peek from the bottom of the screen shortly before the break.
     private func checkBreakWarning() {
         // A break preview is on screen: the user is looking at cats already.
-        guard previewTimer == nil else { return }
+        guard previewTimer == nil, FocusFilterState.shared.policy.catsEnabled else { return }
         breakWarning.leadTime = TimeInterval(settings.breakWarningSeconds)
         guard breakWarning.shouldWarn(
             phase: phase,

@@ -58,7 +58,9 @@ struct MenuContentView: View {
             if availability.isSnoozed { return String(localized: "Il gatto dorme \(availability.untilText())") }
             if !availability.isWorkingTime() { return String(localized: "Fuori orario: niente partenze automatiche") }
             return String(localized: "Pronto quando lo sei tu")
-        case .work: return engine.isPaused ? String(localized: "In pausa (tu, non il gatto)") : String(localized: "Concentrazione")
+        case .work:
+            if engine.isBreakPostponed { return String(localized: "Pausa in attesa: sei in call") }
+            return engine.isPaused ? String(localized: "In pausa (tu, non il gatto)") : String(localized: "Concentrazione")
         case .shortBreak: return String(localized: "Pausa breve")
         case .longBreak: return String(localized: "Pausa lunga")
         }
