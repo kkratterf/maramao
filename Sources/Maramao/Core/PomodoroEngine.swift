@@ -58,9 +58,11 @@ final class PomodoroEngine: ObservableObject {
         if isPaused {
             endDate = Date().addingTimeInterval(remaining)
             isPaused = false
+            startTicker()
         } else {
             tick()
             isPaused = true
+            stopTicker()
             peekingCat.dismiss()
         }
     }
@@ -213,11 +215,21 @@ final class PomodoroEngine: ObservableObject {
         NSSound(named: name)?.play()
     }
 
+    /// Ticks once a second, right after the clock in the menu bar changes, instead of
+    /// polling: the Mac can stay asleep in between. Restarted on every phase change and
+    /// resume, so the ticks stay aligned with the new countdown.
     private func startTicker() {
-        guard ticker == nil else { return }
-        let timer = Timer(timeInterval: 0.25, repeats: true) { [weak self] _ in
+        stopTicker()
+        guard let endDate else { return }
+        // A few milliseconds past the change, so the tick never lands just before it.
+        let firstTick = Date().addingTimeInterval(
+            secondsUntilClockChanges(remaining: endDate.timeIntervalSinceNow) + 0.01
+        )
+        let timer = Timer(fire: firstTick, interval: 1, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.tick() }
         }
+        // Lets macOS coalesce this wakeup with others; 50 ms late is invisible in a clock.
+        timer.tolerance = 0.05
         RunLoop.main.add(timer, forMode: .common)
         ticker = timer
     }

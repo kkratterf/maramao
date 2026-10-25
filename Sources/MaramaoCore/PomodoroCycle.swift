@@ -98,3 +98,12 @@ public func formatClock(_ seconds: TimeInterval) -> String {
     }
     return String(format: "%02d:%02d", m, s)
 }
+
+/// Seconds until `formatClock(remaining)` shows a different value, as the clock counts down.
+/// The app wakes up right then instead of polling, so a running timer costs one wakeup a second.
+/// Returns 0 when the countdown is over.
+public func secondsUntilClockChanges(remaining: TimeInterval) -> TimeInterval {
+    guard remaining > 0 else { return 0 }
+    let fraction = remaining - remaining.rounded(.down)
+    return fraction > 0 ? fraction : 1
+}

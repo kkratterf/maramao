@@ -5,19 +5,22 @@ import os
 
 /// The way out of any break, strict mode included, that needs no permission and works even
 /// when a break mode's own UI is broken:
-/// - the global shortcut ⌃⌥⌘⌫ (a Carbon hot key, which needs no Accessibility permission);
+/// - the global shortcut ⌃⌥⌘⌫ (a Carbon hot key via `HotKeyCenter`, no Accessibility needed);
 /// - five quick clicks in the top-left corner of any screen, where a tiny invisible window
 ///   floats above every break overlay.
 ///
 /// The coordinator arms it while a break is on screen and disarms it afterwards.
 @MainActor
 final class EmergencyExitGuard {
-    /// Shown in Settings and in the README.
-    static let shortcutLabel = "⌃⌥⌘⌫"
+    /// ⌃⌥⌘⌫. A Carbon hot key: it works while another app is active and, unlike a global
+    /// `NSEvent` monitor, needs no Accessibility permission.
+    static let shortcut = HotKeyCombo(keyCode: kVK_Delete, modifiers: HotKeyCombo.controlOptionCommand)
+    /// Shown in Settings ("⌃⌥⌘⌫").
+    static var shortcutLabel: String { shortcut.displayString }
+    private static let hotKeyID = "emergencyExit"
     static let cornerClicks = 5
 
     private let onTrigger: () -> Void
-    private var hotKey: EmergencyHotKey?
     private var localMonitor: Any?
     private var cornerWindows: [EmergencyCornerWindow] = []
     private var screenObserver: NSObjectProtocol?
@@ -34,13 +37,12 @@ final class EmergencyExitGuard {
         isArmed = true
         clicks.reset()
 
-        let hotKey = EmergencyHotKey { [weak self] in
+        let registered = HotKeyCenter.shared.register(id: Self.hotKeyID, combo: Self.shortcut) { [weak self] in
             Task { @MainActor in self?.fire() }
         }
-        if !hotKey.register() {
+        if !registered {
             Logger.breaks.error("Could not register the emergency shortcut; the corner and the key monitor still work")
         }
-        self.hotKey = hotKey
 
         // Belt and braces: when one of our windows is key the local monitor sees the shortcut
         // even if the hot key could not be registered (e.g. another app owns it).
@@ -63,8 +65,7 @@ final class EmergencyExitGuard {
     func disarm() {
         guard isArmed else { return }
         isArmed = false
-        hotKey?.unregister()
-        hotKey = nil
+        HotKeyCenter.shared.unregister(id: Self.hotKeyID)
         if let localMonitor {
             NSEvent.removeMonitor(localMonitor)
         }
@@ -169,95 +170,5 @@ private final class EmergencyCornerView: NSView {
 
     override func mouseDown(with event: NSEvent) {
         onClick?(event.timestamp)
-    }
-}
-
-/// ⌃⌥⌘⌫ as a Carbon hot key. `RegisterEventHotKey` works for background apps and,
-/// unlike a global `NSEvent` monitor, does not need the Accessibility permission.
-private final class EmergencyHotKey {
-    /// "MRMX": tells our hot key apart from any other one registered in the app.
-    private static let signature: OSType = 0x4D52_4D58
-    private static let identifier: UInt32 = 0xE5C
-
-    private let onPress: () -> Void
-    private var hotKeyRef: EventHotKeyRef?
-    private var handlerRef: EventHandlerRef?
-
-    init(onPress: @escaping () -> Void) {
-        self.onPress = onPress
-    }
-
-    deinit {
-        unregister()
-    }
-
-    /// Returns false when the shortcut could not be registered.
-    func register() -> Bool {
-        guard hotKeyRef == nil else { return true }
-        var eventType = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
-        let userData = Unmanaged.passUnretained(self).toOpaque()
-        let installStatus = InstallEventHandler(
-            GetApplicationEventTarget(),
-            { _, event, userData -> OSStatus in
-                guard let event, let userData else { return OSStatus(eventNotHandledErr) }
-                let hotKey = Unmanaged<EmergencyHotKey>.fromOpaque(userData).takeUnretainedValue()
-                return hotKey.handle(event)
-            },
-            1,
-            &eventType,
-            userData,
-            &handlerRef
-        )
-        guard installStatus == noErr else {
-            handlerRef = nil
-            return false
-        }
-
-        let hotKeyID = EventHotKeyID(signature: Self.signature, id: Self.identifier)
-        let modifiers = UInt32(controlKey | optionKey | cmdKey)
-        let registerStatus = RegisterEventHotKey(
-            UInt32(kVK_Delete),
-            modifiers,
-            hotKeyID,
-            GetApplicationEventTarget(),
-            0,
-            &hotKeyRef
-        )
-        guard registerStatus == noErr else {
-            hotKeyRef = nil
-            unregister()
-            return false
-        }
-        return true
-    }
-
-    func unregister() {
-        if let hotKeyRef {
-            UnregisterEventHotKey(hotKeyRef)
-        }
-        hotKeyRef = nil
-        if let handlerRef {
-            RemoveEventHandler(handlerRef)
-        }
-        handlerRef = nil
-    }
-
-    fileprivate func handle(_ event: EventRef) -> OSStatus {
-        var hotKeyID = EventHotKeyID()
-        let status = GetEventParameter(
-            event,
-            EventParamName(kEventParamDirectObject),
-            EventParamType(typeEventHotKeyID),
-            nil,
-            MemoryLayout<EventHotKeyID>.size,
-            nil,
-            &hotKeyID
-        )
-        // Someone else's hot key: let the next handler have it.
-        guard status == noErr, hotKeyID.signature == Self.signature, hotKeyID.id == Self.identifier else {
-            return OSStatus(eventNotHandledErr)
-        }
-        onPress()
-        return noErr
     }
 }

@@ -71,6 +71,8 @@ struct SettingsView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
 
+            ShortcutsSettingsSection()
+
             Section {
                 Text("Le modifiche ai tempi valgono dal prossimo pomodoro.")
                     .font(.caption)
