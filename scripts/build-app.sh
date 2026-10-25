@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Builds Maramao.app (and a zip of it) from the Swift package.
 # Usage: scripts/build-app.sh [debug|release]   (default: release)
+# Environment: SIGN_IDENTITY  codesign identity (default "-", ad-hoc)
 set -euo pipefail
 
 CONFIG="${1:-release}"
@@ -42,8 +43,16 @@ if [ -n "$ICNS" ]; then
     || /usr/libexec/PlistBuddy -c "Add :CFBundleIconFile string AppIcon" "$APP/Contents/Info.plist" || true
 fi
 
-# Ad-hoc signature: enough to run locally, not notarized.
-codesign --force --deep --sign - "$APP"
+# Signature. Ad-hoc by default: enough to run locally, not notarized.
+# SIGN_IDENTITY="Developer ID Application: ..." signs for distribution with
+# the hardened runtime and a secure timestamp, as notarization requires.
+SIGN_IDENTITY="${SIGN_IDENTITY:--}"
+if [ "$SIGN_IDENTITY" = "-" ]; then
+  codesign --force --deep --sign - "$APP"
+else
+  codesign --force --deep --options runtime --timestamp --sign "$SIGN_IDENTITY" "$APP"
+  codesign --verify --strict --verbose=2 "$APP"
+fi
 
 VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP/Contents/Info.plist")"
 (cd "$DIST" && rm -f "Maramao-$VERSION.zip" && ditto -c -k --keepParent Maramao.app "Maramao-$VERSION.zip")
