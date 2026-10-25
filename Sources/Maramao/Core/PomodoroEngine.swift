@@ -128,7 +128,7 @@ final class PomodoroEngine: ObservableObject {
         guard !phase.isBreak else { return }
         let seconds = settings.breakWarningSeconds > 0 ? settings.breakWarningSeconds : BreakWarning.defaultLeadTime
         peekingCat.show(message: BreakWarning.message(seconds: seconds))
-        playSound("Tink")
+        CatSounds.shared.chirp()
     }
 
     /// Closes every break window right away. Called when the app quits.
@@ -171,7 +171,7 @@ final class PomodoroEngine: ObservableObject {
             breaks.end()
             breakContext = nil
             activeBreakMode = nil
-            playSound("Glass")
+            CatSounds.shared.breakOverChime()
         }
         enterCurrentPhase()
     }
@@ -225,7 +225,7 @@ final class PomodoroEngine: ObservableObject {
         if phase.isBreak {
             endPreview()
             peekingCat.close()
-            playSound("Purr")
+            CatSounds.shared.randomMeow()
             let unlock: Date? = settings.strictMode ? nil : Date().addingTimeInterval(settings.skipUnlockSeconds)
             let context = BreakContext(
                 duration: duration,
@@ -238,11 +238,6 @@ final class PomodoroEngine: ObservableObject {
             breaks.start(mode: settings.breakMode, context: context)
             activeBreakMode = breaks.currentModeID
         }
-    }
-
-    private func playSound(_ name: NSSound.Name) {
-        guard settings.soundEnabled else { return }
-        NSSound(named: name)?.play()
     }
 
     /// Ticks once a second, right after the clock in the menu bar changes, instead of
@@ -292,6 +287,6 @@ final class PomodoroEngine: ObservableObject {
         ) else { return }
         let seconds = breakWarning.announcedSeconds(remaining: remaining)
         peekingCat.show(message: BreakWarning.message(seconds: seconds))
-        playSound("Tink")
+        CatSounds.shared.chirp()
     }
 }

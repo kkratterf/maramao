@@ -5,8 +5,11 @@
 [![CI](https://github.com/kkratterf/maramao/actions/workflows/ci.yml/badge.svg)](https://github.com/kkratterf/maramao/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/kkratterf/maramao)](https://github.com/kkratterf/maramao/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](#license)
+[![Website](https://img.shields.io/badge/website-kkratterf.github.io%2Fmaramao-E8402F)](https://kkratterf.github.io/maramao/)
 
 A native macOS menu bar app for the Pomodoro technique. Work for 25 minutes, then a cat makes sure you actually take the break. Written in Swift with SwiftUI and AppKit.
+
+**Website:** [kkratterf.github.io/maramao](https://kkratterf.github.io/maramao/)
 
 ---
 
@@ -24,6 +27,8 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 | ⌨️ | **Il gatto sulla tastiera** | A cat falls asleep on a big keyboard. Every key you press ends up as cat-typing ("mmmmrrrrrooooow"), and Cmd-Q won't get you out. |
 
 Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
+
+In Settings → **Barra dei menu** you choose what the menu bar shows: cat and countdown (default), only the cat, only the countdown, or the cat inside a ring that fills up as the session goes on. The countdown can also drop the seconds (`24m`).
 
 ### Emergency exit
 
