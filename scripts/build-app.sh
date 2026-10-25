@@ -107,6 +107,63 @@ if [ -n "$ICNS" ]; then
     || /usr/libexec/PlistBuddy -c "Add :CFBundleIconFile string AppIcon" "$APP/Contents/Info.plist" || true
 fi
 
+# App Intents metadata (the Focus filter). Xcode extracts it for app targets
+# but not for SwiftPM executables, so do Xcode's two steps by hand: ask the
+# compiler for the "const values" of the app module, then run Xcode's
+# appintentsmetadataprocessor to write Metadata.appintents into Resources.
+# Without it macOS does not offer Maramao in System Settings → Focus → Focus
+# filters. A failure costs only the Focus filter, never the build.
+extract_app_intents() {
+  local work="$ROOT/.build/appintents"
+  rm -rf "$work"
+  mkdir -p "$work"
+  # The protocols Xcode 16 asks the compiler to gather (Maramao_const_extract_protocols.json).
+  printf '%s' '["AppIntent","EntityQuery","AppEntity","TransientEntity","AppEnum","AppShortcutProviding","AppShortcutsProvider","AnyResolverProviding","AppIntentsPackage","DynamicOptionsProvider","_IntentValueRepresentable","_AssistantIntentsProvider","_GenerativeFunctionExtractable"]' \
+    > "$work/protocols.json"
+  # A separate single-architecture build: the metadata does not depend on the CPU.
+  swift build -c release --build-path "$work/build" \
+    -Xswiftc -emit-const-values \
+    -Xswiftc -Xfrontend -Xswiftc -const-gather-protocols-file \
+    -Xswiftc -Xfrontend -Xswiftc "$work/protocols.json" || return 1
+  find "$work/build" -name "*.swiftconstvalues" | grep -v "MaramaoCore" | grep "Maramao" > "$work/constvalues.txt" || true
+  if [ ! -s "$work/constvalues.txt" ]; then
+    echo "no const values found for the Maramao module" >&2
+    find "$work/build" -name "*.swiftconstvalues" >&2 || true
+    return 1
+  fi
+  find "$ROOT/Sources/Maramao" -name "*.swift" > "$work/sources.txt"
+
+  local developer sdk xcode_version bundle_id
+  developer="$(xcode-select -p)"
+  sdk="$(xcrun --sdk macosx --show-sdk-path)"
+  xcode_version="$(xcodebuild -version | awk '/Build version/ {print $3}')"
+  bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Contents/Info.plist")"
+  xcrun appintentsmetadataprocessor \
+    --toolchain-dir "$developer/Toolchains/XcodeDefault.xctoolchain" \
+    --module-name Maramao \
+    --sdk-root "$sdk" \
+    --xcode-version "$xcode_version" \
+    --platform-family macOS \
+    --deployment-target 13.0 \
+    --bundle-identifier "$bundle_id" \
+    --output "$APP/Contents/Resources" \
+    --target-triple "$(uname -m)-apple-macos13.0" \
+    --source-file-list "$work/sources.txt" \
+    --swift-const-vals-list "$work/constvalues.txt" \
+    --force --compile-time-extraction --deployment-aware-processing \
+    --no-app-shortcuts-localization || return 1
+  [ -f "$APP/Contents/Resources/Metadata.appintents/extract.actionsdata" ]
+}
+if extract_app_intents; then
+  echo "Added App Intents metadata (Focus filter)"
+else
+  echo "warning: could not extract the App Intents metadata, the Focus filter will not be available" >&2
+  if [ "${GITHUB_ACTIONS:-}" = "true" ]; then
+    found="$(find "$ROOT/.build/appintents" -name '*.swiftconstvalues' 2>/dev/null | tr '\n' ' ')"
+    echo "::warning::App Intents metadata not extracted. Const values found: ${found:-none}"
+  fi
+fi
+
 # Signature. Ad-hoc by default: enough to run locally, not notarized.
 # SIGN_IDENTITY="Developer ID Application: ..." signs for distribution with
 # the hardened runtime and a secure timestamp, as notarization requires.

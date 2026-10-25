@@ -12,6 +12,28 @@
         }
       }
     },
+    "%@ ne sarà felice": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ will love it"
+          }
+        }
+      }
+    },
+    "%@ è tutto per te.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is all yours."
+          }
+        }
+      }
+    },
     "%@: %lld min": {
       "extractionState": "manual",
       "localizations": {
@@ -30,6 +52,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "%1$@: %2$lld of %3$lld breaks taken"
+          }
+        }
+      }
+    },
+    "%lld (record %lld)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld (best %2$lld)"
+          }
+        }
+      }
+    },
+    "%lld croccantini": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld treats"
           }
         }
       }
@@ -193,6 +237,17 @@
         }
       }
     },
+    "1 croccantino": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 treat"
+          }
+        }
+      }
+    },
     "1 minuto": {
       "extractionState": "manual",
       "localizations": {
@@ -325,6 +380,39 @@
         }
       }
     },
+    "Ah, adesso ti ricordi di me.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oh, now you remember me."
+          }
+        }
+      }
+    },
+    "Al massimo %lld min": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "At most %lld min"
+          }
+        }
+      }
+    },
+    "Al settimo cielo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Over the moon"
+          }
+        }
+      }
+    },
     "ALLA SIESTA": {
       "extractionState": "manual",
       "localizations": {
@@ -435,6 +523,17 @@
         }
       }
     },
+    "Ancora, ancora!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More, more!"
+          }
+        }
+      }
+    },
     "Animazioni delle pause": {
       "extractionState": "manual",
       "localizations": {
@@ -519,6 +618,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "FRESH AIR AND A PIGEON TO STARE AT"
+          }
+        }
+      }
+    },
+    "Aspetta sempre": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait as long as it takes"
           }
         }
       }
@@ -677,6 +787,17 @@
         }
       }
     },
+    "Call e presentazioni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calls and presentations"
+          }
+        }
+      }
+    },
     "Catture: %lld": {
       "extractionState": "manual",
       "localizations": {
@@ -787,6 +908,17 @@
         }
       }
     },
+    "Ciao umano, pausa insieme?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi human, break together?"
+          }
+        }
+      }
+    },
     "Combinazione già usata da un'altra app.": {
       "extractionState": "manual",
       "localizations": {
@@ -805,6 +937,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Same as system"
+          }
+        }
+      }
+    },
+    "Come nelle impostazioni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As in Settings"
           }
         }
       }
@@ -860,6 +1003,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Focus"
+          }
+        }
+      }
+    },
+    "Concept preferito": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favourite concept"
           }
         }
       }
@@ -930,6 +1084,28 @@
         }
       }
     },
+    "Croccantini": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Treats"
+          }
+        }
+      }
+    },
+    "Croccantino": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Treat"
+          }
+        }
+      }
+    },
     "CTRL+S": {
       "extractionState": "manual",
       "localizations": {
@@ -948,6 +1124,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "CTRL+SNOOZE"
+          }
+        }
+      }
+    },
+    "Dai un croccantino": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Give a treat"
+          }
+        }
+      }
+    },
+    "Dai un croccantino a %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Give %@ a treat"
           }
         }
       }
@@ -992,6 +1190,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "RIGHT... LEFT... KIBBLE"
+          }
+        }
+      }
+    },
+    "Di buon umore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In a good mood"
           }
         }
       }
@@ -1121,6 +1330,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "There it is again!"
+          }
+        }
+      }
+    },
+    "Eccoti! Ti aspettavo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There you are! I was waiting."
+          }
+        }
+      }
+    },
+    "Ehi! Mettimi giù piano.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hey! Put me down gently."
           }
         }
       }
@@ -1444,6 +1675,39 @@
         }
       }
     },
+    "Gatti come al solito": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cats as usual"
+          }
+        }
+      }
+    },
+    "Gatti di Maramao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maramao's cats"
+          }
+        }
+      }
+    },
+    "Gatti nelle pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cats during breaks"
+          }
+        }
+      }
+    },
     "Gatto + countdown": {
       "extractionState": "manual",
       "localizations": {
@@ -1532,6 +1796,39 @@
         }
       }
     },
+    "Gnam gnam! Ti voglio bene. 🐟": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nom nom! Love you. 🐟"
+          }
+        }
+      }
+    },
+    "Gnam! 🐟": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nom! 🐟"
+          }
+        }
+      }
+    },
+    "Gnam. Ti perdono, forse. 🐟": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nom. Maybe you're forgiven. 🐟"
+          }
+        }
+      }
+    },
     "Guarda fuori dalla finestra e cerca qualcosa che si muove.": {
       "extractionState": "manual",
       "localizations": {
@@ -1583,6 +1880,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "DID YOU TYPE 'ASDFGHJKL'?"
+          }
+        }
+      }
+    },
+    "Hmpf. Vediamo se stavolta la pausa la fai.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hmph. Let's see if you take this one."
           }
         }
       }
@@ -1989,6 +2297,17 @@
         }
       }
     },
+    "Il tuo gatto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your cat"
+          }
+        }
+      }
+    },
     "IL TUO GATTO TI HA TROVATO": {
       "extractionState": "manual",
       "localizations": {
@@ -2062,6 +2381,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "ON AIR · MARAMAO TV"
+          }
+        }
+      }
+    },
+    "In pace col mondo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "At peace with the world"
           }
         }
       }
@@ -2407,6 +2737,17 @@
         }
       }
     },
+    "Lo sapevo che volevi giocare.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I knew you wanted to play."
+          }
+        }
+      }
+    },
     "LO SCHERMO NON SCAPPA": {
       "extractionState": "manual",
       "localizations": {
@@ -2623,6 +2964,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Put on a song and move a little. Nobody's watching (except me)."
+          }
+        }
+      }
+    },
+    "Mh. Va bene, continua.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hm. Fine, keep going."
           }
         }
       }
@@ -2847,6 +3199,17 @@
         }
       }
     },
+    "Mrrr, finalmente.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrrr, finally."
+          }
+        }
+      }
+    },
     "Mrrr.": {
       "extractionState": "manual",
       "localizations": {
@@ -2979,6 +3342,17 @@
         }
       }
     },
+    "Nessun croccantino": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No treats"
+          }
+        }
+      }
+    },
     "Nessun giorno selezionato": {
       "extractionState": "manual",
       "localizations": {
@@ -3008,6 +3382,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "No Esc. Only break."
+          }
+        }
+      }
+    },
+    "Niente gatti: la pausa resta solo nella barra dei menu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No cats: the break stays in the menu bar"
           }
         }
       }
@@ -3067,6 +3452,28 @@
         }
       }
     },
+    "Nome": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "Non interrompere call e presentazioni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't interrupt calls and presentations"
+          }
+        }
+      }
+    },
     "NON MI INTERESSA. CROCCHETTE.": {
       "extractionState": "manual",
       "localizations": {
@@ -3074,6 +3481,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "DON'T CARE. KIBBLE."
+          }
+        }
+      }
+    },
+    "Non pensare che basti. Prrr.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't think that's enough. Prrr."
           }
         }
       }
@@ -3096,6 +3514,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Don't wake the cat"
+          }
+        }
+      }
+    },
+    "Non ti ho ancora perdonato. Prrr.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not forgiven yet. Prrr."
           }
         }
       }
@@ -3129,6 +3558,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today: 🍅 %lld"
+          }
+        }
+      }
+    },
+    "Ogni pausa rispettata vale un croccantino (fino a %lld). Se salti una pausa il gatto ci resta un po' male, ma gli passa presto. Durante le pause puoi accarezzarlo con un clic e, nel gatto sulla finestra e nell'invasione di gatti, trascinarlo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every break you take earns a treat (up to %lld). Skip one and the cat is a little hurt, but it gets over it quickly. During breaks you can pet it with a click and, in the window cat and the cat invasion, drag it around."
           }
         }
       }
@@ -3254,6 +3694,17 @@
         }
       }
     },
+    "Pausa con te? Il mio momento preferito.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A break with you? My favourite time."
+          }
+        }
+      }
+    },
     "Pausa finita. Il gatto è fiero di sé.": {
       "extractionState": "manual",
       "localizations": {
@@ -3283,6 +3734,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cat break now"
+          }
+        }
+      }
+    },
+    "Pausa in attesa: sei in call": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break on hold: you're in a call"
           }
         }
       }
@@ -3401,6 +3863,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "BREAK?"
+          }
+        }
+      }
+    },
+    "Pause rispettate di fila": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breaks taken in a row"
           }
         }
       }
@@ -3636,6 +4109,17 @@
         }
       }
     },
+    "Prrrrr ❤︎": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prrrrr ❤︎"
+          }
+        }
+      }
+    },
     "Prrr…": {
       "extractionState": "manual",
       "localizations": {
@@ -3798,6 +4282,17 @@
         }
       }
     },
+    "Questa finestra è mia. E basta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This window is mine. Period."
+          }
+        }
+      }
+    },
     "Questa tastiera è calda. È mia.": {
       "extractionState": "manual",
       "localizations": {
@@ -3897,6 +4392,17 @@
         }
       }
     },
+    "Rimanda la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold the break"
+          }
+        }
+      }
+    },
     "Riparti a lavorare da solo dopo la pausa": {
       "extractionState": "manual",
       "localizations": {
@@ -3970,6 +4476,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stick to working hours"
+          }
+        }
+      }
+    },
+    "Rispetta una pausa per guadagnare un croccantino.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take a break to earn a treat."
           }
         }
       }
@@ -4073,6 +4590,17 @@
         }
       }
     },
+    "Scegli come si comportano i gatti durante questa modalità Full immersion.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose how the cats behave during this Focus."
+          }
+        }
+      }
+    },
     "Scegli tra i tuoi Comandi Rapidi": {
       "extractionState": "manual",
       "localizations": {
@@ -4161,6 +4689,28 @@
         }
       }
     },
+    "Se il microfono o la videocamera sono in uso, o hai a tutto schermo Keynote, PowerPoint, un video o una call, la pausa aspetta un minuto alla volta. Nessun permesso richiesto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When the microphone or camera is in use, or Keynote, PowerPoint, a video or a call is fullscreen, the break waits one minute at a time. No permission needed."
+          }
+        }
+      }
+    },
+    "Sei il mio umano preferito.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're my favourite human."
+          }
+        }
+      }
+    },
     "SEI IN CALL?": {
       "extractionState": "manual",
       "localizations": {
@@ -4179,6 +4729,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "TIRED?"
+          }
+        }
+      }
+    },
+    "senza suoni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no sounds"
           }
         }
       }
@@ -4524,6 +5085,17 @@
         }
       }
     },
+    "Ti aspetto dopo la call 🐈": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'll wait until your call is over 🐈"
+          }
+        }
+      }
+    },
     "TI HO PORTATO UN REGALO": {
       "extractionState": "manual",
       "localizations": {
@@ -4531,6 +5103,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "I BROUGHT YOU A GIFT"
+          }
+        }
+      }
+    },
+    "Ti tengo il muso. Però resto qui.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'm sulking. But I'm staying."
+          }
+        }
+      }
+    },
+    "Ti tiene il muso": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Giving you the cold shoulder"
           }
         }
       }
@@ -4579,6 +5173,17 @@
         }
       }
     },
+    "Torno al mio posto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to my spot."
+          }
+        }
+      }
+    },
     "TU GUARDI LO SCHERMO": {
       "extractionState": "manual",
       "localizations": {
@@ -4619,6 +5224,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Last 7 days: %1$@ · %2$@ of focus"
+          }
+        }
+      }
+    },
+    "Umore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mood"
           }
         }
       }
@@ -4689,6 +5305,17 @@
         }
       }
     },
+    "Un gatto che si ricorda di te": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cat that remembers you"
+          }
+        }
+      }
+    },
     "Un gatto che si stiracchia": {
       "extractionState": "manual",
       "localizations": {
@@ -4729,6 +5356,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "A sitting cat"
+          }
+        }
+      }
+    },
+    "Un po' di malumore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A little huffy"
           }
         }
       }
@@ -4832,6 +5470,17 @@
         }
       }
     },
+    "Wheee!": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wheee!"
+          }
+        }
+      }
+    },
     "È RISPARMIO ENERGETICO": {
       "extractionState": "manual",
       "localizations": {
@@ -4850,6 +5499,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "IT'S A SOCK. IT'S YOURS."
+          }
+        }
+      }
+    },
+    "…ok, solo un attimo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "…ok, just for a second."
           }
         }
       }

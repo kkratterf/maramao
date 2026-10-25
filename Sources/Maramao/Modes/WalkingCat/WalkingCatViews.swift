@@ -206,14 +206,49 @@ struct WalkingCatBlockerView: View {
     }
 }
 
-/// An invisible view that follows the cat and turns clicks into cuddles.
+/// An invisible view that follows the cat and turns clicks into cuddles, and drags into
+/// carrying the cat around. Points are global Cocoa coordinates (`NSEvent.mouseLocation`).
 final class WalkingCatHitView: NSView {
     var onClick: (() -> Void)?
+    var canDrag: () -> Bool = { false }
+    var onDragBegan: ((CGPoint) -> Void)?
+    var onDragMoved: ((CGPoint) -> Void)?
+    var onDragEnded: ((CGPoint) -> Void)?
+
+    /// How far the mouse must move before a click becomes a drag.
+    private static let dragThreshold: CGFloat = 5
+    private var downLocation: CGPoint?
+    private var dragging = false
 
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 
     override func mouseDown(with event: NSEvent) {
-        onClick?()
+        downLocation = NSEvent.mouseLocation
+        dragging = false
+    }
+
+    override func mouseDragged(with event: NSEvent) {
+        guard let start = downLocation else { return }
+        let point = NSEvent.mouseLocation
+        if !dragging {
+            guard hypot(point.x - start.x, point.y - start.y) >= Self.dragThreshold, canDrag() else { return }
+            dragging = true
+            onDragBegan?(start)
+        }
+        onDragMoved?(point)
+    }
+
+    override func mouseUp(with event: NSEvent) {
+        defer {
+            downLocation = nil
+            dragging = false
+        }
+        guard downLocation != nil else { return }
+        if dragging {
+            onDragEnded?(NSEvent.mouseLocation)
+        } else {
+            onClick?()
+        }
     }
 
     override func draw(_ dirtyRect: NSRect) {

@@ -82,6 +82,8 @@ struct SettingsView: View {
                 }
             }
 
+            CatCompanionSection()
+
             Section("Accessibilità") {
                 Picker("Animazioni delle pause", selection: $settings.motionPreferenceRaw) {
                     ForEach(MotionPreference.allCases, id: \.self) { preference in
@@ -89,6 +91,21 @@ struct SettingsView: View {
                     }
                 }
                 Text("Con le animazioni ridotte i gatti appaiono con una dissolvenza: niente passeggiate, salti o gatti che cadono. \"Come il sistema\" segue Riduci movimento in Impostazioni di Sistema → Accessibilità → Schermo.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Section("Call e presentazioni") {
+                Toggle("Non interrompere call e presentazioni", isOn: $settings.dontInterruptCalls)
+                if settings.dontInterruptCalls {
+                    Picker("Rimanda la pausa", selection: $settings.maxPostponeMinutes) {
+                        ForEach(BreakPostponer.maxMinutesOptions, id: \.self) { minutes in
+                            Text(BreakPostponer.maxLabel(minutes: minutes)).tag(minutes)
+                        }
+                    }
+                }
+                Text("Se il microfono o la videocamera sono in uso, o hai a tutto schermo Keynote, PowerPoint, un video o una call, la pausa aspetta un minuto alla volta. Nessun permesso richiesto.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
