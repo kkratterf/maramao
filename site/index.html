@@ -340,15 +340,15 @@
           <div class="panel">
             <h3>Primo avvio, se macOS lo blocca</h3>
             <ol class="numbered">
-              <li>In <b>Applicazioni</b>, fai clic col <b>tasto destro</b> (o Ctrl-clic) su Maramao e scegli <b>Apri</b>.</li>
-              <li>Nella finestra che compare, clicca di nuovo <b>Apri</b>.</li>
+              <li>Prova ad aprire Maramao una volta e chiudi l'avviso con <b>Fine</b>.</li>
+              <li>Vai in <b>Impostazioni di Sistema → Privacy e sicurezza</b>, scorri in basso e clicca <b>Apri comunque</b> accanto al messaggio su Maramao.</li>
+              <li>Inserisci la password del Mac e conferma con <b>Apri</b>.</li>
             </ol>
+            <p class="note">Su macOS 13 e 14 c'è anche la scorciatoia: <b>tasto destro</b> su Maramao in Applicazioni, <b>Apri</b>, e di nuovo <b>Apri</b>. Da macOS 15 Apple l'ha tolta.</p>
             <p class="or"><span>oppure</span></p>
-            <ol class="numbered" start="1">
-              <li>Prova ad aprire Maramao una volta, poi vai in <b>Impostazioni di Sistema → Privacy e sicurezza</b>.</li>
-              <li>Scorri in basso e clicca <b>Apri comunque</b> accanto al messaggio su Maramao.</li>
-            </ol>
-            <p class="note">Serve solo la prima volta. Dopo, Maramao si apre come qualsiasi altra app.</p>
+            <p>Dal Terminale, una riga e via:</p>
+            <pre class="faq-cmd"><code>xattr -dr com.apple.quarantine /Applications/Maramao.app</code></pre>
+            <p class="note">Serve solo la prima volta per ogni versione. Se installi con la riga del Terminale qui accanto, lo fa lo script per te.</p>
           </div>
           <div class="panel panel-term">
             <h3>Preferisci il Terminale?</h3>

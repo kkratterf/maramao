@@ -1133,6 +1133,7 @@ details p { padding: 0 3rem 1.4rem 0; color: var(--muted); max-width: 44rem; }
   white-space: pre-wrap;
   word-break: break-all;
 }
+.panel .faq-cmd { margin: .6rem 0 0; }
 
 /* ---------- Outro ---------- */
 
