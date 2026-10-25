@@ -229,6 +229,28 @@
         }
       }
     },
+    "Allunga le dita all'indietro, una mano alla volta, per dieci secondi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gently bend your fingers back, one hand at a time, for ten seconds."
+          }
+        }
+      }
+    },
+    "Alzati e gira per la stanza come se fosse tua.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get up and patrol the room like you own it."
+          }
+        }
+      }
+    },
     "Alzati e sgranchisciti, umano.": {
       "extractionState": "manual",
       "localizations": {
@@ -236,6 +258,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Get up and stretch, human."
+          }
+        }
+      }
+    },
+    "Alzati in piedi e allunga le braccia verso il soffitto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stand up and reach for the ceiling."
           }
         }
       }
@@ -284,6 +317,17 @@
         }
       }
     },
+    "Annaffia le piante o sistema qualcosa in casa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water the plants or tidy something up."
+          }
+        }
+      }
+    },
     "Annulla": {
       "extractionState": "manual",
       "localizations": {
@@ -295,6 +339,17 @@
         }
       }
     },
+    "Apri e chiudi le mani, poi scuoti i polsi. Zampe nuove.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open and close your hands, then shake out your wrists. Fresh paws."
+          }
+        }
+      }
+    },
     "APRI LA FINESTRA": {
       "extractionState": "manual",
       "localizations": {
@@ -302,6 +357,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "OPEN THE WINDOW"
+          }
+        }
+      }
+    },
+    "Apri la finestra e cambia l'aria nella stanza.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the window and let some fresh air in."
           }
         }
       }
@@ -427,6 +493,17 @@
         }
       }
     },
+    "Bevi un po' d'acqua. Io bevo dal rubinetto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink some water. I drink straight from the tap."
+          }
+        }
+      }
+    },
     "Caccia al laser": {
       "extractionState": "manual",
       "localizations": {
@@ -504,6 +581,17 @@
         }
       }
     },
+    "Chiama o scrivi a qualcuno a cui vuoi bene.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Call or text someone you love."
+          }
+        }
+      }
+    },
     "Chiudi": {
       "extractionState": "manual",
       "localizations": {
@@ -511,6 +599,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Close"
+          }
+        }
+      }
+    },
+    "Chiudi gli occhi e conta dieci respiri lenti.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close your eyes and count ten slow breaths."
           }
         }
       }
@@ -842,6 +941,28 @@
         }
       }
     },
+    "Esci a prendere un po' d'aria e di luce.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step outside for some air and daylight."
+          }
+        }
+      }
+    },
+    "Esci sul balcone e guarda il cielo per un minuto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step onto the balcony and look at the sky for a minute."
+          }
+        }
+      }
+    },
     "Esegui un Comando Rapido": {
       "extractionState": "manual",
       "localizations": {
@@ -875,6 +996,39 @@
         }
       }
     },
+    "Fai le fusa: un respiro lungo dal naso, fuori piano dalla bocca.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Purr: a long breath in through the nose, slowly out through the mouth."
+          }
+        }
+      }
+    },
+    "Fai le scale su e giù un paio di volte.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take the stairs up and down a couple of times."
+          }
+        }
+      }
+    },
+    "Fai merenda. I gatti approvano gli snack.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Have a snack. Cats approve of snacks."
+          }
+        }
+      }
+    },
     "Fai subito la pausa": {
       "extractionState": "manual",
       "localizations": {
@@ -882,6 +1036,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Take the break now"
+          }
+        }
+      }
+    },
+    "Fai una passeggiata, anche solo intorno all'isolato.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go for a walk, even just around the block."
+          }
+        }
+      }
+    },
+    "Fai una serie di stiramenti per gambe, schiena e collo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Do a round of stretches for legs, back and neck."
           }
         }
       }
@@ -1113,6 +1289,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "GIT COMMIT"
+          }
+        }
+      }
+    },
+    "Gli schermi senza gatti vengono solo un po' oscurati. Il gatto sulla finestra segue sempre la finestra attiva.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Displays without cats just get dimmed a little. The cat on your window always follows the active window."
+          }
+        }
+      }
+    },
+    "Guarda fuori dalla finestra e cerca qualcosa che si muove.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look out the window and find something that moves."
           }
         }
       }
@@ -1590,6 +1788,17 @@
         }
       }
     },
+    "Inclina la testa a destra e a sinistra, piano, come un gatto curioso.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tilt your head left and right, slowly, like a curious cat."
+          }
+        }
+      }
+    },
     "Info": {
       "extractionState": "manual",
       "localizations": {
@@ -1986,6 +2195,17 @@
         }
       }
     },
+    "Mangia qualcosa di buono, lontano dalla scrivania.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eat something nice, away from the desk."
+          }
+        }
+      }
+    },
     "Maramao controlla una volta al giorno se c'è una nuova versione e te la propone.": {
       "extractionState": "manual",
       "localizations": {
@@ -2048,6 +2268,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pause the pomodoro"
+          }
+        }
+      }
+    },
+    "Metti una canzone e muoviti un po'. Nessuno ti guarda (tranne me).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Put on a song and move a little. Nobody's watching (except me)."
           }
         }
       }
@@ -2874,6 +3105,17 @@
         }
       }
     },
+    "Prepara un tè o un caffè, senza telefono in mano.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make a tea or a coffee, phone not included."
+          }
+        }
+      }
+    },
     "PRESENTAZIONE ALLE 15?": {
       "extractionState": "manual",
       "localizations": {
@@ -3157,6 +3399,28 @@
         }
       }
     },
+    "Raddrizza la schiena e rilassa la mascella. Così.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Straighten your back and unclench your jaw. Like that."
+          }
+        }
+      }
+    },
+    "Regola 20-20-20: guarda lontano, almeno 6 metri, per 20 secondi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "20-20-20 rule: look at something 20 feet away for 20 seconds."
+          }
+        }
+      }
+    },
     "Ricomincia da capo": {
       "extractionState": "manual",
       "localizations": {
@@ -3164,6 +3428,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Start over"
+          }
+        }
+      }
+    },
+    "Riempi la borraccia e bevi un bicchiere intero d'acqua.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refill your bottle and drink a whole glass of water."
           }
         }
       }
@@ -3256,6 +3531,17 @@
         }
       }
     },
+    "Ruota piano le spalle: cinque volte avanti, cinque indietro.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roll your shoulders slowly: five times forward, five back."
+          }
+        }
+      }
+    },
     "sabato": {
       "extractionState": "manual",
       "localizations": {
@@ -3311,6 +3597,17 @@
         }
       }
     },
+    "Sbatti le palpebre venti volte: gli occhi ringraziano.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blink twenty times. Your eyes will thank you."
+          }
+        }
+      }
+    },
     "Scegli tra i tuoi Comandi Rapidi": {
       "extractionState": "manual",
       "localizations": {
@@ -3318,6 +3615,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pick one of your Shortcuts"
+          }
+        }
+      }
+    },
+    "Schermi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Displays"
           }
         }
       }
@@ -3362,6 +3670,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Type away… if you can."
+          }
+        }
+      }
+    },
+    "Sdraiati cinque minuti e non fare niente. Da professionisti.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lie down for five minutes and do nothing. Like a pro."
           }
         }
       }
@@ -3483,6 +3802,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cat only"
+          }
+        }
+      }
+    },
+    "Solo lo schermo con il mouse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only the display with the pointer"
+          }
+        }
+      }
+    },
+    "Solo lo schermo principale": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Main display only"
           }
         }
       }
@@ -3615,6 +3956,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "WERE YOU WORKING?"
+          }
+        }
+      }
+    },
+    "Stiracchiati come un gatto: braccia avanti, schiena ad arco.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stretch like a cat: arms forward, back arched."
           }
         }
       }
@@ -3758,6 +4110,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "YOU: 'I'M BEING PRODUCTIVE'"
+          }
+        }
+      }
+    },
+    "Tutti gli schermi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All displays"
           }
         }
       }
