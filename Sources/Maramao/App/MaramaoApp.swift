@@ -6,12 +6,14 @@ struct MaramaoApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var engine = PomodoroEngine.shared
     @StateObject private var settings = AppSettings.shared
+    @StateObject private var stats = StatsStore.shared
 
     var body: some Scene {
         MenuBarExtra {
             MenuContentView()
                 .environmentObject(engine)
                 .environmentObject(settings)
+                .environmentObject(stats)
         } label: {
             MenuBarLabel(engine: engine)
         }
@@ -64,6 +66,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 rootView: SettingsView()
                     .environmentObject(AppSettings.shared)
                     .environmentObject(PomodoroEngine.shared)
+                    .environmentObject(StatsStore.shared)
             )
             window.center()
             settingsWindow = window
