@@ -5,6 +5,7 @@ import MaramaoCore
 struct MenuContentView: View {
     @EnvironmentObject private var engine: PomodoroEngine
     @EnvironmentObject private var settings: AppSettings
+    @EnvironmentObject private var stats: StatsStore
     @ObservedObject private var shortcuts = GlobalShortcuts.shared
 
     var body: some View {
@@ -12,6 +13,7 @@ struct MenuContentView: View {
             header
             timer
             controls
+            todayRow
             Divider()
             modePicker
             previewRow
@@ -94,6 +96,15 @@ struct MenuContentView: View {
             }
         }
         .controlSize(.large)
+    }
+
+    private var todayRow: some View {
+        Text(stats.todayLine)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .help("Pomodori completati oggi, pause rispettate e giorni di fila con almeno un pomodoro")
     }
 
     private var modePicker: some View {
