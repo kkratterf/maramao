@@ -20,6 +20,8 @@ final class AppSettings: ObservableObject {
     @Published var soundEnabled: Bool { didSet { defaults.set(soundEnabled, forKey: Keys.soundEnabled) } }
     /// Loudness of the cat sounds, 0...1.
     @Published var soundVolume: Double { didSet { defaults.set(soundVolume, forKey: Keys.soundVolume) } }
+    /// Seconds before the end of a work session when a cat peeks to warn about the break. 0 = off.
+    @Published var breakWarningSeconds: Int { didSet { defaults.set(breakWarningSeconds, forKey: Keys.breakWarningSeconds) } }
 
     private enum Keys {
         static let workMinutes = "workMinutes"
@@ -32,6 +34,7 @@ final class AppSettings: ObservableObject {
         static let autoStartWork = "autoStartWork"
         static let soundEnabled = "soundEnabled"
         static let soundVolume = "soundVolume"
+        static let breakWarningSeconds = "breakWarningSeconds"
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -47,6 +50,7 @@ final class AppSettings: ObservableObject {
             Keys.autoStartWork: false,
             Keys.soundEnabled: true,
             Keys.soundVolume: 0.7,
+            Keys.breakWarningSeconds: BreakWarning.defaultLeadTime,
         ])
         workMinutes = defaults.double(forKey: Keys.workMinutes)
         shortBreakMinutes = defaults.double(forKey: Keys.shortBreakMinutes)
@@ -58,6 +62,7 @@ final class AppSettings: ObservableObject {
         autoStartWork = defaults.bool(forKey: Keys.autoStartWork)
         soundEnabled = defaults.bool(forKey: Keys.soundEnabled)
         soundVolume = min(1, max(0, defaults.double(forKey: Keys.soundVolume)))
+        breakWarningSeconds = defaults.integer(forKey: Keys.breakWarningSeconds)
     }
 
     var breakMode: BreakModeID {

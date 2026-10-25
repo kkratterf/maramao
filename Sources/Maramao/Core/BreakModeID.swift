@@ -6,6 +6,7 @@ enum BreakModeID: String, CaseIterable, Identifiable {
     case memeWall
     case sleepyCat
     case catPile
+    case laserChase
     case random
 
     var id: String { rawValue }
@@ -19,6 +20,7 @@ enum BreakModeID: String, CaseIterable, Identifiable {
         case .memeWall: return "😹"
         case .sleepyCat: return "😴"
         case .catPile: return "🐾"
+        case .laserChase: return "🔴"
         case .random: return "🎲"
         }
     }
@@ -29,6 +31,7 @@ enum BreakModeID: String, CaseIterable, Identifiable {
         case .memeWall: return "Muro di meme"
         case .sleepyCat: return "Non svegliare il gatto"
         case .catPile: return "Invasione di gatti"
+        case .laserChase: return "Caccia al laser"
         case .random: return "Sorpresa"
         }
     }
@@ -39,6 +42,7 @@ enum BreakModeID: String, CaseIterable, Identifiable {
         case .memeWall: return "Lo schermo si riempie di GIF e meme di gatti finché la pausa non è finita."
         case .sleepyCat: return "Un gatto dorme sullo schermo: se tocchi il mouse si sveglia e ti giudica."
         case .catPile: return "Piovono gatti dall'alto fino a seppellire tutto lo schermo."
+        case .laserChase: return "Il mouse diventa un puntino laser e il gatto lo insegue per tutto lo schermo."
         case .random: return "Ogni pausa un concept diverso."
         }
     }

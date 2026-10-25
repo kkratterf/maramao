@@ -1,7 +1,9 @@
 import SwiftUI
+import MaramaoCore
 
 struct SettingsView: View {
     @EnvironmentObject private var settings: AppSettings
+    @EnvironmentObject private var engine: PomodoroEngine
     @State private var launchAtLogin = false
     @State private var launchAtLoginError: String?
     @State private var launchAtLoginNeedsApproval = false
@@ -40,6 +42,19 @@ struct SettingsView: View {
                 Text(settings.breakMode.subtitle)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                Picker("Gatto che avvisa", selection: $settings.breakWarningSeconds) {
+                    ForEach(BreakWarning.leadTimeOptions, id: \.self) { seconds in
+                        Text(BreakWarning.optionLabel(seconds: seconds)).tag(seconds)
+                    }
+                }
+                HStack {
+                    Text("Un gattino sbuca dal bordo dello schermo poco prima della pausa.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Prova") { engine.previewBreakWarning() }
+                        .disabled(engine.phase.isBreak)
+                }
             }
 
             Section("Severità") {
@@ -67,6 +82,8 @@ struct SettingsView: View {
                     }
                 }
             }
+
+            ShortcutsSettingsSection()
 
             Section {
                 Text("Le modifiche ai tempi valgono dal prossimo pomodoro.")

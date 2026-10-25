@@ -43,6 +43,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Menu bar only: no Dock icon (also set via LSUIElement in the bundle).
         NSApp.setActivationPolicy(.accessory)
+        // System-wide shortcuts (Carbon hot keys, no permission needed).
+        Task { @MainActor in GlobalShortcuts.shared.activate() }
     }
 
     /// Opens the settings window. A plain NSWindow, because `Settings` scenes
