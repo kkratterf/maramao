@@ -5612,6 +5612,94 @@
           }
         }
       }
+    },
+    "Ti aspetto dopo la call 🐈": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'll wait until your call is over 🐈"
+          }
+        }
+      }
+    },
+    "Aspetta sempre": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait as long as it takes"
+          }
+        }
+      }
+    },
+    "Al massimo %lld min": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "At most %lld min"
+          }
+        }
+      }
+    },
+    "Pausa in attesa: sei in call": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break on hold: you're in a call"
+          }
+        }
+      }
+    },
+    "Call e presentazioni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calls and presentations"
+          }
+        }
+      }
+    },
+    "Non interrompere call e presentazioni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't interrupt calls and presentations"
+          }
+        }
+      }
+    },
+    "Rimanda la pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold the break"
+          }
+        }
+      }
+    },
+    "Se il microfono o la videocamera sono in uso, o hai a tutto schermo Keynote, PowerPoint, un video o una call, la pausa aspetta un minuto alla volta. Nessun permesso richiesto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When the microphone or camera is in use, or Keynote, PowerPoint, a video or a call is fullscreen, the break waits one minute at a time. No permission needed."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

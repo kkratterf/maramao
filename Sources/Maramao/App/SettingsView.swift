@@ -96,6 +96,21 @@ struct SettingsView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
 
+            Section("Call e presentazioni") {
+                Toggle("Non interrompere call e presentazioni", isOn: $settings.dontInterruptCalls)
+                if settings.dontInterruptCalls {
+                    Picker("Rimanda la pausa", selection: $settings.maxPostponeMinutes) {
+                        ForEach(BreakPostponer.maxMinutesOptions, id: \.self) { minutes in
+                            Text(BreakPostponer.maxLabel(minutes: minutes)).tag(minutes)
+                        }
+                    }
+                }
+                Text("Se il microfono o la videocamera sono in uso, o hai a tutto schermo Keynote, PowerPoint, un video o una call, la pausa aspetta un minuto alla volta. Nessun permesso richiesto.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
             Section("Severità") {
                 Toggle("Modalità severa: la pausa non si salta mai", isOn: $settings.strictMode)
                 if !settings.strictMode {

@@ -26,6 +26,10 @@ final class AppSettings: ObservableObject {
     @Published var awayBehaviorRaw: String { didSet { defaults.set(awayBehaviorRaw, forKey: Keys.awayBehavior) } }
     /// Which displays the cats cover (`DisplayScope` raw value).
     @Published var displayScopeRaw: String { didSet { defaults.set(displayScopeRaw, forKey: Keys.displayScope) } }
+    /// Hold the break while the microphone or camera is in use or a presentation is fullscreen.
+    @Published var dontInterruptCalls: Bool { didSet { defaults.set(dontInterruptCalls, forKey: Keys.dontInterruptCalls) } }
+    /// Longest hold, in minutes. 0 = wait as long as the call lasts.
+    @Published var maxPostponeMinutes: Int { didSet { defaults.set(maxPostponeMinutes, forKey: Keys.maxPostponeMinutes) } }
     /// Raw `MenuBarStyle`: what the menu bar item shows.
     @Published var menuBarStyleRaw: String { didSet { defaults.set(menuBarStyleRaw, forKey: Keys.menuBarStyle) } }
     /// Shows "24m" instead of "24:59" in the menu bar.
@@ -49,6 +53,8 @@ final class AppSettings: ObservableObject {
         static let breakWarningSeconds = "breakWarningSeconds"
         static let awayBehavior = "awayBehavior"
         static let displayScope = "displayScope"
+        static let dontInterruptCalls = "dontInterruptCalls"
+        static let maxPostponeMinutes = "maxPostponeMinutes"
         static let menuBarStyle = "menuBarStyle"
         static let menuBarHideSeconds = "menuBarHideSeconds"
         static let motionPreference = "motionPreference"
@@ -71,6 +77,8 @@ final class AppSettings: ObservableObject {
             Keys.breakWarningSeconds: BreakWarning.defaultLeadTime,
             Keys.awayBehavior: AwayBehavior.defaultBehavior.rawValue,
             Keys.displayScope: DisplayScope.defaultScope.rawValue,
+            Keys.dontInterruptCalls: true,
+            Keys.maxPostponeMinutes: BreakPostponer.defaultMaxMinutes,
             Keys.menuBarStyle: MenuBarStyle.defaultStyle.rawValue,
             Keys.menuBarHideSeconds: false,
             Keys.motionPreference: MotionPreference.defaultPreference.rawValue,
@@ -89,6 +97,8 @@ final class AppSettings: ObservableObject {
         breakWarningSeconds = defaults.integer(forKey: Keys.breakWarningSeconds)
         awayBehaviorRaw = defaults.string(forKey: Keys.awayBehavior) ?? AwayBehavior.defaultBehavior.rawValue
         displayScopeRaw = defaults.string(forKey: Keys.displayScope) ?? DisplayScope.defaultScope.rawValue
+        dontInterruptCalls = defaults.bool(forKey: Keys.dontInterruptCalls)
+        maxPostponeMinutes = defaults.integer(forKey: Keys.maxPostponeMinutes)
         menuBarStyleRaw = defaults.string(forKey: Keys.menuBarStyle) ?? MenuBarStyle.defaultStyle.rawValue
         menuBarHideSeconds = defaults.bool(forKey: Keys.menuBarHideSeconds)
         motionPreferenceRaw = defaults.string(forKey: Keys.motionPreference) ?? MotionPreference.defaultPreference.rawValue
