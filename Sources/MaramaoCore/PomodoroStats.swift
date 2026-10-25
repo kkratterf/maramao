@@ -25,6 +25,8 @@ public struct DayStats: Codable, Equatable, Sendable {
     public var breaksSkipped: Int
     /// Break counts per break mode, keyed by the mode's raw value.
     public var modes: [String: BreakModeCounts]
+    /// Breaks ended with the emergency exit (⌃⌥⌘⌫ or the corner). Also counted as skipped.
+    public var emergencyExits: Int
 
     public init(
         day: String,
@@ -32,7 +34,8 @@ public struct DayStats: Codable, Equatable, Sendable {
         focusSeconds: TimeInterval = 0,
         breaksCompleted: Int = 0,
         breaksSkipped: Int = 0,
-        modes: [String: BreakModeCounts] = [:]
+        modes: [String: BreakModeCounts] = [:],
+        emergencyExits: Int = 0
     ) {
         self.day = day
         self.workSessions = workSessions
@@ -40,6 +43,23 @@ public struct DayStats: Codable, Equatable, Sendable {
         self.breaksCompleted = breaksCompleted
         self.breaksSkipped = breaksSkipped
         self.modes = modes
+        self.emergencyExits = emergencyExits
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case day, workSessions, focusSeconds, breaksCompleted, breaksSkipped, modes, emergencyExits
+    }
+
+    /// Decodes stats saved by older versions too, which had no `emergencyExits`.
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        day = try container.decode(String.self, forKey: .day)
+        workSessions = try container.decode(Int.self, forKey: .workSessions)
+        focusSeconds = try container.decode(TimeInterval.self, forKey: .focusSeconds)
+        breaksCompleted = try container.decode(Int.self, forKey: .breaksCompleted)
+        breaksSkipped = try container.decode(Int.self, forKey: .breaksSkipped)
+        modes = try container.decode([String: BreakModeCounts].self, forKey: .modes)
+        emergencyExits = try container.decodeIfPresent(Int.self, forKey: .emergencyExits) ?? 0
     }
 
     public var breaksTotal: Int { breaksCompleted + breaksSkipped }
@@ -53,6 +73,7 @@ public struct DayStats: Codable, Equatable, Sendable {
         result.focusSeconds += other.focusSeconds
         result.breaksCompleted += other.breaksCompleted
         result.breaksSkipped += other.breaksSkipped
+        result.emergencyExits += other.emergencyExits
         for (mode, counts) in other.modes {
             var mine = result.modes[mode] ?? BreakModeCounts()
             mine.completed += counts.completed
@@ -98,6 +119,14 @@ public struct PomodoroStats: Codable, Equatable, Sendable {
                 counts.skipped += 1
             }
             day.modes[mode] = counts
+        }
+    }
+
+    /// The user took the emergency exit out of a break. The break itself is recorded as
+    /// skipped by `recordBreak`; this only counts the escape.
+    public mutating func recordEmergencyExit(at date: Date, calendar: Calendar = .current) {
+        update(date, calendar: calendar) { day in
+            day.emergencyExits += 1
         }
     }
 

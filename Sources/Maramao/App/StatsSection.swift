@@ -36,6 +36,10 @@ struct StatsSection: View {
         if total.breaksTotal > 0 {
             text += " · \(total.breaksCompleted)/\(total.breaksTotal) pause rispettate"
         }
+        if total.emergencyExits > 0 {
+            let exits = total.emergencyExits == 1 ? "1 uscita di emergenza" : "\(total.emergencyExits) uscite di emergenza"
+            text += " · \(exits)"
+        }
         return text
     }
 

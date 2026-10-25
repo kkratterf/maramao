@@ -23,7 +23,7 @@ final class CatPileBreak: BreakMode {
         guard !hasBegun, !hasEnded else { return }
         hasBegun = true
 
-        let screens = NSScreen.screens
+        let screens = BreakScreens.current()
         guard !screens.isEmpty else { return }
 
         // Render the cats once, at the sharpest backing scale in use.
@@ -42,7 +42,7 @@ final class CatPileBreak: BreakMode {
             view.allowsTransparency = true
             view.ignoresSiblingOrder = true
             view.preferredFramesPerSecond = 60
-            let scene = CatPileScene(size: size, artworks: artworks, fillTime: fillTime)
+            let scene = CatPileScene(size: size, artworks: artworks, fillTime: fillTime, calm: BreakAccessibility.reduceMotion)
             window.contentView = view
             view.presentScene(scene)
             window.show()
@@ -85,7 +85,8 @@ final class CatPileBreak: BreakMode {
     }
 
     private func makeHUDWindow(on screen: NSScreen, level: NSWindow.Level, context: BreakContext) -> OverlayWindow {
-        let size = NSSize(width: 480, height: 110)
+        // Tall enough for the cat's tip under the pill (see BreakHUD); the empty part is transparent.
+        let size = NSSize(width: 480, height: 210)
         let visible = screen.visibleFrame
         let frame = NSRect(
             x: screen.frame.midX - size.width / 2,
@@ -95,7 +96,7 @@ final class CatPileBreak: BreakMode {
         )
         let window = OverlayWindow(frame: frame, level: level, clickThrough: false)
         let hud = BreakHUD(context: context, message: "Invasione di gatti in corso.")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         let hosting = CatPileHUDHostingView(rootView: AnyView(hud))
         hosting.frame = NSRect(origin: .zero, size: size)
         hosting.autoresizingMask = [.width, .height]

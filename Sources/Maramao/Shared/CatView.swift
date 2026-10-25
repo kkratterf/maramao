@@ -76,6 +76,19 @@ struct CatView: View {
             }
         }
         .aspectRatio(200 / 160, contentMode: .fit)
+        .accessibilityElement()
+        .accessibilityLabel(accessibilityDescription)
+        .accessibilityAddTraits(.isImage)
+    }
+
+    /// What VoiceOver says about the drawing.
+    private var accessibilityDescription: String {
+        switch pose {
+        case .walking: return "Un gatto che cammina"
+        case .sitting: return "Un gatto seduto"
+        case .sleeping: return "Un gatto che dorme"
+        case .stretching: return "Un gatto che si stiracchia"
+        }
     }
 
     // MARK: - Poses

@@ -49,6 +49,15 @@ struct SettingsView: View {
                 Text(settings.breakMode.subtitle)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                Picker("Schermi", selection: $settings.displayScopeRaw) {
+                    ForEach(DisplayScope.allCases, id: \.self) { scope in
+                        Text(scope.label).tag(scope.rawValue)
+                    }
+                }
+                Text("Gli schermi senza gatti vengono solo un po' oscurati. Il gatto sulla finestra segue sempre la finestra attiva.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 Picker("Gatto che avvisa", selection: $settings.breakWarningSeconds) {
                     ForEach(BreakWarning.leadTimeOptions, id: \.self) { seconds in
                         Text(BreakWarning.optionLabel(seconds: seconds)).tag(seconds)
@@ -62,6 +71,18 @@ struct SettingsView: View {
                     Button("Prova") { engine.previewBreakWarning() }
                         .disabled(engine.phase.isBreak)
                 }
+            }
+
+            Section("Accessibilità") {
+                Picker("Animazioni delle pause", selection: $settings.motionPreferenceRaw) {
+                    ForEach(MotionPreference.allCases, id: \.self) { preference in
+                        Text(preference.label).tag(preference.rawValue)
+                    }
+                }
+                Text("Con le animazioni ridotte i gatti appaiono con una dissolvenza: niente passeggiate, salti o gatti che cadono. \"Come il sistema\" segue Riduci movimento in Impostazioni di Sistema → Accessibilità → Schermo.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             Section("Severità") {

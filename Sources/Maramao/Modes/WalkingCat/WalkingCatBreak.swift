@@ -67,7 +67,8 @@ final class WalkingCatBreak: BreakMode {
     private static let blockerLevel = NSWindow.Level(rawValue: NSWindow.Level.screenSaver.rawValue - 1)
     private static let catLevel = NSWindow.Level.screenSaver
     private static let hudLevel = NSWindow.Level(rawValue: NSWindow.Level.screenSaver.rawValue + 1)
-    private static let hudSize = NSSize(width: 400, height: 90)
+    /// Tall enough for the cat's tip under the pill (see BreakHUD); the empty part is transparent.
+    private static let hudSize = NSSize(width: 460, height: 200)
     private static let lines = [
         "Questa finestra adesso è mia.",
         "Riposati, umano.",
@@ -113,6 +114,12 @@ final class WalkingCatBreak: BreakMode {
 
     /// 1 for a real break, smaller for the 30 s preview: shortens the slow parts.
     private var timeScale: Double = 1
+    /// Reduce Motion: the cat fades in and out in place instead of walking and jumping.
+    private var calm = false
+    private var fadeFrom: Double = 1
+    private var fadeTo: Double = 1
+    private var fadeStart: TimeInterval = 0
+    private var fadeDuration: TimeInterval = 0
     private var holdScale: Double { max(0.45, timeScale) }
 
     private var now: TimeInterval { ProcessInfo.processInfo.systemUptime - startUptime }
@@ -124,6 +131,7 @@ final class WalkingCatBreak: BreakMode {
         began = true
         self.context = context
         timeScale = min(1, max(0.2, context.duration / 90))
+        calm = BreakAccessibility.reduceMotion
 
         let screens = NSScreen.screens
         guard !screens.isEmpty else { return }
@@ -156,7 +164,7 @@ final class WalkingCatBreak: BreakMode {
 
         let hud = OverlayWindow(frame: layout.hudFrame, level: Self.hudLevel, clickThrough: false)
         let hudView = BreakHUD(context: context, message: "Il gatto ha preso la tua finestra.")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         let hosting = WalkingCatFirstMouseHostingView(rootView: hudView)
         hosting.frame = NSRect(origin: .zero, size: layout.hudFrame.size)
         hosting.autoresizingMask = [.width, .height]
@@ -215,6 +223,14 @@ final class WalkingCatBreak: BreakMode {
         running = nil
         settled = false
         cat.bubble = nil
+
+        if calm {
+            // Reduce Motion: the cat just fades away where it is.
+            fadeCat(to: 0, duration: 1.0)
+            queue = [Step(.hold(cat.pose, duration: 1.05), completion: { [weak self] in self?.finish() })]
+            after(2.7) { [weak self] in self?.finish() }
+            return
+        }
 
         let screen = WalkingCatWindowFinder.screen(containing: cat.position)?.frame ?? cat.frameRect
         var steps: [Step] = []
@@ -408,6 +424,11 @@ final class WalkingCatBreak: BreakMode {
     /// Breathing, tail, blinking, bubble and hearts bookkeeping.
     private func updateDerivedState(at time: TimeInterval) {
         cat.time = time
+        if fadeDuration > 0 {
+            let p = min(1, max(0, (time - fadeStart) / fadeDuration))
+            cat.opacity = fadeFrom + (fadeTo - fadeFrom) * p
+            if p >= 1 { fadeDuration = 0 }
+        }
         let blinkCycle = 4.6
         let blinking = time.truncatingRemainder(dividingBy: blinkCycle) > blinkCycle - 0.35
         switch cat.pose {
@@ -519,6 +540,10 @@ final class WalkingCatBreak: BreakMode {
     // MARK: - Routes
 
     private func planEntrance(_ layout: Layout) {
+        if calm {
+            planCalmArrival(layout, announce: true)
+            return
+        }
         let walkWidth = layout.walkWidth
         let screen = layout.screen
         let fromLeft = (layout.area.midX - screen.minX) <= (screen.maxX - layout.area.midX)
@@ -542,6 +567,14 @@ final class WalkingCatBreak: BreakMode {
         queue.removeAll()
         running = nil
         settled = false
+        if calm {
+            // Reduce Motion: fade out here, fade in on the new window.
+            fadeCat(to: 0, duration: 0.4)
+            queue = [Step(.hold(cat.pose, duration: 0.45), completion: { [weak self] in
+                self?.planCalmArrival(layout, announce: false)
+            })]
+            return
+        }
         let walkWidth = layout.walkWidth
         var steps: [Step] = []
 
@@ -619,6 +652,34 @@ final class WalkingCatBreak: BreakMode {
         steps.append(Step(.hold(.sleeping, duration: 0), completion: { [weak self] in
             self?.didSettle()
         }))
+    }
+
+    /// Reduce Motion: the cat appears sitting on the window with a fade, then curls up.
+    private func planCalmArrival(_ layout: Layout, announce: Bool) {
+        cat.position = layout.sleepPoint
+        cat.width = layout.sleepWidth
+        cat.pose = .sitting
+        cat.opacity = 0
+        fadeFrom = 0
+        fadeTo = 0
+        fadeCat(to: 1, duration: 0.8)
+        var steps: [Step] = []
+        steps.append(Step(.hold(.sitting, duration: 0), completion: { [weak self] in
+            if announce { self?.say("Questa finestra adesso è mia.", duration: 2.6) }
+        }))
+        steps.append(Step(.hold(.sitting, duration: 1.8 * holdScale)))
+        steps.append(Step(.hold(.sleeping, duration: 0), completion: { [weak self] in
+            self?.didSettle()
+        }))
+        queue = steps
+        running = nil
+    }
+
+    private func fadeCat(to target: Double, duration: TimeInterval) {
+        fadeFrom = cat.opacity
+        fadeTo = target
+        fadeStart = now
+        fadeDuration = duration
     }
 
     private func didSettle() {
