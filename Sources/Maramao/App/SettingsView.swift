@@ -49,7 +49,23 @@ struct SettingsView: View {
                         Text("Pulsante \"Salta\" dopo \(Int(settings.skipUnlockSeconds)) secondi")
                     }
                 }
-                Toggle("Suoni", isOn: $settings.soundEnabled)
+            }
+
+            Section("Suoni") {
+                Toggle("Suoni dei gatti", isOn: $settings.soundEnabled)
+                if settings.soundEnabled {
+                    HStack {
+                        Text("Volume")
+                        Slider(value: $settings.soundVolume, in: 0...1)
+                    }
+                    HStack {
+                        Text("Prova i suoni")
+                        Spacer()
+                        Button("🐱 Miao") { CatSounds.shared.nextMeow() }
+                        Button("😺 Fusa") { CatSounds.shared.purr(duration: 3) }
+                        Button("🔔 Fine pausa") { CatSounds.shared.breakOverChime() }
+                    }
+                }
             }
 
             Section {

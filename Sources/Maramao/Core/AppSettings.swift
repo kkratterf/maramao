@@ -18,6 +18,8 @@ final class AppSettings: ObservableObject {
     @Published var skipUnlockSeconds: Double { didSet { defaults.set(skipUnlockSeconds, forKey: Keys.skipUnlockSeconds) } }
     @Published var autoStartWork: Bool { didSet { defaults.set(autoStartWork, forKey: Keys.autoStartWork) } }
     @Published var soundEnabled: Bool { didSet { defaults.set(soundEnabled, forKey: Keys.soundEnabled) } }
+    /// Loudness of the cat sounds, 0...1.
+    @Published var soundVolume: Double { didSet { defaults.set(soundVolume, forKey: Keys.soundVolume) } }
 
     private enum Keys {
         static let workMinutes = "workMinutes"
@@ -29,6 +31,7 @@ final class AppSettings: ObservableObject {
         static let skipUnlockSeconds = "skipUnlockSeconds"
         static let autoStartWork = "autoStartWork"
         static let soundEnabled = "soundEnabled"
+        static let soundVolume = "soundVolume"
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -43,6 +46,7 @@ final class AppSettings: ObservableObject {
             Keys.skipUnlockSeconds: 60.0,
             Keys.autoStartWork: false,
             Keys.soundEnabled: true,
+            Keys.soundVolume: 0.7,
         ])
         workMinutes = defaults.double(forKey: Keys.workMinutes)
         shortBreakMinutes = defaults.double(forKey: Keys.shortBreakMinutes)
@@ -53,6 +57,7 @@ final class AppSettings: ObservableObject {
         skipUnlockSeconds = defaults.double(forKey: Keys.skipUnlockSeconds)
         autoStartWork = defaults.bool(forKey: Keys.autoStartWork)
         soundEnabled = defaults.bool(forKey: Keys.soundEnabled)
+        soundVolume = min(1, max(0, defaults.double(forKey: Keys.soundVolume)))
     }
 
     var breakMode: BreakModeID {

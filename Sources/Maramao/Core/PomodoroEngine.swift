@@ -124,7 +124,7 @@ final class PomodoroEngine: ObservableObject {
             breaks.end()
             breakContext = nil
             activeBreakMode = nil
-            playSound("Glass")
+            CatSounds.shared.breakOverChime()
         }
         enterCurrentPhase()
     }
@@ -150,7 +150,7 @@ final class PomodoroEngine: ObservableObject {
 
         if phase.isBreak {
             endPreview()
-            playSound("Purr")
+            CatSounds.shared.randomMeow()
             let unlock: Date? = settings.strictMode ? nil : Date().addingTimeInterval(settings.skipUnlockSeconds)
             let context = BreakContext(
                 duration: duration,
@@ -163,11 +163,6 @@ final class PomodoroEngine: ObservableObject {
             breaks.start(mode: settings.breakMode, context: context)
             activeBreakMode = breaks.currentModeID
         }
-    }
-
-    private func playSound(_ name: NSSound.Name) {
-        guard settings.soundEnabled else { return }
-        NSSound(named: name)?.play()
     }
 
     private func startTicker() {
