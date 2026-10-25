@@ -22,7 +22,7 @@ final class BreakTipStore {
         }
         let tip = picker.next(isLongBreak: isLongBreak)
         guard !tip.isEmpty, let name = packs.catNames.randomElement() else { return tip }
-        return "\(name) dice: \(tip)"
+        return String(localized: "\(name) dice: \(tip)")
     }
 }
 

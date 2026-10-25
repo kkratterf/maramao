@@ -77,33 +77,42 @@ public enum CatPackError: Error, Equatable, Sendable {
     case packTooLarge(bytes: Int)
 
     public var message: String {
+        let manifest = CatPackRules.manifestFileName
         switch self {
         case .missingManifest:
-            return "Manca il file \(CatPackRules.manifestFileName)."
+            return String(localized: "Manca il file \(manifest).")
         case .manifestTooLarge(let bytes):
-            return "\(CatPackRules.manifestFileName) è troppo grande (\(bytes / 1024) KB, massimo \(CatPackRules.maxManifestBytes / 1024) KB)."
+            let kilobytes = bytes / 1024
+            let limit = CatPackRules.maxManifestBytes / 1024
+            return String(localized: "\(manifest) è troppo grande (\(kilobytes) KB, massimo \(limit) KB).")
         case .invalidJSON(let detail):
-            return "\(CatPackRules.manifestFileName) non è un JSON valido: \(detail)"
+            return String(localized: "\(manifest) non è un JSON valido: \(detail)")
         case .unsupportedSchemaVersion(let version):
-            return "Versione dello schema \(version) non supportata (Maramao legge la \(CatPackRules.schemaVersion))."
+            let supported = CatPackRules.schemaVersion
+            return String(localized: "Versione dello schema \(version) non supportata (Maramao legge la \(supported)).")
         case .invalidField(let field, let reason):
-            return "Campo \"\(field)\": \(reason)"
+            return String(localized: "Campo \"\(field)\": \(reason)")
         case .unsupportedLicense(let license):
-            return "Licenza \"\(license)\" non ammessa: usa \(CatPackRules.licenses.sorted().joined(separator: ", "))."
+            let allowed = CatPackRules.licenses.sorted().joined(separator: ", ")
+            return String(localized: "Licenza \"\(license)\" non ammessa: usa \(allowed).")
         case .tooMany(let field, let count, let limit):
-            return "Troppi elementi in \"\(field)\": \(count), massimo \(limit)."
+            return String(localized: "Troppi elementi in \"\(field)\": \(count), massimo \(limit).")
         case .remoteURL(let value):
-            return "Niente indirizzi web: \"\(value)\" deve essere un file dentro il pacchetto."
+            return String(localized: "Niente indirizzi web: \"\(value)\" deve essere un file dentro il pacchetto.")
         case .unsafePath(let value):
-            return "Percorso non valido: \"\(value)\" deve restare dentro la cartella del pacchetto."
+            return String(localized: "Percorso non valido: \"\(value)\" deve restare dentro la cartella del pacchetto.")
         case .unsupportedImageType(let value):
-            return "\"\(value)\": sono ammesse solo immagini PNG, GIF o JPEG."
+            return String(localized: "\"\(value)\": sono ammesse solo immagini PNG, GIF o JPEG.")
         case .missingImage(let value):
-            return "Immagine non trovata: \"\(value)\"."
+            return String(localized: "Immagine non trovata: \"\(value)\".")
         case .imageTooLarge(let value, let bytes):
-            return "\"\(value)\" è troppo grande (\(bytes / 1_000_000) MB, massimo \(CatPackRules.maxImageBytes / 1_000_000) MB)."
+            let megabytes = bytes / 1_000_000
+            let limit = CatPackRules.maxImageBytes / 1_000_000
+            return String(localized: "\"\(value)\" è troppo grande (\(megabytes) MB, massimo \(limit) MB).")
         case .packTooLarge(let bytes):
-            return "Il pacchetto è troppo grande (\(bytes / 1_000_000) MB, massimo \(CatPackRules.maxPackBytes / 1_000_000) MB)."
+            let megabytes = bytes / 1_000_000
+            let limit = CatPackRules.maxPackBytes / 1_000_000
+            return String(localized: "Il pacchetto è troppo grande (\(megabytes) MB, massimo \(limit) MB).")
         }
     }
 }
@@ -142,13 +151,13 @@ public enum CatPackValidator {
         do {
             raw = try JSONDecoder().decode(RawManifest.self, from: data)
         } catch let DecodingError.keyNotFound(key, _) {
-            throw CatPackError.invalidField(key.stringValue, reason: "obbligatorio.")
+            throw CatPackError.invalidField(key.stringValue, reason: String(localized: "obbligatorio."))
         } catch let DecodingError.typeMismatch(_, context) {
-            throw CatPackError.invalidField(fieldName(context.codingPath), reason: "tipo sbagliato.")
+            throw CatPackError.invalidField(fieldName(context.codingPath), reason: String(localized: "tipo sbagliato."))
         } catch let DecodingError.valueNotFound(_, context) {
-            throw CatPackError.invalidField(fieldName(context.codingPath), reason: "valore mancante.")
+            throw CatPackError.invalidField(fieldName(context.codingPath), reason: String(localized: "valore mancante."))
         } catch {
-            throw CatPackError.invalidJSON("controlla virgole e parentesi.")
+            throw CatPackError.invalidJSON(String(localized: "controlla virgole e parentesi."))
         }
 
         guard raw.schemaVersion == CatPackRules.schemaVersion else {
@@ -158,7 +167,7 @@ public enum CatPackValidator {
         let id = raw.id.trimmingCharacters(in: .whitespaces)
         let idCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz0123456789-")
         guard !id.isEmpty, id.count <= 40, id.unicodeScalars.allSatisfy({ idCharacters.contains($0) }) else {
-            throw CatPackError.invalidField("id", reason: "solo lettere minuscole, cifre e trattini, massimo 40.")
+            throw CatPackError.invalidField("id", reason: String(localized: "solo lettere minuscole, cifre e trattini, massimo 40."))
         }
         let name = try text(raw.name, field: "name", maxLength: CatPackRules.maxNameLength, required: true)
         let author = try text(raw.author ?? "", field: "author", maxLength: CatPackRules.maxNameLength, required: false)
@@ -169,7 +178,7 @@ public enum CatPackValidator {
             throw CatPackError.unsupportedLicense(license)
         }
         if license.hasPrefix("CC-BY"), author.isEmpty {
-            throw CatPackError.invalidField("author", reason: "obbligatorio con una licenza CC-BY.")
+            throw CatPackError.invalidField("author", reason: String(localized: "obbligatorio con una licenza CC-BY."))
         }
 
         let rawPalettes = raw.palettes ?? []
@@ -202,7 +211,7 @@ public enum CatPackValidator {
             let top = try text(caption.top ?? "", field: "\(field).top", maxLength: CatPackRules.maxCaptionLength, required: false)
             let bottom = try text(caption.bottom ?? "", field: "\(field).bottom", maxLength: CatPackRules.maxCaptionLength, required: false)
             guard !(top.isEmpty && bottom.isEmpty) else {
-                throw CatPackError.invalidField(field, reason: "serve almeno \"top\" o \"bottom\".")
+                throw CatPackError.invalidField(field, reason: String(localized: "serve almeno \"top\" o \"bottom\"."))
             }
             captions.append(CatPackCaption(top: top, bottom: bottom))
         }
@@ -267,10 +276,10 @@ public enum CatPackValidator {
     private static func text(_ value: String, field: String, maxLength: Int, required: Bool) throws -> String {
         let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
         if required && trimmed.isEmpty {
-            throw CatPackError.invalidField(field, reason: "non può essere vuoto.")
+            throw CatPackError.invalidField(field, reason: String(localized: "non può essere vuoto."))
         }
         guard trimmed.count <= maxLength else {
-            throw CatPackError.invalidField(field, reason: "troppo lungo (massimo \(maxLength) caratteri).")
+            throw CatPackError.invalidField(field, reason: String(localized: "troppo lungo (massimo \(maxLength) caratteri)."))
         }
         return trimmed
     }
@@ -284,7 +293,7 @@ public enum CatPackValidator {
 
     private static func color(_ value: String, field: String) throws -> CatPackColor {
         guard let color = CatPackColor(hex: value) else {
-            throw CatPackError.invalidField(field, reason: "colore nel formato \"#RRGGBB\".")
+            throw CatPackError.invalidField(field, reason: String(localized: "colore nel formato \"#RRGGBB\"."))
         }
         return color
     }
@@ -351,7 +360,7 @@ public enum CatPackLoader {
         do {
             data = try Data(contentsOf: manifestURL)
         } catch {
-            throw CatPackError.invalidJSON("non riesco a leggere il file.")
+            throw CatPackError.invalidJSON(String(localized: "non riesco a leggere il file."))
         }
         let root = folder.resolvingSymlinksInPath().standardizedFileURL.path
         return try CatPackValidator.validate(manifest: data) { relative in

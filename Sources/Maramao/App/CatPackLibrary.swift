@@ -102,7 +102,8 @@ final class CatPackLibrary: ObservableObject {
             .sorted { $0.lastPathComponent.localizedStandardCompare($1.lastPathComponent) == .orderedAscending }
         for (index, folder) in directories.enumerated() {
             if index >= Self.maxPacks {
-                found.append(CatPackEntry(folder: folder, pack: nil, error: "Troppi pacchetti: Maramao ne legge al massimo \(Self.maxPacks)."))
+                let limit = Self.maxPacks
+                found.append(CatPackEntry(folder: folder, pack: nil, error: String(localized: "Troppi pacchetti: Maramao ne legge al massimo \(limit).")))
                 continue
             }
             do {
@@ -186,7 +187,7 @@ struct CatPacksSettingsSection: View {
                 } else {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("⚠️ \(entry.displayName)")
-                        Text(entry.error ?? "Pacchetto non valido.")
+                        Text(entry.error ?? String(localized: "Pacchetto non valido."))
                             .font(.caption)
                             .foregroundStyle(.red)
                             .fixedSize(horizontal: false, vertical: true)
@@ -214,14 +215,19 @@ struct CatPacksSettingsSection: View {
 
     private func summary(_ pack: CatPack) -> String {
         var parts: [String] = []
-        if !pack.author.isEmpty { parts.append("di \(pack.author)") }
+        let author = pack.author
+        if !author.isEmpty { parts.append(String(localized: "di \(author)")) }
         parts.append(pack.license)
-        if !pack.palettes.isEmpty { parts.append("\(pack.palettes.count) gatti") }
-        if !pack.captions.isEmpty { parts.append("\(pack.captions.count) meme") }
-        if !pack.images.isEmpty { parts.append("\(pack.images.count) immagini") }
+        let palettes = pack.palettes.count
+        if palettes > 0 { parts.append(String(localized: "\(palettes) gatti")) }
+        let captions = pack.captions.count
+        if captions > 0 { parts.append(String(localized: "\(captions) meme")) }
+        let images = pack.images.count
+        if images > 0 { parts.append(String(localized: "\(images) immagini")) }
         let tips = pack.shortTips.count + pack.longTips.count
-        if tips > 0 { parts.append("\(tips) consigli") }
-        if !pack.catNames.isEmpty { parts.append("nomi: \(pack.catNames.prefix(3).joined(separator: ", "))") }
+        if tips > 0 { parts.append(String(localized: "\(tips) consigli")) }
+        let names = pack.catNames.prefix(3).joined(separator: ", ")
+        if !names.isEmpty { parts.append(String(localized: "nomi: \(names)")) }
         return parts.joined(separator: " · ")
     }
 }
