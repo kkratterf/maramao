@@ -28,7 +28,13 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 
 Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
 
+With more than one display, **Schermi** in Settings picks where the cats appear: every display, only the main one, or the one with the mouse. The others are just dimmed a little.
+
 In Settings → **Barra dei menu** you choose what the menu bar shows: cat and countdown (default), only the cat, only the countdown, or the cat inside a ring that fills up as the session goes on. The countdown can also drop the seconds (`24m`).
+
+### When you step away
+
+Lunch, a meeting, the Mac asleep or locked: Maramao notices (no permission needed). By default the work timer stops while you are away, and if you were gone at least as long as a short break you come back to a fresh start, because you already rested. Settings → **Quando sei via** can also just pause the timer or ignore absences. Either way, a break never starts while the screen is locked or asleep, and never in the first seconds after you are back.
 
 ### Emergency exit
 

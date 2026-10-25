@@ -35,6 +35,11 @@ final class StatsStore: ObservableObject {
         save()
     }
 
+    func recordEmergencyExit() {
+        stats.recordEmergencyExit(at: Date(), calendar: calendar)
+        save()
+    }
+
     func reset() {
         stats.reset()
         save()

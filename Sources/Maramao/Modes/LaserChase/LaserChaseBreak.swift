@@ -53,6 +53,8 @@ final class LaserChaseBreak: BreakMode {
     private var cursorHidden = false
 
     private var began = false
+    /// Reduce Motion: a slower cat, no butt wiggle, no jumps (it slides onto the dot), no trail.
+    private var calm = false
     private var ended = false
     private var finished = false
 
@@ -77,6 +79,7 @@ final class LaserChaseBreak: BreakMode {
     private var catchPoint: CGPoint = .zero
     private var catches = 0
     private var bubbleStart: TimeInterval = 0
+    private var frameCount = 0
     private var bubbleEnd: TimeInterval = 0
     private var nextHeartID = 0
 
@@ -85,9 +88,10 @@ final class LaserChaseBreak: BreakMode {
     func begin(context: BreakContext) {
         guard !began, !ended else { return }
         began = true
+        calm = BreakAccessibility.reduceMotion
         self.context = context
 
-        let screens = NSScreen.screens
+        let screens = BreakScreens.current()
         guard !screens.isEmpty else { return }
 
         mouse = NSEvent.mouseLocation
@@ -101,7 +105,7 @@ final class LaserChaseBreak: BreakMode {
         cat.dot = mouse
         cat.trail = [mouse]
 
-        let mainScreen = NSScreen.main ?? screens[0]
+        let mainScreen = BreakScreens.primary(in: screens) ?? screens[0]
         let fadeIn = min(0.6, context.duration / 40)
         for screen in screens {
             let window = OverlayWindow(screen: screen)
@@ -278,14 +282,22 @@ final class LaserChaseBreak: BreakMode {
             pointerMoved()
             cat.dot = mouse
             cat.trail.append(mouse)
-            if cat.trail.count > 10 {
-                cat.trail.removeFirst(cat.trail.count - 10)
+            let trailLength = calm ? 1 : 10
+            if cat.trail.count > trailLength {
+                cat.trail.removeFirst(cat.trail.count - trailLength)
             }
         }
 
         step(at: time, dt: dt)
         movedThisTick = false
         updateDerivedState(at: time)
+
+        // While the cat grooms (mouse idle), 15 fps is plenty: only the paw and the blinks
+        // move, and every snapshot redraws a full-screen stage on each display.
+        frameCount += 1
+        let idle = state == .grooming && hypot(vx, vy) < 1
+            && (cat.bubble == nil || (cat.bubbleAge > 0.3 && cat.bubbleRemaining > 0.4))
+        if idle && frameCount % 4 != 0 { return }
         model.snapshot = cat
         syncStatus()
     }
@@ -327,7 +339,7 @@ final class LaserChaseBreak: BreakMode {
                 x: pounceFrom.x + (pounceTo.x - pounceFrom.x) * tt,
                 y: pounceFrom.y + (pounceTo.y - pounceFrom.y) * tt
             )
-            cat.lift = 4 * pounceHeight * tt * (1 - tt)
+            cat.lift = calm ? 0 : 4 * pounceHeight * tt * (1 - tt)
             if t >= 1 {
                 cat.lift = 0
                 land()
@@ -385,7 +397,7 @@ final class LaserChaseBreak: BreakMode {
         let dx = target.x - cat.position.x
         let dy = target.y - cat.position.y
         let distance = hypot(dx, dy)
-        let maxSpeed = w * 5.5
+        let maxSpeed = w * (calm ? 2.5 : 5.5)
         let slowRadius = w * 1.4
         var desiredX: CGFloat = 0
         var desiredY: CGFloat = 0
@@ -447,7 +459,7 @@ final class LaserChaseBreak: BreakMode {
         pounceFrom = cat.position
         pounceTo = target
         let distance = hypot(target.x - pounceFrom.x, target.y - pounceFrom.y)
-        pounceDuration = 0.34 + min(0.22, Double(distance) / 1800)
+        pounceDuration = (calm ? 0.6 : 0.34) + min(0.22, Double(distance) / 1800)
         pounceHeight = cat.height * 0.3 + distance * 0.25
         vx = 0
         vy = 0
@@ -508,7 +520,7 @@ final class LaserChaseBreak: BreakMode {
             let p = min(1, inState / wiggleDuration)
             cat.pose = .walking(step: 0)
             cat.squashY = CGFloat(1 - 0.12 * min(1, p * 3))
-            cat.jitter = CGFloat(sin(time * (40 + 30 * p))) * w * 0.014
+            cat.jitter = calm ? 0 : CGFloat(sin(time * (40 + 30 * p))) * w * 0.014
             cat.tailWag = sin(time * 18) * 0.5
             cat.eyesClosed = false
         case .pouncing:
@@ -519,7 +531,7 @@ final class LaserChaseBreak: BreakMode {
         case .celebrating:
             walking = false
             cat.pose = .sitting
-            let bounce = max(0, sin(inState * 9)) * max(0, 1 - inState / celebrateDuration)
+            let bounce = calm ? 0 : max(0, sin(inState * 9)) * max(0, 1 - inState / celebrateDuration)
             cat.squashY = CGFloat(1 + 0.05 * bounce)
             cat.tailWag = sin(time * 9) * 0.7
             cat.eyesClosed = inState < 0.5
@@ -612,9 +624,9 @@ final class LaserChaseBreak: BreakMode {
 
     // MARK: - Screens
 
-    /// The screen containing `point`, or the closest one.
+    /// The covered screen containing `point`, or the closest one (see `BreakScreens`).
     private static func screen(containing point: CGPoint) -> NSScreen? {
-        let screens = NSScreen.screens
+        let screens = BreakScreens.current()
         if let hit = screens.first(where: { $0.frame.contains(point) }) { return hit }
         var best: NSScreen?
         var bestDistance = CGFloat.greatestFiniteMagnitude
