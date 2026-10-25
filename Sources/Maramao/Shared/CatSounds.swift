@@ -102,7 +102,7 @@ final class CatSounds {
 
     func play(_ sound: Sound, gain: Float = 1) {
         onMain { [self] in
-            guard settings.soundEnabled else { return }
+            guard settings.soundEnabled, FocusFilterState.shared.policy.soundsAllowed else { return }
             let volume = Float(min(1, max(0, settings.soundVolume))) * gain
             guard volume > 0.001 else { return }
             guard let buffer = buffer(for: sound) else { return }
