@@ -419,7 +419,9 @@ struct MemeWallAnimatedImage: NSViewRepresentable {
 /// Slowly shifting gradient with a tiled paw pattern drifting diagonally.
 struct MemeWallBackground: View {
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1.0 / 20.0, paused: false)) { timeline in
+        // The paws drift ~14 pt/s and the hue shifts over minutes: 15 fps is plenty for a
+        // full-screen canvas redrawn on every display.
+        TimelineView(.animation(minimumInterval: 1.0 / 15.0, paused: false)) { timeline in
             Canvas { ctx, size in
                 let t = timeline.date.timeIntervalSinceReferenceDate
                 let hue = (t * 0.015).truncatingRemainder(dividingBy: 1)

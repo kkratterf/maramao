@@ -21,8 +21,15 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 | 😴 | **Non svegliare il gatto** | A cat falls asleep on your screen. Touch the mouse and it wakes up and judges you. |
 | 🐾 | **Invasione di gatti** | Cats rain from the top of the screen and pile up until everything is buried. |
 | 🔴 | **Caccia al laser** | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops. Leave the mouse alone and the cat sits down to groom. |
+| ⌨️ | **Il gatto sulla tastiera** | A cat falls asleep on a big keyboard. Every key you press ends up as cat-typing ("mmmmrrrrrooooow"), and Cmd-Q won't get you out. |
 
 Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
+
+### Emergency exit
+
+If a break ever gets stuck, or you really have to stop it, press **⌃⌥⌘⌫** (Control-Option-Command-Delete) to end it right away, **modalità severa included**. No shortcut at hand? Click five times quickly in the **top-left corner** of any screen. Neither needs any permission.
+
+As a safety net, Maramao also closes every cat window by force if a break is still on screen 30 seconds after it should have ended.
 
 ### Keyboard shortcuts
 

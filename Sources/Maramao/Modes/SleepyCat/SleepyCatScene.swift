@@ -80,7 +80,9 @@ struct SleepyNightSky: View {
                     endPoint: .bottom
                 )
 
-                TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: false)) { timeline in
+                // Stars drift a few points a second: 15 fps looks the same as 30 and halves
+                // the cost of redrawing a full-screen canvas on every display.
+                TimelineView(.animation(minimumInterval: 1.0 / 15.0, paused: false)) { timeline in
                     let t = timeline.date.timeIntervalSinceReferenceDate
                     Canvas { ctx, size in
                         for star in Self.stars {

@@ -69,6 +69,10 @@ struct SettingsView: View {
                     }
                 }
                 Toggle("Suoni", isOn: $settings.soundEnabled)
+                Text("Uscita di emergenza: \(EmergencyExitGuard.shortcutLabel) chiude subito qualsiasi pausa, anche in modalità severa. Funziona anche cliccando \(EmergencyExitGuard.cornerClicks) volte di fila nell'angolo in alto a sinistra dello schermo.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             ShortcutsSettingsSection()
