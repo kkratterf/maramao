@@ -6,6 +6,7 @@ struct MenuContentView: View {
     @EnvironmentObject private var engine: PomodoroEngine
     @EnvironmentObject private var settings: AppSettings
     @EnvironmentObject private var stats: StatsStore
+    @ObservedObject private var shortcuts = GlobalShortcuts.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -73,13 +74,16 @@ struct MenuContentView: View {
             case .idle:
                 Button("Inizia a lavorare") { engine.startWork() }
                     .keyboardShortcut(.defaultAction)
+                    .help("Inizia un pomodoro" + shortcuts.hint(.startPause))
             case .work:
                 Button(engine.isPaused ? "Riprendi" : "Pausa") { engine.togglePause() }
+                    .help((engine.isPaused ? "Riprendi il pomodoro" : "Metti in pausa il pomodoro") + shortcuts.hint(.startPause))
                 Button("Pausa gatto ora") { engine.takeBreakNow() }
+                    .help("Fai subito la pausa" + shortcuts.hint(.takeBreak))
             case .shortBreak, .longBreak:
                 Button("Salta pausa") { engine.skip() }
                     .disabled(!engine.canSkipBreak)
-                    .help(settings.strictMode ? "Modalità severa: non si salta" : "Disponibile dopo \(Int(settings.skipUnlockSeconds)) secondi")
+                    .help((settings.strictMode ? "Modalità severa: non si salta" : "Disponibile dopo \(Int(settings.skipUnlockSeconds)) secondi") + shortcuts.hint(.skip))
             }
             Spacer()
             if engine.phase != .idle {

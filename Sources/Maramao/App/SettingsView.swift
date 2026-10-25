@@ -69,6 +69,8 @@ struct SettingsView: View {
                 Toggle("Suoni", isOn: $settings.soundEnabled)
             }
 
+            ShortcutsSettingsSection()
+
             Section("Statistiche") {
                 StatsSection(stats: stats, confirmReset: $confirmStatsReset)
             }
