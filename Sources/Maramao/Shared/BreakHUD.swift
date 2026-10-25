@@ -40,6 +40,31 @@ struct BreakHUD: View {
                     Text(message)
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .opacity(isHighContrast ? 1 : 0.8)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                // Long messages wrap instead of pushing the buttons out of small HUD windows.
+                .frame(maxWidth: 240, alignment: .leading)
+                if context.canSnoozeNow {
+                    VStack(spacing: 3) {
+                        Button {
+                            context.requestSnooze()
+                        } label: {
+                            Text(BreakSnoozeText.button(minutes: context.snoozeMinutes))
+                                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(skipBackground)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityHint(BreakSnoozeText.left(context.snoozesLeft))
+                        .help(BreakSnoozeText.left(context.snoozesLeft))
+                        if let shortcut = BreakAccessibility.snoozeShortcutLabel {
+                            Text(shortcut)
+                                .font(.system(size: 10, weight: .medium, design: .rounded))
+                                .opacity(isHighContrast ? 1 : 0.65)
+                                .accessibilityHidden(true)
+                        }
+                    }
                 }
                 if context.canSkipNow {
                     VStack(spacing: 3) {

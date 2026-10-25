@@ -40,6 +40,11 @@ final class StatsStore: ObservableObject {
         save()
     }
 
+    func recordSnooze() {
+        stats.recordSnooze(at: Date(), calendar: calendar)
+        save()
+    }
+
     func reset() {
         stats.reset()
         save()
