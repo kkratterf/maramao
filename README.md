@@ -20,6 +20,7 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 | 😹 | **Muro di meme** | The screen fills with cat memes until the break is over. |
 | 😴 | **Non svegliare il gatto** | A cat falls asleep on your screen. Touch the mouse and it wakes up and judges you. |
 | 🐾 | **Invasione di gatti** | Cats rain from the top of the screen and pile up until everything is buried. |
+| 🔴 | **Caccia al laser** | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops. Leave the mouse alone and the cat sits down to groom. |
 
 Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
 
