@@ -115,8 +115,6 @@ final class WalkingCatBreak: BreakMode {
     private var timeScale: Double = 1
     private var holdScale: Double { max(0.45, timeScale) }
 
-    private lazy var purrSound: NSSound? = NSSound(named: NSSound.Name("Purr"))
-
     private var now: TimeInterval { ProcessInfo.processInfo.systemUptime - startUptime }
 
     // MARK: - BreakMode
@@ -735,9 +733,7 @@ final class WalkingCatBreak: BreakMode {
     }
 
     private func purr() {
-        guard let sound = purrSound else { return }
-        if sound.isPlaying { sound.stop() }
-        sound.play()
+        CatSounds.shared.purr(duration: 2.5)
     }
 
     private func say(_ text: String, duration: TimeInterval = 3.8) {

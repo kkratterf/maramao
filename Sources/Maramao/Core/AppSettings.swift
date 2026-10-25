@@ -18,10 +18,16 @@ final class AppSettings: ObservableObject {
     @Published var skipUnlockSeconds: Double { didSet { defaults.set(skipUnlockSeconds, forKey: Keys.skipUnlockSeconds) } }
     @Published var autoStartWork: Bool { didSet { defaults.set(autoStartWork, forKey: Keys.autoStartWork) } }
     @Published var soundEnabled: Bool { didSet { defaults.set(soundEnabled, forKey: Keys.soundEnabled) } }
+    /// Loudness of the cat sounds, 0...1.
+    @Published var soundVolume: Double { didSet { defaults.set(soundVolume, forKey: Keys.soundVolume) } }
     /// Seconds before the end of a work session when a cat peeks to warn about the break. 0 = off.
     @Published var breakWarningSeconds: Int { didSet { defaults.set(breakWarningSeconds, forKey: Keys.breakWarningSeconds) } }
     /// Which displays the cats cover (`DisplayScope` raw value).
     @Published var displayScopeRaw: String { didSet { defaults.set(displayScopeRaw, forKey: Keys.displayScope) } }
+    /// Raw `MenuBarStyle`: what the menu bar item shows.
+    @Published var menuBarStyleRaw: String { didSet { defaults.set(menuBarStyleRaw, forKey: Keys.menuBarStyle) } }
+    /// Shows "24m" instead of "24:59" in the menu bar.
+    @Published var menuBarHideSeconds: Bool { didSet { defaults.set(menuBarHideSeconds, forKey: Keys.menuBarHideSeconds) } }
 
     private enum Keys {
         static let workMinutes = "workMinutes"
@@ -33,8 +39,11 @@ final class AppSettings: ObservableObject {
         static let skipUnlockSeconds = "skipUnlockSeconds"
         static let autoStartWork = "autoStartWork"
         static let soundEnabled = "soundEnabled"
+        static let soundVolume = "soundVolume"
         static let breakWarningSeconds = "breakWarningSeconds"
         static let displayScope = "displayScope"
+        static let menuBarStyle = "menuBarStyle"
+        static let menuBarHideSeconds = "menuBarHideSeconds"
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -49,8 +58,11 @@ final class AppSettings: ObservableObject {
             Keys.skipUnlockSeconds: 60.0,
             Keys.autoStartWork: false,
             Keys.soundEnabled: true,
+            Keys.soundVolume: 0.7,
             Keys.breakWarningSeconds: BreakWarning.defaultLeadTime,
             Keys.displayScope: DisplayScope.defaultScope.rawValue,
+            Keys.menuBarStyle: MenuBarStyle.defaultStyle.rawValue,
+            Keys.menuBarHideSeconds: false,
         ])
         workMinutes = defaults.double(forKey: Keys.workMinutes)
         shortBreakMinutes = defaults.double(forKey: Keys.shortBreakMinutes)
@@ -61,8 +73,11 @@ final class AppSettings: ObservableObject {
         skipUnlockSeconds = defaults.double(forKey: Keys.skipUnlockSeconds)
         autoStartWork = defaults.bool(forKey: Keys.autoStartWork)
         soundEnabled = defaults.bool(forKey: Keys.soundEnabled)
+        soundVolume = min(1, max(0, defaults.double(forKey: Keys.soundVolume)))
         breakWarningSeconds = defaults.integer(forKey: Keys.breakWarningSeconds)
         displayScopeRaw = defaults.string(forKey: Keys.displayScope) ?? DisplayScope.defaultScope.rawValue
+        menuBarStyleRaw = defaults.string(forKey: Keys.menuBarStyle) ?? MenuBarStyle.defaultStyle.rawValue
+        menuBarHideSeconds = defaults.bool(forKey: Keys.menuBarHideSeconds)
     }
 
     var breakMode: BreakModeID {
@@ -73,6 +88,11 @@ final class AppSettings: ObservableObject {
     var displayScope: DisplayScope {
         get { DisplayScope(rawValue: displayScopeRaw) ?? .defaultScope }
         set { displayScopeRaw = newValue.rawValue }
+    }
+
+    var menuBarStyle: MenuBarStyle {
+        get { MenuBarStyle(rawValue: menuBarStyleRaw) ?? .defaultStyle }
+        set { menuBarStyleRaw = newValue.rawValue }
     }
 
     var pomodoroConfig: PomodoroConfig {
