@@ -24,6 +24,7 @@ body:
         - Muro di meme
         - Non svegliare il gatto
         - Invasione di gatti
+        - Caccia al laser
         - Not related to a break
     validations:
       required: true
