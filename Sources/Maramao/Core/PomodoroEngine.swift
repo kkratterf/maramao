@@ -16,6 +16,7 @@ final class PomodoroEngine: ObservableObject {
     @Published private(set) var activeBreakMode: BreakModeID?
 
     private let settings: AppSettings
+    private let stats: StatsStore
     private let breaks = BreakCoordinator()
     private var cycle: PomodoroCycle
     private var endDate: Date?
@@ -25,8 +26,9 @@ final class PomodoroEngine: ObservableObject {
     private var breakWarning = BreakWarning()
     private let peekingCat = PeekingCatWarning()
 
-    init(settings: AppSettings = .shared) {
+    init(settings: AppSettings = .shared, stats: StatsStore? = nil) {
         self.settings = settings
+        self.stats = stats ?? StatsStore.shared
         self.cycle = PomodoroCycle(config: settings.pomodoroConfig)
         self.remaining = settings.pomodoroConfig.work
         breaks.onEmergencyExit = { [weak self] context in
@@ -45,6 +47,7 @@ final class PomodoroEngine: ObservableObject {
     // MARK: - Commands
 
     func startWork() {
+        recordAbandonedBreak()
         endPreview()
         breaks.end()
         cycle.config = settings.pomodoroConfig
@@ -86,6 +89,7 @@ final class PomodoroEngine: ObservableObject {
     }
 
     func reset() {
+        recordAbandonedBreak()
         endPreview()
         breaks.end()
         breakContext = nil
@@ -160,6 +164,7 @@ final class PomodoroEngine: ObservableObject {
     }
 
     private func advance() {
+        recordEndOfPhase()
         let wasBreak = cycle.phase.isBreak
         cycle.advance(autoStartWork: settings.autoStartWork)
         if wasBreak {
@@ -169,6 +174,31 @@ final class PomodoroEngine: ObservableObject {
             playSound("Glass")
         }
         enterCurrentPhase()
+    }
+
+    // MARK: - Stats
+
+    /// Records the phase that is ending. The tick sets `remaining` to 0 before advancing,
+    /// so a phase that ends with time left was ended early by the user.
+    private func recordEndOfPhase() {
+        let finished = remaining <= 0
+        switch phase {
+        case .idle:
+            break
+        case .work:
+            let focused = finished ? phaseDuration : phaseDuration - remaining
+            stats.recordWork(completed: finished, focusSeconds: max(0, focused))
+        case .shortBreak, .longBreak:
+            if let mode = activeBreakMode, breakContext != nil {
+                stats.recordBreak(completed: finished, mode: mode)
+            }
+        }
+    }
+
+    /// A real break left through "start work" or "reset" counts as skipped.
+    private func recordAbandonedBreak() {
+        guard phase.isBreak, breakContext != nil, let mode = activeBreakMode else { return }
+        stats.recordBreak(completed: false, mode: mode)
     }
 
     private func enterCurrentPhase() {
