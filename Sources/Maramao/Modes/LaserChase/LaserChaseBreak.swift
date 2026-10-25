@@ -460,9 +460,7 @@ final class LaserChaseBreak: BreakMode {
             catchPoint = mouse
             spawnHearts()
             say("Preso! 🐾", duration: 1.5)
-            if AppSettings.shared.soundEnabled {
-                NSSound(named: NSSound.Name("Pop"))?.play()
-            }
+            CatSounds.shared.chirp()
             enter(.celebrating)
         } else {
             if Double.random(in: 0...1) < 0.5 {

@@ -66,11 +66,27 @@ struct SettingsView: View {
                         Text("Pulsante \"Salta\" dopo \(Int(settings.skipUnlockSeconds)) secondi")
                     }
                 }
-                Toggle("Suoni", isOn: $settings.soundEnabled)
                 Text("Uscita di emergenza: \(EmergencyExitGuard.shortcutLabel) chiude subito qualsiasi pausa, anche in modalità severa. Funziona anche cliccando \(EmergencyExitGuard.cornerClicks) volte di fila nell'angolo in alto a sinistra dello schermo.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Section("Suoni") {
+                Toggle("Suoni dei gatti", isOn: $settings.soundEnabled)
+                if settings.soundEnabled {
+                    HStack {
+                        Text("Volume")
+                        Slider(value: $settings.soundVolume, in: 0...1)
+                    }
+                    HStack {
+                        Text("Prova i suoni")
+                        Spacer()
+                        Button("🐱 Miao") { CatSounds.shared.nextMeow() }
+                        Button("😺 Fusa") { CatSounds.shared.purr(duration: 3) }
+                        Button("🔔 Fine pausa") { CatSounds.shared.breakOverChime() }
+                    }
+                }
             }
 
             ShortcutsSettingsSection()
