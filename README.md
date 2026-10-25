@@ -50,7 +50,7 @@ They work from any app and need no special permission. Turn each one on or off i
 
 ## Install
 
-Maramao needs **macOS 13 Ventura or later** and no special permissions. Pick one of the two ways below.
+Maramao needs **macOS 13 Ventura or later** and no special permissions. Pick one of the three ways below.
 
 ### 1. The DMG (drag and drop)
 
@@ -76,7 +76,16 @@ The script downloads the latest release, checks its SHA-256, quits Maramao if it
 
 Variables go after the pipe: `curl -fsSL .../install.sh | MARAMAO_VERSION=v0.1.0 sh`.
 
-### 3. First launch and Gatekeeper
+### 3. Homebrew
+
+```bash
+brew tap kkratterf/maramao https://github.com/kkratterf/maramao
+brew install --cask maramao
+```
+
+The tap lives in this repository (`Casks/maramao.rb`) and is updated by every release. The cask installs the DMG from GitHub Releases into `/Applications`; the Gatekeeper note below applies to it too.
+
+### 4. First launch and Gatekeeper
 
 Maramao is not notarized by Apple yet, so the first time you open a copy from the DMG or the zip macOS says it cannot verify the developer. Either:
 
@@ -91,25 +100,29 @@ xattr -dr com.apple.quarantine /Applications/Maramao.app
 
 The install script does this for you. You only need to do it once per version.
 
-### 4. Where is it?
+### 5. Where is it?
 
 Maramao lives in the **menu bar**, top right: look for the 🐱 (it turns into 🍅 and a countdown while you work). There is no Dock icon and no window until you click it. From the menu you start the timer, pick a cat, open the settings, or try a break right away with **Prova un concept**.
 
 To start Maramao every time you log in, turn on **Apri Maramao all'avvio del Mac** in Settings. macOS may ask you to allow it in System Settings → General → Login Items.
 
-### 5. Updating
+### 6. Updating
 
 Install the new version the same way: drag the new DMG's app over the old one (choose **Sostituisci**, Replace), or run the one-liner again. Your settings are kept.
 
-### 6. Uninstalling
+With Homebrew: `brew update && brew upgrade --cask --greedy maramao` (the cask is marked `auto_updates`, so a plain `brew upgrade` leaves Maramao alone and lets the app update itself).
+
+### 7. Uninstalling
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/kkratterf/maramao/main/install.sh | sh -s -- --uninstall
 ```
 
-This quits Maramao, deletes `Maramao.app` and its settings (`defaults delete com.kkratterf.maramao`). By hand: quit Maramao from its menu, move `Maramao.app` to the Bin, and optionally run that `defaults delete` command. The login item, if you turned it on, goes away with the app.
+With Homebrew: `brew uninstall --cask maramao`, or `brew uninstall --zap --cask maramao` to remove the settings too.
 
-### 7. Build from source
+The script quits Maramao, deletes `Maramao.app` and its settings (`defaults delete com.kkratterf.maramao`). By hand: quit Maramao from its menu, move `Maramao.app` to the Bin, and optionally run that `defaults delete` command. The login item, if you turned it on, goes away with the app.
+
+### 8. Build from source
 
 Needs Xcode 15 or later.
 
