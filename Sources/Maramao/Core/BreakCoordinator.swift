@@ -30,6 +30,7 @@ final class BreakCoordinator {
         case .memeWall: return MemeWallBreak()
         case .sleepyCat: return SleepyCatBreak()
         case .catPile: return CatPileBreak()
+        case .laserChase: return LaserChaseBreak()
         case .random: return WalkingCatBreak()
         }
     }
