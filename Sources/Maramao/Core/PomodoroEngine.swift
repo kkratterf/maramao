@@ -21,6 +21,7 @@ final class PomodoroEngine: ObservableObject {
 
     private let settings: AppSettings
     private let stats: StatsStore
+    private let companion: CatCompanionStore
     private let breaks = BreakCoordinator()
     private var cycle: PomodoroCycle
     private var endDate: Date?
@@ -35,9 +36,10 @@ final class PomodoroEngine: ObservableObject {
     /// Work time left when a session was reset by an absence, for "Riprendi da dove ero".
     private var awayResetRemaining: TimeInterval?
 
-    init(settings: AppSettings = .shared, stats: StatsStore? = nil) {
+    init(settings: AppSettings = .shared, stats: StatsStore? = nil, companion: CatCompanionStore? = nil) {
         self.settings = settings
         self.stats = stats ?? StatsStore.shared
+        self.companion = companion ?? CatCompanionStore.shared
         self.cycle = PomodoroCycle(config: settings.pomodoroConfig)
         self.remaining = settings.pomodoroConfig.work
         breaks.onEmergencyExit = { [weak self] context in
@@ -170,6 +172,7 @@ final class PomodoroEngine: ObservableObject {
             skipUnlockDate: Date(),
             onSkip: { [weak self] in self?.endPreview() }
         )
+        companion.breakBegan()
         breaks.start(mode: mode, context: context)
         activeBreakMode = breaks.currentModeID
         previewTimer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: false) { [weak self] _ in
@@ -330,6 +333,7 @@ final class PomodoroEngine: ObservableObject {
         case .shortBreak, .longBreak:
             if let mode = activeBreakMode, breakContext != nil {
                 stats.recordBreak(completed: finished, mode: mode)
+                companion.recordBreak(respected: finished, mode: mode)
             }
         }
     }
@@ -338,6 +342,7 @@ final class PomodoroEngine: ObservableObject {
     private func recordAbandonedBreak() {
         guard phase.isBreak, breakContext != nil, let mode = activeBreakMode else { return }
         stats.recordBreak(completed: false, mode: mode)
+        companion.recordBreak(respected: false, mode: mode)
     }
 
     private func enterCurrentPhase() {
@@ -377,6 +382,7 @@ final class PomodoroEngine: ObservableObject {
                 onSkip: { [weak self] in self?.skip() }
             )
             breakContext = context
+            companion.breakBegan()
             breaks.start(mode: settings.breakMode, context: context)
             activeBreakMode = breaks.currentModeID
         }
