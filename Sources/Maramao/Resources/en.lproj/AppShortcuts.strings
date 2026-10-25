@@ -1,0 +1,6 @@
+/* App Shortcut phrases (Siri, Spotlight). macOS 13 needs a .strings table: AppShortcuts.xcstrings is macOS 14+. */
+"Inizia un pomodoro con ${applicationName}" = "Start a pomodoro with ${applicationName}";
+"Avvia ${applicationName}" = "Start ${applicationName}";
+"Metti in pausa ${applicationName}" = "Pause ${applicationName}";
+"Pausa gatto con ${applicationName}" = "Cat break with ${applicationName}";
+"Stato di ${applicationName}" = "${applicationName} status";

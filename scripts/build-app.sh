@@ -16,10 +16,15 @@ FLAGS=""
 if [ "$CONFIG" = "release" ]; then
   FLAGS="-Xswiftc -Osize"
 fi
-swift build -c "$CONFIG" $FLAGS --arch arm64 --arch x86_64 2>/dev/null \
-  || swift build -c "$CONFIG" $FLAGS
-BIN_DIR="$(swift build -c "$CONFIG" $FLAGS --arch arm64 --arch x86_64 --show-bin-path 2>/dev/null \
-  || swift build -c "$CONFIG" $FLAGS --show-bin-path)"
+# Universal when the toolchain can; otherwise the host architecture only. The bin path
+# must come from the same kind of build, or cp below looks in the wrong folder.
+ARCH_FLAGS="--arch arm64 --arch x86_64"
+if ! swift build -c "$CONFIG" $FLAGS $ARCH_FLAGS; then
+  echo "warning: universal build failed, building for the host architecture only" >&2
+  ARCH_FLAGS=""
+  swift build -c "$CONFIG" $FLAGS
+fi
+BIN_DIR="$(swift build -c "$CONFIG" $FLAGS $ARCH_FLAGS --show-bin-path)"
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
@@ -75,6 +80,10 @@ if [ ! -f "$RES/en.lproj/Localizable.strings" ]; then
   echo "No compiled en.lproj in the SwiftPM bundle (found: $found_lproj), compiling $CATALOG with xcstringstool"
   xcrun xcstringstool compile "$CATALOG" --output-directory "$RES" \
     || { xcrun xcstringstool compile --help || true; exit 1; }
+  for lproj in en it; do
+    mkdir -p "$RES/$lproj.lproj"
+    cp "$ROOT/Sources/Maramao/Resources/$lproj.lproj/AppShortcuts.strings" "$RES/$lproj.lproj/"
+  done
 fi
 # Italian strings are the keys themselves; the folder tells macOS the app speaks Italian.
 mkdir -p "$RES/it.lproj"
@@ -107,12 +116,13 @@ if [ -n "$ICNS" ]; then
     || /usr/libexec/PlistBuddy -c "Add :CFBundleIconFile string AppIcon" "$APP/Contents/Info.plist" || true
 fi
 
-# App Intents metadata (the Focus filter). Xcode extracts it for app targets
+# App Intents metadata (the Focus filter and the Shortcuts actions). Xcode extracts it for app targets
 # but not for SwiftPM executables, so do Xcode's two steps by hand: ask the
 # compiler for the "const values" of the app module, then run Xcode's
 # appintentsmetadataprocessor to write Metadata.appintents into Resources.
 # Without it macOS does not offer Maramao in System Settings → Focus → Focus
-# filters. A failure costs only the Focus filter, never the build.
+# filters, and Shortcuts shows no Maramao actions. A failure costs only those,
+# never the build: maramao:// URLs keep working.
 extract_app_intents() {
   local work="$ROOT/.build/appintents"
   rm -rf "$work"
@@ -155,9 +165,9 @@ extract_app_intents() {
   [ -f "$APP/Contents/Resources/Metadata.appintents/extract.actionsdata" ]
 }
 if extract_app_intents; then
-  echo "Added App Intents metadata (Focus filter)"
+  echo "Added App Intents metadata (Focus filter, Shortcuts actions)"
 else
-  echo "warning: could not extract the App Intents metadata, the Focus filter will not be available" >&2
+  echo "warning: could not extract the App Intents metadata, no Focus filter or Shortcuts actions" >&2
   if [ "${GITHUB_ACTIONS:-}" = "true" ]; then
     found="$(find "$ROOT/.build/appintents" -name '*.swiftconstvalues' 2>/dev/null | tr '\n' ' ')"
     echo "::warning::App Intents metadata not extracted. Const values found: ${found:-none}"

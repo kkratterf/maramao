@@ -29,7 +29,13 @@ let package = Package(
             // Italian keys, English translations (issue #30). build-app.sh copies the
             // compiled .lproj folders into Maramao.app, where SwiftUI and
             // String(localized:) look them up in Bundle.main.
-            resources: [.process("Resources/Localizable.xcstrings")]
+            resources: [
+                .process("Resources/Localizable.xcstrings"),
+                // App Shortcut phrases: a .strings table, since AppShortcuts.xcstrings
+                // needs macOS 14 and Maramao supports macOS 13.
+                .process("Resources/en.lproj/AppShortcuts.strings"),
+                .process("Resources/it.lproj/AppShortcuts.strings"),
+            ]
         ),
         .testTarget(
             name: "MaramaoCoreTests",
