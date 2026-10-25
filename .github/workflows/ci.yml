@@ -54,9 +54,16 @@ jobs:
           echo "Maramao.app launched and stayed up"
           echo "::notice::Maramao.app $(lipo -archs "$app/Contents/MacOS/Maramao"), bundle $(du -sk "$app" | cut -f1) KB, Sparkle.framework $(du -sk "$app/Contents/Frameworks/Sparkle.framework" | cut -f1) KB"
 
-      - name: Probe App Intents (temporary)
-        run: scripts/probe-appintents.sh
-        continue-on-error: true
+      - name: Check the App Intents metadata
+        run: |
+          meta=dist/Maramao.app/Contents/Resources/Metadata.appintents
+          if [ ! -f "$meta/extract.actionsdata" ]; then
+            echo "::error::Metadata.appintents is missing from Maramao.app: the Focus filter would not show up"
+            exit 1
+          fi
+          grep -q "MaramaoFocusFilter" "$meta/extract.actionsdata" \
+            || { echo "::error::the Focus filter intent is missing from Metadata.appintents"; exit 1; }
+          echo "::notice::Metadata.appintents: $(ls "$meta" | tr '\n' ' ')($(wc -c < "$meta/extract.actionsdata" | tr -d ' ') bytes of actions data)"
 
       - name: Upload Maramao.app
         uses: actions/upload-artifact@v4
