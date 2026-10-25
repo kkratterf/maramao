@@ -63,4 +63,20 @@ final class PomodoroCycleTests: XCTestCase {
         XCTAssertEqual(formatClock(3725), "1:02:05")
         XCTAssertEqual(formatClock(-4), "00:00")
     }
+
+    func testSecondsUntilClockChanges() {
+        XCTAssertEqual(secondsUntilClockChanges(remaining: 1500), 1)
+        XCTAssertEqual(secondsUntilClockChanges(remaining: 1234.25), 0.25, accuracy: 1e-9)
+        XCTAssertEqual(secondsUntilClockChanges(remaining: 0.4), 0.4, accuracy: 1e-9)
+        XCTAssertEqual(secondsUntilClockChanges(remaining: 0), 0)
+        XCTAssertEqual(secondsUntilClockChanges(remaining: -3), 0)
+    }
+
+    func testClockChangesRightAfterTheWait() {
+        for remaining in [1500, 1234.25, 61.999, 0.4, 7.5] {
+            let wait = secondsUntilClockChanges(remaining: remaining)
+            XCTAssertEqual(formatClock(remaining - wait + 0.001), formatClock(remaining), "\(remaining)")
+            XCTAssertNotEqual(formatClock(remaining - wait - 0.001), formatClock(remaining), "\(remaining)")
+        }
+    }
 }
