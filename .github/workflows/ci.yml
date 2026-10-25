@@ -149,3 +149,34 @@ jobs:
             --url https://example.com/Maramao-0.3.0.zip --signature 'sparkle:edSignature="BBBB" length="20"'
           cat "$tmp/appcast.xml"
           test "$(grep -c '<item>' "$tmp/appcast.xml")" = 2
+
+  cask:
+    name: Homebrew cask
+    runs-on: macos-15
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+      HOMEBREW_NO_ENV_HINTS: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: brew style
+        run: brew style Casks/maramao.rb
+
+      # The audit runs offline (no --online, no --new): those checks download
+      # the DMG and query GitHub for notability, and the version in the cask may
+      # point at a release that has no DMG yet (it is bumped by release.yml).
+      - name: brew audit
+        run: |
+          brew tap-new --no-git maramao/ci
+          tap="$(brew --repository)/Library/Taps/maramao/homebrew-ci"
+          mkdir -p "$tap/Casks"
+          cp Casks/maramao.rb "$tap/Casks/maramao.rb"
+          if ! brew audit --cask --strict maramao/ci/maramao > audit.log 2>&1; then
+            cat audit.log
+            # Surface the findings as annotations, so they show on the PR.
+            grep -v '^$' audit.log | while IFS= read -r line; do echo "::error file=Casks/maramao.rb::$line"; done
+            exit 1
+          fi
+          cat audit.log
