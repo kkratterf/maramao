@@ -7,12 +7,16 @@ struct KeyboardCatScene: View {
     let context: BreakContext
     let isMain: Bool
 
+    @Environment(\.colorSchemeContrast) private var contrast
+
     var body: some View {
-        ZStack {
+        // Increase Contrast: a nearly opaque curtain.
+        let solid = contrast == .increased
+        return ZStack {
             LinearGradient(
                 colors: [
-                    Color(red: 0.07, green: 0.06, blue: 0.09).opacity(0.9),
-                    Color(red: 0.13, green: 0.1, blue: 0.12).opacity(0.94),
+                    Color(red: 0.07, green: 0.06, blue: 0.09).opacity(solid ? 0.98 : 0.9),
+                    Color(red: 0.13, green: 0.1, blue: 0.12).opacity(solid ? 0.99 : 0.94),
                 ],
                 startPoint: .top,
                 endPoint: .bottom
@@ -102,7 +106,8 @@ struct KeyboardCatStage: View {
 
         let breathe = asleep ? CGFloat(1 + 0.015 * (1 - cos(2 * Double.pi * t / 3.6))) : CGFloat(1 + 0.02 * min(1, inPhase / 0.6))
         let wag = sin(t * 0.8) * 0.3 + sin(sinceTwitch * 28) * 0.9 * twitch
-        let shiver = CGFloat(sin(sinceTwitch * 70) * 2.5 * twitch)
+        // Reduce Motion: no shiver, the tail twitch is enough.
+        let shiver = BreakAccessibility.reduceMotion ? 0 : CGFloat(sin(sinceTwitch * 70) * 2.5 * twitch)
 
         return ZStack {
             CatView(pose: asleep ? .sleeping : .stretching, palette: model.palette, tailWag: wag)
@@ -121,8 +126,10 @@ struct KeyboardCatStage: View {
     private func zLetter(index: Int, t: Double, size: CGSize) -> some View {
         let period = 3.6
         let raw = (t / period + Double(index) / 3).truncatingRemainder(dividingBy: 1)
-        let p = CGFloat(raw)
-        let x = size.width * 0.25 + p * size.width * 0.2 + CGFloat(sin(raw * 2 * Double.pi)) * 8
+        // Reduce Motion: each Z stays in its place and only fades in and out.
+        let calm = BreakAccessibility.reduceMotion
+        let p = calm ? CGFloat(index + 1) / 4 : CGFloat(raw)
+        let x = size.width * 0.25 + p * size.width * 0.2 + (calm ? 0 : CGFloat(sin(raw * 2 * Double.pi)) * 8)
         let y = size.height * 0.18 - p * size.height * 0.6
         return Text(index == 1 ? "z" : "Z")
             .font(.system(size: 20 + 18 * p, weight: .heavy, design: .rounded))
@@ -142,6 +149,8 @@ struct KeyboardCatKeyboard: View {
 
     private static let userGlow = Color(red: 0.75, green: 0.9, blue: 1.0)
     private static let catGlow = Color(red: 1.0, green: 0.62, blue: 0.22)
+
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
 
     var body: some View {
         Canvas { ctx, size in
@@ -175,6 +184,11 @@ struct KeyboardCatKeyboard: View {
                 ctx.fill(Path(roundedRect: rect.offsetBy(dx: 0, dy: u * 0.03), cornerRadius: radius, style: .continuous),
                          with: .color(Color.black.opacity(0.35)))
                 ctx.fill(keyPath, with: .color(glow ?? Color(white: 0.13)))
+                if differentiateWithoutColor && glow != nil {
+                    // Not only by color: keys you press get a solid outline, the cat's a dashed one.
+                    let dash: [CGFloat] = isUser ? [] : [u * 0.12, u * 0.08]
+                    ctx.stroke(keyPath, with: .color(.black), style: StrokeStyle(lineWidth: max(1.5, u * 0.05), dash: dash))
+                }
 
                 if !key.label.isEmpty {
                     let fontSize = key.isSmallLabel ? u * 0.24 : u * 0.34

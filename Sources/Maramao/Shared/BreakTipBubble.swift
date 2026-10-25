@@ -40,9 +40,16 @@ struct BreakTipBubble: View {
         .fixedSize(horizontal: false, vertical: true)
         .shadow(color: .black.opacity(0.22), radius: 8, y: 3)
         .allowsHitTesting(false)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Consiglio del gatto: " + text)
     }
 
-    private var fill: Color { style == .dark ? Color.white.opacity(0.92) : Color(white: 0.12).opacity(0.88) }
+    @Environment(\.colorSchemeContrast) private var contrast
+
+    private var fill: Color {
+        let solid = contrast == .increased
+        return style == .dark ? Color.white.opacity(solid ? 1 : 0.92) : Color(white: 0.12).opacity(solid ? 1 : 0.88)
+    }
     private var textColor: Color { style == .dark ? Color(white: 0.12) : .white }
 }
 
