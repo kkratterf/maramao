@@ -14,6 +14,10 @@ final class PomodoroEngine: ObservableObject {
     @Published private(set) var completedWorkSessions = 0
     /// Mode of the break on screen, when there is one (also during previews).
     @Published private(set) var activeBreakMode: BreakModeID?
+    /// "Bentornato! …" after the user came back from being away, shown in the menu.
+    @Published private(set) var awayNotice: String?
+    /// True while "Riprendi da dove ero" can undo a reset caused by being away.
+    @Published private(set) var canUndoAwayReset = false
 
     private let settings: AppSettings
     private let stats: StatsStore
@@ -25,6 +29,11 @@ final class PomodoroEngine: ObservableObject {
     private var previewTimer: Timer?
     private var breakWarning = BreakWarning()
     private let peekingCat = PeekingCatWarning()
+    private let presence = PresenceMonitor()
+    /// True while a work session is paused because the user is away (not by the user).
+    private var frozenByAway = false
+    /// Work time left when a session was reset by an absence, for "Riprendi da dove ero".
+    private var awayResetRemaining: TimeInterval?
 
     init(settings: AppSettings = .shared, stats: StatsStore? = nil) {
         self.settings = settings
@@ -37,6 +46,16 @@ final class PomodoroEngine: ObservableObject {
         breaks.onWatchdogFired = { [weak self] context in
             self?.breakForceEnded(context, emergency: false)
         }
+        presence.idleThreshold = { [weak settings] in
+            AwayPolicy.idleThreshold(shortBreak: (settings?.shortBreakMinutes ?? 5) * 60)
+        }
+        presence.onAway = { [weak self] since in
+            self?.userWentAway(since: since)
+        }
+        presence.onReturn = { [weak self] since in
+            self?.userCameBack(awaySince: since)
+        }
+        presence.start()
     }
 
     var isRunning: Bool { phase != .idle && !isPaused }
@@ -47,6 +66,7 @@ final class PomodoroEngine: ObservableObject {
     // MARK: - Commands
 
     func startWork() {
+        clearAwayState()
         recordAbandonedBreak()
         endPreview()
         breaks.end()
@@ -58,6 +78,7 @@ final class PomodoroEngine: ObservableObject {
     /// Pauses or resumes a work session. Breaks cannot be paused: the cat does not negotiate.
     func togglePause() {
         guard phase == .work else { return }
+        clearAwayState()
         if isPaused {
             endDate = Date().addingTimeInterval(remaining)
             isPaused = false
@@ -68,6 +89,7 @@ final class PomodoroEngine: ObservableObject {
             stopTicker()
             peekingCat.dismiss()
         }
+        updateIdlePolling()
     }
 
     /// Skips the current phase. Work ends straight into a break; a break only ends when skipping is allowed.
@@ -89,6 +111,7 @@ final class PomodoroEngine: ObservableObject {
     }
 
     func reset() {
+        clearAwayState()
         recordAbandonedBreak()
         endPreview()
         breaks.end()
@@ -103,6 +126,31 @@ final class PomodoroEngine: ObservableObject {
         completedWorkSessions = 0
         phaseDuration = 0
         remaining = settings.pomodoroConfig.work
+        updateIdlePolling()
+    }
+
+    /// "Riprendi da dove ero": undoes a reset caused by an absence the app took for a rest.
+    func undoAwayReset() {
+        guard canUndoAwayReset, phase == .idle, let left = awayResetRemaining, left > 0 else {
+            clearAwayState()
+            return
+        }
+        clearAwayState()
+        peekingCat.dismiss()
+        cycle.config = settings.pomodoroConfig
+        cycle.startWork()
+        enterCurrentPhase()
+        // The focus before the absence is already in the stats: the rest of the session
+        // runs as a shorter one.
+        phaseDuration = left
+        remaining = left
+        endDate = Date().addingTimeInterval(left)
+        startTicker()
+    }
+
+    /// Hides the "Bentornato" line in the menu.
+    func dismissAwayNotice() {
+        clearAwayState()
     }
 
     /// Shows a break mode for a few seconds without touching the cycle.
@@ -176,6 +224,90 @@ final class PomodoroEngine: ObservableObject {
         enterCurrentPhase()
     }
 
+    // MARK: - Away from the Mac
+
+    private var awayBehavior: AwayBehavior {
+        AwayBehavior(rawValue: settings.awayBehaviorRaw) ?? .defaultBehavior
+    }
+
+    private func updateIdlePolling() {
+        presence.setIdlePolling(phase == .work && !isPaused && awayBehavior != .ignore)
+    }
+
+    private func clearAwayState() {
+        frozenByAway = false
+        awayNotice = nil
+        canUndoAwayReset = false
+        awayResetRemaining = nil
+    }
+
+    /// The Mac went to sleep, the screen locked or the user stopped touching it.
+    private func userWentAway(since: Date) {
+        guard AwayPolicy.shouldFreeze(phase: phase, isPaused: isPaused, behavior: awayBehavior),
+              let endDate else { return }
+        remaining = AwayPolicy.remainingWhenLeft(
+            remainingNow: endDate.timeIntervalSinceNow,
+            now: Date(),
+            awaySince: since,
+            phaseDuration: phaseDuration
+        )
+        isPaused = true
+        frozenByAway = true
+        stopTicker()
+        peekingCat.dismiss()
+    }
+
+    /// The user is back after `awaySince`. Breaks just go on: being away is resting.
+    private func userCameBack(awaySince: Date) {
+        let now = Date()
+        let wasFrozen = frozenByAway && phase == .work && isPaused
+        frozenByAway = false
+        guard phase == .work, wasFrozen || !isPaused else { return }
+
+        let nextBreak: TimeInterval = (cycle.completedWorkSessions + 1) % cycle.config.sessionsBeforeLongBreak == 0
+            ? cycle.config.longBreak
+            : cycle.config.shortBreak
+        let left = wasFrozen ? remaining : (endDate?.timeIntervalSince(now) ?? remaining)
+        let action = AwayPolicy.onReturn(
+            phase: phase,
+            behavior: awayBehavior,
+            wasFrozen: wasFrozen,
+            awayDuration: now.timeIntervalSince(awaySince),
+            restThreshold: settings.shortBreakMinutes * 60,
+            remaining: left,
+            breakDuration: nextBreak
+        )
+
+        switch action {
+        case .none:
+            break
+        case .resume(let newRemaining):
+            remaining = newRemaining
+            endDate = now.addingTimeInterval(newRemaining)
+            isPaused = false
+            startTicker()
+        case .stayPaused:
+            remaining = left
+        case .resetRested:
+            stats.recordWork(completed: false, focusSeconds: max(0, phaseDuration - left))
+            awayResetRemaining = left
+            cycle.abandonWork()
+            enterCurrentPhase()
+            canUndoAwayReset = left > 0
+        case .skipBreakRested:
+            stats.recordWork(completed: true, focusSeconds: phaseDuration)
+            cycle.advance()
+            cycle.advance(autoStartWork: settings.autoStartWork)
+            enterCurrentPhase()
+        }
+        updateIdlePolling()
+
+        if let message = AwayPolicy.message(for: action) {
+            awayNotice = message
+            peekingCat.show(message: message)
+        }
+    }
+
     // MARK: - Stats
 
     /// Records the phase that is ending. The tick sets `remaining` to 0 before advancing,
@@ -205,8 +337,11 @@ final class PomodoroEngine: ObservableObject {
         phase = cycle.phase
         completedWorkSessions = cycle.completedWorkSessions
         isPaused = false
+        frozenByAway = false
         breakWarning.reset()
         if phase != .work { peekingCat.dismiss() }
+        if phase != .idle { canUndoAwayReset = false }
+        updateIdlePolling()
 
         guard phase != .idle else {
             stopTicker()
@@ -273,6 +408,8 @@ final class PomodoroEngine: ObservableObject {
         guard let endDate, !isPaused else { return }
         remaining = max(0, endDate.timeIntervalSinceNow)
         if remaining <= 0 {
+            // Never start a break nobody can see: wait for the wake or unlock.
+            if phase == .work, presence.isScreenUnavailable { return }
             advance()
             return
         }

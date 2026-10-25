@@ -20,6 +20,8 @@ final class AppSettings: ObservableObject {
     @Published var soundEnabled: Bool { didSet { defaults.set(soundEnabled, forKey: Keys.soundEnabled) } }
     /// Seconds before the end of a work session when a cat peeks to warn about the break. 0 = off.
     @Published var breakWarningSeconds: Int { didSet { defaults.set(breakWarningSeconds, forKey: Keys.breakWarningSeconds) } }
+    /// What happens to a work session while the Mac is asleep, locked or idle (`AwayBehavior`).
+    @Published var awayBehaviorRaw: String { didSet { defaults.set(awayBehaviorRaw, forKey: Keys.awayBehavior) } }
 
     private enum Keys {
         static let workMinutes = "workMinutes"
@@ -32,6 +34,7 @@ final class AppSettings: ObservableObject {
         static let autoStartWork = "autoStartWork"
         static let soundEnabled = "soundEnabled"
         static let breakWarningSeconds = "breakWarningSeconds"
+        static let awayBehavior = "awayBehavior"
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -47,6 +50,7 @@ final class AppSettings: ObservableObject {
             Keys.autoStartWork: false,
             Keys.soundEnabled: true,
             Keys.breakWarningSeconds: BreakWarning.defaultLeadTime,
+            Keys.awayBehavior: AwayBehavior.defaultBehavior.rawValue,
         ])
         workMinutes = defaults.double(forKey: Keys.workMinutes)
         shortBreakMinutes = defaults.double(forKey: Keys.shortBreakMinutes)
@@ -58,6 +62,7 @@ final class AppSettings: ObservableObject {
         autoStartWork = defaults.bool(forKey: Keys.autoStartWork)
         soundEnabled = defaults.bool(forKey: Keys.soundEnabled)
         breakWarningSeconds = defaults.integer(forKey: Keys.breakWarningSeconds)
+        awayBehaviorRaw = defaults.string(forKey: Keys.awayBehavior) ?? AwayBehavior.defaultBehavior.rawValue
     }
 
     var breakMode: BreakModeID {

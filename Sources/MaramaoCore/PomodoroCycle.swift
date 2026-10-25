@@ -81,6 +81,13 @@ public struct PomodoroCycle: Equatable, Sendable {
         return phase
     }
 
+    /// Leaves a work session without counting it (e.g. the user rested while away).
+    /// Keeps the sessions completed so far.
+    public mutating func abandonWork() {
+        guard phase == .work else { return }
+        phase = .idle
+    }
+
     public mutating func reset() {
         phase = .idle
         completedWorkSessions = 0

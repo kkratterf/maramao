@@ -25,6 +25,10 @@ Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every 
 
 Breaks can be skipped after a minute (configurable), or never in **modalità severa**.
 
+### When you step away
+
+Lunch, a meeting, the Mac asleep or locked: Maramao notices (no permission needed). By default the work timer stops while you are away, and if you were gone at least as long as a short break you come back to a fresh start, because you already rested. Settings → **Quando sei via** can also just pause the timer or ignore absences. Either way, a break never starts while the screen is locked or asleep, and never in the first seconds after you are back.
+
 ### Emergency exit
 
 If a break ever gets stuck, or you really have to stop it, press **⌃⌥⌘⌫** (Control-Option-Command-Delete) to end it right away, **modalità severa included**. No shortcut at hand? Click five times quickly in the **top-left corner** of any screen. Neither needs any permission.

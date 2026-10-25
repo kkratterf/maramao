@@ -33,6 +33,15 @@ struct SettingsView: View {
                     Text("Pausa lunga ogni \(settings.sessionsBeforeLongBreak) pomodori")
                 }
                 Toggle("Riparti a lavorare da solo dopo la pausa", isOn: $settings.autoStartWork)
+                Picker("Quando sei via", selection: $settings.awayBehaviorRaw) {
+                    ForEach(AwayBehavior.allCases) { behavior in
+                        Text(behavior.title).tag(behavior.rawValue)
+                    }
+                }
+                Text(awayCaption)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             Section("Gatti") {
@@ -100,6 +109,20 @@ struct SettingsView: View {
             Button("Annulla", role: .cancel) {}
         } message: {
             Text("Pomodori, pause e giorni di fila verranno cancellati. Il gatto dimentica tutto.")
+        }
+    }
+
+    /// Explains the "Quando sei via" choice.
+    private var awayCaption: String {
+        let minutes = Int(AwayPolicy.idleThreshold(shortBreak: settings.shortBreakMinutes * 60) / 60)
+        let away = "Mac in stop, schermo bloccato o \(minutes) min senza toccare niente."
+        switch AwayBehavior(rawValue: settings.awayBehaviorRaw) ?? .defaultBehavior {
+        case .countAsBreak:
+            return "\(away) Il timer si ferma e, se sei stato via almeno una pausa breve, al ritorno riparti da capo: la pausa l'hai già fatta."
+        case .pause:
+            return "\(away) Il timer si ferma e ti aspetta in pausa finché non riprendi tu."
+        case .ignore:
+            return "Il timer continua a correre, ma la pausa non parte mai a schermo bloccato: aspetta che torni."
         }
     }
 
