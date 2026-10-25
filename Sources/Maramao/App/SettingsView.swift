@@ -5,6 +5,8 @@ struct SettingsView: View {
     @State private var launchAtLogin = false
     @State private var launchAtLoginError: String?
     @State private var launchAtLoginNeedsApproval = false
+    @EnvironmentObject private var stats: StatsStore
+    @State private var confirmStatsReset = false
 
     var body: some View {
         Form {
@@ -52,6 +54,10 @@ struct SettingsView: View {
                 Toggle("Suoni", isOn: $settings.soundEnabled)
             }
 
+            Section("Statistiche") {
+                StatsSection(stats: stats, confirmReset: $confirmStatsReset)
+            }
+
             Section {
                 Text("Le modifiche ai tempi valgono dal prossimo pomodoro.")
                     .font(.caption)
@@ -68,6 +74,12 @@ struct SettingsView: View {
         .formStyle(.grouped)
         .frame(width: 520, height: 560)
         .onAppear(perform: refreshLaunchAtLogin)
+        .alert("Azzerare le statistiche?", isPresented: $confirmStatsReset) {
+            Button("Azzera", role: .destructive) { stats.reset() }
+            Button("Annulla", role: .cancel) {}
+        } message: {
+            Text("Pomodori, pause e giorni di fila verranno cancellati. Il gatto dimentica tutto.")
+        }
     }
 
     /// Version from the bundle, or "dev" when running outside the .app.
