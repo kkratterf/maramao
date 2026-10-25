@@ -7,6 +7,7 @@ struct MenuContentView: View {
     @EnvironmentObject private var settings: AppSettings
     @EnvironmentObject private var stats: StatsStore
     @ObservedObject private var shortcuts = GlobalShortcuts.shared
+    @ObservedObject private var updater = AppUpdater.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -21,6 +22,9 @@ struct MenuContentView: View {
             modePicker
             previewRow
             Divider()
+            if updater.isAvailable {
+                updateRow
+            }
             footer
         }
         .padding(16)
@@ -161,6 +165,24 @@ struct MenuContentView: View {
                     .disabled(engine.phase.isBreak)
             }
         }
+    }
+
+    /// Hidden until the build has a real Sparkle key (see `AppUpdater`).
+    private var updateRow: some View {
+        HStack {
+            if let version = updater.pendingUpdateVersion {
+                Button("🎁 Nuova versione \(version) disponibile") { updater.checkForUpdates() }
+                    .foregroundStyle(.orange)
+                    .help("Mostra l'aggiornamento")
+            } else {
+                Button("Controlla aggiornamenti…") { updater.checkForUpdates() }
+                    .disabled(!updater.canCheckForUpdates)
+                    .help("Cerca una nuova versione di Maramao")
+            }
+            Spacer()
+        }
+        .buttonStyle(.borderless)
+        .font(.callout)
     }
 
     private var footer: some View {

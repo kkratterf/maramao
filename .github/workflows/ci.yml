@@ -33,6 +33,27 @@ jobs:
       - name: Build the app bundle
         run: scripts/build-app.sh release
 
+      - name: Check the app bundle
+        run: |
+          app=dist/Maramao.app
+          test -d "$app/Contents/Frameworks/Sparkle.framework"
+          otool -L "$app/Contents/MacOS/Maramao" | grep Sparkle
+          otool -l "$app/Contents/MacOS/Maramao" | grep -A2 LC_RPATH
+          lipo -archs "$app/Contents/MacOS/Maramao"
+          codesign --verify --deep --strict --verbose=1 "$app"
+          # Smoke test: dyld must find Sparkle, and the app must stay up.
+          "$app/Contents/MacOS/Maramao" &
+          pid=$!
+          sleep 8
+          if ! kill -0 "$pid" 2>/dev/null; then
+            wait "$pid" || true
+            echo "::error::Maramao.app exited at launch"
+            exit 1
+          fi
+          kill "$pid"
+          echo "Maramao.app launched and stayed up"
+          echo "::notice::Maramao.app $(lipo -archs "$app/Contents/MacOS/Maramao"), bundle $(du -sk "$app" | cut -f1) KB, Sparkle.framework $(du -sk "$app/Contents/Frameworks/Sparkle.framework" | cut -f1) KB"
+
       - name: Upload Maramao.app
         uses: actions/upload-artifact@v4
         with:
@@ -66,7 +87,7 @@ jobs:
           retention-days: 14
 
   shellcheck:
-    name: Lint install.sh
+    name: Lint scripts
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -77,3 +98,13 @@ jobs:
           shellcheck --version
           shellcheck --shell=sh install.sh
           sh -n install.sh
+
+      - name: Appcast script
+        run: |
+          tmp=$(mktemp -d)
+          python3 scripts/update-appcast.py --appcast "$tmp/appcast.xml" --version 0.2.0 \
+            --url https://example.com/Maramao-0.2.0.zip --signature 'sparkle:edSignature="AAAA" length="10"'
+          python3 scripts/update-appcast.py --appcast "$tmp/appcast.xml" --version 0.3.0 \
+            --url https://example.com/Maramao-0.3.0.zip --signature 'sparkle:edSignature="BBBB" length="20"'
+          cat "$tmp/appcast.xml"
+          test "$(grep -c '<item>' "$tmp/appcast.xml")" = 2
