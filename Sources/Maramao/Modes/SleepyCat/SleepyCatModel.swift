@@ -40,10 +40,10 @@ final class SleepyCatModel: ObservableObject {
 
     var hudMessage: String {
         switch phase {
-        case .asleep: return "Shhh… il gatto dorme. Non svegliarlo."
-        case .drowsy: return "Si sta riaddormentando… piano."
-        case .startled, .awake: return "L'hai svegliato! Giù le mani."
-        case .stretching: return "Il gatto si stiracchia. Pausa finita."
+        case .asleep: return String(localized: "Shhh… il gatto dorme. Non svegliarlo.")
+        case .drowsy: return String(localized: "Si sta riaddormentando… piano.")
+        case .startled, .awake: return String(localized: "L'hai svegliato! Giù le mani.")
+        case .stretching: return String(localized: "Il gatto si stiracchia. Pausa finita.")
         }
     }
 }
@@ -51,37 +51,37 @@ final class SleepyCatModel: ObservableObject {
 /// What the cat says when it is woken up, from mildly sleepy to properly angry.
 enum SleepyCatLines {
     static let calm: [String] = [
-        "Mrrr? Ti avevo detto di riposare.",
-        "Il mouse non scappa.",
-        "Vai a bere un bicchiere d'acqua.",
-        "Alzati e sgranchisciti, umano.",
-        "Shh… stavo sognando un tonno.",
-        "Guarda fuori dalla finestra, non lo schermo.",
-        "Le email possono aspettare. Io no.",
-        "Rilassa le spalle. Ecco, così.",
-        "Fai due respiri profondi. Poi lasciami dormire.",
+        String(localized: "Mrrr? Ti avevo detto di riposare."),
+        String(localized: "Il mouse non scappa."),
+        String(localized: "Vai a bere un bicchiere d'acqua."),
+        String(localized: "Alzati e sgranchisciti, umano."),
+        String(localized: "Shh… stavo sognando un tonno."),
+        String(localized: "Guarda fuori dalla finestra, non lo schermo."),
+        String(localized: "Le email possono aspettare. Io no."),
+        String(localized: "Rilassa le spalle. Ecco, così."),
+        String(localized: "Fai due respiri profondi. Poi lasciami dormire."),
     ]
 
     static let annoyed: [String] = [
-        "Di nuovo? Sul serio?",
-        "Ho detto PAUSA.",
-        "Ogni volta che tocchi il mouse un gatto perde un pisolino.",
-        "Ti vedo, sai. Dormo con un occhio solo.",
-        "Il lavoro sarà ancora lì tra cinque minuti.",
-        "Vai a fare due passi. Lontano dalla scrivania.",
-        "Questa è la mia pausa. E anche la tua.",
-        "Mrrrau. Ultimo avvertimento… forse.",
+        String(localized: "Di nuovo? Sul serio?"),
+        String(localized: "Ho detto PAUSA."),
+        String(localized: "Ogni volta che tocchi il mouse un gatto perde un pisolino."),
+        String(localized: "Ti vedo, sai. Dormo con un occhio solo."),
+        String(localized: "Il lavoro sarà ancora lì tra cinque minuti."),
+        String(localized: "Vai a fare due passi. Lontano dalla scrivania."),
+        String(localized: "Questa è la mia pausa. E anche la tua."),
+        String(localized: "Mrrrau. Ultimo avvertimento… forse."),
     ]
 
     static let angry: [String] = [
-        "😾 Basta! Sto cercando di dormire!",
-        "😾 Un'altra mossa e ti butto il caffè dalla scrivania.",
-        "😾 Mani lontane dalla tastiera. Subito.",
-        "😾 Mi siedo sulla tastiera, giuro.",
-        "😾 Pausa vuol dire PAUSA, umano.",
-        "😾 Sto contando fino a nove. Come le mie vite.",
-        "😾 HSSSS!",
-        "😾 Stanotte ti miagolo alle quattro.",
+        String(localized: "😾 Basta! Sto cercando di dormire!"),
+        String(localized: "😾 Un'altra mossa e ti butto il caffè dalla scrivania."),
+        String(localized: "😾 Mani lontane dalla tastiera. Subito."),
+        String(localized: "😾 Mi siedo sulla tastiera, giuro."),
+        String(localized: "😾 Pausa vuol dire PAUSA, umano."),
+        String(localized: "😾 Sto contando fino a nove. Come le mie vite."),
+        String(localized: "😾 HSSSS!"),
+        String(localized: "😾 Stanotte ti miagolo alle quattro."),
     ]
 
     /// A line matching the annoyance level, avoiding an immediate repeat.
@@ -97,15 +97,15 @@ enum SleepyCatLines {
     }
 
     static func stat(percent: Int) -> String {
-        "Il gatto ha dormito il \(percent)% della pausa"
+        String(localized: "Il gatto ha dormito il \(percent)% della pausa")
     }
 
     static func result(percent: Int) -> String {
         switch percent {
-        case 90...: return "Pausa perfetta! 😻"
-        case 70..<90: return "Bella pausa, quasi perfetta 😺"
-        case 40..<70: return "Il gatto ha sonnecchiato a tratti 😼"
-        default: return "Il gatto non ha chiuso occhio 🙀"
+        case 90...: return String(localized: "Pausa perfetta! 😻")
+        case 70..<90: return String(localized: "Bella pausa, quasi perfetta 😺")
+        case 40..<70: return String(localized: "Il gatto ha sonnecchiato a tratti 😼")
+        default: return String(localized: "Il gatto non ha chiuso occhio 🙀")
         }
     }
 }

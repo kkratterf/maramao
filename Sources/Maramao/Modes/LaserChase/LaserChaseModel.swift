@@ -62,7 +62,7 @@ final class LaserChaseModel: ObservableObject {
 /// Slow-changing state for the HUD and texts, kept apart so they do not redraw every frame.
 @MainActor
 final class LaserChaseStatus: ObservableObject {
-    @Published var message = "Un puntino rosso! Il gatto lo vuole."
+    @Published var message = String(localized: "Un puntino rosso! Il gatto lo vuole.")
     @Published var catches = 0
     @Published var showHint = false
     @Published var ending = false
@@ -90,29 +90,29 @@ final class LaserChaseHostingView: NSHostingView<AnyView> {
 /// What the cat says.
 enum LaserChaseLines {
     static let start = [
-        "Cos'è quel puntino rosso?!",
-        "Un puntino! È mio!",
-        "Mrrr… lo vedo, sai.",
+        String(localized: "Cos'è quel puntino rosso?!"),
+        String(localized: "Un puntino! È mio!"),
+        String(localized: "Mrrr… lo vedo, sai."),
     ]
 
     static let missed = [
-        "Mancato!",
-        "Mrr?",
-        "Dov'è finito?",
-        "Era qui un attimo fa…",
+        String(localized: "Mancato!"),
+        String(localized: "Mrr?"),
+        String(localized: "Dov'è finito?"),
+        String(localized: "Era qui un attimo fa…"),
     ]
 
     static let wakeUp = [
-        "Mrrr?!",
-        "Si muove!",
-        "Eccolo di nuovo!",
+        String(localized: "Mrrr?!"),
+        String(localized: "Si muove!"),
+        String(localized: "Eccolo di nuovo!"),
     ]
 
     static func result(catches: Int) -> String {
         switch catches {
-        case 0: return "Catture: 0. Il puntino era troppo veloce 😼"
-        case 1: return "Catture: 1. Il gatto è fiero di sé 😺"
-        default: return "Catture: \(catches)! Cacciatore provetto 😻"
+        case 0: return String(localized: "Catture: 0. Il puntino era troppo veloce 😼")
+        case 1: return String(localized: "Catture: 1. Il gatto è fiero di sé 😺")
+        default: return String(localized: "Catture: \(catches)! Cacciatore provetto 😻")
         }
     }
 }

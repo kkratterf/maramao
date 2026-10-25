@@ -22,9 +22,9 @@ enum GlobalShortcut: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .startPause: return "Inizia / metti in pausa"
-        case .takeBreak: return "Pausa gatto ora"
-        case .skip: return "Salta (quando si può)"
+        case .startPause: return String(localized: "Inizia / metti in pausa")
+        case .takeBreak: return String(localized: "Pausa gatto ora")
+        case .skip: return String(localized: "Salta (quando si può)")
         }
     }
 

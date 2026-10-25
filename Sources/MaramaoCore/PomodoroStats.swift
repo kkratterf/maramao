@@ -176,13 +176,16 @@ public struct PomodoroStats: Codable, Equatable, Sendable {
 public enum StatsText {
     /// "Oggi: 🍅 4 · 🐈 3/4 pause rispettate · 🔥 5 giorni". Empty parts are left out.
     public static func todayLine(today: DayStats, streak: Int) -> String {
-        var parts = ["Oggi: 🍅 \(today.workSessions)"]
+        var parts = [String(localized: "Oggi: 🍅 \(today.workSessions)")]
         if today.breaksTotal > 0 {
-            let noun = today.breaksTotal == 1 ? "pausa rispettata" : "pause rispettate"
-            parts.append("🐈 \(today.breaksCompleted)/\(today.breaksTotal) \(noun)")
+            let done = today.breaksCompleted
+            let total = today.breaksTotal
+            parts.append(total == 1
+                ? String(localized: "🐈 \(done)/\(total) pausa rispettata")
+                : String(localized: "🐈 \(done)/\(total) pause rispettate"))
         }
         if streak > 0 {
-            parts.append("🔥 \(streak) \(streak == 1 ? "giorno" : "giorni")")
+            parts.append(streak == 1 ? String(localized: "🔥 \(streak) giorno") : String(localized: "🔥 \(streak) giorni"))
         }
         return parts.joined(separator: " · ")
     }

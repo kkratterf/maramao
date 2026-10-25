@@ -46,12 +46,12 @@ struct MenuContentView: View {
     private var phaseTitle: String {
         switch engine.phase {
         case .idle:
-            if availability.isSnoozed { return "Il gatto dorme \(availability.untilText())" }
-            if !availability.isWorkingTime() { return "Fuori orario: niente partenze automatiche" }
-            return "Pronto quando lo sei tu"
-        case .work: return engine.isPaused ? "In pausa (tu, non il gatto)" : "Concentrazione"
-        case .shortBreak: return "Pausa breve"
-        case .longBreak: return "Pausa lunga"
+            if availability.isSnoozed { return String(localized: "Il gatto dorme \(availability.untilText())") }
+            if !availability.isWorkingTime() { return String(localized: "Fuori orario: niente partenze automatiche") }
+            return String(localized: "Pronto quando lo sei tu")
+        case .work: return engine.isPaused ? String(localized: "In pausa (tu, non il gatto)") : String(localized: "Concentrazione")
+        case .shortBreak: return String(localized: "Pausa breve")
+        case .longBreak: return String(localized: "Pausa lunga")
         }
     }
 
@@ -83,16 +83,16 @@ struct MenuContentView: View {
             case .idle:
                 Button("Inizia a lavorare") { engine.startWork() }
                     .keyboardShortcut(.defaultAction)
-                    .help("Inizia un pomodoro" + shortcuts.hint(.startPause))
+                    .help(String(localized: "Inizia un pomodoro") + shortcuts.hint(.startPause))
             case .work:
-                Button(engine.isPaused ? "Riprendi" : "Pausa") { engine.togglePause() }
-                    .help((engine.isPaused ? "Riprendi il pomodoro" : "Metti in pausa il pomodoro") + shortcuts.hint(.startPause))
+                Button(engine.isPaused ? LocalizedStringKey("Riprendi") : LocalizedStringKey("Pausa")) { engine.togglePause() }
+                    .help((engine.isPaused ? String(localized: "Riprendi il pomodoro") : String(localized: "Metti in pausa il pomodoro")) + shortcuts.hint(.startPause))
                 Button("Pausa gatto ora") { engine.takeBreakNow() }
-                    .help("Fai subito la pausa" + shortcuts.hint(.takeBreak))
+                    .help(String(localized: "Fai subito la pausa") + shortcuts.hint(.takeBreak))
             case .shortBreak, .longBreak:
                 Button("Salta pausa") { engine.skip() }
                     .disabled(!engine.canSkipBreak)
-                    .help((settings.strictMode ? "Modalità severa: non si salta" : "Disponibile dopo \(Int(settings.skipUnlockSeconds)) secondi") + shortcuts.hint(.skip))
+                    .help((settings.strictMode ? String(localized: "Modalità severa: non si salta") : String(localized: "Disponibile dopo \(Int(settings.skipUnlockSeconds)) secondi")) + shortcuts.hint(.skip))
             }
             Spacer()
             if engine.phase != .idle {

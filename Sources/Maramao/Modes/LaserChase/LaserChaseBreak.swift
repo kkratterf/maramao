@@ -459,7 +459,7 @@ final class LaserChaseBreak: BreakMode {
             catches += 1
             catchPoint = mouse
             spawnHearts()
-            say("Preso! 🐾", duration: 1.5)
+            say(String(localized: "Preso! 🐾"), duration: 1.5)
             CatSounds.shared.chirp()
             enter(.celebrating)
         } else {
@@ -594,15 +594,15 @@ final class LaserChaseBreak: BreakMode {
         let message: String
         switch state {
         case .chasing, .missed:
-            message = "Il gatto insegue il puntino. Tu riposa."
+            message = String(localized: "Il gatto insegue il puntino. Tu riposa.")
         case .wiggling, .pouncing:
-            message = "Attenzione… sta per saltare!"
+            message = String(localized: "Attenzione… sta per saltare!")
         case .celebrating, .waiting:
-            message = "Preso! Muovi il puntino per un'altra caccia."
+            message = String(localized: "Preso! Muovi il puntino per un'altra caccia.")
         case .grooming:
-            message = "Il gatto si lecca la zampa."
+            message = String(localized: "Il gatto si lecca la zampa.")
         case .proud:
-            message = "Pausa finita. Il gatto è fiero di sé."
+            message = String(localized: "Pausa finita. Il gatto è fiero di sé.")
         }
         if status.message != message { status.message = message }
         if status.catches != catches { status.catches = catches }

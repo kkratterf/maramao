@@ -149,17 +149,17 @@ final class MemeWallModel: ObservableObject {
         [Color(red: 0.55, green: 0.9, blue: 0.88), Color(red: 0.2, green: 0.6, blue: 0.7)],
     ]
     private static let messages = [
-        "Niente lavoro. Solo meme.",
-        "Il gatto ha preso il telecomando.",
-        "Stai guardando Maramao TV.",
-        "Torna quando il gatto lo dice.",
+        String(localized: "Niente lavoro. Solo meme."),
+        String(localized: "Il gatto ha preso il telecomando."),
+        String(localized: "Stai guardando Maramao TV."),
+        String(localized: "Torna quando il gatto lo dice."),
     ]
 
     init(cardCount: Int, deck: MemeWallDeck, userImages: MemeWallUserImages, entranceScale: Double) {
         self.deck = deck
         self.userImages = userImages
         self.entranceScale = entranceScale
-        self.hudMessage = Self.messages.randomElement() ?? "Niente lavoro. Solo meme."
+        self.hudMessage = Self.messages.randomElement() ?? String(localized: "Niente lavoro. Solo meme.")
         var made: [MemeWallCard] = []
         for _ in 0..<max(1, cardCount) {
             let used = made.map { $0.meme.template }

@@ -69,11 +69,11 @@ final class WalkingCatBreak: BreakMode {
     private static let hudLevel = NSWindow.Level(rawValue: NSWindow.Level.screenSaver.rawValue + 1)
     private static let hudSize = NSSize(width: 400, height: 90)
     private static let lines = [
-        "Questa finestra adesso è mia.",
-        "Riposati, umano.",
-        "Mrrr.",
-        "Niente lavoro, solo coccole.",
-        "Fai due passi, io resto qui.",
+        String(localized: "Questa finestra adesso è mia."),
+        String(localized: "Riposati, umano."),
+        String(localized: "Mrrr."),
+        String(localized: "Niente lavoro, solo coccole."),
+        String(localized: "Fai due passi, io resto qui."),
     ]
 
     // MARK: - State
@@ -155,7 +155,7 @@ final class WalkingCatBreak: BreakMode {
         hitWindow = hit
 
         let hud = OverlayWindow(frame: layout.hudFrame, level: Self.hudLevel, clickThrough: false)
-        let hudView = BreakHUD(context: context, message: "Il gatto ha preso la tua finestra.")
+        let hudView = BreakHUD(context: context, message: String(localized: "Il gatto ha preso la tua finestra."))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         let hosting = WalkingCatFirstMouseHostingView(rootView: hudView)
         hosting.frame = NSRect(origin: .zero, size: layout.hudFrame.size)
@@ -611,7 +611,7 @@ final class WalkingCatBreak: BreakMode {
     /// Sit on the title bar, hop onto the middle of the window, grow big and fall asleep.
     private func appendSettle(layout: Layout, sit: TimeInterval, announce: Bool, into steps: inout [Step]) {
         steps.append(Step(.hold(.sitting, duration: 0), completion: { [weak self] in
-            if announce { self?.say("Questa finestra adesso è mia.", duration: max(2.2, sit + 0.6)) }
+            if announce { self?.say(String(localized: "Questa finestra adesso è mia."), duration: max(2.2, sit + 0.6)) }
         }))
         steps.append(Step(.hold(.sitting, duration: sit)))
         steps.append(Step(.jump(to: layout.sleepPoint, duration: 0.65, height: 40), width: layout.sleepWidth))
@@ -728,7 +728,7 @@ final class WalkingCatBreak: BreakMode {
         }
         purr()
         if settled && cat.bubble == nil && Double.random(in: 0...1) < 0.4 {
-            say(["Mrrr.", "Prrr…", "Ancora coccole."].randomElement() ?? "Mrrr.", duration: 2.2)
+            say([String(localized: "Mrrr."), String(localized: "Prrr…"), String(localized: "Ancora coccole.")].randomElement() ?? String(localized: "Mrrr."), duration: 2.2)
         }
     }
 

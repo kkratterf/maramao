@@ -168,14 +168,14 @@ struct SettingsView: View {
             refreshLaunchAtLogin()
         } catch {
             // Revert the toggle to the real state and explain why.
-            launchAtLoginError = "Non riesco a cambiare l'avvio automatico: \(error.localizedDescription)"
+            launchAtLoginError = String(localized: "Non riesco a cambiare l'avvio automatico: \(error.localizedDescription)")
             refreshLaunchAtLogin()
         }
     }
 
-    private func minutesStepper(_ title: String, value: Binding<Double>, range: ClosedRange<Double>) -> some View {
+    private func minutesStepper(_ title: LocalizedStringKey, value: Binding<Double>, range: ClosedRange<Double>) -> some View {
         Stepper(value: value, in: range, step: 1) {
-            Text("\(title): \(Int(value.wrappedValue)) min")
+            Text("\(Text(title)): \(Int(value.wrappedValue)) min")
         }
     }
 }

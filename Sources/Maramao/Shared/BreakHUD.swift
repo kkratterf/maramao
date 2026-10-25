@@ -5,7 +5,7 @@ import MaramaoCore
 /// when allowed, the skip button.
 struct BreakHUD: View {
     let context: BreakContext
-    var message: String = "Pausa. Il gatto ha deciso."
+    var message: String = String(localized: "Pausa. Il gatto ha deciso.")
     var style: Style = .dark
 
     enum Style { case dark, light }
@@ -28,7 +28,7 @@ struct BreakHUD: View {
                     Button {
                         context.requestSkip()
                     } label: {
-                        Text(context.isPreview ? "Chiudi" : "Salta")
+                        Text(context.isPreview ? LocalizedStringKey("Chiudi") : LocalizedStringKey("Salta"))
                             .font(.system(size: 12, weight: .semibold, design: .rounded))
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)

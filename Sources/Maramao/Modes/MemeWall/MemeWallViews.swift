@@ -40,7 +40,7 @@ struct MemeWallView: View {
     private var header: some View {
         if context.isLongBreak {
             VStack(spacing: 4) {
-                MemeWallOutlinedText(text: "📺 MARAMAO TV · PAUSA LUNGA", size: 40, outline: 2.5)
+                MemeWallOutlinedText(text: String(localized: "📺 MARAMAO TV · PAUSA LUNGA"), size: 40, outline: 2.5)
                 Text("La compilation dei gatti che ti vogliono lontano dalla tastiera")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundColor(.white.opacity(0.85))

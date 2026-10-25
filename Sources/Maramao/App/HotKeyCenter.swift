@@ -35,7 +35,7 @@ struct HotKeyCombo: Equatable {
             kVK_ANSI_U: "U", kVK_ANSI_V: "V", kVK_ANSI_W: "W", kVK_ANSI_X: "X",
             kVK_ANSI_Y: "Y", kVK_ANSI_Z: "Z",
             kVK_Delete: "⌫", kVK_ForwardDelete: "⌦", kVK_Escape: "⎋",
-            kVK_Return: "↩", kVK_Space: "Spazio", kVK_Tab: "⇥",
+            kVK_Return: "↩", kVK_Space: String(localized: "Spazio"), kVK_Tab: "⇥",
         ]
         return letters[keyCode] ?? "#\(keyCode)"
     }

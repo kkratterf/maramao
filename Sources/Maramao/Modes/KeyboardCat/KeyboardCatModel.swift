@@ -180,7 +180,7 @@ final class KeyboardCatModel: ObservableObject {
     @Published var bubble: String?
     /// Last time the cat twitched (tail and a little shiver), for the views' animation.
     @Published var twitchDate = Date.distantPast
-    @Published var hudMessage = "Il gatto dorme sulla tastiera."
+    @Published var hudMessage = String(localized: "Il gatto dorme sulla tastiera.")
 
     let palette: CatPalette
 
@@ -217,18 +217,18 @@ enum KeyboardCatLines {
 
     /// What the cat mumbles every few key presses. The first one is always the first line.
     static let sleepy = [
-        "Sto dormendo qui.",
-        "Mrrr. Tastiera occupata.",
-        "Shhh. Cinque minuti ancora.",
-        "Questa tastiera è calda. È mia.",
-        "Il lavoro può aspettare. Io no.",
-        "Prrr… scrivo io per te.",
+        String(localized: "Sto dormendo qui."),
+        String(localized: "Mrrr. Tastiera occupata."),
+        String(localized: "Shhh. Cinque minuti ancora."),
+        String(localized: "Questa tastiera è calda. È mia."),
+        String(localized: "Il lavoro può aspettare. Io no."),
+        String(localized: "Prrr… scrivo io per te."),
     ]
 
     static let escape = [
-        "Esc? Non c'è via di fuga.",
-        "Niente Esc. Solo pausa.",
+        String(localized: "Esc? Non c'è via di fuga."),
+        String(localized: "Niente Esc. Solo pausa."),
     ]
 
-    static let quit = "Il gatto non ti lascia uscire 😼"
+    static let quit = String(localized: "Il gatto non ti lascia uscire 😼")
 }

@@ -95,8 +95,8 @@ final class KeyboardCatBreak: BreakMode {
         }
         model.pressedKeys = []
         model.catKeys = []
-        model.bubble = "Ok, ora puoi lavorare."
-        model.hudMessage = "Il gatto si alza. Pausa finita."
+        model.bubble = String(localized: "Ok, ora puoi lavorare.")
+        model.hudMessage = String(localized: "Il gatto si alza. Pausa finita.")
         model.setPhase(.stretching)
 
         // A stretch, then fade out. Everything is closed within ~2 s.

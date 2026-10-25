@@ -31,10 +31,11 @@ struct StatsSection: View {
     }
 
     private func weekSummary(_ total: DayStats) -> String {
-        let pomodori = total.workSessions == 1 ? "1 pomodoro" : "\(total.workSessions) pomodori"
-        var text = "Ultimi 7 giorni: \(pomodori) · \(StatsText.duration(minutes: total.focusMinutes)) di concentrazione"
+        let pomodori = pomodoriCount(total.workSessions)
+        let focus = StatsText.duration(minutes: total.focusMinutes)
+        var text = String(localized: "Ultimi 7 giorni: \(pomodori) · \(focus) di concentrazione")
         if total.breaksTotal > 0 {
-            text += " · \(total.breaksCompleted)/\(total.breaksTotal) pause rispettate"
+            text += " · " + String(localized: "\(total.breaksCompleted)/\(total.breaksTotal) pause rispettate")
         }
         return text
     }
@@ -92,6 +93,14 @@ private struct WeekBars: View {
     }
 
     private func barHelp(_ day: DayStats) -> String {
-        "\(day.day): \(day.workSessions) pomodori, \(StatsText.duration(minutes: day.focusMinutes)), \(day.breaksCompleted)/\(day.breaksTotal) pause rispettate"
+        let pomodori = pomodoriCount(day.workSessions)
+        let focus = StatsText.duration(minutes: day.focusMinutes)
+        let breaks = String(localized: "\(day.breaksCompleted)/\(day.breaksTotal) pause rispettate")
+        return "\(day.day): \(pomodori), \(focus), \(breaks)"
     }
+}
+
+/// "1 pomodoro", "4 pomodori" (plural variants in the String Catalog).
+private func pomodoriCount(_ count: Int) -> String {
+    String(localized: "\(count) pomodori")
 }

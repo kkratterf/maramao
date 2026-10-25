@@ -13,6 +13,7 @@ Maramao is a native macOS Pomodoro timer that lives in the menu bar. When it is 
 | `Sources/Maramao/App` | SwiftUI `MenuBarExtra` app, menu panel, settings window |
 | `Sources/Maramao/Core` | `PomodoroEngine` (clock), `BreakCoordinator`, `BreakMode` protocol, `AppSettings`, `BreakModeID` |
 | `Sources/Maramao/Shared` | Building blocks for break modes: `OverlayWindow`, `BreakHUD`, `CatView` (the procedural cat) |
+| `Sources/Maramao/Resources` | `Localizable.xcstrings`: String Catalog, Italian keys with English translations |
 | `Sources/Maramao/Modes/<Name>` | One folder per break concept, each a `BreakMode` |
 | `Tests/MaramaoCoreTests` | XCTest for `MaramaoCore` |
 | `Resources/Info.plist` | App bundle metadata, including the version |
@@ -22,7 +23,7 @@ Maramao is a native macOS Pomodoro timer that lives in the menu bar. When it is 
 ## Language of the project
 
 - **Code, comments, doc comments, commit messages, PR titles and PR descriptions: English.**
-- Everything the user sees in the app (menu, settings, cat captions, HUD) is **Italian**. That is the product, not a style choice.
+- Everything the user sees in the app (menu, settings, cat captions, HUD) is written in **Italian** first: that is the product, not a style choice. Italian is the source language of the String Catalog and every string also gets an **English** translation, used when macOS runs in English (see "Rules for changes").
 
 ## Build and test
 
@@ -52,6 +53,7 @@ The website has no build step: preview it with `python3 -m http.server -d site 8
 - Keep PRs small and focused: one issue, one PR. Do not mix refactors with behaviour changes.
 - No third-party dependencies without a reason written in the PR description.
 - Match the style of the surrounding code.
+- **Every new UI string needs an English translation** in `Sources/Maramao/Resources/Localizable.xcstrings` (String Catalog). Italian is the source language: the key is the Italian text. SwiftUI literals (`Text("…")`, `Button("…")`) are looked up automatically; a plain `String` shown to the user must use `String(localized: "…")`. Counts get plural variants (`one`/`other`) in the catalog, for both `it` and `en`. Translate cat lines with personality, not word for word. CI runs `scripts/check-strings.py`, which fails on a missing English entry or a `String(localized:)` key that is not in the catalog.
 
 ## Docs, roadmap and planning
 

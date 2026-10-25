@@ -24,7 +24,7 @@ struct SleepyCatScene: View {
             Text("Shhh 🤫")
                 .font(.system(size: 44, weight: .semibold, design: .rounded))
                 .foregroundColor(.white.opacity(0.85))
-            Text(model.isAwake ? "😾 L'hai svegliato!" : "Il gatto dorme sull'altro schermo.")
+            Text(model.isAwake ? LocalizedStringKey("😾 L'hai svegliato!") : LocalizedStringKey("Il gatto dorme sull'altro schermo."))
                 .font(.system(size: 15, weight: .medium, design: .rounded))
                 .foregroundColor(.white.opacity(0.6))
         }
