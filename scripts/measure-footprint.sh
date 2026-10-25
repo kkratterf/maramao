@@ -3,7 +3,7 @@
 # pomodoro runs and during each break mode. Prints a Markdown report (and appends
 # it to $GITHUB_STEP_SUMMARY in CI).
 # Usage: scripts/measure-footprint.sh [scenario ...]
-#   default scenarios: idle work walkingCat memeWall sleepyCat catPile
+#   default scenarios: idle, work and every break mode
 # Needs dist/Maramao.app (scripts/build-app.sh release) and a logged-in GUI session.
 # CI runners are shared VMs: compare numbers from the same runner type, and treat
 # small CPU differences as noise.
@@ -20,7 +20,7 @@ WINDOW="${WINDOW:-20}"
 if [ "$#" -gt 0 ]; then
   SCENARIOS=("$@")
 else
-  SCENARIOS=(idle work walkingCat memeWall sleepyCat catPile)
+  SCENARIOS=(idle work walkingCat memeWall sleepyCat catPile laserChase keyboardCat)
 fi
 
 kb() { awk -v b="$1" 'BEGIN { printf "%.0f KB", b / 1024 }'; }
