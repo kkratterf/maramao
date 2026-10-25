@@ -64,3 +64,16 @@ jobs:
           name: Maramao-dmg
           path: dist/*.dmg
           retention-days: 14
+
+  shellcheck:
+    name: Lint install.sh
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: ShellCheck
+        run: |
+          shellcheck --version
+          shellcheck --shell=sh install.sh
+          sh -n install.sh
