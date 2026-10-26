@@ -67,7 +67,7 @@ They work from any app and need no special permission. Turn each one on or off i
 
 | Shortcut | Action |
 | --- | --- |
-| ⌃⌥⌘P | Start a pomodoro, or pause / resume it |
+| F4 (fn-F4 on Apple keyboards) | Start a pomodoro, or pause / resume it |
 | ⌃⌥⌘B | Take the cat break now |
 | ⌃⌥⌘S | Skip the current phase (a break only once skipping is allowed) |
 | ⌃⌥⌘R | Snooze the break that just started (**Snooze**, within the daily limit) |
