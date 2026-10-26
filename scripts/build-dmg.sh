@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Builds dist/Maramao-<version>.dmg: a styled installer window with
-# Maramao.app on the left, an Applications shortcut on the right and a
-# background drawn in code by scripts/make-dmg-background.swift.
+# Builds dist/Maramao-<version>.dmg: a tall styled installer window with
+# Maramao.app on top, an Applications shortcut below it and a background
+# drawn in code by scripts/make-dmg-background.swift (the PNGs are kept in
+# .build/dmg/background for review).
 #
 # Usage: scripts/build-dmg.sh [--rebuild]
 #   Reuses dist/Maramao.app when it exists (so a signed app is kept),
@@ -23,13 +24,13 @@ SIGN_IDENTITY="${SIGN_IDENTITY:--}"
 VOLNAME="Maramao"
 
 # Window geometry: must match scripts/make-dmg-background.swift.
-WIN_W=660
-WIN_H=400
+WIN_W=440
+WIN_H=588
 WIN_X=200
 WIN_Y=120
 ICON_SIZE=128
-APP_POS="165, 200"
-APPS_POS="495, 200"
+APP_POS="220, 196"
+APPS_POS="220, 430"
 
 warn() {
   if [ -n "${GITHUB_ACTIONS:-}" ]; then
