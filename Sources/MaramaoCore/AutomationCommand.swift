@@ -19,10 +19,16 @@ public enum AutomationCommand: Equatable, Sendable {
     case reset
     /// Choose the break mode, by `BreakModeID` raw value (case-insensitive).
     case setMode(String)
+    /// Choose the break mode of the long break, by `BreakModeID` raw value, or
+    /// `sameAsShortBreak` to let it follow the short break again.
+    case setLongBreakMode(String)
     /// Preview a break mode for 30 seconds, by `BreakModeID` raw value.
     case preview(String)
     /// Choose the timer rhythm, by `TimerPreset` raw value (case-insensitive).
     case setPreset(String)
+
+    /// `setLongBreakMode` argument that means "the same cat as the short break".
+    public static let sameAsShortBreak = "same"
 
     /// URL scheme registered in Info.plist.
     public static let urlScheme = "maramao"
@@ -37,6 +43,7 @@ public enum AutomationCommand: Equatable, Sendable {
         "maramao://skip",
         "maramao://reset",
         "maramao://mode/<id>",
+        "maramao://longmode/<id>",
         "maramao://preview/<id>",
         "maramao://preset/<id>",
     ]
@@ -72,6 +79,10 @@ public enum AutomationCommand: Equatable, Sendable {
             let id = arguments[0].trimmingCharacters(in: .whitespaces)
             guard !id.isEmpty else { return nil }
             self = .setMode(id)
+        case ("longmode", 1):
+            let id = arguments[0].trimmingCharacters(in: .whitespaces)
+            guard !id.isEmpty else { return nil }
+            self = .setLongBreakMode(id)
         case ("preview", 1):
             let id = arguments[0].trimmingCharacters(in: .whitespaces)
             guard !id.isEmpty else { return nil }

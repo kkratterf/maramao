@@ -35,7 +35,8 @@ final class BreakCoordinator {
     func start(mode: BreakModeID, context: BreakContext) {
         end()
         generation += 1
-        let resolved = mode.resolved()
+        // `random` picks from the cats chosen in Settings, avoiding the previous one.
+        let resolved = AppSettings.shared.resolveSurprise(mode)
         let breakMode = Self.make(resolved)
         current = breakMode
         currentContext = context

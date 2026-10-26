@@ -90,12 +90,13 @@ open maramao://start
 | `maramao://skip` | Skip the current phase |
 | `maramao://reset` | Stop and go back to idle |
 | `maramao://mode/<id>` | Choose the break mode for the next breaks |
+| `maramao://longmode/<id>` | Choose the break mode of the long break (`same` follows the short break) |
 | `maramao://preview/<id>` | Try a break mode for 30 seconds |
 | `maramao://preset/<id>` | Choose the rhythm: `classic`, `long`, `deep` or `custom` |
 
 Mode ids: `walkingCat`, `memeWall`, `sleepyCat`, `catPile`, `laserChase`, `keyboardCat`, `birdWatching`, or `random` (🎲 Surprise me). URLs that would end a break early (`start`, `skip`, `reset`) only work once the break may be skipped, so **strict mode** still wins.
 
-The **Shortcuts** app also lists Maramao actions: *Start a pomodoro*, *Pause or resume*, *Cat break now*, *Choose the break mode*, *Choose the rhythm* and *Maramao status* (returns the phase, the time left and today's pomodori as text). Siri and Spotlight know phrases like "Start a pomodoro with Maramao" (in Italian: "Inizia un pomodoro con Maramao"). They show up once `Maramao.app` has been opened from `Applications`.
+The **Shortcuts** app also lists Maramao actions: *Start a pomodoro*, *Pause or resume*, *Cat break now*, *Choose the break mode*, *Choose the rhythm*, *Choose the long-break cat* and *Maramao status* (returns the phase, the time left and today's pomodori as text). Siri and Spotlight know phrases like "Start a pomodoro with Maramao" (in Italian: "Inizia un pomodoro con Maramao"). They show up once `Maramao.app` has been opened from `Applications`.
 
 A Raycast script command, for example:
 
@@ -204,7 +205,7 @@ The install script does this for you. You only need to do it once per version.
 
 ### 5. Where is it?
 
-Maramao lives in the **menu bar**, top right: look for the 🐱 (it turns into 🍅 and a countdown while you work). There is no Dock icon and no window until you click it. From the menu you start the timer, pick a cat, open the settings, or try a break right away with **Try a cat**.
+Maramao lives in the **menu bar**, top right: look for the 🐱 (it turns into 🍅 and a countdown while you work). There is no Dock icon. The first time you open it, a cat welcomes you in a small window: it sets the timer, lets you pick a cat, shows a 10-second trial break and the emergency exit. You can skip it, and see it again from Settings → **Show the welcome again** (*Rivedi il benvenuto*). From the menu you start the timer, pick a cat, open the settings, or try a break right away with **Try a cat**.
 
 To start Maramao every time you log in, turn on **Open Maramao at login** in Settings. macOS may ask you to allow it in System Settings → General → Login Items.
 
@@ -253,7 +254,18 @@ Contributions are welcome, from a new cat to a timer fix.
 
 ## Art
 
-Every cat in Maramao is drawn in code (`Sources/Maramao/Shared/CatView.swift`). No third-party images, memes or GIFs are bundled. Any future CC0 or public-domain asset will be credited here.
+Every cat in Maramao is drawn in code (`Sources/Maramao/Shared/CatView.swift`). No third-party images, memes or GIFs are bundled.
+
+The [website](https://kkratterf.github.io/maramao/) shows short clips of real cats from Wikimedia Commons, trimmed and re-encoded in `site/media/`. They are not part of the app. The CC BY-SA clips are shared under the same license:
+
+- [Black Cat walking.webm](https://commons.wikimedia.org/wiki/File:Black_Cat_walking.webm) by Dzkouslavia, CC0 ([license](https://creativecommons.org/publicdomain/zero/1.0/deed.en))
+- [Kluse - Lotti playing in a box v 01 ies.webm](https://commons.wikimedia.org/wiki/File:Kluse_-_Lotti_playing_in_a_box_v_01_ies.webm) by Frank Vincentz, CC BY-SA 3.0 ([license](https://creativecommons.org/licenses/by-sa/3.0))
+- [Cat yawning in slow motion.webm](https://commons.wikimedia.org/wiki/File:Cat_yawning_in_slow_motion.webm) by Grendelkhan, CC BY-SA 4.0 ([license](https://creativecommons.org/licenses/by-sa/4.0))
+- [Kitten sleeping 2 2014-08-24.ogv](https://commons.wikimedia.org/wiki/File:Kitten_sleeping_2_2014-08-24.ogv) by FASTILY, CC BY-SA 4.0 ([license](https://creativecommons.org/licenses/by-sa/4.0))
+- [Three kittens 1 2017-06-25.webm](https://commons.wikimedia.org/wiki/File:Three_kittens_1_2017-06-25.webm) by FASTILY, CC BY-SA 4.0 ([license](https://creativecommons.org/licenses/by-sa/4.0))
+- [Cat playing with a laser pointer.webm](https://commons.wikimedia.org/wiki/File:Cat_playing_with_a_laser_pointer.webm) by Clément Bucco-Lechat, CC BY-SA 3.0 ([license](https://creativecommons.org/licenses/by-sa/3.0))
+- [Kitten playing - Tokyo - Jan 7 2020.webm](https://commons.wikimedia.org/wiki/File:Kitten_playing_-_Tokyo_-_Jan_7_2020.webm) by Nesnad, CC BY 4.0 ([license](https://creativecommons.org/licenses/by/4.0))
+- [Yawning kitten.ogv](https://commons.wikimedia.org/wiki/File:Yawning_kitten.ogv) by Andrew Krizhanovsky, Public domain
 
 The pictures in `packs/example/images` were drawn for this repository by a small script and are CC0, like the rest of that pack. Community packs declare their own license (CC0 or CC-BY) in `pack.json`; Maramao shows it in Settings.
 

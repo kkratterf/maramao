@@ -25,6 +25,9 @@ struct MaramaoApp: App {
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var settingsWindow: NSWindow?
+    /// The welcome window, alive only while it is on screen.
+    private var onboardingWindow: NSWindow?
+    private var onboardingCloseObserver: NSObjectProtocol?
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         // maramao:// URLs. Installed before launch finishes so the URL that
@@ -63,6 +66,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         Task { @MainActor in MeasurementHooks.run() }
         // Sparkle auto-update; a no-op until Info.plist has a real public key.
         Task { @MainActor in AppUpdater.shared.start() }
+        // First launch: a cat explains what is about to happen (issue #88).
+        Task { @MainActor in
+            if !AppSettings.shared.hasCompletedOnboarding { self.showOnboarding() }
+        }
     }
 
     /// Never leave a cat behind: close every break window before quitting.
@@ -95,5 +102,49 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         NSApp.activate(ignoringOtherApps: true)
         settingsWindow?.makeKeyAndOrderFront(nil)
+    }
+
+    /// Opens the welcome window: on first launch, and from Settings. Created on demand and
+    /// released when closed. Closing it in any way (finished, skipped, close button) counts
+    /// as done, so it is shown once.
+    @MainActor
+    func showOnboarding() {
+        if onboardingWindow == nil {
+            let window = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 460, height: 480),
+                styleMask: [.titled, .closable],
+                backing: .buffered,
+                defer: false
+            )
+            window.title = String(localized: "Benvenuto in Maramao")
+            window.isReleasedWhenClosed = false
+            window.contentView = NSHostingView(
+                rootView: OnboardingView(onClose: { [weak window] in window?.close() })
+                    .environmentObject(AppSettings.shared)
+                    .environmentObject(PomodoroEngine.shared)
+            )
+            window.center()
+            onboardingCloseObserver = NotificationCenter.default.addObserver(
+                forName: NSWindow.willCloseNotification,
+                object: window,
+                queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in self?.onboardingDidClose() }
+            }
+            onboardingWindow = window
+        }
+        NSApp.activate(ignoringOtherApps: true)
+        onboardingWindow?.makeKeyAndOrderFront(nil)
+    }
+
+    @MainActor
+    private func onboardingDidClose() {
+        AppSettings.shared.hasCompletedOnboarding = true
+        if let observer = onboardingCloseObserver {
+            NotificationCenter.default.removeObserver(observer)
+            onboardingCloseObserver = nil
+        }
+        onboardingWindow?.contentView = nil
+        onboardingWindow = nil
     }
 }
