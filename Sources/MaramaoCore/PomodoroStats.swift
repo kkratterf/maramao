@@ -30,6 +30,9 @@ public struct DayStats: Codable, Equatable, Sendable {
     /// Breaks postponed with "Rimanda". A snoozed break comes back later and is recorded
     /// again as completed or skipped, so this is not part of `breaksTotal`.
     public var breaksSnoozed: Int
+    /// 20-20-20 micro-breaks shown while working. Not breaks: they never stop the pomodoro,
+    /// so they are not part of `breaksTotal`.
+    public var microBreaks: Int
 
     public init(
         day: String,
@@ -39,7 +42,8 @@ public struct DayStats: Codable, Equatable, Sendable {
         breaksSkipped: Int = 0,
         modes: [String: BreakModeCounts] = [:],
         emergencyExits: Int = 0,
-        breaksSnoozed: Int = 0
+        breaksSnoozed: Int = 0,
+        microBreaks: Int = 0
     ) {
         self.day = day
         self.workSessions = workSessions
@@ -49,13 +53,16 @@ public struct DayStats: Codable, Equatable, Sendable {
         self.modes = modes
         self.emergencyExits = emergencyExits
         self.breaksSnoozed = breaksSnoozed
+        self.microBreaks = microBreaks
     }
 
     private enum CodingKeys: String, CodingKey {
         case day, workSessions, focusSeconds, breaksCompleted, breaksSkipped, modes, emergencyExits, breaksSnoozed
+        case microBreaks
     }
 
-    /// Decodes stats saved by older versions too, which had no `emergencyExits` or `breaksSnoozed`.
+    /// Decodes stats saved by older versions too, which had no `emergencyExits`,
+    /// `breaksSnoozed` or `microBreaks`.
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         day = try container.decode(String.self, forKey: .day)
@@ -66,11 +73,14 @@ public struct DayStats: Codable, Equatable, Sendable {
         modes = try container.decode([String: BreakModeCounts].self, forKey: .modes)
         emergencyExits = try container.decodeIfPresent(Int.self, forKey: .emergencyExits) ?? 0
         breaksSnoozed = try container.decodeIfPresent(Int.self, forKey: .breaksSnoozed) ?? 0
+        microBreaks = try container.decodeIfPresent(Int.self, forKey: .microBreaks) ?? 0
     }
 
     public var breaksTotal: Int { breaksCompleted + breaksSkipped }
     public var focusMinutes: Int { Int((focusSeconds / 60).rounded(.down)) }
-    public var isEmpty: Bool { workSessions == 0 && focusSeconds == 0 && breaksTotal == 0 && breaksSnoozed == 0 }
+    public var isEmpty: Bool {
+        workSessions == 0 && focusSeconds == 0 && breaksTotal == 0 && breaksSnoozed == 0 && microBreaks == 0
+    }
 
     /// Sums several days into one (the result keeps `day` of the receiver).
     public func adding(_ other: DayStats) -> DayStats {
@@ -81,6 +91,7 @@ public struct DayStats: Codable, Equatable, Sendable {
         result.breaksSkipped += other.breaksSkipped
         result.emergencyExits += other.emergencyExits
         result.breaksSnoozed += other.breaksSnoozed
+        result.microBreaks += other.microBreaks
         for (mode, counts) in other.modes {
             var mine = result.modes[mode] ?? BreakModeCounts()
             mine.completed += counts.completed
@@ -141,6 +152,13 @@ public struct PomodoroStats: Codable, Equatable, Sendable {
     public mutating func recordSnooze(at date: Date, calendar: Calendar = .current) {
         update(date, calendar: calendar) { day in
             day.breaksSnoozed += 1
+        }
+    }
+
+    /// A 20-20-20 micro-break was shown while working.
+    public mutating func recordMicroBreak(at date: Date, calendar: Calendar = .current) {
+        update(date, calendar: calendar) { day in
+            day.microBreaks += 1
         }
     }
 

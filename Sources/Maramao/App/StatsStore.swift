@@ -45,6 +45,11 @@ final class StatsStore: ObservableObject {
         save()
     }
 
+    func recordMicroBreak() {
+        stats.recordMicroBreak(at: Date(), calendar: calendar)
+        save()
+    }
+
     func reset() {
         stats.reset()
         save()

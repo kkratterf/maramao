@@ -89,6 +89,17 @@
         }
       }
     },
+    "%lld micro-pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld eye breaks"
+          }
+        }
+      }
+    },
     "%lld minuti": {
       "extractionState": "manual",
       "localizations": {
@@ -318,6 +329,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 treat"
+          }
+        }
+      }
+    },
+    "1 micro-pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 eye break"
           }
         }
       }
@@ -1415,6 +1437,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Untitled document — edited by the cat"
+          }
+        }
+      }
+    },
+    "Guarda lontano, almeno 6 metri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look far away, at least 20 feet"
+          }
+        }
+      }
+    },
+    "Micro-pausa per gli occhi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eye micro-break"
+          }
+        }
+      }
+    },
+    "Ogni %lld minuti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every %lld minutes"
+          }
+        }
+      }
+    },
+    "Regola 20-20-20: ogni tanto un gattino ti chiede di guardare lontano per 20 secondi. Non copre lo schermo e non ferma il pomodoro.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The 20-20-20 rule: every so often a little cat asks you to look 20 feet away for 20 seconds. It never covers the screen and never stops the pomodoro."
           }
         }
       }
