@@ -9,7 +9,7 @@ Key facts:
 - Breaks can be skipped after a minute, or never in strict mode ("modalità severa"). "Rimanda" snoozes a break for 1, 3 or 5 minutes, a few times a day.
 - Breaks wait while the microphone or camera is in use, or a presentation or call app is fullscreen.
 - Every cat in the app is drawn in code (the website shows freely licensed videos of real cats from Wikimedia Commons). Users can add their own cats with "cat packs" (folders with a pack.json, CC0 or CC-BY art).
-- Automation: `maramao://start`, `maramao://pause`, `maramao://break`, `maramao://skip`, `maramao://mode/<id>` and more; Shortcuts actions; global shortcuts: fn-F4 (or F4 with standard function keys) starts or pauses a session from v0.3.1, Control-Option-Command-B starts a break, -S skips, -R snoozes.
+- Automation: `maramao://start`, `maramao://pause`, `maramao://break`, `maramao://skip`, `maramao://mode/<id>` and more; Shortcuts actions; global shortcuts: fn-F5 (or F5 with standard function keys) starts or pauses a session, Control-Option-Command-B starts a break, -S skips, -R snoozes.
 - Emergency exit from any break: Control-Option-Command-Delete, or five quick clicks in the top-left corner of a screen.
 
 ## Install

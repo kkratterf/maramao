@@ -196,7 +196,7 @@ section[id] { scroll-margin-top: 84px; }
 .section-head b { color: var(--ink); font-weight: 600; }
 @media (max-width: 520px) { .section { padding: 80px 0; } .section-head { margin-bottom: 40px; } }
 
-/* Keyboard: a slice of a Mac keyboard with fn and F4 lit up */
+/* Keyboard: a slice of a Mac keyboard with fn and F5 lit up */
 .kb-wrap {
   position: relative; display: flex; justify-content: center; overflow: hidden; padding: 24px 0 8px;
   -webkit-mask-image: radial-gradient(70% 90% at 50% 40%, #000 55%, transparent);
