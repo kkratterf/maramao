@@ -1,9 +1,0 @@
-# slug|File|start|length|crop
-hero|File:Black Cat walking.webm|0.6|5|
-window|File:Kluse - Lotti playing in a box v 01 ies.webm|28|6|
-memes|File:Cat yawning in slow motion.webm|6.0|5.5|1080:810:0:400
-sleepy|File:Kitten sleeping 2 2014-08-24.ogv|2.0|6|
-pile|File:Three kittens 1 2017-06-25.webm|4.5|5.2|
-laser|File:Cat playing with a laser pointer.webm|3.5|4.5|
-keyboard|File:Kitten playing - Tokyo - Jan 7 2020.webm|0|6|
-outro|File:Yawning kitten.ogv|2.3|3.4|400:400:230:10
