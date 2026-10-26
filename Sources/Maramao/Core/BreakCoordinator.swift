@@ -1,11 +1,5 @@
 import AppKit
 import MaramaoCore
-import os
-
-extension Logger {
-    /// Break lifecycle: watchdog, emergency exit, stray windows.
-    static let breaks = Logger(subsystem: "com.kkratterf.maramao", category: "breaks")
-}
 
 /// Creates the break mode for each break and tears it down when the break is over.
 ///
@@ -50,6 +44,7 @@ final class BreakCoordinator {
         startWatchdog()
         BreakAccessibility.beginBreak()
         BreakScreens.beginBreak()
+        DiagnosticLog.breaks.notice("Break started: \(resolved.rawValue)\(context.isPreview ? " (preview)" : "")")
         breakMode.begin(context: context)
         announcer.start(context: context, modeTitle: resolved.title)
     }
@@ -61,6 +56,7 @@ final class BreakCoordinator {
         currentModeID = nil
         stopWatchdog()
         emergencyExit.disarm()
+        DiagnosticLog.breaks.notice("Break ended")
         breakMode.end()
         announcer.stop()
         BreakAccessibility.announce(BreakSpeech.breakEnded)
@@ -74,7 +70,7 @@ final class BreakCoordinator {
         end()
         let closed = OverlayWindow.closeAllBreakOverlays()
         if closed > 0 {
-            Logger.breaks.notice("Force-closed \(closed, privacy: .public) break overlay(s)")
+            DiagnosticLog.breaks.notice("Force-closed \(closed) break overlay(s)")
         }
     }
 
@@ -82,7 +78,7 @@ final class BreakCoordinator {
 
     private func emergencyExitTriggered() {
         guard let context = currentContext else { return }
-        Logger.breaks.notice("Emergency exit taken")
+        DiagnosticLog.breaks.notice("Emergency exit taken")
         forceEnd()
         onEmergencyExit?(context)
     }
@@ -107,7 +103,7 @@ final class BreakCoordinator {
             return
         }
         guard BreakWatchdog.isOverdue(now: Date(), endDate: context.endDate) else { return }
-        Logger.breaks.error("Watchdog: break still on screen \(Int(-context.endDate.timeIntervalSinceNow), privacy: .public)s after its end, closing it by force")
+        DiagnosticLog.breaks.error("Watchdog: break still on screen \(Int(-context.endDate.timeIntervalSinceNow))s after its end, closing it by force")
         forceEnd()
         onWatchdogFired?(context)
     }
@@ -120,7 +116,7 @@ final class BreakCoordinator {
                 guard let self, self.generation == expected, !self.isActive else { return }
                 let closed = OverlayWindow.closeAllBreakOverlays()
                 if closed > 0 {
-                    Logger.breaks.error("Swept \(closed, privacy: .public) overlay(s) left open after the break ended")
+                    DiagnosticLog.breaks.error("Swept \(closed) overlay(s) left open after the break ended")
                 }
             }
         }

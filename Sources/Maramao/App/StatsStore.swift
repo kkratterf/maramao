@@ -64,6 +64,17 @@ final class StatsStore: ObservableObject {
         stats.total(ofLast: count, endingAt: Date(), calendar: calendar)
     }
 
+    func bestDay(ofLast count: Int) -> DayStats? {
+        stats.bestDay(ofLast: count, endingAt: Date(), calendar: calendar)
+    }
+
+    func activeDays(ofLast count: Int) -> Int {
+        stats.activeDays(ofLast: count, endingAt: Date(), calendar: calendar)
+    }
+
+    /// The whole history as CSV, for the export in Settings.
+    func csv() -> String { StatsCSV.export(stats) }
+
     /// Short weekday label ("lun", "mar", ...) for a `yyyy-MM-dd` key.
     func weekdayLabel(for dayKey: String) -> String {
         let parts = dayKey.split(separator: "-").compactMap { Int($0) }
