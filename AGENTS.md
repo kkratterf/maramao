@@ -93,7 +93,7 @@ Agent platforms that assign their own branch names (e.g. `claude/...`) are fine;
 
 ## Releases
 
-- SemVer, tags `vX.Y.Z`.
+- SemVer, tags `vX.Y.Z`. Releases follow the same naming as `kkratterf/fratmscript`: the release title is the bare tag (`v0.3.0`, never "Maramao v0.3.0"), published by `github-actions[bot]`, notes generated from `.github/release.yml` (sections by area label, in Italian). Assets keep the names the cask, `install.sh` and the appcast expect: `Maramao-X.Y.Z.zip`, `Maramao-X.Y.Z.dmg`, `SHA256SUMS.txt`.
 - Minor release = a version milestone, cut when all `P0` issues of that version label are closed and `main` is green. Patch release when a user-facing fix lands.
 - **Merging the version-bump PR is the release.** Nobody has to start a workflow by hand.
 
@@ -115,6 +115,7 @@ Agent sandboxes are refused these actions, so ask the maintainer instead of retr
 
 - start, re-run or cancel workflows (`workflow_dispatch`, re-runs): that is why releases start from a merge;
 - delete branches or tags, force-push;
+- create, edit or delete GitHub Releases (a wrong title or note is fixed by the maintainer, or by changing `release.yml` for the next one);
 - change repository settings: description, topics, Pages, secrets, branch protection;
 - add the signing secrets (`APPLE_*`, `SPARKLE_ED_PRIVATE_KEY`).
 
