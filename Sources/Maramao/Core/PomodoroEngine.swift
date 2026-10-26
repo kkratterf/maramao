@@ -58,7 +58,7 @@ final class PomodoroEngine: ObservableObject {
             self?.breakForceEnded(context, emergency: false)
         }
         presence.idleThreshold = { [weak settings] in
-            AwayPolicy.idleThreshold(shortBreak: (settings?.shortBreakMinutes ?? 5) * 60)
+            AwayPolicy.idleThreshold(shortBreak: settings?.pomodoroConfig.shortBreak ?? 5 * 60)
         }
         presence.onAway = { [weak self] since in
             self?.userWentAway(since: since)
@@ -205,6 +205,16 @@ final class PomodoroEngine: ObservableObject {
         remaining = left
         endDate = Date().addingTimeInterval(left)
         startTicker()
+    }
+
+    /// Switches the timer rhythm (issue #92). The phase on screen keeps its length; the
+    /// new durations start with the next phase. While idle the clock shows them at once.
+    func setTimerPreset(_ preset: TimerPreset) {
+        settings.timerPreset = preset
+        cycle.config = settings.pomodoroConfig
+        if phase == .idle {
+            remaining = settings.pomodoroConfig.work
+        }
     }
 
     /// Hides the "Bentornato" line in the menu.
@@ -372,7 +382,7 @@ final class PomodoroEngine: ObservableObject {
             behavior: awayBehavior,
             wasFrozen: wasFrozen,
             awayDuration: now.timeIntervalSince(awaySince),
-            restThreshold: settings.shortBreakMinutes * 60,
+            restThreshold: settings.pomodoroConfig.shortBreak,
             remaining: left,
             breakDuration: nextBreak
         )
