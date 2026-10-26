@@ -49,6 +49,8 @@ final class AppSettings: ObservableObject {
     /// "Rimanda": minutes a break is postponed by, and how many times a day (0 = never).
     @Published var snoozeMinutes: Int { didSet { defaults.set(snoozeMinutes, forKey: Keys.snoozeMinutes) } }
     @Published var snoozeDailyLimit: Int { didSet { defaults.set(snoozeDailyLimit, forKey: Keys.snoozeDailyLimit) } }
+    /// True once the welcome window has been shown (finished, skipped or closed).
+    @Published var hasCompletedOnboarding: Bool { didSet { defaults.set(hasCompletedOnboarding, forKey: Keys.hasCompletedOnboarding) } }
     /// Minutes of work between 20-20-20 micro-breaks for the eyes. 0 = off.
     @Published var microBreakMinutes: Int { didSet { defaults.set(microBreakMinutes, forKey: Keys.microBreakMinutes) } }
 
@@ -78,11 +80,25 @@ final class AppSettings: ObservableObject {
         static let companionEnabled = "companionEnabled"
         static let snoozeMinutes = "snoozeMinutes"
         static let snoozeDailyLimit = "snoozeDailyLimit"
+        static let hasCompletedOnboarding = "hasCompletedOnboarding"
+        /// Every key an earlier version may have saved, settings and stores alike
+        /// (`StatsStore`, `CatCompanionStore`): any of them means Maramao ran before.
+        static let priorUse = [
+            workMinutes, shortBreakMinutes, longBreakMinutes, sessionsBeforeLongBreak, breakMode,
+            strictMode, skipUnlockSeconds, autoStartWork, soundEnabled, soundVolume,
+            breakWarningSeconds, awayBehavior, displayScope, dontInterruptCalls, maxPostponeMinutes,
+            menuBarStyle, menuBarHideSeconds, motionPreference, companionEnabled, snoozeMinutes,
+            snoozeDailyLimit, "stats.v1", "catCompanion.v1",
+        ]
         static let microBreakMinutes = "microBreakMinutes"
     }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
+        // Read before `register`, which would make every key look saved. Users upgrading
+        // from a version without onboarding already know the cats: no welcome window.
+        let hasPriorSettings = Keys.priorUse.contains { defaults.object(forKey: $0) != nil }
+        let storedOnboarding = defaults.object(forKey: Keys.hasCompletedOnboarding) as? Bool
         defaults.register(defaults: [
             Keys.workMinutes: 25.0,
             Keys.shortBreakMinutes: 5.0,
@@ -136,6 +152,7 @@ final class AppSettings: ObservableObject {
         companionEnabled = defaults.bool(forKey: Keys.companionEnabled)
         snoozeMinutes = defaults.integer(forKey: Keys.snoozeMinutes)
         snoozeDailyLimit = defaults.integer(forKey: Keys.snoozeDailyLimit)
+        hasCompletedOnboarding = OnboardingPolicy.hasCompleted(stored: storedOnboarding, hasPriorSettings: hasPriorSettings)
         microBreakMinutes = defaults.integer(forKey: Keys.microBreakMinutes)
     }
 

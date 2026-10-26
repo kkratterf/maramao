@@ -6824,6 +6824,330 @@
         }
       }
     },
+    "Ciao, sono Maramao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi, I'm Maramao"
+          }
+        }
+      }
+    },
+    "Vivo nella barra dei menu, lassù accanto all'orologio: clicca il mio musetto per avviare il timer. Quando il pomodoro finisce, un gatto si prende lo schermo finché non fai una pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I live in the menu bar, up there by the clock: click my little face to start the timer. When the pomodoro is over, a cat takes over your screen until you take a break."
+          }
+        }
+      }
+    },
+    "Non è un virus: è per il tuo bene.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'm not a virus. I'm doing this for your own good."
+          }
+        }
+      }
+    },
+    "Quanto lavori, quanto riposi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How long you work, how long you rest"
+          }
+        }
+      }
+    },
+    "Il classico è 25 minuti di lavoro e 5 di pausa. Puoi cambiarli quando vuoi nelle Impostazioni.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The classic is 25 minutes of work and 5 of rest. You can change them any time in Settings."
+          }
+        }
+      }
+    },
+    "Scegli il tuo gatto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick your cat"
+          }
+        }
+      }
+    },
+    "Chi ti ferma quando è ora di staccare? Con Sorpresa ogni pausa è diversa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who stops you when it's time to step away? With Surprise me, every break is a different cat."
+          }
+        }
+      }
+    },
+    "Prova una pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try a break"
+          }
+        }
+      }
+    },
+    "Dura solo %lld secondi, poi il gatto se ne va. Così la prima pausa vera non ti coglie di sorpresa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "It only lasts %lld second, then the cat leaves. That way your first real break won't catch you off guard."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "It only lasts %lld seconds, then the cat leaves. That way your first real break won't catch you off guard."
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Dura solo %lld secondo, poi il gatto se ne va. Così la prima pausa vera non ti coglie di sorpresa."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Dura solo %lld secondi, poi il gatto se ne va. Così la prima pausa vera non ti coglie di sorpresa."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Fammi vedere": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show me"
+          }
+        }
+      }
+    },
+    "L'uscita di emergenza": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The emergency exit"
+          }
+        }
+      }
+    },
+    "Se proprio devi scappare, %@ chiude subito qualsiasi pausa, anche in modalità severa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you really have to run, %@ closes any break right away, even in strict mode."
+          }
+        }
+      }
+    },
+    "Oppure clicca %lld volte di fila nell'angolo in alto a sinistra dello schermo. Il gatto ci rimane male, ma ti lascia andare.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Or click %lld time in the top-left corner of the screen. The cat will sulk, but it will let you go."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Or click %lld times in a row in the top-left corner of the screen. The cat will sulk, but it will let you go."
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Oppure clicca %lld volta nell'angolo in alto a sinistra dello schermo. Il gatto ci rimane male, ma ti lascia andare."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Oppure clicca %lld volte di fila nell'angolo in alto a sinistra dello schermo. Il gatto ci rimane male, ma ti lascia andare."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Sempre con te": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always by your side"
+          }
+        }
+      }
+    },
+    "Se vuoi, mi apro all'avvio del Mac, così non ti scordi mai le pause.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you like, I'll open when your Mac starts, so you never forget a break."
+          }
+        }
+      }
+    },
+    "Puoi rivedere questo benvenuto quando vuoi dalle Impostazioni.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can see this welcome again any time from Settings."
+          }
+        }
+      }
+    },
+    "Più tardi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Later"
+          }
+        }
+      }
+    },
+    "Indietro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        }
+      }
+    },
+    "Avanti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        }
+      }
+    },
+    "Inizia il primo pomodoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start the first pomodoro"
+          }
+        }
+      }
+    },
+    "Passo %lld di %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "Benvenuto in Maramao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to Maramao"
+          }
+        }
+      }
+    },
+    "Il gatto ti rispiega tutto e ti fa provare una pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat walks you through it all again and lets you try a break."
+          }
+        }
+      }
+    },
+    "Rivedi il benvenuto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the welcome again"
+          }
+        }
+      }
+    },
     "Come la pausa breve": {
       "extractionState": "manual",
       "localizations": {

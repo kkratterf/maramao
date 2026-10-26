@@ -95,9 +95,28 @@ Agent platforms that assign their own branch names (e.g. `claude/...`) are fine;
 
 - SemVer, tags `vX.Y.Z`.
 - Minor release = a version milestone, cut when all `P0` issues of that version label are closed and `main` is green. Patch release when a user-facing fix lands.
-- First a version-bump PR (`chore(release): vX.Y.Z`) that updates `CFBundleShortVersionString` (and bumps `CFBundleVersion`) in `Resources/Info.plist`; the release workflow checks it.
-- The release is created by the manual `release.yml` workflow (`workflow_dispatch`), which tests, builds the ad-hoc signed `Maramao.app`, tags and generates notes.
+- **Merging the version-bump PR is the release.** Nobody has to start a workflow by hand.
+
+### How to cut a release (agents and humans)
+
+1. Check that every `P0` issue of the version label is closed and `main` is green.
+2. Open a PR titled `chore(release): vX.Y.Z` that only changes `Resources/Info.plist`: `CFBundleShortVersionString` to `X.Y.Z` and `CFBundleVersion` up by one. Label it `skip-changelog`.
+3. Merge it (squash) once CI is green. `release.yml` runs on every push to `main` that touches `Resources/Info.plist`. Its `plan` job reads the version; if the tag `vX.Y.Z` does not exist yet, it tests, builds and signs `Maramao.app`, makes the DMG and checksums, tags, publishes the GitHub Release with notes grouped by label, then commits the Homebrew cask bump (and the Sparkle appcast, when the key is set) to `main`.
+4. Check the "Release" run in Actions and the new release page, then tell the maintainer the version is out.
+
+- A version with a suffix (`0.3.0-beta.1`) becomes a pre-release and leaves the cask and the appcast alone.
+- Other edits to `Info.plist` (for example `SUPublicEDKey`) trigger the workflow too, find the tag already there and publish nothing.
+- If a release run fails, fix the cause in a normal PR; then the maintainer re-runs it, or starts `release.yml` by hand (`workflow_dispatch`) with the version. The same manual start with `dry_run: true` builds and signs everything and publishes nothing (the files go to the workflow artifacts).
 - **No `CHANGELOG.md`.** The changelog lives only in GitHub Release notes.
+
+### What agents cannot do here
+
+Agent sandboxes are refused these actions, so ask the maintainer instead of retrying or working around them:
+
+- start, re-run or cancel workflows (`workflow_dispatch`, re-runs): that is why releases start from a merge;
+- delete branches or tags, force-push;
+- change repository settings: description, topics, Pages, secrets, branch protection;
+- add the signing secrets (`APPLE_*`, `SPARKLE_ED_PRIVATE_KEY`).
 
 ## Merging
 
