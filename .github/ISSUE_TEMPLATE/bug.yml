@@ -41,3 +41,9 @@ body:
     attributes:
       label: Maramao version
       description: From the release you downloaded, or the commit you built.
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: Filled in by "Segnala un problema" in the Maramao menu or Settings (version, macOS, displays, settings, recent log). No personal data; edit or remove anything you prefer not to share.
+      render: text
