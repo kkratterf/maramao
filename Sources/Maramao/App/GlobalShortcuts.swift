@@ -16,9 +16,9 @@ enum GlobalShortcut: String, CaseIterable, Identifiable {
     var combo: HotKeyCombo {
         switch self {
         // A single key for the action used most. On Apple keyboards the top row
-        // sends media keys by default, so this is fn-F4 there, plain F4 when
+        // sends media keys by default, so this is fn-F5 there, plain F5 when
         // "Use F1, F2, etc. keys as standard function keys" is on.
-        case .startPause: return HotKeyCombo(keyCode: kVK_F4, modifiers: 0)
+        case .startPause: return HotKeyCombo(keyCode: kVK_F5, modifiers: 0)
         case .takeBreak: return HotKeyCombo(keyCode: kVK_ANSI_B, modifiers: HotKeyCombo.controlOptionCommand)
         case .skip: return HotKeyCombo(keyCode: kVK_ANSI_S, modifiers: HotKeyCombo.controlOptionCommand)
         case .snooze: return HotKeyCombo(keyCode: kVK_ANSI_R, modifiers: HotKeyCombo.controlOptionCommand)
@@ -150,7 +150,7 @@ struct ShortcutsSettingsSection: View {
                         .foregroundStyle(.red)
                 }
             }
-            Text("Funzionano da qualsiasi app, senza permessi speciali. Sulle tastiere Apple F4 si preme con fn.")
+            Text("Funzionano da qualsiasi app, senza permessi speciali. Sulle tastiere Apple F5 si preme con fn.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
