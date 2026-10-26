@@ -284,6 +284,13 @@ struct MenuContentView: View {
                 (NSApp.delegate as? AppDelegate)?.showSettings()
             }
             Spacer()
+            Button {
+                BugReporter.reportProblem()
+            } label: {
+                Label("Segnala un problema…", systemImage: "ladybug")
+            }
+            .labelStyle(.iconOnly)
+            .help("Segnala un problema: copia le informazioni diagnostiche e apre una segnalazione su GitHub")
             Button("Esci") { NSApp.terminate(nil) }
         }
         .buttonStyle(.borderless)
