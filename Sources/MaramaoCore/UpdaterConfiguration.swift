@@ -5,7 +5,7 @@ import Foundation
 /// placeholder public key with a real one, so a build without signing keys
 /// never shows an update UI that could not verify anything.
 public enum UpdaterConfiguration {
-    /// The value of `SUPublicEDKey` committed in `Resources/Info.plist`.
+    /// The value `SUPublicEDKey` holds in `Resources/Info.plist` until a real key is set.
     public static let placeholderPublicKey = "SPARKLE_PUBLIC_ED_KEY_PLACEHOLDER"
 
     /// Length in bytes of an Ed25519 public key.

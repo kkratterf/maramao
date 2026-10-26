@@ -421,6 +421,17 @@
         }
       }
     },
+    "30 giorni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 days"
+          }
+        }
+      }
+    },
     "30 minuti": {
       "extractionState": "manual",
       "localizations": {
@@ -439,6 +450,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "5 MINUTES OF ME. NON-NEGOTIABLE."
+          }
+        }
+      }
+    },
+    "7 giorni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 days"
           }
         }
       }
@@ -916,17 +938,6 @@
         }
       }
     },
-    "Cambia la durata di pomodoro e pause: Classico, Lungo, Profondo o i tempi delle Impostazioni.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Changes how long pomodori and breaks last: Classic, Long, Deep or the times in Settings."
-          }
-        }
-      }
-    },
     "Catture: %lld": {
       "extractionState": "manual",
       "localizations": {
@@ -1044,28 +1055,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hi human, break together?"
-          }
-        }
-      }
-    },
-    "Classico": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Classic"
-          }
-        }
-      }
-    },
-    "Classico 25/5": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Classic 25/5"
           }
         }
       }
@@ -1485,17 +1474,6 @@
         }
       }
     },
-    "Durata di pomodoro e pausa breve. Vale dalla prossima fase.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Length of a pomodoro and of the short break. Kicks in with the next phase."
-          }
-        }
-      }
-    },
     "E IL GATTO DICE NO": {
       "extractionState": "manual",
       "localizations": {
@@ -1624,6 +1602,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Run a Shortcut"
+          }
+        }
+      }
+    },
+    "Esporta CSV…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export CSV…"
+          }
+        }
+      }
+    },
+    "Esporta le statistiche": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export the statistics"
           }
         }
       }
@@ -1987,6 +1987,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Days"
+          }
+        }
+      }
+    },
+    "Giorno migliore: %@ con %@ · %lld giorni attivi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best day: %1$@ with %2$@ · %3$lld active days"
           }
         }
       }
@@ -3031,28 +3042,6 @@
         }
       }
     },
-    "Lungo": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Long"
-          }
-        }
-      }
-    },
-    "Lungo 50/10": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Long 50/10"
-          }
-        }
-      }
-    },
     "Mac in stop, schermo bloccato o %lld min senza toccare niente.": {
       "extractionState": "manual",
       "localizations": {
@@ -3922,17 +3911,6 @@
         }
       }
     },
-    "Ora il menu usa il ritmo %@: questi tempi valgono per Personalizzato.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The menu is on %@ right now: these times are for Custom."
-          }
-        }
-      }
-    },
     "ORA SI FANNO LE FUSA": {
       "extractionState": "manual",
       "localizations": {
@@ -4227,13 +4205,13 @@
         }
       }
     },
-    "Personalizzato": {
+    "Periodo": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Custom"
+            "value": "Period"
           }
         }
       }
@@ -4377,28 +4355,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "PRODUCTIVITY: %lld%%"
-          }
-        }
-      }
-    },
-    "Profondo": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Deep"
-          }
-        }
-      }
-    },
-    "Profondo 90/20": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Deep 90/20"
           }
         }
       }
@@ -4873,17 +4829,6 @@
         }
       }
     },
-    "Ritmo": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rhythm"
-          }
-        }
-      }
-    },
     "RUOTA IL COLLO PIANO": {
       "extractionState": "manual",
       "localizations": {
@@ -4990,17 +4935,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose how the cats behave during this Focus."
-          }
-        }
-      }
-    },
-    "Scegli il ritmo": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Choose the rhythm"
           }
         }
       }
@@ -5654,13 +5588,13 @@
         }
       }
     },
-    "Ultimi 7 giorni: %@ · %@ di concentrazione": {
+    "Ultimi %lld giorni: %@ · %@ di concentrazione": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Last 7 days: %1$@ · %2$@ of focus"
+            "value": "Last %1$lld days: %2$@ · %3$@ of focus"
           }
         }
       }
@@ -6688,6 +6622,138 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copies the version, macOS, displays, settings and the last lines of the log, with no personal data, and opens a filled-in bug report on GitHub. Nothing leaves your Mac until you submit it."
+          }
+        }
+      }
+    },
+    "Cambia la durata di pomodoro e pause: Classico, Lungo, Profondo o i tempi delle Impostazioni.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Changes how long pomodori and breaks last: Classic, Long, Deep or the times in Settings."
+          }
+        }
+      }
+    },
+    "Classico": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Classic"
+          }
+        }
+      }
+    },
+    "Classico 25/5": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Classic 25/5"
+          }
+        }
+      }
+    },
+    "Durata di pomodoro e pausa breve. Vale dalla prossima fase.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Length of a pomodoro and of the short break. Kicks in with the next phase."
+          }
+        }
+      }
+    },
+    "Lungo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long"
+          }
+        }
+      }
+    },
+    "Lungo 50/10": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long 50/10"
+          }
+        }
+      }
+    },
+    "Ora il menu usa il ritmo %@: questi tempi valgono per Personalizzato.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The menu is on %@ right now: these times are for Custom."
+          }
+        }
+      }
+    },
+    "Personalizzato": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom"
+          }
+        }
+      }
+    },
+    "Profondo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deep"
+          }
+        }
+      }
+    },
+    "Profondo 90/20": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deep 90/20"
+          }
+        }
+      }
+    },
+    "Ritmo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rhythm"
+          }
+        }
+      }
+    },
+    "Scegli il ritmo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the rhythm"
           }
         }
       }
