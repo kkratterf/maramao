@@ -5,7 +5,8 @@ name: Release
 # `chore(release): vX.Y.Z` bump PR is merged: if the tag vX.Y.Z does not
 # exist yet, it publishes that version. A version with a suffix (0.3.0-beta.1)
 # becomes a pre-release. Pushes that leave the version alone, or whose tag
-# already exists, publish nothing.
+# already exists, publish nothing. A push that changes this workflow runs it
+# too, so merging the fix for a failed release retries it.
 #
 # It can also be started by hand (workflow_dispatch) with the version to
 # publish (e.g. 0.2.0), for a dry run or to retry a failed release. The
@@ -40,14 +41,15 @@ name: Release
 # is set, the zip is signed with Sparkle's sign_update and, for non-pre-release
 # versions, added to site/appcast.xml, committed to main and deployed to
 # GitHub Pages (https://kkratterf.github.io/maramao/appcast.xml). Without the
-# secret these steps are skipped with a warning.
+# secret, or when sign_update rejects it, these steps are skipped with a
+# warning and the release still goes out.
 #   SPARKLE_ED_PRIVATE_KEY          private EdDSA key exported with Sparkle's
 #                                   `generate_keys -x <file>`; its public half
 #                                   goes in SUPublicEDKey in Resources/Info.plist
 on:
   push:
     branches: [main]
-    paths: [Resources/Info.plist]
+    paths: [Resources/Info.plist, .github/workflows/release.yml]
   workflow_dispatch:
     inputs:
       version:
@@ -288,8 +290,16 @@ jobs:
             sign_update="$RUNNER_TEMP/sparkle/bin/sign_update"
           fi
           echo "Using $sign_update"
-          zip_signature=$(printf '%s' "$SPARKLE_ED_PRIVATE_KEY" | "$sign_update" --ed-key-file - "dist/Maramao-$VERSION.zip")
-          dmg_signature=$(printf '%s' "$SPARKLE_ED_PRIVATE_KEY" | "$sign_update" --ed-key-file - "dist/Maramao-$VERSION.dmg")
+          # sign_update reads one line from stdin and prints its errors on
+          # stdout, so trim the secret and show the output when it fails.
+          key=$(printf '%s' "$SPARKLE_ED_PRIVATE_KEY" | tr -d '[:space:]')
+          if ! zip_signature=$(printf '%s\n' "$key" | "$sign_update" --ed-key-file - "dist/Maramao-$VERSION.zip") ||
+             ! dmg_signature=$(printf '%s\n' "$key" | "$sign_update" --ed-key-file - "dist/Maramao-$VERSION.dmg"); then
+            echo "sign_update: ${dmg_signature:-$zip_signature}"
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::sign_update rejected SPARKLE_ED_PRIVATE_KEY (see the log above): this release is not signed for Sparkle and the appcast is not updated. Set the secret to the output of generate_keys -x."
+            exit 0
+          fi
           echo "zip: $zip_signature"
           echo "dmg: $dmg_signature"
           echo "enabled=true" >> "$GITHUB_OUTPUT"
