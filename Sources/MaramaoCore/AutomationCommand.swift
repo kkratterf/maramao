@@ -21,6 +21,8 @@ public enum AutomationCommand: Equatable, Sendable {
     case setMode(String)
     /// Preview a break mode for 30 seconds, by `BreakModeID` raw value.
     case preview(String)
+    /// Choose the timer rhythm, by `TimerPreset` raw value (case-insensitive).
+    case setPreset(String)
 
     /// URL scheme registered in Info.plist.
     public static let urlScheme = "maramao"
@@ -36,6 +38,7 @@ public enum AutomationCommand: Equatable, Sendable {
         "maramao://reset",
         "maramao://mode/<id>",
         "maramao://preview/<id>",
+        "maramao://preset/<id>",
     ]
 
     /// Parses a `maramao://` URL. Accepts `maramao://start`, `maramao:start`
@@ -73,6 +76,10 @@ public enum AutomationCommand: Equatable, Sendable {
             let id = arguments[0].trimmingCharacters(in: .whitespaces)
             guard !id.isEmpty else { return nil }
             self = .preview(id)
+        case ("preset", 1):
+            let id = arguments[0].trimmingCharacters(in: .whitespaces)
+            guard !id.isEmpty else { return nil }
+            self = .setPreset(id)
         default:
             return nil
         }

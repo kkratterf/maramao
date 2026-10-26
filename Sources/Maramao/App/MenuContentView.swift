@@ -26,6 +26,7 @@ struct MenuContentView: View {
                 companionRow
             }
             Divider()
+            presetPicker
             modePicker
             previewRow
             Divider()
@@ -229,6 +230,23 @@ struct MenuContentView: View {
             .lineLimit(1)
             .minimumScaleFactor(0.8)
             .help("Pomodori completati oggi, pause rispettate e giorni di fila con almeno un pomodoro")
+    }
+
+    /// "Ritmo": Classico 25/5, Lungo 50/10, Profondo 90/20 or the Settings durations.
+    private var presetPicker: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Ritmo").font(.caption).foregroundStyle(.secondary)
+            Picker("Ritmo", selection: Binding(
+                get: { settings.timerPreset },
+                set: { engine.setTimerPreset($0) }
+            )) {
+                ForEach(TimerPreset.allCases) { preset in
+                    Text(verbatim: preset.menuTitle(custom: settings.customPomodoroConfig)).tag(preset)
+                }
+            }
+            .labelsHidden()
+            .help("Durata di pomodoro e pausa breve. Vale dalla prossima fase.")
+        }
     }
 
     private var modePicker: some View {

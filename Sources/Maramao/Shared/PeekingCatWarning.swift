@@ -6,7 +6,8 @@ import SwiftUI
 @MainActor
 final class PeekingCatWarning {
     private static let windowSize = NSSize(width: 320, height: 230)
-    private static let stayOnScreen: TimeInterval = 6
+    /// How long the cat stays up by default, before it slides back down.
+    static let stayOnScreen: TimeInterval = 6
 
     private var window: OverlayWindow?
     private var model: PeekingCatModel?
@@ -14,8 +15,8 @@ final class PeekingCatWarning {
 
     var isVisible: Bool { window != nil }
 
-    /// Peeks for about six seconds, then slides back down. Replaces a cat already on screen.
-    func show(message: String) {
+    /// Peeks for `stay` seconds, then slides back down. Replaces a cat already on screen.
+    func show(message: String, stay: TimeInterval = PeekingCatWarning.stayOnScreen) {
         close()
         guard let screen = Self.targetScreen() else { return }
 
@@ -47,7 +48,7 @@ final class PeekingCatWarning {
                 model.eyesClosed = false
             }
             let elapsed = 0.05 + 0.55 + 0.8 + 2.2 + 1.6 + 3 * 0.16
-            guard await PeekingCatWarning.wait(max(0.1, Self.stayOnScreen - elapsed)) else { return }
+            guard await PeekingCatWarning.wait(max(0.1, stay - elapsed)) else { return }
             self?.dismiss()
         }
     }

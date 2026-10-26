@@ -220,6 +220,7 @@ final class PomodoroStatsTests: XCTestCase {
         XCTAssertEqual(day.breaksSkipped, 1)
         XCTAssertEqual(day.emergencyExits, 0)
         XCTAssertEqual(day.breaksSnoozed, 0)
+        XCTAssertEqual(day.microBreaks, 0)
         XCTAssertEqual(day.modes["catPile"], BreakModeCounts(completed: 2, skipped: 1))
     }
 
@@ -235,5 +236,19 @@ final class PomodoroStatsTests: XCTestCase {
         XCTAssertFalse(today.isEmpty)
         XCTAssertEqual(stats.day(date(2026, 10, 26, 10), calendar: calendar).breaksSnoozed, 0, "The count starts again every day")
         XCTAssertEqual(stats.total(ofLast: 7, endingAt: now, calendar: calendar).breaksSnoozed, 3)
+    }
+
+    func testMicroBreaksAreCountedPerDayAndSummed() {
+        var stats = PomodoroStats()
+        let now = date(2026, 10, 25, 10)
+        stats.recordMicroBreak(at: now, calendar: calendar)
+        stats.recordMicroBreak(at: now, calendar: calendar)
+        stats.recordMicroBreak(at: date(2026, 10, 24, 10), calendar: calendar)
+        let today = stats.day(now, calendar: calendar)
+        XCTAssertEqual(today.microBreaks, 2)
+        XCTAssertEqual(today.breaksTotal, 0, "A micro-break is not a break")
+        XCTAssertEqual(today.workSessions, 0, "A micro-break does not touch the pomodoro")
+        XCTAssertFalse(today.isEmpty)
+        XCTAssertEqual(stats.total(ofLast: 7, endingAt: now, calendar: calendar).microBreaks, 3)
     }
 }
