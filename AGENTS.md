@@ -96,7 +96,7 @@ Agent platforms that assign their own branch names (e.g. `claude/...`) are fine;
 - SemVer, tags `vX.Y.Z`.
 - Minor release = a version milestone, cut when all `P0` issues of that version label are closed and `main` is green. Patch release when a user-facing fix lands.
 - First a version-bump PR (`chore(release): vX.Y.Z`) that updates `CFBundleShortVersionString` (and bumps `CFBundleVersion`) in `Resources/Info.plist`; the release workflow checks it.
-- The release is created by the manual `release.yml` workflow (`workflow_dispatch`), which tests, builds the ad-hoc signed `Maramao.app`, tags and generates notes.
+- Merging that PR **is** the release: `release.yml` runs on every push to `main` that changes `Resources/Info.plist`, and when the tag `vX.Y.Z` for the version in it does not exist yet it tests, builds and signs `Maramao.app`, tags, generates notes and publishes. A version with a suffix (`0.3.0-beta.1`) becomes a pre-release. Manual `workflow_dispatch` stays for dry runs and retries.
 - **No `CHANGELOG.md`.** The changelog lives only in GitHub Release notes.
 
 ## Merging
