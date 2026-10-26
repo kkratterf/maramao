@@ -1,0 +1,18 @@
+name: Site media (temporary)
+
+on:
+  push:
+    branches: [claude/project-thread-fbcf13]
+    paths: [".media/**", ".github/workflows/site-media.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  media:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Discover
+        if: hashFiles('.media/pick.txt') == ''
+        run: python3 .media/discover.py
