@@ -11,6 +11,8 @@ final class AppSettings: ObservableObject {
     @Published var shortBreakMinutes: Double { didSet { defaults.set(shortBreakMinutes, forKey: Keys.shortBreakMinutes) } }
     @Published var longBreakMinutes: Double { didSet { defaults.set(longBreakMinutes, forKey: Keys.longBreakMinutes) } }
     @Published var sessionsBeforeLongBreak: Int { didSet { defaults.set(sessionsBeforeLongBreak, forKey: Keys.sessionsBeforeLongBreak) } }
+    /// Raw `TimerPreset` picked in the menu. `custom` runs the durations above.
+    @Published var timerPresetRaw: String { didSet { defaults.set(timerPresetRaw, forKey: Keys.timerPreset) } }
     @Published var breakModeRaw: String { didSet { defaults.set(breakModeRaw, forKey: Keys.breakMode) } }
     /// When true the break can never be skipped. The cat decides.
     @Published var strictMode: Bool { didSet { defaults.set(strictMode, forKey: Keys.strictMode) } }
@@ -41,12 +43,15 @@ final class AppSettings: ObservableObject {
     /// "Rimanda": minutes a break is postponed by, and how many times a day (0 = never).
     @Published var snoozeMinutes: Int { didSet { defaults.set(snoozeMinutes, forKey: Keys.snoozeMinutes) } }
     @Published var snoozeDailyLimit: Int { didSet { defaults.set(snoozeDailyLimit, forKey: Keys.snoozeDailyLimit) } }
+    /// Minutes of work between 20-20-20 micro-breaks for the eyes. 0 = off.
+    @Published var microBreakMinutes: Int { didSet { defaults.set(microBreakMinutes, forKey: Keys.microBreakMinutes) } }
 
     private enum Keys {
         static let workMinutes = "workMinutes"
         static let shortBreakMinutes = "shortBreakMinutes"
         static let longBreakMinutes = "longBreakMinutes"
         static let sessionsBeforeLongBreak = "sessionsBeforeLongBreak"
+        static let timerPreset = "timerPreset"
         static let breakMode = "breakMode"
         static let strictMode = "strictMode"
         static let skipUnlockSeconds = "skipUnlockSeconds"
@@ -64,6 +69,7 @@ final class AppSettings: ObservableObject {
         static let companionEnabled = "companionEnabled"
         static let snoozeMinutes = "snoozeMinutes"
         static let snoozeDailyLimit = "snoozeDailyLimit"
+        static let microBreakMinutes = "microBreakMinutes"
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -73,6 +79,7 @@ final class AppSettings: ObservableObject {
             Keys.shortBreakMinutes: 5.0,
             Keys.longBreakMinutes: 15.0,
             Keys.sessionsBeforeLongBreak: 4,
+            Keys.timerPreset: TimerPreset.defaultPreset.rawValue,
             Keys.breakMode: BreakModeID.random.rawValue,
             Keys.strictMode: false,
             Keys.skipUnlockSeconds: 60.0,
@@ -90,11 +97,13 @@ final class AppSettings: ObservableObject {
             Keys.companionEnabled: true,
             Keys.snoozeMinutes: BreakSnoozePolicy.defaultMinutes,
             Keys.snoozeDailyLimit: BreakSnoozePolicy.defaultDailyLimit,
+            Keys.microBreakMinutes: MicroBreakSchedule.defaultIntervalMinutes,
         ])
         workMinutes = defaults.double(forKey: Keys.workMinutes)
         shortBreakMinutes = defaults.double(forKey: Keys.shortBreakMinutes)
         longBreakMinutes = defaults.double(forKey: Keys.longBreakMinutes)
         sessionsBeforeLongBreak = defaults.integer(forKey: Keys.sessionsBeforeLongBreak)
+        timerPresetRaw = defaults.string(forKey: Keys.timerPreset) ?? TimerPreset.defaultPreset.rawValue
         breakModeRaw = defaults.string(forKey: Keys.breakMode) ?? BreakModeID.random.rawValue
         strictMode = defaults.bool(forKey: Keys.strictMode)
         skipUnlockSeconds = defaults.double(forKey: Keys.skipUnlockSeconds)
@@ -112,6 +121,7 @@ final class AppSettings: ObservableObject {
         companionEnabled = defaults.bool(forKey: Keys.companionEnabled)
         snoozeMinutes = defaults.integer(forKey: Keys.snoozeMinutes)
         snoozeDailyLimit = defaults.integer(forKey: Keys.snoozeDailyLimit)
+        microBreakMinutes = defaults.integer(forKey: Keys.microBreakMinutes)
     }
 
     var snoozePolicy: BreakSnoozePolicy {
@@ -138,12 +148,23 @@ final class AppSettings: ObservableObject {
         set { motionPreferenceRaw = newValue.rawValue }
     }
 
-    var pomodoroConfig: PomodoroConfig {
+    var timerPreset: TimerPreset {
+        get { TimerPreset(rawValue: timerPresetRaw) ?? .defaultPreset }
+        set { timerPresetRaw = newValue.rawValue }
+    }
+
+    /// The durations set in Settings ("Personalizzato").
+    var customPomodoroConfig: PomodoroConfig {
         PomodoroConfig(
             work: workMinutes * 60,
             shortBreak: shortBreakMinutes * 60,
             longBreak: longBreakMinutes * 60,
             sessionsBeforeLongBreak: sessionsBeforeLongBreak
         )
+    }
+
+    /// The durations the timer runs: the chosen preset, or the Settings ones.
+    var pomodoroConfig: PomodoroConfig {
+        timerPreset.config(custom: customPomodoroConfig)
     }
 }

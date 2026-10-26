@@ -78,6 +78,12 @@ struct StatsSection: View {
                 : String(localized: "\(total.breaksSnoozed) pause rimandate")
             text += " · \(snoozed)"
         }
+        if total.microBreaks > 0 {
+            let micro = total.microBreaks == 1
+                ? String(localized: "1 micro-pausa")
+                : String(localized: "\(total.microBreaks) micro-pause")
+            text += " · \(micro)"
+        }
         if total.emergencyExits > 0 {
             let exits = String(localized: "\(total.emergencyExits) uscite di emergenza")
             text += " · \(exits)"

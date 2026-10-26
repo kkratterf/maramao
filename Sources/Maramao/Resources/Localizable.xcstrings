@@ -89,6 +89,17 @@
         }
       }
     },
+    "%lld micro-pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld eye breaks"
+          }
+        }
+      }
+    },
     "%lld minuti": {
       "extractionState": "manual",
       "localizations": {
@@ -318,6 +329,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 treat"
+          }
+        }
+      }
+    },
+    "1 micro-pausa": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 eye break"
           }
         }
       }
@@ -1437,6 +1459,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Untitled document — edited by the cat"
+          }
+        }
+      }
+    },
+    "Guarda lontano, almeno 6 metri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look far away, at least 20 feet"
+          }
+        }
+      }
+    },
+    "Micro-pausa per gli occhi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eye micro-break"
+          }
+        }
+      }
+    },
+    "Ogni %lld minuti": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every %lld minutes"
+          }
+        }
+      }
+    },
+    "Regola 20-20-20: ogni tanto un gattino ti chiede di guardare lontano per 20 secondi. Non copre lo schermo e non ferma il pomodoro.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The 20-20-20 rule: every so often a little cat asks you to look 20 feet away for 20 seconds. It never covers the screen and never stops the pomodoro."
           }
         }
       }
@@ -6622,6 +6688,138 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copies the version, macOS, displays, settings and the last lines of the log, with no personal data, and opens a filled-in bug report on GitHub. Nothing leaves your Mac until you submit it."
+          }
+        }
+      }
+    },
+    "Cambia la durata di pomodoro e pause: Classico, Lungo, Profondo o i tempi delle Impostazioni.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Changes how long pomodori and breaks last: Classic, Long, Deep or the times in Settings."
+          }
+        }
+      }
+    },
+    "Classico": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Classic"
+          }
+        }
+      }
+    },
+    "Classico 25/5": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Classic 25/5"
+          }
+        }
+      }
+    },
+    "Durata di pomodoro e pausa breve. Vale dalla prossima fase.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Length of a pomodoro and of the short break. Kicks in with the next phase."
+          }
+        }
+      }
+    },
+    "Lungo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long"
+          }
+        }
+      }
+    },
+    "Lungo 50/10": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long 50/10"
+          }
+        }
+      }
+    },
+    "Ora il menu usa il ritmo %@: questi tempi valgono per Personalizzato.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The menu is on %@ right now: these times are for Custom."
+          }
+        }
+      }
+    },
+    "Personalizzato": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom"
+          }
+        }
+      }
+    },
+    "Profondo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deep"
+          }
+        }
+      }
+    },
+    "Profondo 90/20": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deep 90/20"
+          }
+        }
+      }
+    },
+    "Ritmo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rhythm"
+          }
+        }
+      }
+    },
+    "Scegli il ritmo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the rhythm"
           }
         }
       }
