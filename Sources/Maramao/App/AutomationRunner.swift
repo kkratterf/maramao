@@ -51,6 +51,12 @@ enum AutomationRunner {
             if let mode = breakMode(matching: id) {
                 AppSettings.shared.breakMode = mode
             }
+        case .setLongBreakMode(let id):
+            if id.caseInsensitiveCompare(AutomationCommand.sameAsShortBreak) == .orderedSame {
+                AppSettings.shared.longBreakMode = nil
+            } else if let mode = breakMode(matching: id) {
+                AppSettings.shared.longBreakMode = mode
+            }
         case .preview(let id):
             if let mode = breakMode(matching: id) {
                 engine.preview(mode.resolved(), seconds: 30)

@@ -7147,6 +7147,61 @@
           }
         }
       }
+    },
+    "Come la pausa breve": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same as the short break"
+          }
+        }
+      }
+    },
+    "Gatto della pausa lunga": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long break cat"
+          }
+        }
+      }
+    },
+    "Sorpresa pesca solo tra i gatti accesi, e non ripete due volte di fila lo stesso. Almeno un gatto resta sempre acceso.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Surprise me picks only among the cats you leave on, and never plays the same one twice in a row. At least one cat always stays on."
+          }
+        }
+      }
+    },
+    "Scegli il gatto della pausa lunga": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the long-break cat"
+          }
+        }
+      }
+    },
+    "Sceglie come i gatti ti fermeranno alla prossima pausa lunga.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chooses how the cats will stop you at the next long break."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

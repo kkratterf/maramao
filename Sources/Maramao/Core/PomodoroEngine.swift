@@ -448,7 +448,7 @@ final class PomodoroEngine: ObservableObject {
 
     /// The mode of the real (not preview) break in progress, on screen or snoozed.
     private var realBreakMode: BreakModeID? {
-        if isBreakSnoozed { return snoozedMode ?? settings.breakMode.resolved() }
+        if isBreakSnoozed { return snoozedMode ?? settings.effectiveBreakMode(isLongBreak: phase == .longBreak).resolved() }
         return breakContext != nil ? activeBreakMode : nil
     }
 
@@ -505,7 +505,8 @@ final class PomodoroEngine: ObservableObject {
             companion.breakBegan()
             // A Focus filter may change the mode, or turn the cats off: the break
             // then only counts down in the menu bar. A snoozed break brings its own cat back.
-            if let mode = breakMode ?? FocusFilterState.shared.breakMode(default: settings.breakMode) {
+            let chosen = settings.effectiveBreakMode(isLongBreak: phase == .longBreak)
+            if let mode = breakMode ?? FocusFilterState.shared.breakMode(default: chosen) {
                 breaks.start(mode: mode, context: context)
             }
             activeBreakMode = breaks.currentModeID
