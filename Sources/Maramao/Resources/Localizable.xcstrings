@@ -421,6 +421,17 @@
         }
       }
     },
+    "30 giorni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 days"
+          }
+        }
+      }
+    },
     "30 minuti": {
       "extractionState": "manual",
       "localizations": {
@@ -439,6 +450,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "5 MINUTES OF ME. NON-NEGOTIABLE."
+          }
+        }
+      }
+    },
+    "7 giorni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 days"
           }
         }
       }
@@ -1584,6 +1606,28 @@
         }
       }
     },
+    "Esporta CSV…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export CSV…"
+          }
+        }
+      }
+    },
+    "Esporta le statistiche": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export the statistics"
+          }
+        }
+      }
+    },
     "Fa partire un pomodoro, o lo riprende se è in pausa.": {
       "extractionState": "manual",
       "localizations": {
@@ -1943,6 +1987,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Days"
+          }
+        }
+      }
+    },
+    "Giorno migliore: %@ con %@ · %lld giorni attivi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best day: %1$@ with %2$@ · %3$lld active days"
           }
         }
       }
@@ -4150,6 +4205,17 @@
         }
       }
     },
+    "Periodo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period"
+          }
+        }
+      }
+    },
     "PIANO. COME UN GATTO CHE TI VUOLE BENE.": {
       "extractionState": "manual",
       "localizations": {
@@ -5522,13 +5588,13 @@
         }
       }
     },
-    "Ultimi 7 giorni: %@ · %@ di concentrazione": {
+    "Ultimi %lld giorni: %@ · %@ di concentrazione": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Last 7 days: %1$@ · %2$@ of focus"
+            "value": "Last %1$lld days: %2$@ · %3$@ of focus"
           }
         }
       }
@@ -6523,6 +6589,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "the file cannot be read."
+          }
+        }
+      }
+    },
+    "Segnala un problema…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report a Problem…"
+          }
+        }
+      }
+    },
+    "Segnala un problema: copia le informazioni diagnostiche e apre una segnalazione su GitHub": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report a problem: copies the diagnostics and opens a bug report on GitHub"
+          }
+        }
+      }
+    },
+    "Copia versione, macOS, schermi, impostazioni e le ultime righe del log, senza dati personali, e apre su GitHub una segnalazione già compilata. Non parte niente finché non la invii tu.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copies the version, macOS, displays, settings and the last lines of the log, with no personal data, and opens a filled-in bug report on GitHub. Nothing leaves your Mac until you submit it."
           }
         }
       }
