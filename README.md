@@ -85,11 +85,12 @@ open maramao://start
 | `maramao://skip` | Skip the current phase |
 | `maramao://reset` | Stop and go back to idle |
 | `maramao://mode/<id>` | Choose the break mode for the next breaks |
+| `maramao://longmode/<id>` | Choose the break mode of the long break (`same` follows the short break) |
 | `maramao://preview/<id>` | Try a break mode for 30 seconds |
 
 Mode ids: `walkingCat`, `memeWall`, `sleepyCat`, `catPile`, `laserChase`, `keyboardCat`, or `random` (🎲 Sorpresa). URLs that would end a break early (`start`, `skip`, `reset`) only work once the break may be skipped, so **modalità severa** still wins.
 
-The **Shortcuts** app also lists Maramao actions: *Inizia un pomodoro*, *Metti in pausa o riprendi*, *Pausa gatto ora*, *Scegli la modalità pausa* and *Stato di Maramao* (returns the phase, the time left and today's pomodori as text). Siri and Spotlight know phrases like "Inizia un pomodoro con Maramao". They show up once `Maramao.app` has been opened from `Applications`.
+The **Shortcuts** app also lists Maramao actions: *Inizia un pomodoro*, *Metti in pausa o riprendi*, *Pausa gatto ora*, *Scegli la modalità pausa*, *Scegli il gatto della pausa lunga* and *Stato di Maramao* (returns the phase, the time left and today's pomodori as text). Siri and Spotlight know phrases like "Inizia un pomodoro con Maramao". They show up once `Maramao.app` has been opened from `Applications`.
 
 A Raycast script command, for example:
 

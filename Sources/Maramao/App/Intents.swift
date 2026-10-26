@@ -77,6 +77,46 @@ struct SetBreakModeIntent: AppIntent {
     }
 }
 
+/// The same modes plus "same as the short break", for the long-break action.
+/// Raw values must match `BreakModeID`, except `same`.
+enum LongBreakModeAppEnum: String, AppEnum {
+    case same
+    case walkingCat
+    case memeWall
+    case sleepyCat
+    case catPile
+    case laserChase
+    case keyboardCat
+    case random
+
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "Gatto della pausa lunga"
+    static let caseDisplayRepresentations: [LongBreakModeAppEnum: DisplayRepresentation] = [
+        .same: "Come la pausa breve",
+        .walkingCat: "Il gatto sulla finestra",
+        .memeWall: "Muro di meme",
+        .sleepyCat: "Non svegliare il gatto",
+        .catPile: "Invasione di gatti",
+        .laserChase: "Caccia al laser",
+        .keyboardCat: "Il gatto sulla tastiera",
+        .random: "Sorpresa",
+    ]
+}
+
+struct SetLongBreakModeIntent: AppIntent {
+    static let title: LocalizedStringResource = "Scegli il gatto della pausa lunga"
+    static let description: IntentDescription? = IntentDescription("Sceglie come i gatti ti fermeranno alla prossima pausa lunga.")
+
+    @Parameter(title: "Modalità")
+    var mode: LongBreakModeAppEnum
+
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        let id = mode == .same ? AutomationCommand.sameAsShortBreak : mode.rawValue
+        AutomationRunner.perform(.setLongBreakMode(id))
+        return .result()
+    }
+}
+
 struct GetStatusIntent: AppIntent {
     static let title: LocalizedStringResource = "Stato di Maramao"
     static let description: IntentDescription? = IntentDescription("Dice la fase attuale, il tempo rimasto e i pomodori di oggi.")

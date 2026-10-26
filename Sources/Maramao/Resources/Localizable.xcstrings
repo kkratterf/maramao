@@ -1059,6 +1059,17 @@
         }
       }
     },
+    "Come la pausa breve": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same as the short break"
+          }
+        }
+      }
+    },
     "Come nelle impostazioni": {
       "extractionState": "manual",
       "localizations": {
@@ -1415,6 +1426,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Untitled document — edited by the cat"
+          }
+        }
+      }
+    },
+    "Gatto della pausa lunga": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long break cat"
+          }
+        }
+      }
+    },
+    "Sorpresa pesca solo tra i gatti accesi, e non ripete due volte di fila lo stesso. Almeno un gatto resta sempre acceso.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Surprise me picks only among the cats you leave on, and never plays the same one twice in a row. At least one cat always stays on."
           }
         }
       }

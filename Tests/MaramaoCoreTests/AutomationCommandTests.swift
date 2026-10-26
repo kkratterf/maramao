@@ -23,6 +23,8 @@ final class AutomationCommandTests: XCTestCase {
     func testModeAndPreviewKeepTheId() {
         XCTAssertEqual(parse("maramao://mode/memeWall"), .setMode("memeWall"))
         XCTAssertEqual(parse("maramao://mode/random"), .setMode("random"))
+        XCTAssertEqual(parse("maramao://longmode/catPile"), .setLongBreakMode("catPile"))
+        XCTAssertEqual(parse("maramao://longmode/same"), .setLongBreakMode(AutomationCommand.sameAsShortBreak))
         XCTAssertEqual(parse("maramao://preview/catPile"), .preview("catPile"))
     }
 
@@ -40,6 +42,7 @@ final class AutomationCommandTests: XCTestCase {
         XCTAssertNil(parse("maramao://"))
         XCTAssertNil(parse("maramao://dance"))
         XCTAssertNil(parse("maramao://mode"))
+        XCTAssertNil(parse("maramao://longmode"))
         XCTAssertNil(parse("maramao://preview"))
         XCTAssertNil(parse("maramao://mode/a/b"))
         XCTAssertNil(parse("maramao://start/now"))

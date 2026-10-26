@@ -58,6 +58,24 @@ struct SettingsView: View {
                 Text(settings.breakMode.subtitle)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                if settings.breakMode == .random {
+                    ForEach(BreakModeID.concrete) { mode in
+                        Toggle(isOn: surpriseBinding(mode)) {
+                            Text("\(mode.emoji)  \(mode.title)")
+                        }
+                        .disabled(settings.surpriseRotation.isLastOn(mode.rawValue))
+                    }
+                    Text("Sorpresa pesca solo tra i gatti accesi, e non ripete due volte di fila lo stesso. Almeno un gatto resta sempre acceso.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Picker("Gatto della pausa lunga", selection: $settings.longBreakModeRaw) {
+                    Text("Come la pausa breve").tag("")
+                    ForEach(BreakModeID.allCases) { mode in
+                        Text("\(mode.emoji)  \(mode.title)").tag(mode.rawValue)
+                    }
+                }
                 Picker("Schermi", selection: $settings.displayScopeRaw) {
                     ForEach(DisplayScope.allCases, id: \.self) { scope in
                         Text(scope.label).tag(scope.rawValue)
@@ -206,6 +224,14 @@ struct SettingsView: View {
         } message: {
             Text("Pomodori, pause e giorni di fila verranno cancellati. Il gatto dimentica tutto.")
         }
+    }
+
+    /// Turns one cat of the Sorpresa rotation on or off.
+    private func surpriseBinding(_ mode: BreakModeID) -> Binding<Bool> {
+        Binding<Bool>(
+            get: { settings.surpriseRotation.isOn(mode.rawValue) },
+            set: { settings.surpriseRotation = settings.surpriseRotation.setting(mode.rawValue, on: $0) }
+        )
     }
 
     /// Explains the "Quando sei via" choice.
