@@ -131,6 +131,13 @@ jobs:
           path: dist/*.dmg
           retention-days: 14
 
+      - name: Upload the DMG background
+        uses: actions/upload-artifact@v4
+        with:
+          name: dmg-background
+          path: .build/dmg/background/*.png
+          retention-days: 14
+
   shellcheck:
     name: Lint scripts
     runs-on: ubuntu-latest

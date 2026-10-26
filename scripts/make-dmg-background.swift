@@ -1,13 +1,17 @@
 // Draws the background of the Maramao DMG window with CoreGraphics and
 // CoreText, in the same palette as the app icon (scripts/make-icon.swift).
 // Usage: swift scripts/make-dmg-background.swift <out-dir>
-// Writes <out-dir>/background.png (660x400) and background@2x.png
-// (1320x800). Combine them with:
+// Writes <out-dir>/background.png (440x588) and background@2x.png
+// (880x1176). Combine them with:
 //   tiffutil -cathidpicheck background.png background@2x.png -out background.tiff
 //
-// The design space is 660x400 points, origin bottom-left. Finder places
-// the icons (top-left origin) with Maramao.app centred at (165, 200) and
-// Applications at (495, 200), so the arrow runs between those two slots.
+// A tall window, top to bottom: a dark keyboard where Maramao.app sits as
+// the glowing F4 key (fn-F4 starts a pomodoro), then a lighter panel with
+// chevrons pointing down to the Applications folder.
+//
+// The design space is 440x588 points, origin bottom-left. Finder places
+// the icons (top-left origin) with Maramao.app centred at (220, 196) and
+// Applications at (220, 430): `top(y)` converts those Finder coordinates.
 // Finder's window bounds include the title bar, so the bottom ~28 points
 // may be hidden: nothing important is drawn there.
 
@@ -16,8 +20,11 @@ import CoreText
 import Foundation
 import ImageIO
 
-let width: CGFloat = 660
-let height: CGFloat = 400
+let width: CGFloat = 440
+let height: CGFloat = 588
+
+/// Finder (top-left origin) y to CoreGraphics (bottom-left origin) y.
+func top(_ y: CGFloat) -> CGFloat { height - y }
 
 // MARK: - Helpers
 
@@ -100,159 +107,178 @@ func drawPaw(in ctx: CGContext, center: CGPoint, angle: CGFloat, size: CGFloat, 
     ctx.restoreGState()
 }
 
-/// A point on a quadratic Bezier curve.
-func quadPoint(_ p0: CGPoint, _ c: CGPoint, _ p1: CGPoint, _ t: CGFloat) -> CGPoint {
-    let u = 1 - t
-    return CGPoint(x: u * u * p0.x + 2 * u * t * c.x + t * t * p1.x,
-                   y: u * u * p0.y + 2 * u * t * c.y + t * t * p1.y)
-}
-
-/// The tangent angle of a quadratic Bezier curve.
-func quadAngle(_ p0: CGPoint, _ c: CGPoint, _ p1: CGPoint, _ t: CGFloat) -> CGFloat {
-    let dx = 2 * (1 - t) * (c.x - p0.x) + 2 * t * (p1.x - c.x)
-    let dy = 2 * (1 - t) * (c.y - p0.y) + 2 * t * (p1.y - c.y)
-    return atan2(dy, dx)
-}
-
 // MARK: - Drawing
 
-func drawBackground(in ctx: CGContext, scale: CGFloat) {
-    ctx.scaleBy(x: scale, y: scale)
+let appCenter = CGPoint(x: 220, y: top(196))
+/// Where the dark keyboard ends and the light panel starts, just under the
+/// app icon so Finder's "Maramao" label sits on the light part.
+let panelTop = top(266)
 
-    let cream = rgb(0xFFF6EA)
-    let tomato = rgb(0xE8402F)
-    let tomatoDark = rgb(0xC9322A)
+let legendColor = rgb(0xB7A7AC, 0.85)
+let legendFont = font(["SFPro-Regular", "HelveticaNeue", "Helvetica"], size: 17)
 
-    // Warm cream paper with a gentle vertical gradient.
-    ctx.setFillColor(cream)
-    ctx.fill(CGRect(x: 0, y: 0, width: width, height: height))
-    ctx.drawLinearGradient(
-        gradient([rgb(0xFFFBF4), rgb(0xFFF1DC), rgb(0xFFE6CC)], [0, 0.6, 1]),
-        start: CGPoint(x: 0, y: height), end: CGPoint(x: 0, y: 0), options: []
-    )
-    // Soft tomato glows behind the two icon slots.
-    for cx in [CGFloat(165), CGFloat(495)] {
-        ctx.drawRadialGradient(
-            gradient([rgb(0xFFB199, 0.40), rgb(0xFFB199, 0)], [0, 1]),
-            startCenter: CGPoint(x: cx, y: 200), startRadius: 0,
-            endCenter: CGPoint(x: cx, y: 200), endRadius: 120, options: []
-        )
-    }
+/// Shadow offsets and blurs are in pixels, not points: multiply by this.
+var pixelScale: CGFloat = 1
 
-    // A tomato band at the top, with a wavy lower edge.
-    let band = CGMutablePath()
-    band.move(to: CGPoint(x: 0, y: height))
-    band.addLine(to: CGPoint(x: 0, y: 344))
-    let waves = 6
-    let waveWidth = width / CGFloat(waves)
-    for i in 0..<waves {
-        let x0 = CGFloat(i) * waveWidth
-        band.addQuadCurve(to: CGPoint(x: x0 + waveWidth, y: 344),
-                          control: CGPoint(x: x0 + waveWidth / 2, y: i % 2 == 0 ? 334 : 354))
-    }
-    band.addLine(to: CGPoint(x: width, y: height))
-    band.closeSubpath()
+/// A dark keyboard key cap with a soft top highlight. `centered` draws a
+/// big legend in the middle, like a letter key.
+func drawKey(in ctx: CGContext, rect: CGRect, centered: String = "") {
+    let cap = CGPath(roundedRect: rect, cornerWidth: 14, cornerHeight: 14, transform: nil)
     ctx.saveGState()
-    ctx.addPath(band)
+    ctx.setShadow(offset: CGSize(width: 0, height: -3 * pixelScale), blur: 6 * pixelScale, color: rgb(0x000000, 0.5))
+    ctx.addPath(cap)
+    ctx.setFillColor(rgb(0x221A1D))
+    ctx.fillPath()
+    ctx.restoreGState()
+    ctx.saveGState()
+    ctx.addPath(cap)
     ctx.clip()
     ctx.drawLinearGradient(
-        gradient([rgb(0xFF7A5C), rgb(0xF04A36), rgb(0xD62F25)], [0, 0.6, 1]),
-        start: CGPoint(x: 0, y: height), end: CGPoint(x: 0, y: 330), options: []
+        gradient([rgb(0x2E2427), rgb(0x1E1719)], [0, 1]),
+        start: CGPoint(x: 0, y: rect.maxY), end: CGPoint(x: 0, y: rect.minY), options: []
     )
     ctx.restoreGState()
-
-    // Title on the band.
-    let titleFont = font(["SFProRounded-Bold", "ArialRoundedMTBold", "HelveticaNeue-Bold"], size: 24)
-    ctx.saveGState()
-    ctx.setShadow(offset: CGSize(width: 0, height: -1 * scale), blur: 3 * scale, color: rgb(0x7A1410, 0.45))
-    drawCenteredText("Trascina il gatto nelle Applicazioni", in: ctx, font: titleFont,
-                     color: rgb(0xFFFFFF), centerX: width / 2, baselineY: 360)
-    ctx.restoreGState()
-
-    // Paw print trail walking from the app slot to Applications, under
-    // the arrow, alternating left and right feet.
-    let trailStart = CGPoint(x: 240, y: 150)
-    let trailControl = CGPoint(x: 330, y: 118)
-    let trailEnd = CGPoint(x: 420, y: 150)
-    let steps = 6
-    for i in 0..<steps {
-        let t = (CGFloat(i) + 0.5) / CGFloat(steps)
-        let p = quadPoint(trailStart, trailControl, trailEnd, t)
-        let a = quadAngle(trailStart, trailControl, trailEnd, t)
-        let side: CGFloat = i % 2 == 0 ? 1 : -1
-        let offset = CGPoint(x: -sin(a) * 7 * side, y: cos(a) * 7 * side)
-        let alpha = 0.30 + 0.45 * t
-        drawPaw(in: ctx, center: CGPoint(x: p.x + offset.x, y: p.y + offset.y),
-                angle: a, size: 15, color: rgb(0xDB7A2E, alpha))
+    ctx.addPath(cap)
+    ctx.setStrokeColor(rgb(0xFFFFFF, 0.07))
+    ctx.setLineWidth(1)
+    ctx.strokePath()
+    if !centered.isEmpty {
+        let big = font(["SFPro-Regular", "HelveticaNeue-Light", "Helvetica"], size: 38)
+        drawCenteredText(centered, in: ctx, font: big, color: legendColor, centerX: rect.midX, baselineY: rect.midY - 13)
     }
+}
 
-    // A friendly hand-drawn arrow arcing from the app to Applications.
-    let arrowStart = CGPoint(x: 250, y: 212)
-    let arrowControl = CGPoint(x: 330, y: 262)
-    let arrowEnd = CGPoint(x: 404, y: 214)
+/// The globe printed on the fn key of recent Apple keyboards.
+func drawGlobe(in ctx: CGContext, center: CGPoint, radius r: CGFloat, color: CGColor) {
+    ctx.setStrokeColor(color)
+    ctx.setLineWidth(1.5)
+    ctx.addPath(ellipse(center.x, center.y, r, r))
+    ctx.addPath(ellipse(center.x, center.y, r * 0.45, r))
+    ctx.move(to: CGPoint(x: center.x, y: center.y - r))
+    ctx.addLine(to: CGPoint(x: center.x, y: center.y + r))
+    ctx.move(to: CGPoint(x: center.x - r, y: center.y))
+    ctx.addLine(to: CGPoint(x: center.x + r, y: center.y))
+    ctx.strokePath()
+}
+
+/// One line of text starting at `x`, or ending at `rightX`.
+func drawText(_ text: String, in ctx: CGContext, font: CTFont, color: CGColor,
+              x: CGFloat? = nil, rightX: CGFloat? = nil, baselineY: CGFloat) {
+    let attributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key(kCTFontAttributeName as String): font,
+        NSAttributedString.Key(kCTForegroundColorAttributeName as String): color,
+    ]
+    let line = CTLineCreateWithAttributedString(NSAttributedString(string: text, attributes: attributes) as CFAttributedString)
+    let lineWidth = CGFloat(CTLineGetTypographicBounds(line, nil, nil, nil))
     ctx.saveGState()
-    ctx.setShadow(offset: CGSize(width: 0, height: -2 * scale), blur: 4 * scale, color: rgb(0x7A1410, 0.25))
-    ctx.beginTransparencyLayer(auxiliaryInfo: nil)
-    ctx.setStrokeColor(tomato)
-    ctx.setLineWidth(9)
+    ctx.textMatrix = .identity
+    ctx.textPosition = CGPoint(x: x ?? ((rightX ?? 0) - lineWidth), y: baselineY)
+    CTLineDraw(line, ctx)
+    ctx.restoreGState()
+}
+
+/// A downward chevron centred at `center`.
+func drawChevron(in ctx: CGContext, center: CGPoint, color: CGColor) {
+    ctx.setStrokeColor(color)
+    ctx.setLineWidth(5)
     ctx.setLineCap(.round)
     ctx.setLineJoin(.round)
-    ctx.move(to: arrowStart)
-    ctx.addQuadCurve(to: arrowEnd, control: arrowControl)
+    ctx.move(to: CGPoint(x: center.x - 15, y: center.y + 7))
+    ctx.addLine(to: CGPoint(x: center.x, y: center.y - 7))
+    ctx.addLine(to: CGPoint(x: center.x + 15, y: center.y + 7))
     ctx.strokePath()
-    // Arrow head, aligned with the end tangent.
-    let endAngle = quadAngle(arrowStart, arrowControl, arrowEnd, 1)
-    let headLength: CGFloat = 26
-    let spread: CGFloat = 0.62
-    let left = CGPoint(x: arrowEnd.x - headLength * cos(endAngle - spread),
-                       y: arrowEnd.y - headLength * sin(endAngle - spread))
-    let right = CGPoint(x: arrowEnd.x - headLength * cos(endAngle + spread),
-                        y: arrowEnd.y - headLength * sin(endAngle + spread))
-    ctx.move(to: left)
-    ctx.addLine(to: arrowEnd)
-    ctx.addLine(to: right)
-    ctx.strokePath()
-    ctx.endTransparencyLayer()
-    ctx.restoreGState()
+}
 
-    // Highlight along the arrow, like the shine on the icon's tomato.
-    ctx.setStrokeColor(rgb(0xFFB199, 0.7))
-    ctx.setLineWidth(2.5)
-    ctx.setLineCap(.round)
-    let hlStart = quadPoint(arrowStart, arrowControl, arrowEnd, 0.12)
-    let hlEnd = quadPoint(arrowStart, arrowControl, arrowEnd, 0.42)
-    let hlControl = quadPoint(arrowStart, arrowControl, arrowEnd, 0.27)
-    ctx.move(to: CGPoint(x: hlStart.x, y: hlStart.y + 2))
-    ctx.addQuadCurve(to: CGPoint(x: hlEnd.x, y: hlEnd.y + 2),
-                     control: CGPoint(x: hlControl.x, y: hlControl.y + 6))
-    ctx.strokePath()
+func drawBackground(in ctx: CGContext, scale: CGFloat) {
+    pixelScale = scale
+    ctx.scaleBy(x: scale, y: scale)
 
-    // A tiny tomato with its calyx at the top of the arc.
-    let tomatoCenter = CGPoint(x: 330, y: 268)
-    ctx.saveGState()
-    ctx.setShadow(offset: CGSize(width: 0, height: -1 * scale), blur: 3 * scale, color: rgb(0x7A1410, 0.3))
-    ctx.setFillColor(tomatoDark)
-    ctx.addPath(ellipse(tomatoCenter.x, tomatoCenter.y, 13, 11))
-    ctx.fillPath()
-    ctx.restoreGState()
-    ctx.setFillColor(rgb(0xFFFFFF, 0.35))
-    ctx.addPath(ellipse(tomatoCenter.x - 5, tomatoCenter.y + 4, 4, 2.5))
-    ctx.fillPath()
-    ctx.setFillColor(rgb(0x3FA34D))
-    for angle in [CGFloat(20), CGFloat(90), CGFloat(160)] {
-        let r = angle * CGFloat.pi / 180
-        ctx.addPath(ellipse(tomatoCenter.x + cos(r) * 5, tomatoCenter.y + 9 + sin(r) * 2, 4.5, 2.2))
+    // The keyboard: warm near-black with a tomato glow behind the app key.
+    ctx.setFillColor(rgb(0x140F11))
+    ctx.fill(CGRect(x: 0, y: 0, width: width, height: height))
+    ctx.drawRadialGradient(
+        gradient([rgb(0xE8402F, 0.38), rgb(0xE8402F, 0.10), rgb(0xE8402F, 0)], [0, 0.45, 1]),
+        startCenter: appCenter, startRadius: 0, endCenter: appCenter, endRadius: 260, options: []
+    )
+
+    // Top row, cut by the window edges like a close-up of a real keyboard:
+    // it spells MIAO.
+    let keySize: CGFloat = 104
+    let gap: CGFloat = 14
+    let rowWidth = 4 * keySize + 3 * gap
+    for (i, letter) in ["M", "I", "A", "O"].enumerated() {
+        let x = (width - rowWidth) / 2 + CGFloat(i) * (keySize + gap)
+        drawKey(in: ctx, rect: CGRect(x: x, y: top(106), width: keySize, height: keySize), centered: letter)
     }
+
+    // Middle row, sinking into the panel below: fn on the left, the app as
+    // F4 in the middle, F5 on the right.
+    let slot: CGFloat = 144
+    let ring = CGRect(x: appCenter.x - slot / 2, y: appCenter.y - slot / 2, width: slot, height: slot)
+    let sideWidth: CGFloat = 130
+    let sideBottom = panelTop - 30
+    let sideTop = ring.maxY
+    let fnKey = CGRect(x: ring.minX - gap - sideWidth, y: sideBottom, width: sideWidth, height: sideTop - sideBottom)
+    let f5Key = CGRect(x: ring.maxX + gap, y: sideBottom, width: sideWidth, height: sideTop - sideBottom)
+    drawKey(in: ctx, rect: fnKey)
+    drawKey(in: ctx, rect: f5Key)
+    drawGlobe(in: ctx, center: CGPoint(x: fnKey.maxX - 26, y: fnKey.maxY - 26), radius: 9, color: legendColor)
+    drawText("fn", in: ctx, font: legendFont, color: legendColor, x: fnKey.minX + 16, baselineY: panelTop + 18)
+    drawText("F5", in: ctx, font: legendFont, color: legendColor, rightX: f5Key.maxX - 16, baselineY: panelTop + 18)
+
+    // The app key: a glowing tomato ring around Finder's 128 pt icon.
+    let ringPath = CGPath(roundedRect: ring, cornerWidth: 34, cornerHeight: 34, transform: nil)
+    ctx.saveGState()
+    ctx.setShadow(offset: .zero, blur: 22 * pixelScale, color: rgb(0xFF5A40, 0.85))
+    ctx.addPath(ringPath)
+    ctx.setFillColor(rgb(0x241B1E))
     ctx.fillPath()
+    ctx.restoreGState()
+    ctx.addPath(ringPath)
+    ctx.setStrokeColor(rgb(0xFF7A5C))
+    ctx.setLineWidth(3)
+    ctx.strokePath()
 
-    // Small paws in the corners as decoration.
-    drawPaw(in: ctx, center: CGPoint(x: 44, y: 70), angle: 1.2, size: 14, color: rgb(0xF6A04D, 0.35))
-    drawPaw(in: ctx, center: CGPoint(x: 616, y: 78), angle: 1.9, size: 14, color: rgb(0xF6A04D, 0.35))
+    // The light panel, with a soft edge so the keyboard seems to sink into it.
+    let panel = CGRect(x: 0, y: 0, width: width, height: panelTop)
+    ctx.saveGState()
+    ctx.setShadow(offset: CGSize(width: 0, height: 6 * pixelScale), blur: 18 * pixelScale, color: rgb(0x000000, 0.55))
+    ctx.setFillColor(rgb(0xA79C98))
+    ctx.fill(panel)
+    ctx.restoreGState()
+    ctx.saveGState()
+    ctx.clip(to: panel)
+    ctx.drawLinearGradient(
+        gradient([rgb(0xB7ADA9), rgb(0x8E8582), rgb(0x6F6764)], [0, 0.55, 1]),
+        start: CGPoint(x: 0, y: panelTop), end: CGPoint(x: 0, y: 0), options: []
+    )
+    // The app key's glow spills over the edge of the panel.
+    ctx.drawRadialGradient(
+        gradient([rgb(0xE8402F, 0.22), rgb(0xE8402F, 0)], [0, 1]),
+        startCenter: CGPoint(x: appCenter.x, y: panelTop), startRadius: 0,
+        endCenter: CGPoint(x: appCenter.x, y: panelTop), endRadius: 200, options: []
+    )
+    ctx.restoreGState()
+    // The panel's edge, like the light catching the front of the keyboard.
+    ctx.setFillColor(rgb(0xFFFFFF, 0.18))
+    ctx.fill(CGRect(x: 0, y: panelTop - 1, width: width, height: 1))
 
-    // Footer.
-    let footerFont = font(["SFProRounded-Medium", "ArialRoundedMTBold", "HelveticaNeue-Medium"], size: 12)
-    drawCenteredText("Maramao · il Pomodoro che ti ferma coi gatti", in: ctx, font: footerFont,
-                     color: rgb(0x3A2420, 0.6), centerX: width / 2, baselineY: 42)
+    // Three chevrons pointing from the app down to Applications, brighter
+    // towards the folder.
+    let chevronTop = top(318)
+    for i in 0..<3 {
+        let alpha = 0.35 + 0.3 * CGFloat(i)
+        ctx.saveGState()
+        ctx.setShadow(offset: .zero, blur: 8 * pixelScale, color: rgb(0xFF7A5C, alpha * 0.8))
+        drawChevron(in: ctx, center: CGPoint(x: appCenter.x, y: chevronTop - CGFloat(i) * 15),
+                    color: rgb(0xFFE3DA, alpha))
+        ctx.restoreGState()
+    }
+
+    // Faint paw prints wandering around the folder.
+    drawPaw(in: ctx, center: CGPoint(x: 66, y: top(470)), angle: 1.35, size: 16, color: rgb(0xFFFFFF, 0.12))
+    drawPaw(in: ctx, center: CGPoint(x: 84, y: top(430)), angle: 1.75, size: 16, color: rgb(0xFFFFFF, 0.16))
+    drawPaw(in: ctx, center: CGPoint(x: 374, y: top(410)), angle: 1.4, size: 16, color: rgb(0xFFFFFF, 0.12))
 }
 
 // MARK: - Output
