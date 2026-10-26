@@ -374,7 +374,7 @@ jobs:
             "dist/Maramao-$VERSION.dmg" \
             dist/SHA256SUMS.txt \
             --target "$GITHUB_SHA" \
-            --title "Maramao $TAG" \
+            --title "$TAG" \
             --notes-file "$RUNNER_TEMP/release-out/release-notes.md" \
             "${flags[@]}"
 
