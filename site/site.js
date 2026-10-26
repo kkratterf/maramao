@@ -22,6 +22,33 @@
     clips.forEach(function (v) { v.autoplay = true; v.preload = "auto"; });
   }
 
+  // Break mode tabs: one clip on stage at a time. Hidden panels never load
+  // their video; the observer above starts the new one once it is shown.
+  document.querySelectorAll("[data-tabs]").forEach(function (box) {
+    var tabs = Array.prototype.slice.call(box.querySelectorAll('[role="tab"]'));
+    function select(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.tabIndex = on ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute("aria-controls"));
+        panel.hidden = !on;
+        var v = panel.querySelector("video");
+        if (v && !on) v.pause();
+      });
+      if (focus) tab.focus();
+    }
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { select(tab); });
+      tab.addEventListener("keydown", function (e) {
+        var step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+        if (!step) return;
+        e.preventDefault();
+        select(tabs[(i + step + tabs.length) % tabs.length], true);
+      });
+    });
+  });
+
   // Copy buttons next to the install commands.
   document.querySelectorAll("[data-copy]").forEach(function (btn) {
     btn.addEventListener("click", function () {
