@@ -1,15 +1,15 @@
 # Maramao
 
-> Maramao is a free, open-source Pomodoro timer for the macOS menu bar. You work for 25 minutes, then a cat takes over the screen so you actually take the break. Native Swift app (SwiftUI and AppKit), macOS 13 Ventura or later, Apple Silicon and Intel, MIT license, no special permissions, no tracking. The app speaks English and Italian and follows the language of the Mac. Website: https://kkratterf.github.io/maramao/ (English) and https://kkratterf.github.io/maramao/it/ (Italian).
+> Maramao is a free, open-source Pomodoro timer for the macOS menu bar. You work for 25 minutes, then a cat takes over the screen so you actually take the break. Native Swift app (SwiftUI and AppKit), macOS 13 Ventura or later, Apple Silicon and Intel, MIT license, no special permissions, no tracking. The app speaks English and Italian and follows the language of the Mac. Website: https://kkratterf.github.io/maramao/ (English) and https://kkratterf.github.io/maramao/it/ (Italian). FAQ: https://kkratterf.github.io/maramao/faq/
 
 Key facts:
 
 - Lives in the menu bar only (no Dock icon). Work, short break, long break and the number of pomodori before a long break are configurable.
-- Break modes, each a different cat: "Cat on your window" (a cat sits on the window you are working in and follows it), "Meme wall" (the screen fills with cat memes), "Don't wake the cat" (a sleeping cat that wakes up and judges you if you touch the mouse), "Cat invasion" (cats rain down and bury the screen), "Laser chase" (the mouse becomes a laser dot a cat chases), "Cat on the keyboard" (a cat sleeps on the keyboard and turns typing into cat-typing), and "Surprise me" (a random one each break). Italian names: Il gatto sulla finestra, Muro di meme, Non svegliare il gatto, Invasione di gatti, Caccia al laser, Il gatto sulla tastiera, Sorpresa.
+- Break modes, each a different cat: "Cat on your window" (a cat sits on the window you are working in and follows it), "Meme wall" (the screen fills with cat memes), "Don't wake the cat" (a sleeping cat that wakes up and judges you if you touch the mouse), "Cat invasion" (cats rain down and bury the screen), "Laser chase" (the mouse becomes a laser dot a cat chases), "Cat on the keyboard" (a cat sleeps on the keyboard and turns typing into cat-typing), "Bird watching" (the screen becomes a window on a garden: the cat watches the birds while you rest your eyes), and "Surprise me" (a random one each break). Italian names: Il gatto sulla finestra, Muro di meme, Non svegliare il gatto, Invasione di gatti, Caccia al laser, Il gatto sulla tastiera, Il gatto alla finestra, Sorpresa.
 - Breaks can be skipped after a minute, or never in strict mode ("modalità severa"). "Rimanda" snoozes a break for 1, 3 or 5 minutes, a few times a day.
 - Breaks wait while the microphone or camera is in use, or a presentation or call app is fullscreen.
 - Every cat in the app is drawn in code (the website shows freely licensed videos of real cats from Wikimedia Commons). Users can add their own cats with "cat packs" (folders with a pack.json, CC0 or CC-BY art).
-- Automation: `maramao://start`, `maramao://pause`, `maramao://break`, `maramao://skip`, `maramao://mode/<id>` and more; Shortcuts actions; global shortcuts such as Control-Option-Command-P to start or pause.
+- Automation: `maramao://start`, `maramao://pause`, `maramao://break`, `maramao://skip`, `maramao://mode/<id>` and more; Shortcuts actions; global shortcuts: fn-F4 (or F4 with standard function keys) starts or pauses a session from v0.3.1, Control-Option-Command-B starts a break, -S skips, -R snoozes.
 - Emergency exit from any break: Control-Option-Command-Delete, or five quick clicks in the top-left corner of a screen.
 
 ## Install

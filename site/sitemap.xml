@@ -12,4 +12,16 @@
     <xhtml:link rel="alternate" hreflang="it" href="https://kkratterf.github.io/maramao/it/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://kkratterf.github.io/maramao/"/>
   </url>
+  <url>
+    <loc>https://kkratterf.github.io/maramao/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kkratterf.github.io/maramao/faq/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://kkratterf.github.io/maramao/it/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kkratterf.github.io/maramao/faq/"/>
+  </url>
+  <url>
+    <loc>https://kkratterf.github.io/maramao/it/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kkratterf.github.io/maramao/faq/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://kkratterf.github.io/maramao/it/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kkratterf.github.io/maramao/faq/"/>
+  </url>
 </urlset>

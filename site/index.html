@@ -14,20 +14,6 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" as="image" href="media/hero.jpg">
-
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:locale:alternate" content="it_IT">
-  <meta property="og:site_name" content="Maramao">
-  <meta property="og:title" content="Maramao: work for 25 minutes, then the cat takes over">
-  <meta property="og:description" content="A free Pomodoro timer for the Mac menu bar. When it's break time, a cat sits on your window until you stop.">
-  <meta property="og:url" content="https://kkratterf.github.io/maramao/">
-  <meta property="og:image" content="https://kkratterf.github.io/maramao/og.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="A real cat next to the words: Work for 25 minutes. Then the cat takes over.">
-  <meta name="twitter:card" content="summary_large_image">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -44,72 +30,102 @@
     "license": "https://github.com/kkratterf/maramao/blob/main/LICENSE",
     "url": "https://kkratterf.github.io/maramao/",
     "downloadUrl": "https://github.com/kkratterf/maramao/releases/latest",
-    "installUrl": "https://kkratterf.github.io/maramao/#install",
-    "sameAs": ["https://github.com/kkratterf/maramao"],
+        "sameAs": ["https://github.com/kkratterf/maramao"],
     "image": "https://kkratterf.github.io/maramao/og.jpg",
     "author": { "@type": "Person", "name": "kkratterf", "url": "https://github.com/kkratterf" }
   }
   </script>
-
   <link rel="stylesheet" href="styles.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="it_IT">
+  <meta property="og:site_name" content="Maramao">
+  <meta property="og:title" content="Maramao: work for 25 minutes, then the cat takes over">
+  <meta property="og:description" content="A free Pomodoro timer for the Mac menu bar. When it's break time, a cat sits on your window until you stop.">
+  <meta property="og:url" content="https://kkratterf.github.io/maramao/">
+  <meta property="og:image" content="https://kkratterf.github.io/maramao/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A real cat next to the words: Work for 25 minutes. Then the cat takes over.">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
-<body>
+<body class="page-home">
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="top">
-    <div class="wrap top-in">
+    <div class="top-in">
       <a class="brand" href="./" aria-label="Maramao home">
-        <img src="favicon.svg" alt="" width="26" height="26">
+        <img src="favicon.svg" alt="" width="24" height="24">
         <span>Maramao</span>
       </a>
       <nav aria-label="Sections">
         <ul>
-          <li><a href="#cats">The cats</a></li>
+          <li><a href="#cats">Cats</a></li>
           <li><a href="#features">Features</a></li>
-          <li><a href="#install">Install</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="https://github.com/kkratterf/maramao">GitHub</a></li>
+          <li><a href="faq/">FAQ</a></li>
+          <li><a href="it/" hreflang="it" lang="it" aria-label="Italiano">IT</a></li>
         </ul>
       </nav>
       <div class="top-right">
-        <a class="lang" href="it/" hreflang="it" lang="it">Italiano</a>
-        <a class="btn btn-primary btn-sm" href="https://github.com/kkratterf/maramao/releases/latest" data-download>Download</a>
+        <a class="btn btn-ghost btn-sm btn-icon" href="https://github.com/kkratterf/maramao" aria-label="Maramao on GitHub" data-stars><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+        <a class="btn btn-primary btn-sm" href="https://github.com/kkratterf/maramao/releases/latest" data-download><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> Download</a>
       </div>
     </div>
   </header>
 
   <main id="main">
     <section class="hero" aria-labelledby="title">
+      <div class="grainient" data-grainient data-colors="#08080a,#1d0c08,#8a2a12,#ff5a3c,#ffc2a8" data-angle="20" data-speed="0.8" data-flow="0.9" data-silk="0.3" data-grain-amount="0.07" data-dpr="1" aria-hidden="true"><canvas></canvas></div>
       <div class="wrap">
-        <img class="app-icon" src="favicon.svg" alt="" width="88" height="88">
-        <h1 id="title">Work for 25 minutes.<br><span>Then the cat takes over.</span></h1>
-        <p class="lead">Maramao is a Pomodoro timer that lives in your Mac's menu bar. When it's time for a break, a cat sits on your screen and stays there until you've actually taken it.</p>
+        <img class="app-icon" src="favicon.svg" alt="" width="80" height="80">
+        <h1 id="title">Work for 25 minutes<br><span>Then the cat takes over</span></h1>
+        <p class="lead">A Pomodoro timer for your Mac's menu bar. When it's break time, a cat takes over your screen.</p>
         <div class="ctas">
-          <a class="btn btn-primary btn-lg" href="https://github.com/kkratterf/maramao/releases/latest" data-download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Download for Mac</a>
-          <a class="btn btn-lg" href="https://github.com/kkratterf/maramao"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg> View on GitHub</a>
+          <a class="btn btn-primary btn-lg" href="https://github.com/kkratterf/maramao/releases/latest" data-download><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> Download for Mac</a>
         </div>
-        <p class="meta"><span>Version <span data-version>0.2.0</span></span><span>macOS 13 or later</span><span>Apple Silicon and Intel</span><span>Free and open source</span></p>
-        <div class="shot">
-          <figure class="screen">
-            <div class="menubar" aria-hidden="true"><span>Maramao</span><i class="opt">File</i><i class="opt">Edit</i><i class="opt">View</i><span class="sp"></span><b>😾 4:59</b><i>Wed 14:32</i></div>
-            <video data-clip muted loop playsinline preload="none" poster="media/hero.jpg" width="800" height="450" aria-label="A black cat walks up to the camera and stares."><source src="media/hero.mp4" type="video/mp4"></video>
-            <div class="pill" aria-hidden="true">Break <b>4:59</b> <span>Skip</span></div>
-          </figure>
-        </div>
+        <p class="meta"><span>Version <span data-version>0.3.0</span></span><span>macOS 13+</span><span>Free and open source</span></p>
+
+        <figure class="mac" data-demo>
+          <div class="mac-screen">
+            <div class="menubar" aria-hidden="true"><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span>Notes</span><i class="opt">File</i><i class="opt">Edit</i><i class="opt">Format</i><i class="opt">View</i><span class="sp"></span><b class="mb-cat"><span aria-hidden="true">🐱</span> <span data-demo-clock>0:05</span></b><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 18.5a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2ZM12 13c2 0 3.8.8 5.1 2.1l-1.5 1.5A5.1 5.1 0 0 0 12 15.1c-1.4 0-2.7.6-3.6 1.5l-1.5-1.5A7.2 7.2 0 0 1 12 13Zm0-5c3.4 0 6.4 1.4 8.6 3.6L19.1 13A10 10 0 0 0 12 10a10 10 0 0 0-7.1 3L3.4 11.6A12.1 12.1 0 0 1 12 8Z"/></svg><i>Wed 14:32</i></div>
+            <div class="desk">
+              <div class="win" aria-hidden="true">
+                <div class="win-bar"><i></i><i></i><i></i><span>Q4 plan</span></div>
+                <div class="win-body"><p class="l-h">Q4 plan</p><p class="">Ship the new onboarding</p><p class="">Fix the export bug before Friday</p><p class="">Review the pricing page copy</p><span class="ln" style="--w:92%"></span><span class="ln" style="--w:78%"></span><span class="ln" style="--w:85%"></span><span class="ln" style="--w:60%"></span><span class="caret"></span></div>
+              </div>
+              <div class="brk">
+                <div class="cat-card">
+                  <video data-clip muted loop playsinline preload="none" poster="media/hero.jpg" width="800" height="450" aria-label="A black cat walks up to the camera and stares."><source src="media/hero.mp4" type="video/mp4"></video>
+                  <p class="say" aria-hidden="true">Paws off. Break time.</p>
+                </div>
+                <div class="pill" aria-hidden="true">Break <b data-demo-break>4:59</b> <span>Snooze</span> <span>Skip</span></div>
+              </div>
+            </div>
+          </div>
+        </figure>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="h-pillars">
+    <section class="section keys" aria-labelledby="h-keys">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="h-pillars">It's not about working less.</h2>
-          <p>It's about stopping when you said you would.</p>
+          <h2 id="h-keys">It's not about working less</h2>
+          <p>It's about stopping when you said you would. Press <b>fn</b> <b>F4</b> to start.</p>
+        </div>
+        <div class="kb-wrap" aria-hidden="true">
+          <div class="kb">
+            <div class="kb-row"><span class="key k-fn k-mod">esc</span><span class="key k-fn">F1</span><span class="key k-fn">F2</span><span class="key k-fn">F3</span><span class="key k-fn hot"><img src="favicon.svg" alt="" width="18" height="18">F4</span><span class="key k-fn">F5</span><span class="key k-fn">F6</span><span class="key k-fn">F7</span><span class="key k-fn">F8</span><span class="key k-fn">F9</span><span class="key k-fn">F10</span><span class="key k-fn">F11</span></div>
+            <div class="kb-row"><span class="key">`</span><span class="key">1</span><span class="key">2</span><span class="key">3</span><span class="key">4</span><span class="key">5</span><span class="key">6</span><span class="key">7</span><span class="key">8</span><span class="key">9</span><span class="key">0</span><span class="key">-</span></div>
+            <div class="kb-row"><span class="key k-mod k-wide">tab</span><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div>
+            <div class="kb-row"><span class="key k-mod hot"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></g></svg>fn</span><span class="key k-mod">⌃<small>control</small></span><span class="key k-mod">⌥<small>option</small></span><span class="key k-mod k-wide">⌘<small>command</small></span><span class="key k-space"></span></div>
+          </div>
         </div>
         <ul class="pillars">
-          <li><b>Native.</b>A small Swift app, under 3 MB.</li>
-          <li><b>Polite.</b>Waits for your calls and presentations.</li>
-          <li><b>Private.</b>No permissions, no account, no tracking.</li>
-          <li><b>Free.</b>Open source under the MIT license.</li>
+          <li><h3>One key</h3><p>fn F4 starts a focus session, or pauses it.</p></li>
+          <li><h3>Polite</h3><p>Waits while you're on a call or presenting.</p></li>
+          <li><h3>Private</h3><p>No permissions, no account, no tracking.</p></li>
+          <li><h3>Native</h3><p>A tiny Swift app. Free and open source.</p></li>
         </ul>
       </div>
     </section>
@@ -117,153 +133,129 @@
     <section id="cats" class="section" aria-labelledby="h-cats">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="h-cats">There's a cat for that.</h2>
-          <p>Six ways to be interrupted. Pick one from the menu bar, or let <b>Surprise me</b> choose a different one every break.</p>
+          <h2 id="h-cats">A cat for every break</h2>
+          <p>Pick a break mode from the menu bar, or let <b>Surprise me</b> choose a different one each time.</p>
         </div>
         <div class="modes" data-tabs>
           <div class="mode-list" role="tablist" aria-label="Break modes">
             <button class="mode-tab" type="button" role="tab" id="tab-window" aria-controls="panel-window" aria-selected="true">
               <h3><span aria-hidden="true">🐈</span> Cat on your window</h3>
-              <p>A cat walks across the screen and sits on the window you're working in. Switch windows and it follows you.</p>
+              <p>A cat walks over and sits on the window you're using. Switch windows and it follows.</p>
             </button>
             <button class="mode-tab" type="button" role="tab" id="tab-memes" aria-controls="panel-memes" aria-selected="false" tabindex="-1">
               <h3><span aria-hidden="true">😹</span> Meme wall</h3>
-              <p>Cat memes fill the screen, one after another, until the break is over.</p>
+              <p>Cat memes fill the screen until the break is over.</p>
             </button>
             <button class="mode-tab" type="button" role="tab" id="tab-sleepy" aria-controls="panel-sleepy" aria-selected="false" tabindex="-1">
               <h3><span aria-hidden="true">😴</span> Don't wake the cat</h3>
-              <p>A cat sleeps on your screen. Touch the mouse and it wakes up and gives you a look.</p>
+              <p>A cat naps on your screen. Move the mouse and it glares at you.</p>
             </button>
             <button class="mode-tab" type="button" role="tab" id="tab-pile" aria-controls="panel-pile" aria-selected="false" tabindex="-1">
               <h3><span aria-hidden="true">🐾</span> Cat invasion</h3>
-              <p>Cats fall from the top of the screen and pile up until there's nothing left to see.</p>
+              <p>Cats rain down and pile up until you can't see a thing.</p>
             </button>
             <button class="mode-tab" type="button" role="tab" id="tab-laser" aria-controls="panel-laser" aria-selected="false" tabindex="-1">
               <h3><span aria-hidden="true">🔴</span> Laser chase</h3>
-              <p>Your pointer turns into a red laser dot and the cat chases it around the screen.</p>
+              <p>Your pointer turns into a laser dot. The cat wants it.</p>
             </button>
             <button class="mode-tab" type="button" role="tab" id="tab-keyboard" aria-controls="panel-keyboard" aria-selected="false" tabindex="-1">
               <h3><span aria-hidden="true">⌨️</span> Cat on the keyboard</h3>
-              <p>A cat falls asleep on the keyboard. Whatever you type comes out as “mmmrrrooow”, and ⌘Q won't save you.</p>
+              <p>Whatever you type comes out as “mmmrrrooow”. ⌘Q won't help.</p>
             </button>
           </div>
           <div class="mode-stage">
             <div class="mode-panel" role="tabpanel" id="panel-window" aria-labelledby="tab-window">
-              <figure class="screen"><video data-clip muted loop playsinline preload="none" poster="media/window.jpg" aria-label="A cat climbing into a cardboard box."><source src="media/window.mp4" type="video/mp4"></video></figure>
-              <p class="mode-caption">A cat walks across the screen and sits on the window you're working in. Switch windows and it follows you.</p>
+              <figure class="screen">
+                <div class="menubar" aria-hidden="true"><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span>Notes</span><span class="sp"></span><b class="mb-cat">🐱 4:59</b></div>
+                <video data-clip muted loop playsinline preload="none" poster="media/window.jpg" aria-label="A cat climbing into a cardboard box."><source src="media/window.mp4" type="video/mp4"></video>
+                <div class="pill" aria-hidden="true">Break <b>4:59</b> <span>Skip</span></div>
+              </figure>
+              <p class="mode-caption">A cat walks over and sits on the window you're using. Switch windows and it follows.</p>
             </div>
             <div class="mode-panel" role="tabpanel" id="panel-memes" aria-labelledby="tab-memes" hidden>
-              <figure class="screen"><video data-clip muted loop playsinline preload="none" poster="media/memes.jpg" aria-label="A tabby cat yawning."><source src="media/memes.mp4" type="video/mp4"></video></figure>
-              <p class="mode-caption">Cat memes fill the screen, one after another, until the break is over.</p>
+              <figure class="screen">
+                <div class="menubar" aria-hidden="true"><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span>Notes</span><span class="sp"></span><b class="mb-cat">🐱 4:59</b></div>
+                <video data-clip muted loop playsinline preload="none" poster="media/memes.jpg" aria-label="A tabby cat yawning."><source src="media/memes.mp4" type="video/mp4"></video>
+                <div class="pill" aria-hidden="true">Break <b>4:59</b> <span>Skip</span></div>
+              </figure>
+              <p class="mode-caption">Cat memes fill the screen until the break is over.</p>
             </div>
             <div class="mode-panel" role="tabpanel" id="panel-sleepy" aria-labelledby="tab-sleepy" hidden>
-              <figure class="screen"><video data-clip muted loop playsinline preload="none" poster="media/sleepy.jpg" aria-label="A kitten asleep."><source src="media/sleepy.mp4" type="video/mp4"></video></figure>
-              <p class="mode-caption">A cat sleeps on your screen. Touch the mouse and it wakes up and gives you a look.</p>
+              <figure class="screen">
+                <div class="menubar" aria-hidden="true"><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span>Notes</span><span class="sp"></span><b class="mb-cat">🐱 4:59</b></div>
+                <video data-clip muted loop playsinline preload="none" poster="media/sleepy.jpg" aria-label="A kitten asleep."><source src="media/sleepy.mp4" type="video/mp4"></video>
+                <div class="pill" aria-hidden="true">Break <b>4:59</b> <span>Skip</span></div>
+              </figure>
+              <p class="mode-caption">A cat naps on your screen. Move the mouse and it glares at you.</p>
             </div>
             <div class="mode-panel" role="tabpanel" id="panel-pile" aria-labelledby="tab-pile" hidden>
-              <figure class="screen"><video data-clip muted loop playsinline preload="none" poster="media/pile.jpg" aria-label="Three kittens asleep on top of each other."><source src="media/pile.mp4" type="video/mp4"></video></figure>
-              <p class="mode-caption">Cats fall from the top of the screen and pile up until there's nothing left to see.</p>
+              <figure class="screen">
+                <div class="menubar" aria-hidden="true"><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span>Notes</span><span class="sp"></span><b class="mb-cat">🐱 4:59</b></div>
+                <video data-clip muted loop playsinline preload="none" poster="media/pile.jpg" aria-label="Three kittens asleep on top of each other."><source src="media/pile.mp4" type="video/mp4"></video>
+                <div class="pill" aria-hidden="true">Break <b>4:59</b> <span>Skip</span></div>
+              </figure>
+              <p class="mode-caption">Cats rain down and pile up until you can't see a thing.</p>
             </div>
             <div class="mode-panel" role="tabpanel" id="panel-laser" aria-labelledby="tab-laser" hidden>
-              <figure class="screen"><video data-clip muted loop playsinline preload="none" poster="media/laser.jpg" aria-label="A cat watching a laser dot on the wall."><source src="media/laser.mp4" type="video/mp4"></video></figure>
-              <p class="mode-caption">Your pointer turns into a red laser dot and the cat chases it around the screen.</p>
+              <figure class="screen">
+                <div class="menubar" aria-hidden="true"><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span>Notes</span><span class="sp"></span><b class="mb-cat">🐱 4:59</b></div>
+                <video data-clip muted loop playsinline preload="none" poster="media/laser.jpg" aria-label="A cat watching a laser dot on the wall."><source src="media/laser.mp4" type="video/mp4"></video>
+                <div class="pill" aria-hidden="true">Break <b>4:59</b> <span>Skip</span></div>
+              </figure>
+              <p class="mode-caption">Your pointer turns into a laser dot. The cat wants it.</p>
             </div>
             <div class="mode-panel" role="tabpanel" id="panel-keyboard" aria-labelledby="tab-keyboard" hidden>
-              <figure class="screen"><video data-clip muted loop playsinline preload="none" poster="media/keyboard.jpg" aria-label="A fluffy kitten sprawled on a cushion."><source src="media/keyboard.mp4" type="video/mp4"></video></figure>
-              <p class="mode-caption">A cat falls asleep on the keyboard. Whatever you type comes out as “mmmrrrooow”, and ⌘Q won't save you.</p>
+              <figure class="screen">
+                <div class="menubar" aria-hidden="true"><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span>Notes</span><span class="sp"></span><b class="mb-cat">🐱 4:59</b></div>
+                <video data-clip muted loop playsinline preload="none" poster="media/keyboard.jpg" aria-label="A fluffy kitten sprawled on a cushion."><source src="media/keyboard.mp4" type="video/mp4"></video>
+                <div class="pill" aria-hidden="true">Break <b>4:59</b> <span>Skip</span></div>
+              </figure>
+              <p class="mode-caption">Whatever you type comes out as “mmmrrrooow”. ⌘Q won't help.</p>
             </div>
           </div>
         </div>
-        <p class="modes-note">The videos are real cats doing what cats do. In the app the cats are drawn, and you can try every mode right away from <b>Try a cat</b> in the menu.</p>
+        <p class="modes-note">Real cats in the videos, drawn cats in the app. Try any mode from <b>Try a cat</b> in the menu.</p>
       </div>
     </section>
 
     <section id="features" class="section" aria-labelledby="h-features">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="h-features">Small app. Lots of cat.</h2>
-          <p>Everything else it does, quietly, from the menu bar.</p>
+          <h2 id="h-features">Built around your day</h2>
+          <p>It stays out of the way until it's time to stop.</p>
         </div>
         <div class="bento">
           <div class="cell wide">
-            <div class="vis" aria-hidden="true"><div class="mini-bar"><span>🍅</span><b>24:59</b><i>Wed 14:32</i></div></div>
-            <h3>Menu bar only</h3><p>A countdown next to the clock. No Dock icon, no extra windows. Show the cat, the time, or a ring that fills up.</p>
+            <div class="vis" aria-hidden="true"><div class="mini-bar"><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span class="sp"></span><b>🐱 24:59</b><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 18.5a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2ZM12 13c2 0 3.8.8 5.1 2.1l-1.5 1.5A5.1 5.1 0 0 0 12 15.1c-1.4 0-2.7.6-3.6 1.5l-1.5-1.5A7.2 7.2 0 0 1 12 13Zm0-5c3.4 0 6.4 1.4 8.6 3.6L19.1 13A10 10 0 0 0 12 10a10 10 0 0 0-7.1 3L3.4 11.6A12.1 12.1 0 0 1 12 8Z"/></svg><i>Wed 14:32</i></div></div>
+            <h3>Menu bar only</h3><p>A countdown next to the clock. No Dock icon, no windows.</p>
           </div>
           <div class="cell">
             <div class="vis" aria-hidden="true"><kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>⌫</kbd></div>
-            <h3>Emergency exit</h3><p><b>⌃⌥⌘⌫</b> ends any break at once, strict mode included.</p>
+            <h3>Emergency exit</h3><p><b>⌃⌥⌘⌫</b> ends any break, even in strict mode.</p>
           </div>
           <div class="cell">
-            <div class="vis" aria-hidden="true"><span class="chip">1 min</span><span class="chip on">3 min</span><span class="chip">5 min</span></div>
-            <h3>Snooze</h3><p>Two more minutes? Send the cat away for a bit, a few times a day.</p>
+            <div class="vis vis-col" aria-hidden="true">
+              <div class="chips"><span class="chip on"><i class="dot"></i>Mic</span><span class="chip">Camera</span><span class="chip">Keynote</span></div>
+              <span class="wait">⏸ Break in 1 min</span>
+            </div>
+            <h3>Waits for your calls</h3><p>Mic, camera or a fullscreen presentation on? The break waits.</p>
+          </div>
+          <div class="cell">
+            <div class="vis" aria-hidden="true"><div class="seg-ctl"><span>1 min</span><span class="on">3 min</span><span>5 min</span></div></div>
+            <h3>Snooze</h3><p>Two more minutes? Send the cat away, a few times a day.</p>
+          </div>
+          <div class="cell">
+            <div class="vis" aria-hidden="true"><div class="setting"><span>Strict mode</span><i class="switch"></i></div></div>
+            <h3>Strict mode</h3><p>No Skip button. The cat decides.</p>
+          </div>
+          <div class="cell">
+            <div class="vis vis-col" aria-hidden="true"><div class="timeline"><span class="seg w" style="--w:25">25</span><span class="seg b" style="--w:5">5</span><span class="seg w" style="--w:25">25</span><span class="seg b" style="--w:5">5</span><span class="seg w" style="--w:25">25</span><span class="seg l" style="--w:15">15</span></div><div class="legend"><span class="w">Work</span><span class="b">Break</span><span class="l">Long break</span></div></div>
+            <h3>Your own timings</h3><p>Set work, short and long breaks.</p>
           </div>
           <div class="cell wide">
-            <div class="vis" aria-hidden="true"><span class="chip on">🎙 Mic in use</span><span class="chip">📷 Camera on</span><span class="chip">Keynote</span></div>
-            <h3>Waits for your calls</h3><p>If the mic or camera is on, or Keynote, PowerPoint or a video is fullscreen, the break waits until you're done.</p>
+            <div class="vis" aria-hidden="true"><div class="chart"><span class="bar"><i style="--t:6;--s:1"></i><em>M</em></span><span class="bar"><i style="--t:7;--s:0"></i><em>T</em></span><span class="bar"><i style="--t:5;--s:2"></i><em>W</em></span><span class="bar"><i style="--t:8;--s:0"></i><em>T</em></span><span class="bar"><i style="--t:4;--s:3"></i><em>F</em></span><span class="bar"><i style="--t:2;--s:0"></i><em>S</em></span><span class="bar"><i style="--t:3;--s:1"></i><em>S</em></span></div><div class="legend legend-v"><span class="t">Taken</span><span class="s">Skipped</span></div></div>
+            <h3>Stats</h3><p>Breaks taken and skipped over 7 or 30 days. Export to CSV.</p>
           </div>
-          <div class="cell"><h3>Strict mode</h3><p>Normally you can skip after a minute. In strict mode you can't.</p></div>
-          <div class="cell"><h3>Notices when you're away</h3><p>Lunch or a locked Mac counts as rest, so you come back to a fresh session.</p></div>
-          <div class="cell"><h3>Your own timings</h3><p>Work, short break, long break, and how many sessions before the long one.</p></div>
-          <div class="cell"><h3>Every display</h3><p>Cats on all your screens, only the main one, or the one with the mouse.</p></div>
-          <div class="cell"><h3>Your cat</h3><p>Every break you take earns your cat a treat. Skip too many and it sulks.</p></div>
-          <div class="cell"><h3>Stats</h3><p>Breaks taken and skipped over 7 or 30 days, exportable as CSV.</p></div>
-          <div class="cell"><h3>Shortcuts and automation</h3><p>Global shortcuts, Shortcuts actions and <code>maramao://</code> links for Raycast, Alfred or a Stream Deck.</p></div>
-          <div class="cell"><h3>Cat packs</h3><p>Add your own cats, names, captions and meme pictures with a folder and a JSON file.</p></div>
-          <div class="cell"><h3>English and Italian</h3><p>The app follows the language of your Mac.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="install" class="section" aria-labelledby="h-install">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="h-install">Install in a minute.</h2>
-          <p>Pick whichever you like. They all give you the same app.</p>
-        </div>
-        <div class="install">
-          <div class="cell">
-            <h3>Download</h3><p>Open the DMG and drag Maramao into Applications. It shows up in the menu bar as a small cat.</p>
-            <a class="btn btn-primary" href="https://github.com/kkratterf/maramao/releases/latest" data-download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Download for Mac</a>
-          </div>
-          <div class="cell">
-            <h3>Terminal</h3><p>Installs the latest version and takes care of the first launch. <a href="https://github.com/kkratterf/maramao/blob/main/install.sh">Read the script</a>.</p>
-            <div class="cmd">
-              <pre><code id="cmd-sh">curl -fsSL https://raw.githubusercontent.com/kkratterf/maramao/main/install.sh | sh</code></pre>
-              <button class="copy" type="button" data-copy="cmd-sh" data-copied="Copied" aria-label="Copy the install command">Copy</button>
-            </div>
-          </div>
-          <div class="cell">
-            <h3>Homebrew</h3><p>Installs the cask from this repository.</p>
-            <div class="cmd">
-              <pre><code id="cmd-brew">brew tap kkratterf/maramao https://github.com/kkratterf/maramao &amp;&amp; brew install --cask maramao</code></pre>
-              <button class="copy" type="button" data-copy="cmd-brew" data-copied="Copied" aria-label="Copy the Homebrew command">Copy</button>
-            </div>
-          </div>
-        </div>
-        <details class="gatekeeper">
-          <summary>macOS says it can't open Maramao?</summary>
-          <ol>
-              <li>Maramao isn't notarized by Apple yet. Open it once and close the warning with <b>Done</b>.</li>
-              <li>In <b>System Settings → Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b> next to the Maramao message.</li>
-              <li>Confirm with your password. You only do this once per version.</li>
-          </ol>
-          <p>On macOS 13 and 14 you can right-click the app and choose <b>Open</b> instead. Or run <code>xattr -dr com.apple.quarantine /Applications/Maramao.app</code>.</p>
-        </details>
-      </div>
-    </section>
-
-    <section id="faq" class="section" aria-labelledby="h-faq">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="h-faq">Questions.</h2>
-        </div>
-        <div class="faq">
-          <div><h3>Why cats?</h3><p>Anyone who lives with a cat knows that when it decides you're done, you're done. A notification is easy to ignore. A cat sitting on your document is not.</p></div>
-          <div><h3>Does it need any permissions?</h3><p>No. Maramao doesn't ask for Accessibility or Screen Recording, doesn't read what you type and doesn't send anything anywhere.</p></div>
-          <div><h3>Can I skip a break?</h3><p>Yes. A <b>Skip</b> button shows up after a minute, and you can change that in Settings. Strict mode removes it. Snooze pushes the break back a few minutes instead.</p></div>
-          <div><h3>What if a break starts during a call?</h3><p>It doesn't. While the microphone or camera is in use, or a presentation, video or call app is fullscreen, the break waits a minute at a time, up to 10 minutes by default.</p></div>
-          <div><h3>How do I uninstall it?</h3><p>Quit Maramao from its menu and move it to the Bin. To remove the settings too, run:</p><pre><code>curl -fsSL https://raw.githubusercontent.com/kkratterf/maramao/main/install.sh | sh -s -- --uninstall</code></pre></div>
-          <div><h3>Is it really free?</h3><p>Yes. Maramao is open source under the MIT license. The code is <a href="https://github.com/kkratterf/maramao">on GitHub</a>, and pull requests with new cats are welcome.</p></div>
         </div>
       </div>
     </section>
@@ -271,9 +263,9 @@
     <section class="outro" aria-labelledby="h-outro">
       <div class="wrap">
         <div class="clip"><video data-clip muted loop playsinline preload="none" poster="media/outro.jpg" aria-label="A kitten yawning."><source src="media/outro.mp4" type="video/mp4"></video></div>
-        <h2 id="h-outro">Take the break.</h2>
+        <h2 id="h-outro">Take the break</h2>
         <p>Free for macOS 13 and later.</p>
-        <a class="btn btn-primary btn-lg" href="https://github.com/kkratterf/maramao/releases/latest" data-download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Download for Mac</a>
+        <a class="btn btn-primary btn-lg" href="https://github.com/kkratterf/maramao/releases/latest" data-download><svg class="i-apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> Download for Mac</a>
       </div>
     </section>
   </main>
@@ -282,34 +274,33 @@
     <div class="wrap">
       <div class="foot-grid">
         <div>
-          <p class="brand"><img src="favicon.svg" alt="" width="26" height="26"> Maramao</p>
+          <p class="brand"><img src="favicon.svg" alt="" width="24" height="24"> Maramao</p>
           <p>The Pomodoro timer for Mac where a cat enforces your breaks.</p>
         </div>
-          <div>
-            <h4>Product</h4>
-            <ul>
-              <li><a href="https://github.com/kkratterf/maramao/releases/latest" data-download>Download</a></li>
-              <li><a href="https://github.com/kkratterf/maramao/releases">Releases</a></li>
-              <li><a href="#install">Install</a></li>
-              <li><a href="#faq">FAQ</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Project</h4>
-            <ul>
-              <li><a href="https://github.com/kkratterf/maramao">GitHub</a></li>
-              <li><a href="https://github.com/kkratterf/maramao/issues/new/choose">Report a bug</a></li>
-              <li><a href="https://github.com/kkratterf/maramao#cat-packs">Cat packs</a></li>
-              <li><a href="https://github.com/kkratterf/maramao/blob/main/LICENSE">MIT License</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Language</h4>
-            <ul>
-              <li><a href="./" hreflang="en">English</a></li>
-              <li><a href="it/" hreflang="it">Italiano</a></li>
-            </ul>
-          </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="https://github.com/kkratterf/maramao/releases/latest" data-download>Download</a></li>
+            <li><a href="https://github.com/kkratterf/maramao/releases">Releases</a></li>
+            <li><a href="faq/">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Project</h2>
+          <ul>
+            <li><a href="https://github.com/kkratterf/maramao">GitHub</a></li>
+            <li><a href="https://github.com/kkratterf/maramao/issues/new/choose">Report a bug</a></li>
+            <li><a href="https://github.com/kkratterf/maramao#cat-packs">Cat packs</a></li>
+            <li><a href="https://github.com/kkratterf/maramao/blob/main/LICENSE">MIT License</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Language</h2>
+          <ul>
+            <li><a href="./" hreflang="en" lang="en">English</a></li>
+            <li><a href="it/" hreflang="it" lang="it">Italiano</a></li>
+          </ul>
+        </div>
       </div>
       <div class="foot-bottom">
         <p class="credits">Cat videos from Wikimedia Commons, trimmed and re-encoded: <a href="https://commons.wikimedia.org/wiki/File:Black_Cat_walking.webm">Black Cat walking</a> by Dzkouslavia (<a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a>); <a href="https://commons.wikimedia.org/wiki/File:Kluse_-_Lotti_playing_in_a_box_v_01_ies.webm">Kluse - Lotti playing in a box v 01 ies</a> by Frank Vincentz (<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>); <a href="https://commons.wikimedia.org/wiki/File:Cat_yawning_in_slow_motion.webm">Cat yawning in slow motion</a> by Grendelkhan (<a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>); <a href="https://commons.wikimedia.org/wiki/File:Kitten_sleeping_2_2014-08-24.ogv">Kitten sleeping 2 2014-08-24</a> by FASTILY (<a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>); <a href="https://commons.wikimedia.org/wiki/File:Three_kittens_1_2017-06-25.webm">Three kittens 1 2017-06-25</a> by FASTILY (<a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>); <a href="https://commons.wikimedia.org/wiki/File:Cat_playing_with_a_laser_pointer.webm">Cat playing with a laser pointer</a> by Clément Bucco-Lechat (<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>); <a href="https://commons.wikimedia.org/wiki/File:Kitten_playing_-_Tokyo_-_Jan_7_2020.webm">Kitten playing - Tokyo - Jan 7 2020</a> by Nesnad (<a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a>); <a href="https://commons.wikimedia.org/wiki/File:Yawning_kitten.ogv">Yawning kitten</a> by Andrew Krizhanovsky (public domain). The CC BY-SA clips are shared under the same license.</p>
@@ -319,5 +310,6 @@
   </footer>
 
   <script src="site.js" defer></script>
+  <script src="grainient.js" defer></script>
 </body>
 </html>
