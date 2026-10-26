@@ -24,6 +24,15 @@ struct SettingsView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
+                HStack {
+                    Text("Il gatto ti rispiega tutto e ti fa provare una pausa.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Rivedi il benvenuto") {
+                        (NSApp.delegate as? AppDelegate)?.showOnboarding()
+                    }
+                }
             }
 
             MenuBarSettingsSection()
