@@ -28,6 +28,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// The welcome window, alive only while it is on screen.
     private var onboardingWindow: NSWindow?
     private var onboardingCloseObserver: NSObjectProtocol?
+    /// The menu panel in a normal window, for when the menu bar item cannot be reached.
+    private var panelWindow: NSWindow?
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         // maramao:// URLs. Installed before launch finishes so the URL that
@@ -72,6 +74,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// Opening Maramao again (Finder, Launchpad, Spotlight) while it is running. A menu bar
+    /// app has no window and no Dock icon, so by default nothing visible happens, and the
+    /// menu bar item can be hidden behind the notch when the bar is full. Show something.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        Task { @MainActor in
+            if AppSettings.shared.hasCompletedOnboarding {
+                self.showPanelWindow()
+            } else {
+                self.showOnboarding()
+            }
+        }
+        return false
+    }
+
     /// Never leave a cat behind: close every break window before quitting.
     @MainActor
     func applicationWillTerminate(_ notification: Notification) {
@@ -102,6 +118,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         NSApp.activate(ignoringOtherApps: true)
         settingsWindow?.makeKeyAndOrderFront(nil)
+    }
+
+    /// Opens the menu panel in a regular window, with a hint about where the menu bar item is.
+    @MainActor
+    func showPanelWindow() {
+        if panelWindow == nil {
+            let content = VStack(alignment: .leading, spacing: 0) {
+                Text("Vivo nella barra dei menu, accanto all'orologio. Se lassù non mi vedi, la barra è troppo piena e la tacca dello schermo mi copre: togli qualche icona, oppure usami da questa finestra.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding([.horizontal, .top], 16)
+                    .frame(width: 300, alignment: .leading)
+                MenuContentView()
+                    .environmentObject(PomodoroEngine.shared)
+                    .environmentObject(AppSettings.shared)
+                    .environmentObject(StatsStore.shared)
+            }
+            let window = NSWindow(contentViewController: NSHostingController(rootView: content))
+            window.styleMask = [.titled, .closable]
+            window.title = "Maramao"
+            window.isReleasedWhenClosed = false
+            window.center()
+            panelWindow = window
+        }
+        NSApp.activate(ignoringOtherApps: true)
+        panelWindow?.makeKeyAndOrderFront(nil)
     }
 
     /// Opens the welcome window: on first launch, and from Settings. Created on demand and

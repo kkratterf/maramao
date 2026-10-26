@@ -48,6 +48,7 @@ struct OnboardingView: View {
         case .welcome:
             title("Ciao, sono Maramao")
             paragraph("Vivo nella barra dei menu, lassù accanto all'orologio: clicca il mio musetto per avviare il timer. Quando il pomodoro finisce, un gatto si prende lo schermo finché non fai una pausa.")
+            paragraph("Non vedi il mio musetto lassù? La barra è troppo piena e la tacca dello schermo mi copre: togli qualche icona, oppure riapri Maramao dalla cartella Applicazioni e ti apro una finestra.")
             paragraph("Non è un virus: è per il tuo bene.")
         case .timing:
             title("Quanto lavori, quanto riposi")

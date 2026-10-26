@@ -1925,13 +1925,13 @@
         }
       }
     },
-    "Funzionano da qualsiasi app, senza permessi speciali.": {
+    "Funzionano da qualsiasi app, senza permessi speciali. Sulle tastiere Apple F4 si preme con fn.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "They work from any app, no special permissions needed."
+            "value": "They work from any app, no special permissions needed. On Apple keyboards, press F4 with fn."
           }
         }
       }
@@ -7320,6 +7320,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "A window onto the garden 🌿"
+          }
+        }
+      }
+    },
+    "Vivo nella barra dei menu, accanto all'orologio. Se lassù non mi vedi, la barra è troppo piena e la tacca dello schermo mi copre: togli qualche icona, oppure usami da questa finestra.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I live in the menu bar, next to the clock. Can't see me up there? The bar is too full and the notch is sitting on me: drop a few icons, or use me from this window."
+          }
+        }
+      }
+    },
+    "Non vedi il mio musetto lassù? La barra è troppo piena e la tacca dello schermo mi copre: togli qualche icona, oppure riapri Maramao dalla cartella Applicazioni e ti apro una finestra.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can't spot my little face up there? The bar is too full and the notch is hiding me: drop a few icons, or open Maramao again from Applications and I'll pop up a window."
           }
         }
       }
