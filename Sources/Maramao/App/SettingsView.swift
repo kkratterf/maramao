@@ -32,6 +32,11 @@ struct SettingsView: View {
                 minutesStepper("Lavoro", value: $settings.workMinutes, range: 1...120)
                 minutesStepper("Pausa breve", value: $settings.shortBreakMinutes, range: 1...30)
                 minutesStepper("Pausa lunga", value: $settings.longBreakMinutes, range: 1...60)
+                if settings.timerPreset != .custom {
+                    Text("Ora il menu usa il ritmo \(settings.timerPreset.menuTitle(custom: settings.customPomodoroConfig)): questi tempi valgono per Personalizzato.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
                 Stepper(value: $settings.sessionsBeforeLongBreak, in: 1...10) {
                     Text("Pausa lunga ogni \(settings.sessionsBeforeLongBreak) pomodori")
                 }
@@ -210,7 +215,7 @@ struct SettingsView: View {
 
     /// Explains the "Quando sei via" choice.
     private var awayCaption: String {
-        let minutes = Int(AwayPolicy.idleThreshold(shortBreak: settings.shortBreakMinutes * 60) / 60)
+        let minutes = Int(AwayPolicy.idleThreshold(shortBreak: settings.pomodoroConfig.shortBreak) / 60)
         let away = String(localized: "Mac in stop, schermo bloccato o \(minutes) min senza toccare niente.")
         switch AwayBehavior(rawValue: settings.awayBehaviorRaw) ?? .defaultBehavior {
         case .countAsBreak:
