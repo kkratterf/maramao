@@ -80,6 +80,20 @@ struct SettingsView: View {
                     Button("Prova") { engine.previewBreakWarning() }
                         .disabled(engine.phase.isBreak)
                 }
+                Picker("Micro-pausa per gli occhi", selection: $settings.microBreakMinutes) {
+                    ForEach(MicroBreakSchedule.intervalOptions, id: \.self) { minutes in
+                        Text(MicroBreakSchedule.optionLabel(minutes: minutes)).tag(minutes)
+                    }
+                }
+                HStack {
+                    Text("Regola 20-20-20: ogni tanto un gattino ti chiede di guardare lontano per 20 secondi. Non copre lo schermo e non ferma il pomodoro.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                    Button("Prova") { engine.previewMicroBreak() }
+                        .disabled(engine.phase.isBreak)
+                }
             }
 
             CatCompanionSection()

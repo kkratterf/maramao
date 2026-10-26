@@ -41,6 +41,8 @@ final class AppSettings: ObservableObject {
     /// "Rimanda": minutes a break is postponed by, and how many times a day (0 = never).
     @Published var snoozeMinutes: Int { didSet { defaults.set(snoozeMinutes, forKey: Keys.snoozeMinutes) } }
     @Published var snoozeDailyLimit: Int { didSet { defaults.set(snoozeDailyLimit, forKey: Keys.snoozeDailyLimit) } }
+    /// Minutes of work between 20-20-20 micro-breaks for the eyes. 0 = off.
+    @Published var microBreakMinutes: Int { didSet { defaults.set(microBreakMinutes, forKey: Keys.microBreakMinutes) } }
 
     private enum Keys {
         static let workMinutes = "workMinutes"
@@ -64,6 +66,7 @@ final class AppSettings: ObservableObject {
         static let companionEnabled = "companionEnabled"
         static let snoozeMinutes = "snoozeMinutes"
         static let snoozeDailyLimit = "snoozeDailyLimit"
+        static let microBreakMinutes = "microBreakMinutes"
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -90,6 +93,7 @@ final class AppSettings: ObservableObject {
             Keys.companionEnabled: true,
             Keys.snoozeMinutes: BreakSnoozePolicy.defaultMinutes,
             Keys.snoozeDailyLimit: BreakSnoozePolicy.defaultDailyLimit,
+            Keys.microBreakMinutes: MicroBreakSchedule.defaultIntervalMinutes,
         ])
         workMinutes = defaults.double(forKey: Keys.workMinutes)
         shortBreakMinutes = defaults.double(forKey: Keys.shortBreakMinutes)
@@ -112,6 +116,7 @@ final class AppSettings: ObservableObject {
         companionEnabled = defaults.bool(forKey: Keys.companionEnabled)
         snoozeMinutes = defaults.integer(forKey: Keys.snoozeMinutes)
         snoozeDailyLimit = defaults.integer(forKey: Keys.snoozeDailyLimit)
+        microBreakMinutes = defaults.integer(forKey: Keys.microBreakMinutes)
     }
 
     var snoozePolicy: BreakSnoozePolicy {

@@ -34,6 +34,7 @@ final class PomodoroEngine: ObservableObject {
     private var breakContext: BreakContext?
     private var previewTimer: Timer?
     private var breakWarning = BreakWarning()
+    private var microBreak = MicroBreakSchedule()
     private let peekingCat = PeekingCatWarning()
     private let presence = PresenceMonitor()
     /// The mode of the snoozed break: the same cat comes back.
@@ -228,6 +229,12 @@ final class PomodoroEngine: ObservableObject {
         previewTimer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: false) { [weak self] _ in
             Task { @MainActor in self?.endPreview() }
         }
+    }
+
+    /// Shows the micro-break cat right away, without touching the cycle or the stats.
+    func previewMicroBreak() {
+        guard !phase.isBreak else { return }
+        peekingCat.show(message: MicroBreakSchedule.message, stay: MicroBreakSchedule.duration)
     }
 
     /// Shows the peeking cat warning right away, without touching the cycle.
@@ -446,6 +453,7 @@ final class PomodoroEngine: ObservableObject {
         postponer.reset()
         isBreakPostponed = false
         breakWarning.reset()
+        microBreak.reset()
         if phase != .work { peekingCat.dismiss() }
         if phase != .idle { canUndoAwayReset = false }
         updateIdlePolling()
@@ -532,6 +540,7 @@ final class PomodoroEngine: ObservableObject {
             return
         }
         checkBreakWarning()
+        checkMicroBreak()
     }
 
     /// Lets a cat peek from the bottom of the screen shortly before the break.
@@ -548,5 +557,30 @@ final class PomodoroEngine: ObservableObject {
         let seconds = breakWarning.announcedSeconds(remaining: remaining)
         peekingCat.show(message: BreakWarning.message(seconds: seconds))
         CatSounds.shared.chirp()
+    }
+
+    /// The 20-20-20 micro-break: every so often a cat peeks for twenty seconds and asks you
+    /// to look far away. It never covers the screen and never touches the countdown.
+    private func checkMicroBreak() {
+        // Another cat is already on screen, or the Focus turned the cats off.
+        guard previewTimer == nil, !peekingCat.isVisible, FocusFilterState.shared.policy.catsEnabled else { return }
+        microBreak.intervalMinutes = settings.microBreakMinutes
+        // The cheap check first: the system is only asked about calls when one is due.
+        guard microBreak.isDue(
+            phase: phase,
+            isPaused: isPaused,
+            elapsed: phaseDuration - remaining,
+            remaining: remaining
+        ) else { return }
+        let busy = settings.dontInterruptCalls && BusyDetector.current().isBusy
+        guard microBreak.shouldShow(
+            phase: phase,
+            isPaused: isPaused,
+            elapsed: phaseDuration - remaining,
+            remaining: remaining,
+            busy: busy
+        ) else { return }
+        stats.recordMicroBreak()
+        peekingCat.show(message: MicroBreakSchedule.message, stay: MicroBreakSchedule.duration)
     }
 }
