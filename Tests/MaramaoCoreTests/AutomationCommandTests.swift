@@ -26,6 +26,8 @@ final class AutomationCommandTests: XCTestCase {
         XCTAssertEqual(parse("maramao://longmode/catPile"), .setLongBreakMode("catPile"))
         XCTAssertEqual(parse("maramao://longmode/same"), .setLongBreakMode(AutomationCommand.sameAsShortBreak))
         XCTAssertEqual(parse("maramao://preview/catPile"), .preview("catPile"))
+        XCTAssertEqual(parse("maramao://preset/deep"), .setPreset("deep"))
+        XCTAssertEqual(parse("maramao://Preset/Classic/"), .setPreset("Classic"))
     }
 
     func testAlternativeSpellings() {
@@ -44,6 +46,8 @@ final class AutomationCommandTests: XCTestCase {
         XCTAssertNil(parse("maramao://mode"))
         XCTAssertNil(parse("maramao://longmode"))
         XCTAssertNil(parse("maramao://preview"))
+        XCTAssertNil(parse("maramao://preset"))
+        XCTAssertNil(parse("maramao://preset/long/now"))
         XCTAssertNil(parse("maramao://mode/a/b"))
         XCTAssertNil(parse("maramao://start/now"))
         XCTAssertNil(parse("https://start"))

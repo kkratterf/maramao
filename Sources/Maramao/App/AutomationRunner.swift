@@ -61,6 +61,10 @@ enum AutomationRunner {
             if let mode = breakMode(matching: id) {
                 engine.preview(mode.resolved(), seconds: 30)
             }
+        case .setPreset(let id):
+            if let preset = TimerPreset(id: id) {
+                engine.setTimerPreset(preset)
+            }
         }
     }
 

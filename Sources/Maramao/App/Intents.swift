@@ -113,6 +113,34 @@ struct SetLongBreakModeIntent: AppIntent {
     func perform() async throws -> some IntentResult {
         let id = mode == .same ? AutomationCommand.sameAsShortBreak : mode.rawValue
         AutomationRunner.perform(.setLongBreakMode(id))
+
+/// Rhythms for the "Scegli il ritmo" action. Literal display names, like
+/// `BreakModeAppEnum`. Raw values must match `TimerPreset`.
+enum TimerPresetAppEnum: String, AppEnum {
+    case classic
+    case long
+    case deep
+    case custom
+
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "Ritmo"
+    static let caseDisplayRepresentations: [TimerPresetAppEnum: DisplayRepresentation] = [
+        .classic: "Classico 25/5",
+        .long: "Lungo 50/10",
+        .deep: "Profondo 90/20",
+        .custom: "Personalizzato",
+    ]
+}
+
+struct SetTimerPresetIntent: AppIntent {
+    static let title: LocalizedStringResource = "Scegli il ritmo"
+    static let description: IntentDescription? = IntentDescription("Cambia la durata di pomodoro e pause: Classico, Lungo, Profondo o i tempi delle Impostazioni.")
+
+    @Parameter(title: "Ritmo")
+    var preset: TimerPresetAppEnum
+
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        AutomationRunner.perform(.setPreset(preset.rawValue))
         return .result()
     }
 }
