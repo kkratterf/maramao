@@ -207,6 +207,25 @@
     sel.addRange(range);
   }
 
+  // Download buttons: point straight at the DMG of the latest release. The
+  // file name carries the version, so ask the GitHub API for it; without
+  // JavaScript or if the API fails, the link opens the release page.
+  var downloads = document.querySelectorAll("[data-download]");
+  if (downloads.length && window.fetch) {
+    fetch("https://api.github.com/repos/kkratterf/maramao/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (release) {
+        if (!release || !release.assets) return;
+        var dmg = release.assets.filter(function (a) { return /\.dmg$/.test(a.name); })[0];
+        if (!dmg) return;
+        downloads.forEach(function (link) {
+          link.href = dmg.browser_download_url;
+          link.title = "Maramao " + release.tag_name + " · .dmg";
+        });
+      })
+      .catch(function () {});
+  }
+
   var year = document.querySelector("[data-year]");
   if (year) year.textContent = String(new Date().getFullYear());
 })();
