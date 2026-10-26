@@ -1,0 +1,44 @@
+name: Screenshots
+
+# Renders every break mode to PNGs (scripts/render-screenshots.sh) and uploads them, so a
+# visual change can be reviewed without a Mac. The app snapshots its own windows, so no
+# Screen Recording permission is needed. Its own workflow, not part of the required CI job:
+# it still fails honestly when a mode renders nothing at all.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: screenshots-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    name: Render the break modes
+    runs-on: macos-15
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the app bundle
+        run: scripts/build-app.sh release
+
+      - name: Render
+        run: scripts/render-screenshots.sh
+
+      - name: Upload the screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Maramao-screenshots
+          path: dist/screenshots
+          retention-days: 14
+
+      - name: Link the artifact in the summary
+        if: always()
+        run: |
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "[Download the PNGs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)" >> "$GITHUB_STEP_SUMMARY"
