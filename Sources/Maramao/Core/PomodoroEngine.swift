@@ -179,6 +179,7 @@ final class PomodoroEngine: ObservableObject {
         cycle.reset()
         cycle.config = settings.pomodoroConfig
         phase = .idle
+        DiagnosticLog.engine.notice("Reset")
         isPaused = false
         completedWorkSessions = 0
         phaseDuration = 0
@@ -438,6 +439,7 @@ final class PomodoroEngine: ObservableObject {
         isBreakSnoozed = false
         snoozedMode = nil
         phase = cycle.phase
+        DiagnosticLog.engine.notice("Phase: \(cycle.phase.rawValue), \(Int(cycle.currentDuration)) s")
         completedWorkSessions = cycle.completedWorkSessions
         isPaused = false
         frozenByAway = false
