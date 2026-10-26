@@ -1925,13 +1925,13 @@
         }
       }
     },
-    "Funzionano da qualsiasi app, senza permessi speciali. Sulle tastiere Apple F5 si preme con fn.": {
+    "Funzionano da qualsiasi app, senza permessi speciali.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "They work from any app, no special permissions needed. On Apple keyboards, press F5 with fn."
+            "value": "They work from any app, no special permissions needed."
           }
         }
       }

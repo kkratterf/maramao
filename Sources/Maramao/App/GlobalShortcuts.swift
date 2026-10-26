@@ -15,10 +15,9 @@ enum GlobalShortcut: String, CaseIterable, Identifiable {
 
     var combo: HotKeyCombo {
         switch self {
-        // A single key for the action used most. On Apple keyboards the top row
-        // sends media keys by default, so this is fn-F5 there, plain F5 when
-        // "Use F1, F2, etc. keys as standard function keys" is on.
-        case .startPause: return HotKeyCombo(keyCode: kVK_F5, modifiers: 0)
+        // M for Maramao. ⌘⇧M was the first pick, but Teams (mute), Slack and
+        // VS Code already use it, and a global hot key would steal it.
+        case .startPause: return HotKeyCombo(keyCode: kVK_ANSI_M, modifiers: HotKeyCombo.controlOptionCommand)
         case .takeBreak: return HotKeyCombo(keyCode: kVK_ANSI_B, modifiers: HotKeyCombo.controlOptionCommand)
         case .skip: return HotKeyCombo(keyCode: kVK_ANSI_S, modifiers: HotKeyCombo.controlOptionCommand)
         case .snooze: return HotKeyCombo(keyCode: kVK_ANSI_R, modifiers: HotKeyCombo.controlOptionCommand)
@@ -150,7 +149,7 @@ struct ShortcutsSettingsSection: View {
                         .foregroundStyle(.red)
                 }
             }
-            Text("Funzionano da qualsiasi app, senza permessi speciali. Sulle tastiere Apple F5 si preme con fn.")
+            Text("Funzionano da qualsiasi app, senza permessi speciali.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
