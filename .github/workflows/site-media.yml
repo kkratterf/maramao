@@ -3,7 +3,7 @@ name: Site media (temporary)
 on:
   push:
     branches: [claude/project-thread-fbcf13]
-    paths: [".media/**", ".github/workflows/site-media.yml"]
+    paths: [".media/*.txt", ".media/*.py", ".github/workflows/site-media.yml"]
 
 permissions:
   contents: write
@@ -13,13 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Discover
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null && pip install -q pillow
+      - name: Contact sheets
         if: hashFiles('.media/pick.txt') == ''
-        run: python3 .media/discover.py
-      - name: Commit the report
-        if: hashFiles('.media/pick.txt') == ''
+        run: python3 .media/preview.py
+      - name: Fetch and encode
+        if: hashFiles('.media/pick.txt') != ''
+        run: python3 .media/fetch.py
+      - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898+github-actions[bot]@users.noreply.github.com"
-          git add .media/report.txt
-          git commit -m "chore: cat media report" && git push
+          git add -A .media site/media || true
+          git commit -m "chore: site media output" && git push
