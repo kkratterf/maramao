@@ -49,15 +49,59 @@
     });
   });
 
-  // Copy buttons next to the install commands.
-  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+  // The hero Mac: a few seconds of work, then the break takes over, and again.
+  // With reduced motion it stays on the break, the part worth seeing.
+  var demo = document.querySelector("[data-demo]");
+  if (demo) {
+    var clock = demo.querySelector("[data-demo-clock]");
+    var brk = demo.querySelector("[data-demo-break]");
+    var fmt = function (s) { return Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); };
+    var setState = function (state) { demo.setAttribute("data-state", state); };
+    if (still) {
+      setState("break");
+      if (clock) clock.textContent = "4:59";
+    } else {
+      var tick = 0;
+      setState("work");
+      setInterval(function () {
+        tick = (tick + 1) % 14; // 5 s of work, 9 s of break
+        if (tick < 5) {
+          setState("work");
+          if (clock) clock.textContent = fmt(5 - tick);
+        } else {
+          setState("break");
+          var left = 299 - (tick - 5);
+          if (clock) clock.textContent = fmt(left);
+          if (brk) brk.textContent = fmt(left);
+        }
+      }, 1000);
+    }
+  }
+
+  // FAQ accordion: every answer is open without JavaScript. With it they
+  // start closed and slide open, like the coss/Base UI accordion.
+  document.querySelectorAll("[data-accordion] .acc-trigger").forEach(function (btn) {
+    var panel = document.getElementById(btn.getAttribute("aria-controls"));
+    if (!panel) return;
+    btn.setAttribute("aria-expanded", "false");
+    panel.hidden = true;
     btn.addEventListener("click", function () {
-      var code = document.getElementById(btn.getAttribute("data-copy"));
-      if (!code || !navigator.clipboard) return;
-      var label = btn.textContent;
-      navigator.clipboard.writeText(code.textContent.trim()).then(function () {
-        btn.textContent = btn.getAttribute("data-copied") || "Copied";
-        setTimeout(function () { btn.textContent = label; }, 1600);
+      var open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      if (still) { panel.hidden = open; return; }
+      if (!open) {
+        panel.hidden = false;
+        var h = panel.scrollHeight;
+        panel.style.height = "0px";
+        requestAnimationFrame(function () { panel.style.height = h + "px"; });
+      } else {
+        panel.style.height = panel.scrollHeight + "px";
+        requestAnimationFrame(function () { panel.style.height = "0px"; });
+      }
+      panel.addEventListener("transitionend", function done() {
+        panel.removeEventListener("transitionend", done);
+        if (btn.getAttribute("aria-expanded") === "false") panel.hidden = true;
+        panel.style.height = "";
       });
     });
   });
@@ -65,10 +109,13 @@
   // Download buttons: point straight at the DMG of the latest release. The
   // file name carries the version, so ask the GitHub API for it; without
   // JavaScript or if the API fails, the link opens the release page.
+  var api = "https://api.github.com/repos/kkratterf/maramao";
+  var json = function (url) {
+    return fetch(url, { headers: { Accept: "application/vnd.github+json" } }).then(function (r) { return r.ok ? r.json() : null; });
+  };
   var downloads = document.querySelectorAll("[data-download]");
   if (downloads.length && window.fetch) {
-    fetch("https://api.github.com/repos/kkratterf/maramao/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
-      .then(function (r) { return r.ok ? r.json() : null; })
+    json(api + "/releases/latest")
       .then(function (release) {
         if (!release || !release.assets) return;
         var dmg = release.assets.filter(function (a) { return /\.dmg$/.test(a.name); })[0];
@@ -79,6 +126,24 @@
         });
         document.querySelectorAll("[data-version]").forEach(function (el) {
           el.textContent = release.tag_name.replace(/^v/, "");
+        });
+      })
+      .catch(function () {});
+  }
+
+  // GitHub button: just the icon until the repository has 10 stars.
+  var stars = document.querySelectorAll("[data-stars]");
+  if (stars.length && window.fetch) {
+    json(api)
+      .then(function (repo) {
+        var n = repo && repo.stargazers_count;
+        if (!n || n < 10) return;
+        var label = n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, "") + "k" : String(n);
+        stars.forEach(function (el) {
+          var span = document.createElement("span");
+          span.textContent = label;
+          el.appendChild(span);
+          el.setAttribute("aria-label", el.getAttribute("aria-label") + ", " + n + " ★");
         });
       })
       .catch(function () {});
