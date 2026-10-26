@@ -6526,6 +6526,127 @@
           }
         }
       }
+    },
+    "Il gatto alla finestra": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat at the window"
+          }
+        }
+      }
+    },
+    "Lo schermo diventa una finestra sul giardino: il gatto guarda gli uccellini, tu riposi gli occhi.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The screen becomes a window onto a garden: the cat watches the birds while your eyes rest."
+          }
+        }
+      }
+    },
+    "Guarda fuori, lontano dallo schermo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look outside, far away from the screen."
+          }
+        }
+      }
+    },
+    "Metti a fuoco qualcosa a sei metri da te.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus on something twenty feet away."
+          }
+        }
+      }
+    },
+    "Venti secondi di sguardo lontano: è la regola 20-20-20.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twenty seconds of looking far away: that is the 20-20-20 rule."
+          }
+        }
+      }
+    },
+    "Se hai una finestra vera, è il momento di aprirla.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you have a real window, now is the time to open it."
+          }
+        }
+      }
+    },
+    "Sbatti le palpebre, piano. Ancora una volta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blink, slowly. And once more."
+          }
+        }
+      }
+    },
+    "Gli uccellini li guarda il gatto. Tu guarda l'orizzonte.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat takes care of the birds. You take care of the horizon."
+          }
+        }
+      }
+    },
+    "Cerca il punto più lontano della stanza e restaci.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find the farthest point in the room and stay there."
+          }
+        }
+      }
+    },
+    "Spalle giù, occhi lontani. Il resto può aspettare.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shoulders down, eyes far away. The rest can wait."
+          }
+        }
+      }
+    },
+    "Una finestra sul giardino 🌿": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A window onto the garden 🌿"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
