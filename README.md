@@ -35,6 +35,7 @@ Pick one in the menu bar, or let **🎲 Surprise me** (*Sorpresa*) choose a diff
 | 🐾 | **Cat invasion** (*Invasione di gatti*) | Cats rain from the top of the screen and pile up until everything is buried. |
 | 🔴 | **Laser chase** (*Caccia al laser*) | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops. Leave the mouse alone and the cat sits down to groom. |
 | ⌨️ | **Cat on the keyboard** (*Il gatto sulla tastiera*) | A cat falls asleep on a big keyboard. Every key you press ends up as cat-typing ("mmmmrrrrrooooow"), and Cmd-Q won't get you out. |
+| 🐦 | **The cat at the window** (*Il gatto alla finestra*) | The screen becomes a window onto a garden: birds hop on a branch, the cat watches them and chatters. The HUD asks you to look far away, the eye-rest break (20-20-20). |
 
 Breaks can be skipped after a minute (configurable), or never in **strict mode** (*modalità severa*). Need two more minutes? **Snooze** (*Rimanda*) on the break pill (or ⌃⌥⌘R) sends the cat away for 1, 3 or 5 minutes and brings the whole break back afterwards, up to 3 times a day by default (Settings → **Strictness**). Snoozes show up in the stats. Not to be confused with **Pause for…**, which puts the whole app to sleep.
 
@@ -93,7 +94,7 @@ open maramao://start
 | `maramao://preview/<id>` | Try a break mode for 30 seconds |
 | `maramao://preset/<id>` | Choose the rhythm: `classic`, `long`, `deep` or `custom` |
 
-Mode ids: `walkingCat`, `memeWall`, `sleepyCat`, `catPile`, `laserChase`, `keyboardCat`, or `random` (🎲 Surprise me). URLs that would end a break early (`start`, `skip`, `reset`) only work once the break may be skipped, so **strict mode** still wins.
+Mode ids: `walkingCat`, `memeWall`, `sleepyCat`, `catPile`, `laserChase`, `keyboardCat`, `birdWatching`, or `random` (🎲 Surprise me). URLs that would end a break early (`start`, `skip`, `reset`) only work once the break may be skipped, so **strict mode** still wins.
 
 The **Shortcuts** app also lists Maramao actions: *Start a pomodoro*, *Pause or resume*, *Cat break now*, *Choose the break mode*, *Choose the rhythm*, *Choose the long-break cat* and *Maramao status* (returns the phase, the time left and today's pomodori as text). Siri and Spotlight know phrases like "Start a pomodoro with Maramao" (in Italian: "Inizia un pomodoro con Maramao"). They show up once `Maramao.app` has been opened from `Applications`.
 

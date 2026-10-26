@@ -8,6 +8,7 @@ enum BreakModeID: String, CaseIterable, Identifiable {
     case catPile
     case laserChase
     case keyboardCat
+    case birdWatching
     case random
 
     var id: String { rawValue }
@@ -23,6 +24,7 @@ enum BreakModeID: String, CaseIterable, Identifiable {
         case .catPile: return "🐾"
         case .laserChase: return "🔴"
         case .keyboardCat: return "⌨️"
+        case .birdWatching: return "🐦"
         case .random: return "🎲"
         }
     }
@@ -35,6 +37,7 @@ enum BreakModeID: String, CaseIterable, Identifiable {
         case .catPile: return String(localized: "Invasione di gatti")
         case .laserChase: return String(localized: "Caccia al laser")
         case .keyboardCat: return String(localized: "Il gatto sulla tastiera")
+        case .birdWatching: return String(localized: "Il gatto alla finestra")
         case .random: return String(localized: "Sorpresa")
         }
     }
@@ -47,6 +50,7 @@ enum BreakModeID: String, CaseIterable, Identifiable {
         case .catPile: return String(localized: "Piovono gatti dall'alto fino a seppellire tutto lo schermo.")
         case .laserChase: return String(localized: "Il mouse diventa un puntino laser e il gatto lo insegue per tutto lo schermo.")
         case .keyboardCat: return String(localized: "Un gatto dorme sulla tastiera: qualunque cosa scrivi, la scrive lui.")
+        case .birdWatching: return String(localized: "Lo schermo diventa una finestra sul giardino: il gatto guarda gli uccellini, tu riposi gli occhi.")
         case .random: return String(localized: "Ogni pausa un concept diverso.")
         }
     }

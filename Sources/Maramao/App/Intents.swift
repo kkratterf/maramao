@@ -49,6 +49,7 @@ enum BreakModeAppEnum: String, AppEnum {
     case catPile
     case laserChase
     case keyboardCat
+    case birdWatching
     case random
 
     static let typeDisplayRepresentation: TypeDisplayRepresentation = "Modalità pausa"
@@ -59,6 +60,7 @@ enum BreakModeAppEnum: String, AppEnum {
         .catPile: "Invasione di gatti",
         .laserChase: "Caccia al laser",
         .keyboardCat: "Il gatto sulla tastiera",
+        .birdWatching: "Il gatto alla finestra",
         .random: "Sorpresa",
     ]
 }
@@ -87,6 +89,7 @@ enum LongBreakModeAppEnum: String, AppEnum {
     case catPile
     case laserChase
     case keyboardCat
+    case birdWatching
     case random
 
     static let typeDisplayRepresentation: TypeDisplayRepresentation = "Gatto della pausa lunga"
@@ -98,6 +101,7 @@ enum LongBreakModeAppEnum: String, AppEnum {
         .catPile: "Invasione di gatti",
         .laserChase: "Caccia al laser",
         .keyboardCat: "Il gatto sulla tastiera",
+        .birdWatching: "Il gatto alla finestra",
         .random: "Sorpresa",
     ]
 }
