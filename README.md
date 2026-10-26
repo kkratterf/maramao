@@ -203,7 +203,7 @@ The install script does this for you. You only need to do it once per version.
 
 ### 5. Where is it?
 
-Maramao lives in the **menu bar**, top right: look for the 🐱 (it turns into 🍅 and a countdown while you work). There is no Dock icon and no window until you click it. From the menu you start the timer, pick a cat, open the settings, or try a break right away with **Try a cat**.
+Maramao lives in the **menu bar**, top right: look for the 🐱 (it turns into 🍅 and a countdown while you work). There is no Dock icon. The first time you open it, a cat welcomes you in a small window: it sets the timer, lets you pick a cat, shows a 10-second trial break and the emergency exit. You can skip it, and see it again from Settings → **Show the welcome again** (*Rivedi il benvenuto*). From the menu you start the timer, pick a cat, open the settings, or try a break right away with **Try a cat**.
 
 To start Maramao every time you log in, turn on **Open Maramao at login** in Settings. macOS may ask you to allow it in System Settings → General → Login Items.
 
