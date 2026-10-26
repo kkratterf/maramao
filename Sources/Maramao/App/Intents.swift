@@ -113,6 +113,9 @@ struct SetLongBreakModeIntent: AppIntent {
     func perform() async throws -> some IntentResult {
         let id = mode == .same ? AutomationCommand.sameAsShortBreak : mode.rawValue
         AutomationRunner.perform(.setLongBreakMode(id))
+        return .result()
+    }
+}
 
 /// Rhythms for the "Scegli il ritmo" action. Literal display names, like
 /// `BreakModeAppEnum`. Raw values must match `TimerPreset`.
