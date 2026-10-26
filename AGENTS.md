@@ -106,7 +106,7 @@ Agent platforms that assign their own branch names (e.g. `claude/...`) are fine;
 
 - A version with a suffix (`0.3.0-beta.1`) becomes a pre-release and leaves the cask and the appcast alone.
 - Other edits to `Info.plist` (for example `SUPublicEDKey`) trigger the workflow too, find the tag already there and publish nothing.
-- If a release run fails, fix the cause in a normal PR; then the maintainer re-runs it, or starts `release.yml` by hand (`workflow_dispatch`) with the version. The same manual start with `dry_run: true` builds and signs everything and publishes nothing (the files go to the workflow artifacts).
+- If a release run fails, fix the cause in a normal PR that changes `release.yml` (or `Info.plist`): merging it runs the workflow again, which publishes the version whose tag is still missing. The maintainer can also start `release.yml` by hand (`workflow_dispatch`) with the version. The same manual start with `dry_run: true` builds and signs everything and publishes nothing (the files go to the workflow artifacts).
 - **No `CHANGELOG.md`.** The changelog lives only in GitHub Release notes.
 
 ### What agents cannot do here
