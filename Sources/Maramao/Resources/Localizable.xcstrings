@@ -6658,6 +6658,39 @@
           }
         }
       }
+    },
+    "Segnala un problema…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report a Problem…"
+          }
+        }
+      }
+    },
+    "Segnala un problema: copia le informazioni diagnostiche e apre una segnalazione su GitHub": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report a problem: copies the diagnostics and opens a bug report on GitHub"
+          }
+        }
+      }
+    },
+    "Copia versione, macOS, schermi, impostazioni e le ultime righe del log, senza dati personali, e apre su GitHub una segnalazione già compilata. Non parte niente finché non la invii tu.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copies the version, macOS, displays, settings and the last lines of the log, with no personal data, and opens a filled-in bug report on GitHub. Nothing leaves your Mac until you submit it."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

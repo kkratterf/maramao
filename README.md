@@ -1,6 +1,6 @@
 # Maramao 🐈
 
-**Il Pomodoro che ti ferma coi gatti** (the Pomodoro timer that stops you with cats)
+**The Pomodoro timer that stops you with cats**
 
 [![CI](https://github.com/kkratterf/maramao/actions/workflows/ci.yml/badge.svg)](https://github.com/kkratterf/maramao/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/kkratterf/maramao)](https://github.com/kkratterf/maramao/releases/latest)
@@ -8,6 +8,8 @@
 [![Website](https://img.shields.io/badge/website-kkratterf.github.io%2Fmaramao-E8402F)](https://kkratterf.github.io/maramao/)
 
 A native macOS menu bar app for the Pomodoro technique. Work for 25 minutes, then a cat makes sure you actually take the break. Written in Swift with SwiftUI and AppKit.
+
+The app speaks Italian and English and follows the language of your Mac. This README uses the English labels; where it helps, the Italian one follows in parentheses.
 
 **Website:** [kkratterf.github.io/maramao](https://kkratterf.github.io/maramao/)
 
@@ -23,51 +25,51 @@ or download the DMG from the [latest release](https://github.com/kkratterf/maram
 
 ## The cats
 
-Pick one in the menu bar, or let **🎲 Sorpresa** choose a different one every break. You can try each of them right away from **Prova un concept**.
+Pick one in the menu bar, or let **🎲 Surprise me** (*Sorpresa*) choose a different one every break. You can try each of them right away from **Try a cat** (*Prova un concept*).
 
 | | Mode | What happens |
 | --- | --- | --- |
-| 🐈 | **Il gatto sulla finestra** | A cat walks across the screen, jumps on the window you are working in and sits on it. That window is blocked until the break ends. Switch window? The cat follows. |
-| 😹 | **Muro di meme** | The screen fills with cat memes until the break is over. |
-| 😴 | **Non svegliare il gatto** | A cat falls asleep on your screen. Touch the mouse and it wakes up and judges you. |
-| 🐾 | **Invasione di gatti** | Cats rain from the top of the screen and pile up until everything is buried. |
-| 🔴 | **Caccia al laser** | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops. Leave the mouse alone and the cat sits down to groom. |
-| ⌨️ | **Il gatto sulla tastiera** | A cat falls asleep on a big keyboard. Every key you press ends up as cat-typing ("mmmmrrrrrooooow"), and Cmd-Q won't get you out. |
+| 🐈 | **Cat on your window** (*Il gatto sulla finestra*) | A cat walks across the screen, jumps on the window you are working in and sits on it. That window is blocked until the break ends. Switch window? The cat follows. |
+| 😹 | **Meme wall** (*Muro di meme*) | The screen fills with cat memes until the break is over. |
+| 😴 | **Don't wake the cat** (*Non svegliare il gatto*) | A cat falls asleep on your screen. Touch the mouse and it wakes up and judges you. |
+| 🐾 | **Cat invasion** (*Invasione di gatti*) | Cats rain from the top of the screen and pile up until everything is buried. |
+| 🔴 | **Laser chase** (*Caccia al laser*) | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops. Leave the mouse alone and the cat sits down to groom. |
+| ⌨️ | **Cat on the keyboard** (*Il gatto sulla tastiera*) | A cat falls asleep on a big keyboard. Every key you press ends up as cat-typing ("mmmmrrrrrooooow"), and Cmd-Q won't get you out. |
 
-Breaks can be skipped after a minute (configurable), or never in **modalità severa**. Need two more minutes? **Rimanda** on the break pill (or ⌃⌥⌘R) sends the cat away for 1, 3 or 5 minutes and brings the whole break back afterwards, up to 3 times a day by default (Settings → **Severità**). Snoozes show up in the stats. Not to be confused with **Pausa per…**, which puts the whole app to sleep.
+Breaks can be skipped after a minute (configurable), or never in **strict mode** (*modalità severa*). Need two more minutes? **Snooze** (*Rimanda*) on the break pill (or ⌃⌥⌘R) sends the cat away for 1, 3 or 5 minutes and brings the whole break back afterwards, up to 3 times a day by default (Settings → **Strictness**). Snoozes show up in the stats. Not to be confused with **Pause for…**, which puts the whole app to sleep.
 
-With more than one display, **Schermi** in Settings picks where the cats appear: every display, only the main one, or the one with the mouse. The others are just dimmed a little.
+With more than one display, **Displays** in Settings picks where the cats appear: every display, only the main one, or the one with the mouse. The others are just dimmed a little.
 
-**Il tuo gatto** remembers you. Every respected break earns it a treat (*croccantino*) you can give from the menu or Settings; skipped breaks make it a little grumpy, a streak of respected ones makes it happier. During breaks you can pet it with a click (it purrs) and drag it around in *Il gatto sulla finestra* and *Invasione di gatti*. Name it in Settings → **Il tuo gatto**, or turn the whole thing off there.
+**Your cat** remembers you. Every break you take earns it a treat you can give from the menu or Settings; skipped breaks make it a little grumpy, a streak of respected ones makes it happier. During breaks you can pet it with a click (it purrs) and drag it around in *Cat on your window* and *Cat invasion*. Name it in Settings → **Your cat**, or turn the whole thing off there.
 
-Switching rhythm takes one click: **Ritmo** in the menu offers **Classico 25/5**, **Lungo 50/10** (long break 30), **Profondo 90/20** (long break 30) and **Personalizzato**, the times you set in Settings. The session on screen keeps its length; the new rhythm starts with the next phase.
+Switching rhythm takes one click: **Rhythm** (*Ritmo*) in the menu offers **Classic 25/5**, **Long 50/10** (long break 30), **Deep 90/20** (long break 30) and **Custom**, the times you set in Settings. The session on screen keeps its length; the new rhythm starts with the next phase.
 
-In Settings → **Barra dei menu** you choose what the menu bar shows: cat and countdown (default), only the cat, only the countdown, or the cat inside a ring that fills up as the session goes on. The countdown can also drop the seconds (`24m`).
+In Settings → **Menu bar** you choose what the menu bar shows: cat and countdown (default), only the cat, only the countdown, or the cat inside a ring that fills up as the session goes on. The countdown can also drop the seconds (`24m`).
 
 ### Calls and presentations
 
-A cat on your Zoom call is not funny. When the microphone or the camera is in use, or Keynote, PowerPoint, a video or a call app is fullscreen, the break waits one minute at a time (up to 10 minutes by default, or as long as it takes) and a little cat tells you "Ti aspetto dopo la call". Turn it off or change the limit in Settings → **Call e presentazioni**. No permission needed.
+A cat on your Zoom call is not funny. When the microphone or the camera is in use, or Keynote, PowerPoint, a video or a call app is fullscreen, the break waits one minute at a time (up to 10 minutes by default, or as long as it takes) and a little cat tells you "I'll wait until your call is over". Turn it off or change the limit in Settings → **Calls and presentations**. No permission needed.
 
 ### When you step away
 
-Lunch, a meeting, the Mac asleep or locked: Maramao notices (no permission needed). By default the work timer stops while you are away, and if you were gone at least as long as a short break you come back to a fresh start, because you already rested. Settings → **Quando sei via** can also just pause the timer or ignore absences. Either way, a break never starts while the screen is locked or asleep, and never in the first seconds after you are back.
+Lunch, a meeting, the Mac asleep or locked: Maramao notices (no permission needed). By default the work timer stops while you are away, and if you were gone at least as long as a short break you come back to a fresh start, because you already rested. Settings → **When you're away** can also just pause the timer or ignore absences. Either way, a break never starts while the screen is locked or asleep, and never in the first seconds after you are back.
 
 ### Emergency exit
 
-If a break ever gets stuck, or you really have to stop it, press **⌃⌥⌘⌫** (Control-Option-Command-Delete) to end it right away, **modalità severa included**. No shortcut at hand? Click five times quickly in the **top-left corner** of any screen. Neither needs any permission.
+If a break ever gets stuck, or you really have to stop it, press **⌃⌥⌘⌫** (Control-Option-Command-Delete) to end it right away, **strict mode included**. No shortcut at hand? Click five times quickly in the **top-left corner** of any screen. Neither needs any permission.
 
 As a safety net, Maramao also closes every cat window by force if a break is still on screen 30 seconds after it should have ended.
 
 ### Keyboard shortcuts
 
-They work from any app and need no special permission. Turn each one on or off in Settings → **Scorciatoie**.
+They work from any app and need no special permission. Turn each one on or off in Settings → **Shortcuts**.
 
 | Shortcut | Action |
 | --- | --- |
 | ⌃⌥⌘P | Start a pomodoro, or pause / resume it |
 | ⌃⌥⌘B | Take the cat break now |
 | ⌃⌥⌘S | Skip the current phase (a break only once skipping is allowed) |
-| ⌃⌥⌘R | Snooze the break that just started (**Rimanda**, within the daily limit) |
+| ⌃⌥⌘R | Snooze the break that just started (**Snooze**, within the daily limit) |
 
 ### Automation
 
@@ -90,9 +92,9 @@ open maramao://start
 | `maramao://preview/<id>` | Try a break mode for 30 seconds |
 | `maramao://preset/<id>` | Choose the rhythm: `classic`, `long`, `deep` or `custom` |
 
-Mode ids: `walkingCat`, `memeWall`, `sleepyCat`, `catPile`, `laserChase`, `keyboardCat`, or `random` (🎲 Sorpresa). URLs that would end a break early (`start`, `skip`, `reset`) only work once the break may be skipped, so **modalità severa** still wins.
+Mode ids: `walkingCat`, `memeWall`, `sleepyCat`, `catPile`, `laserChase`, `keyboardCat`, or `random` (🎲 Surprise me). URLs that would end a break early (`start`, `skip`, `reset`) only work once the break may be skipped, so **strict mode** still wins.
 
-The **Shortcuts** app also lists Maramao actions: *Inizia un pomodoro*, *Metti in pausa o riprendi*, *Pausa gatto ora*, *Scegli la modalità pausa*, *Scegli il ritmo* and *Stato di Maramao* (returns the phase, the time left and today's pomodori as text). Siri and Spotlight know phrases like "Inizia un pomodoro con Maramao". They show up once `Maramao.app` has been opened from `Applications`.
+The **Shortcuts** app also lists Maramao actions: *Start a pomodoro*, *Pause or resume*, *Cat break now*, *Choose the break mode*, *Choose the rhythm* and *Maramao status* (returns the phase, the time left and today's pomodori as text). Siri and Spotlight know phrases like "Start a pomodoro with Maramao" (in Italian: "Inizia un pomodoro con Maramao"). They show up once `Maramao.app` has been opened from `Applications`.
 
 A Raycast script command, for example:
 
@@ -106,7 +108,7 @@ open "maramao://toggle"
 
 ### Cat packs
 
-A cat pack adds your own cats without touching the code: fur colours for the drawn cat, cat names, meme captions and pictures for **Muro di meme**, and tips for the break bubble. Packs are plain folders in `~/Library/Application Support/Maramao/Cats/`; Settings → **Pacchetti di gatti** has **Apri cartella**, **Ricarica** and a switch per pack. To start, copy [`packs/example`](packs/example) there.
+A cat pack adds your own cats without touching the code: fur colours for the drawn cat, cat names, meme captions and pictures for **Meme wall**, and tips for the break bubble. Packs are plain folders in `~/Library/Application Support/Maramao/Cats/`; Settings → **Cat packs** has **Open folder**, **Reload** and a switch per pack. To start, copy [`packs/example`](packs/example) there.
 
 ```
 Cats/
@@ -121,7 +123,7 @@ Cats/
 {
   "schemaVersion": 1,
   "id": "my-cats",
-  "name": "I miei gatti",
+  "name": "My cats",
   "author": "Your name",
   "license": "CC0-1.0",
   "description": "Optional, up to 300 characters.",
@@ -129,9 +131,9 @@ Cats/
     { "name": "Micio", "fur": "#F0963C", "stripes": "#C8641E", "belly": "#FAE6C8", "eyes": "#6EBE50", "nose": "#F28C99" }
   ],
   "catNames": ["Micio"],
-  "captions": [{ "top": "QUANDO IL TIMER SUONA", "bottom": "E IL GATTO SORRIDE" }],
+  "captions": [{ "top": "WHEN THE TIMER RINGS", "bottom": "AND THE CAT SMILES" }],
   "images": ["images/micio.png"],
-  "tips": { "short": ["Guarda lontano per venti secondi."], "long": ["Fai due passi."] }
+  "tips": { "short": ["Look away for twenty seconds."], "long": ["Go for a short walk."] }
 }
 ```
 
@@ -151,7 +153,7 @@ Maramao needs **macOS 13 Ventura or later** and no special permissions. Pick one
 ### 1. The DMG (drag and drop)
 
 1. Download `Maramao-x.y.z.dmg` from the [latest release](https://github.com/kkratterf/maramao/releases/latest).
-2. Open it and drag the cat onto **Applicazioni** (`Applications`).
+2. Open it and drag the cat onto **Applications**.
 3. Eject the disk image.
 
 Every release also ships a plain `Maramao-x.y.z.zip` and a `SHA256SUMS.txt` to check the downloads (`shasum -a 256 -c SHA256SUMS.txt --ignore-missing`).
@@ -183,13 +185,13 @@ The tap lives in this repository (`Casks/maramao.rb`) and is updated by every re
 
 ### 4. First launch and Gatekeeper
 
-Maramao is not notarized by Apple yet, so the first time you open a copy from the DMG or the zip macOS says it cannot verify the developer and offers only **Fine** (Done) or the Bin. To open it anyway:
+Maramao is not notarized by Apple yet, so the first time you open a copy from the DMG or the zip macOS says it cannot verify the developer and offers only **Done** or the Bin. To open it anyway:
 
-1. Try to open it once and close the warning with **Fine** (Done).
-2. Go to **System Settings → Privacy & Security**, scroll down and click **Apri comunque** (Open Anyway) next to the message about Maramao.
-3. Enter your Mac password and confirm with **Apri** (Open).
+1. Try to open it once and close the warning with **Done**.
+2. Go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway** next to the message about Maramao.
+3. Enter your Mac password and confirm with **Open**.
 
-On macOS 13 and 14 the old shortcut also works: right-click `Maramao.app` in Applications → **Apri** (Open) → **Apri** again. macOS 15 Sequoia removed it.
+On macOS 13 and 14 the old shortcut also works: right-click `Maramao.app` in Applications → **Open** → **Open** again. macOS 15 Sequoia removed it.
 
 Or skip all that and clear the quarantine flag in Terminal:
 
@@ -201,13 +203,13 @@ The install script does this for you. You only need to do it once per version.
 
 ### 5. Where is it?
 
-Maramao lives in the **menu bar**, top right: look for the 🐱 (it turns into 🍅 and a countdown while you work). There is no Dock icon and no window until you click it. From the menu you start the timer, pick a cat, open the settings, or try a break right away with **Prova un concept**.
+Maramao lives in the **menu bar**, top right: look for the 🐱 (it turns into 🍅 and a countdown while you work). There is no Dock icon and no window until you click it. From the menu you start the timer, pick a cat, open the settings, or try a break right away with **Try a cat**.
 
-To start Maramao every time you log in, turn on **Apri Maramao all'avvio del Mac** in Settings. macOS may ask you to allow it in System Settings → General → Login Items.
+To start Maramao every time you log in, turn on **Open Maramao at login** in Settings. macOS may ask you to allow it in System Settings → General → Login Items.
 
 ### 6. Updating
 
-Install the new version the same way: drag the new DMG's app over the old one (choose **Sostituisci**, Replace), or run the one-liner again. Your settings are kept.
+Install the new version the same way: drag the new DMG's app over the old one (choose **Replace**), or run the one-liner again. Your settings are kept.
 
 With Homebrew: `brew update && brew upgrade --cask --greedy maramao` (the cask is marked `auto_updates`, so a plain `brew upgrade` leaves Maramao alone and lets the app update itself).
 

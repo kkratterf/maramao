@@ -200,6 +200,14 @@ struct SettingsView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .textSelection(.enabled)
+                HStack {
+                    Text("Copia versione, macOS, schermi, impostazioni e le ultime righe del log, senza dati personali, e apre su GitHub una segnalazione già compilata. Non parte niente finché non la invii tu.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                    Button("Segnala un problema…") { BugReporter.reportProblem() }
+                }
             }
         }
         .formStyle(.grouped)

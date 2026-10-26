@@ -1,7 +1,6 @@
 import AppKit
 import Carbon.HIToolbox
 import MaramaoCore
-import os
 
 /// The way out of any break, strict mode included, that needs no permission and works even
 /// when a break mode's own UI is broken:
@@ -41,7 +40,7 @@ final class EmergencyExitGuard {
             Task { @MainActor in self?.fire() }
         }
         if !registered {
-            Logger.breaks.error("Could not register the emergency shortcut; the corner and the key monitor still work")
+            DiagnosticLog.breaks.error("Could not register the emergency shortcut; the corner and the key monitor still work")
         }
 
         // Belt and braces: when one of our windows is key the local monitor sees the shortcut
