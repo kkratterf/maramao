@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Builds dist/Maramao-<version>.dmg: a tall styled installer window with
-# Maramao.app on top, an Applications shortcut below it and a background
-# drawn in code by scripts/make-dmg-background.swift (the PNGs are kept in
-# .build/dmg/background for review).
+# Builds dist/Maramao-<version>.dmg: a styled installer window with
+# Maramao.app on the left, an Applications shortcut on the right and the
+# website hero as background (Resources/dmg/*.png, rendered from
+# scripts/dmg-background/background.html by scripts/render-dmg-background.mjs).
 #
 # Usage: scripts/build-dmg.sh [--rebuild]
 #   Reuses dist/Maramao.app when it exists (so a signed app is kept),
@@ -23,14 +23,15 @@ WORK="$ROOT/.build/dmg"
 SIGN_IDENTITY="${SIGN_IDENTITY:--}"
 VOLNAME="Maramao"
 
-# Window geometry: must match scripts/make-dmg-background.swift.
-WIN_W=440
-WIN_H=588
+# Window geometry: must match scripts/dmg-background/background.html. The
+# bounds include the ~28 pt title bar above the 660x420 background.
+WIN_W=660
+WIN_H=448
 WIN_X=200
 WIN_Y=120
 ICON_SIZE=128
-APP_POS="220, 196"
-APPS_POS="220, 430"
+APP_POS="190, 222"
+APPS_POS="470, 222"
 
 warn() {
   if [ -n "${GITHUB_ACTIONS:-}" ]; then
@@ -59,13 +60,12 @@ ditto "$APP" "$STAGING/Maramao.app"
 ln -s /Applications "$STAGING/Applications"
 
 BACKGROUND=""
-if swift "$ROOT/scripts/make-dmg-background.swift" "$WORK/background" \
-  && tiffutil -cathidpicheck "$WORK/background/background.png" "$WORK/background/background@2x.png" \
+if tiffutil -cathidpicheck "$ROOT/Resources/dmg/background.png" "$ROOT/Resources/dmg/background@2x.png" \
     -out "$STAGING/.background/background.tiff"; then
   BACKGROUND="background.tiff"
   echo "Created DMG background ($(wc -c < "$STAGING/.background/background.tiff" | tr -d ' ') bytes)"
 else
-  warn "could not draw the DMG background, building without it"
+  warn "could not prepare the DMG background, building without it"
   rmdir "$STAGING/.background" 2>/dev/null || true
 fi
 
