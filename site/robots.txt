@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kkratterf.github.io/maramao/sitemap.xml
+Sitemap: https://maramao.kkratter.com/sitemap.xml

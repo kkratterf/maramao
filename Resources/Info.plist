@@ -45,7 +45,7 @@
     <key>NSHumanReadableCopyright</key>
     <string>MIT License</string>
     <key>SUFeedURL</key>
-    <string>https://kkratterf.github.io/maramao/appcast.xml</string>
+    <string>https://maramao.kkratter.com/appcast.xml</string>
     <key>SUPublicEDKey</key>
     <string>35joF/vAnnPkPnkU/lUCgx0RAYMDFSVBAWVfFl6j82s=</string>
     <key>SUEnableAutomaticChecks</key>

@@ -40,7 +40,7 @@ name: Release
 # Auto-update with Sparkle (optional). When the SPARKLE_ED_PRIVATE_KEY secret
 # is set, the zip is signed with Sparkle's sign_update and, for non-pre-release
 # versions, added to site/appcast.xml, committed to main and deployed to
-# GitHub Pages (https://kkratterf.github.io/maramao/appcast.xml). Without the
+# GitHub Pages (https://maramao.kkratter.com/appcast.xml). Without the
 # secret, or when sign_update rejects it, these steps are skipped with a
 # warning and the release still goes out.
 #   SPARKLE_ED_PRIVATE_KEY          private EdDSA key exported with Sparkle's
