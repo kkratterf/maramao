@@ -1,0 +1,54 @@
+<!doctype html>
+<!--
+  The DMG installer background: the website hero (the same Grainient
+  gradient, colours and headline) cut to the Finder window.
+  scripts/render-dmg-background.mjs screenshots it into Resources/dmg/.
+  Open it with #icons to preview where Finder puts the two icons.
+
+  The design space is 660x420 points. Finder places the icons (centres,
+  top-left origin) at (190, 222) and (470, 222): keep scripts/build-dmg.sh
+  in sync.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Maramao DMG background</title>
+<style>
+  html, body { margin: 0; background: #08080a; }
+  .bg { position: relative; width: 660px; height: 420px; overflow: hidden; background: #08080a; font-family: -apple-system, "Inter", "Helvetica Neue", Arial, sans-serif; }
+  .grainient { position: absolute; inset: 0; }
+  .grainient canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  /* A warm glow under the icons and a dark veil behind the headline, as on the site */
+  .glow { position: absolute; inset: 0; background: radial-gradient(70% 60% at 50% 105%, rgb(255 90 60 / 38%), transparent 70%); }
+  .veil { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 14%, rgb(8 8 10 / 70%), transparent 75%); }
+  h1 { position: absolute; left: 0; right: 0; top: 40px; margin: 0; text-align: center; color: #f4f4f5; font-size: 30px; font-weight: 700; letter-spacing: -.035em; line-height: 1.1; }
+  h1 span { color: rgb(244 244 245 / 62%); }
+  .arrow { position: absolute; left: 290px; top: 202px; }
+  .icon { position: absolute; top: 158px; width: 128px; text-align: center; color: #fff; font-size: 13px; }
+  .icon img, .icon svg { display: block; width: 128px; height: 128px; }
+  .icon span { display: block; margin-top: 6px; }
+</style>
+</head>
+<body>
+<div class="bg" id="bg">
+  <div class="grainient" data-grainient data-colors="#08080a,#1d0c08,#8a2a12,#ff5a3c,#ffc2a8" data-angle="20" data-speed="0.8" data-flow="0.9" data-silk="0.3" data-grain-amount="0.07" data-dpr="2" data-interactive="false"><canvas></canvas></div>
+  <div class="glow"></div>
+  <div class="veil"></div>
+  <h1>Work for 25 minutes<br><span>Then the cat takes over</span></h1>
+  <svg class="arrow" width="80" height="40" viewBox="0 0 80 40" aria-hidden="true">
+    <path d="M10 6L28 20L10 34" fill="none" stroke="rgb(255 255 255 / 40%)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M32 6L50 20L32 34" fill="none" stroke="rgb(255 255 255 / 65%)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M54 6L72 20L54 34" fill="none" stroke="rgb(255 255 255 / 92%)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div id="icons" hidden>
+    <div class="icon" style="left: 126px"><img src="../../site/favicon.svg" alt=""><span>Maramao</span></div>
+    <div class="icon" style="left: 406px">
+      <svg viewBox="0 0 128 128" aria-hidden="true"><path d="M12 34a8 8 0 0 1 8-8h28l10 10h50a8 8 0 0 1 8 8v6H12z" fill="#3d8fd6"/><rect x="12" y="42" width="104" height="70" rx="9" fill="#5eaaf0"/><path d="M50 98L64 60L78 98M55 86H73" fill="none" stroke="#2f7cc4" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Applications</span>
+    </div>
+  </div>
+</div>
+<script>if (location.hash === '#icons') document.getElementById('icons').hidden = false;</script>
+<script src="../../site/grainient.js"></script>
+</body>
+</html>
