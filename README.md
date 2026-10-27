@@ -5,13 +5,13 @@
 [![CI](https://github.com/kkratterf/maramao/actions/workflows/ci.yml/badge.svg)](https://github.com/kkratterf/maramao/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/kkratterf/maramao)](https://github.com/kkratterf/maramao/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](#license)
-[![Website](https://img.shields.io/badge/website-kkratterf.github.io%2Fmaramao-E8402F)](https://kkratterf.github.io/maramao/)
+[![Website](https://img.shields.io/badge/website-maramao.kkratter.com-E8402F)](https://maramao.kkratter.com/)
 
 A native macOS menu bar app for the Pomodoro technique. Work for 25 minutes, then a cat makes sure you actually take the break. Written in Swift with SwiftUI and AppKit.
 
 The app speaks Italian and English and follows the language of your Mac. This README uses the English labels; where it helps, the Italian one follows in parentheses.
 
-**Website:** [kkratterf.github.io/maramao](https://kkratterf.github.io/maramao/)
+**Website:** [maramao.kkratter.com](https://maramao.kkratter.com/)
 
 **Install** (macOS 13+, free, no special permissions):
 
@@ -256,7 +256,7 @@ Contributions are welcome, from a new cat to a timer fix.
 
 Every cat in Maramao is drawn in code (`Sources/Maramao/Shared/CatView.swift`). No third-party images, memes or GIFs are bundled.
 
-The [website](https://kkratterf.github.io/maramao/) shows short clips of real cats from Wikimedia Commons, trimmed and re-encoded in `site/media/`. They are not part of the app. The CC BY-SA clips are shared under the same license:
+The [website](https://maramao.kkratter.com/) shows short clips of real cats from Wikimedia Commons, trimmed and re-encoded in `site/media/`. They are not part of the app. The CC BY-SA clips are shared under the same license:
 
 - [Black Cat walking.webm](https://commons.wikimedia.org/wiki/File:Black_Cat_walking.webm) by Dzkouslavia, CC0 ([license](https://creativecommons.org/publicdomain/zero/1.0/deed.en))
 - [Kluse - Lotti playing in a box v 01 ies.webm](https://commons.wikimedia.org/wiki/File:Kluse_-_Lotti_playing_in_a_box_v_01_ies.webm) by Frank Vincentz, CC BY-SA 3.0 ([license](https://creativecommons.org/licenses/by-sa/3.0))

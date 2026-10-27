@@ -1,6 +1,6 @@
 # Maramao
 
-> Maramao is a free, open-source Pomodoro timer for the macOS menu bar. You work for 25 minutes, then a cat takes over the screen so you actually take the break. Native Swift app (SwiftUI and AppKit), macOS 13 Ventura or later, Apple Silicon and Intel, MIT license, no special permissions, no tracking. The app speaks English and Italian and follows the language of the Mac. Website: https://kkratterf.github.io/maramao/ (English) and https://kkratterf.github.io/maramao/it/ (Italian). FAQ: https://kkratterf.github.io/maramao/faq/
+> Maramao is a free, open-source Pomodoro timer for the macOS menu bar. You work for 25 minutes, then a cat takes over the screen so you actually take the break. Native Swift app (SwiftUI and AppKit), macOS 13 Ventura or later, Apple Silicon and Intel, MIT license, no special permissions, no tracking. The app speaks English and Italian and follows the language of the Mac. Website: https://maramao.kkratter.com/ (English) and https://maramao.kkratter.com/it/ (Italian). FAQ: https://maramao.kkratter.com/faq/
 
 Key facts:
 

@@ -10,7 +10,7 @@ cask "maramao" do
   url "https://github.com/kkratterf/maramao/releases/download/v#{version}/Maramao-#{version}.dmg"
   name "Maramao"
   desc "Pomodoro timer for the menu bar that stops you with cats"
-  homepage "https://kkratterf.github.io/maramao/"
+  homepage "https://maramao.kkratter.com/"
 
   livecheck do
     url :url
