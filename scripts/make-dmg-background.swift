@@ -6,7 +6,7 @@
 //   tiffutil -cathidpicheck background.png background@2x.png -out background.tiff
 //
 // A tall window, top to bottom: a dark keyboard where Maramao.app sits as
-// the glowing F4 key (fn-F4 starts a pomodoro), then a lighter panel with
+// the glowing M key (⌃⌥⌘M starts a pomodoro), then a lighter panel with
 // chevrons pointing down to the Applications folder.
 //
 // The design space is 440x588 points, origin bottom-left. Finder places
@@ -148,19 +148,6 @@ func drawKey(in ctx: CGContext, rect: CGRect, centered: String = "") {
     }
 }
 
-/// The globe printed on the fn key of recent Apple keyboards.
-func drawGlobe(in ctx: CGContext, center: CGPoint, radius r: CGFloat, color: CGColor) {
-    ctx.setStrokeColor(color)
-    ctx.setLineWidth(1.5)
-    ctx.addPath(ellipse(center.x, center.y, r, r))
-    ctx.addPath(ellipse(center.x, center.y, r * 0.45, r))
-    ctx.move(to: CGPoint(x: center.x, y: center.y - r))
-    ctx.addLine(to: CGPoint(x: center.x, y: center.y + r))
-    ctx.move(to: CGPoint(x: center.x - r, y: center.y))
-    ctx.addLine(to: CGPoint(x: center.x + r, y: center.y))
-    ctx.strokePath()
-}
-
 /// One line of text starting at `x`, or ending at `rightX`.
 func drawText(_ text: String, in ctx: CGContext, font: CTFont, color: CGColor,
               x: CGFloat? = nil, rightX: CGFloat? = nil, baselineY: CGFloat) {
@@ -211,20 +198,23 @@ func drawBackground(in ctx: CGContext, scale: CGFloat) {
         drawKey(in: ctx, rect: CGRect(x: x, y: top(106), width: keySize, height: keySize), centered: letter)
     }
 
-    // Middle row, sinking into the panel below: fn on the left, the app as
-    // F4 in the middle, F5 on the right.
+    // Middle row, sinking into the panel below: the app as M in the middle,
+    // between command and option, like a hand reaching for ⌃⌥⌘M.
     let slot: CGFloat = 144
     let ring = CGRect(x: appCenter.x - slot / 2, y: appCenter.y - slot / 2, width: slot, height: slot)
     let sideWidth: CGFloat = 130
     let sideBottom = panelTop - 30
     let sideTop = ring.maxY
-    let fnKey = CGRect(x: ring.minX - gap - sideWidth, y: sideBottom, width: sideWidth, height: sideTop - sideBottom)
-    let f5Key = CGRect(x: ring.maxX + gap, y: sideBottom, width: sideWidth, height: sideTop - sideBottom)
-    drawKey(in: ctx, rect: fnKey)
-    drawKey(in: ctx, rect: f5Key)
-    drawGlobe(in: ctx, center: CGPoint(x: fnKey.maxX - 26, y: fnKey.maxY - 26), radius: 9, color: legendColor)
-    drawText("fn", in: ctx, font: legendFont, color: legendColor, x: fnKey.minX + 16, baselineY: panelTop + 18)
-    drawText("F5", in: ctx, font: legendFont, color: legendColor, rightX: f5Key.maxX - 16, baselineY: panelTop + 18)
+    let commandKey = CGRect(x: ring.minX - gap - sideWidth, y: sideBottom, width: sideWidth, height: sideTop - sideBottom)
+    let optionKey = CGRect(x: ring.maxX + gap, y: sideBottom, width: sideWidth, height: sideTop - sideBottom)
+    drawKey(in: ctx, rect: commandKey)
+    drawKey(in: ctx, rect: optionKey)
+    // Legends as printed on Apple keyboards: the symbol in the top corner,
+    // the name in the bottom one.
+    drawText("⌘", in: ctx, font: legendFont, color: legendColor, rightX: commandKey.maxX - 16, baselineY: commandKey.maxY - 32)
+    drawText("command", in: ctx, font: legendFont, color: legendColor, x: commandKey.minX + 16, baselineY: panelTop + 18)
+    drawText("⌥", in: ctx, font: legendFont, color: legendColor, x: optionKey.minX + 16, baselineY: optionKey.maxY - 32)
+    drawText("option", in: ctx, font: legendFont, color: legendColor, rightX: optionKey.maxX - 16, baselineY: panelTop + 18)
 
     // The app key: a glowing tomato ring around Finder's 128 pt icon.
     let ringPath = CGPath(roundedRect: ring, cornerWidth: 34, cornerHeight: 34, transform: nil)
