@@ -256,6 +256,8 @@ Contributions are welcome, from a new cat to a timer fix.
 
 Every cat in Maramao is drawn in code (`Sources/Maramao/Shared/CatView.swift`). No third-party images, memes or GIFs are bundled.
 
+The website headings use [Mattone](https://github.com/collletttivo/mattone) by Collletttivo, under the SIL Open Font License 1.1 (`site/fonts/Mattone-OFL.txt`).
+
 The [website](https://maramao.kkratter.com/) shows short clips of real cats from Wikimedia Commons, trimmed and re-encoded in `site/media/`. They are not part of the app. The CC BY-SA clips are shared under the same license:
 
 - [Black Cat walking.webm](https://commons.wikimedia.org/wiki/File:Black_Cat_walking.webm) by Dzkouslavia, CC0 ([license](https://creativecommons.org/publicdomain/zero/1.0/deed.en))

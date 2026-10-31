@@ -1,5 +1,11 @@
-/* Maramao website. Plain CSS, system fonts, no build step.
+/* Maramao website. Plain CSS, no build step. Headings use Mattone (Collletttivo, SIL OFL 1.1, site/fonts/), the rest system fonts.
    Dark, like a Mac app's own site: one accent (tomato), hairline borders, a grainy glow behind the hero. */
+
+@font-face {
+  font-family: "Mattone";
+  src: url("fonts/Mattone-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
 
 :root {
   --bg: #08080a;
@@ -16,6 +22,7 @@
   --radius: 18px;
   --wrap: 1120px;
   --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --display: "Mattone", var(--font);
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color-scheme: dark;
 }
@@ -47,7 +54,9 @@ code, pre { font-family: var(--mono); font-size: .875em; }
 .skip:focus { left: 16px; top: 12px; z-index: 50; background: var(--bg-2); padding: 8px 12px; border-radius: 8px; }
 
 h1, h2, h3 { margin: 0; line-height: 1.1; letter-spacing: -.025em; font-weight: 650; }
-h2 { font-size: clamp(32px, 4.6vw, 48px); }
+/* Mattone has one weight and is wide: no faux bold, tighter tracking */
+h1, h2, .brand { font-family: var(--display); font-weight: 400; letter-spacing: -.02em; }
+h2 { font-size: clamp(28px, 4vw, 42px); }
 h3 { font-size: 17px; letter-spacing: -.01em; font-weight: 600; }
 p { margin: 0; }
 
@@ -60,7 +69,7 @@ p { margin: 0; }
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 12px 32px -12px rgb(0 0 0 / 60%);
   -webkit-backdrop-filter: saturate(170%) blur(20px); backdrop-filter: saturate(170%) blur(20px);
 }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 650; font-size: 16px; justify-self: start; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 400; font-size: 16px; justify-self: start; }
 .brand img { width: 24px; height: 24px; }
 .top nav ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; font-size: 14px; }
 .top nav a { display: block; padding: 6px 12px; border-radius: 8px; color: var(--muted); transition: color .15s, background-color .15s; }
@@ -106,7 +115,7 @@ p { margin: 0; }
 /* A soft dark veil keeps the headline readable over the brightest part of the gradient */
 .grainient::after { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 45% at 50% 22%, rgb(8 8 10 / 72%), transparent 75%); }
 .app-icon { width: 80px; height: 80px; margin: 0 auto 28px; filter: drop-shadow(0 12px 40px rgb(255 90 60 / 45%)); }
-.hero h1 { font-size: clamp(42px, 7vw, 76px); letter-spacing: -.04em; max-width: 13em; margin: 0 auto; }
+.hero h1 { font-size: clamp(32px, 5.6vw, 64px); letter-spacing: -.03em; line-height: 1.08; max-width: 14em; margin: 0 auto; }
 .hero h1 span { color: rgb(244 244 245 / 62%); }
 .hero .lead { margin: 22px auto 0; font-size: 19px; color: rgb(244 244 245 / 72%); max-width: 30em; }
 .ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
@@ -344,10 +353,10 @@ kbd {
 
 /* FAQ page: an accordion, one question per row */
 .faq-page { padding-top: 96px; }
-.faq-page h1 { font-size: clamp(36px, 5.5vw, 56px); letter-spacing: -.035em; }
+.faq-page h1 { font-size: clamp(32px, 5vw, 52px); }
 .acc { max-width: 760px; margin: 0 auto; border-top: 1px solid var(--line); }
 .acc-item { border-bottom: 1px solid var(--line); }
-.acc-item h2 { font-size: inherit; letter-spacing: normal; }
+.acc-item h2 { font: inherit; letter-spacing: normal; }
 .acc-trigger {
   display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 22px 4px;
   background: none; border: 0; color: var(--ink); font: 600 17px/1.35 var(--font); text-align: left; cursor: pointer;
@@ -364,7 +373,7 @@ kbd {
 /* Footer */
 .foot { border-top: 1px solid var(--line); padding: 56px 0 64px; font-size: 14px; color: var(--muted); }
 .foot-grid { display: grid; grid-template-columns: 1.4fr repeat(3, minmax(0, 1fr)); gap: 32px; }
-.foot h2 { margin: 0 0 14px; font-size: 13px; font-weight: 600; letter-spacing: 0; color: var(--ink); }
+.foot h2 { margin: 0 0 14px; font: 600 13px/1.1 var(--font); letter-spacing: 0; color: var(--ink); }
 .foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .foot a:hover { color: var(--ink); }
 .foot .brand { color: var(--ink); margin-bottom: 12px; }
