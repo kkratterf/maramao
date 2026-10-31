@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+  <channel>
+    <title>Maramao</title>
+    <link>https://github.com/kkratterf/maramao</link>
+    <description>Aggiornamenti di Maramao</description>
+    <language>it</language>
+    <item>
+      <title>Maramao 0.3.3</title>
+      <pubDate>Sat, 31 Oct 2026 15:09:26 GMT</pubDate>
+      <link>https://github.com/kkratterf/maramao/releases/tag/v0.3.3</link>
+      <sparkle:version>0.3.3</sparkle:version>
+      <sparkle:shortVersionString>0.3.3</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/kkratterf/maramao/releases/tag/v0.3.3</sparkle:fullReleaseNotesLink>
+      <enclosure url="https://github.com/kkratterf/maramao/releases/download/v0.3.3/Maramao-0.3.3.zip" length="3516398" type="application/octet-stream" sparkle:edSignature="EXB+I5pLNbrbJ9hfwDdM+TvzdDHszrlOeleqljipDhdLjrc3eg1At4zXkM25utmrSuY5o6evYDxQ/UQlUyaZCA==" />
+    </item>
+  </channel>
+</rss>
