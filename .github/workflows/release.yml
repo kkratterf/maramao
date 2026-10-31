@@ -302,6 +302,27 @@ jobs:
           fi
           echo "zip: $zip_signature"
           echo "dmg: $dmg_signature"
+          # A key that signs fine but is not the pair of SUPublicEDKey would
+          # publish updates every installed copy rejects: compare them first.
+          # generate_keys -x exports the 32-byte seed in base64.
+          cat > "$RUNNER_TEMP/public-key.swift" <<'SWIFT'
+          import CryptoKit
+          import Foundation
+          let line = readLine() ?? ""
+          guard let data = Data(base64Encoded: line), data.count >= 32,
+                let key = try? Curve25519.Signing.PrivateKey(rawRepresentation: data.prefix(32)) else {
+              print("invalid")
+              exit(0)
+          }
+          print(key.publicKey.rawRepresentation.base64EncodedString())
+          SWIFT
+          derived_key=$(printf '%s\n' "$key" | swift "$RUNNER_TEMP/public-key.swift")
+          if [ "$derived_key" != "$public_key" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::SPARKLE_ED_PRIVATE_KEY does not match SUPublicEDKey in Resources/Info.plist (its public key is $derived_key): the appcast is not updated, so installed copies are not offered an update they would reject"
+            exit 0
+          fi
+          echo "SPARKLE_ED_PRIVATE_KEY matches SUPublicEDKey"
           echo "enabled=true" >> "$GITHUB_OUTPUT"
           echo "zip_signature=$zip_signature" >> "$GITHUB_OUTPUT"
 
