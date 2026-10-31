@@ -177,6 +177,10 @@ jobs:
       - name: brew audit
         run: |
           brew tap-new --no-git maramao/ci
+          # Newer Homebrew refuses casks from taps nobody trusted yet.
+          if brew commands | grep -qx trust; then
+            brew trust maramao/ci
+          fi
           tap="$(brew --repository)/Library/Taps/maramao/homebrew-ci"
           mkdir -p "$tap/Casks"
           cp Casks/maramao.rb "$tap/Casks/maramao.rb"
