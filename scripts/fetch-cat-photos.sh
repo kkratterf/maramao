@@ -25,7 +25,8 @@ while IFS=$'\t' read -r kind name url sha page author; do
     mv "$src.part" "$src"
   fi
   actual="$(shasum -a 256 "$src" | cut -d' ' -f1)"
-  if [ -n "$sha" ] && [ "$sha" != "$actual" ]; then
+  # Tabs count as whitespace for read, so an empty column would shift the others: "-" means none.
+  if [ "$sha" != "-" ] && [ "$sha" != "$actual" ]; then
     echo "error: $name: sha256 $actual, expected $sha ($url)" >&2
     rm -f "$src"
     exit 1
