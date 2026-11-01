@@ -9,10 +9,27 @@ struct HotKeyCombo: Equatable {
 
     /// ⌃⌥⌘ together: rarely used by other apps, so a safe base for defaults.
     static let controlOptionCommand = UInt32(controlKey | optionKey | cmdKey)
+    /// ⇧⌘ together.
+    static let shiftCommand = UInt32(shiftKey | cmdKey)
 
     init(keyCode: Int, modifiers: UInt32) {
         self.keyCode = UInt32(keyCode)
         self.modifiers = modifiers
+    }
+
+    /// The same combination as an `NSMenuItem` key equivalent, e.g. "m".
+    var keyEquivalent: String {
+        HotKeyCombo.keyName(Int(keyCode)).lowercased()
+    }
+
+    /// The modifiers as `NSMenuItem.keyEquivalentModifierMask`.
+    var modifierFlags: NSEvent.ModifierFlags {
+        var flags: NSEvent.ModifierFlags = []
+        if modifiers & UInt32(controlKey) != 0 { flags.insert(.control) }
+        if modifiers & UInt32(optionKey) != 0 { flags.insert(.option) }
+        if modifiers & UInt32(shiftKey) != 0 { flags.insert(.shift) }
+        if modifiers & UInt32(cmdKey) != 0 { flags.insert(.command) }
+        return flags
     }
 
     /// Human readable form in the macOS order, e.g. "⌃⌥⌘P".

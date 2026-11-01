@@ -6868,17 +6868,6 @@
         }
       }
     },
-    "Il classico è 25 minuti di lavoro e 5 di pausa. Puoi cambiarli quando vuoi nelle Impostazioni.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The classic is 25 minutes of work and 5 of rest. You can change them any time in Settings."
-          }
-        }
-      }
-    },
     "Scegli il tuo gatto": {
       "extractionState": "manual",
       "localizations": {
@@ -7335,13 +7324,101 @@
         }
       }
     },
-    "Non vedi il mio musetto lassù? La barra è troppo piena e la tacca dello schermo mi copre: togli qualche icona, oppure riapri Maramao dalla cartella Applicazioni e ti apro una finestra.": {
+    "Un gatto dorme a tutto schermo. Tocca mouse o tastiera e si sveglia arrabbiato.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Can't spot my little face up there? The bar is too full and the notch is hiding me: drop a few icons, or open Maramao again from Applications and I'll pop up a window."
+            "value": "A cat sleeps across your whole screen. Touch the mouse or the keyboard and it wakes up furious."
+          }
+        }
+      }
+    },
+    "Esci da Maramao": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit Maramao"
+          }
+        }
+      }
+    },
+    "Prova la modalità": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try Mode"
+          }
+        }
+      }
+    },
+    "Una pausa finta di 30 secondi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A pretend break of 30 seconds"
+          }
+        }
+      }
+    },
+    "Pausa per": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause For"
+          }
+        }
+      }
+    },
+    "Aggiorna alla versione %@…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update to Version %@…"
+          }
+        }
+      }
+    },
+    "Il classico è 25 minuti di lavoro e 5 di pausa.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The classic is 25 minutes of work and 5 of rest."
+          }
+        }
+      }
+    },
+    "Cambia la durata di pomodoro e pause: Classico, Lungo, Profondo o Personalizzato.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Changes how long pomodoros and breaks last: Classic, Long, Deep or Custom."
+          }
+        }
+      }
+    },
+    "Non vedi il mio musetto lassù? La barra è troppo piena e la tacca dello schermo mi copre: togli qualche icona, oppure riapri Maramao dalla cartella Applicazioni e ti apro il menu lì dove sei.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can't spot my little face up there? The bar is too full and the notch is hiding me: drop a few icons, or open Maramao again from Applications and I'll open my menu right where you are."
           }
         }
       }

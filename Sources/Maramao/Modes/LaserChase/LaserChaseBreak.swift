@@ -42,7 +42,6 @@ final class LaserChaseBreak: BreakMode {
 
     private var context: BreakContext?
     private let model = LaserChaseModel(palette: CatPalette.random())
-    private let status = LaserChaseStatus()
     private var cat = LaserChaseSnapshot()
 
     private var windows: [OverlayWindow] = []
@@ -78,9 +77,7 @@ final class LaserChaseBreak: BreakMode {
     private var pounceHeight: CGFloat = 0
     private var catchPoint: CGPoint = .zero
     private var catches = 0
-    private var bubbleStart: TimeInterval = 0
     private var frameCount = 0
-    private var bubbleEnd: TimeInterval = 0
     private var nextHeartID = 0
 
     // MARK: - BreakMode
@@ -112,7 +109,6 @@ final class LaserChaseBreak: BreakMode {
             window.acceptsMouseMovedEvents = true
             let scene = LaserChaseScene(
                 model: model,
-                status: status,
                 context: context,
                 screenFrame: screen.frame,
                 isMain: screen == mainScreen
@@ -137,10 +133,8 @@ final class LaserChaseBreak: BreakMode {
         lastTick = time
         lastMoveAt = time
         enter(.chasing)
-        say(LaserChaseLines.start.randomElement() ?? "Mrrr?", duration: 2.4)
         updateDerivedState(at: time)
         model.snapshot = cat
-        syncStatus()
 
         let relay = LaserChaseRelay { [weak self] in self?.tick() }
         self.relay = relay
@@ -169,9 +163,6 @@ final class LaserChaseBreak: BreakMode {
         if let screen = Self.screen(containing: cat.position) {
             cat.facingLeft = cat.position.x > screen.frame.midX
         }
-        say(LaserChaseLines.result(catches: catches), duration: exitHold + exitFade + 0.5)
-        status.ending = true
-        syncStatus()
 
         // The cat sits proudly for a moment, then everything fades. Closed within ~2.5 s.
         // The task captures self strongly to stay alive after the coordinator lets go.
@@ -296,10 +287,8 @@ final class LaserChaseBreak: BreakMode {
         // move, and every snapshot redraws a full-screen stage on each display.
         frameCount += 1
         let idle = state == .grooming && hypot(vx, vy) < 1
-            && (cat.bubble == nil || (cat.bubbleAge > 0.3 && cat.bubbleRemaining > 0.4))
         if idle && frameCount % 4 != 0 { return }
         model.snapshot = cat
-        syncStatus()
     }
 
     private func enter(_ newState: State) {
@@ -361,7 +350,6 @@ final class LaserChaseBreak: BreakMode {
         case .grooming:
             brake(dt)
             if movedThisTick {
-                say(LaserChaseLines.wakeUp.randomElement() ?? "Mrrr?!", duration: 1.4)
                 enter(.chasing)
             }
         case .proud:
@@ -471,13 +459,9 @@ final class LaserChaseBreak: BreakMode {
             catches += 1
             catchPoint = mouse
             spawnHearts()
-            say(String(localized: "Preso! 🐾"), duration: 1.5)
             CatSounds.shared.chirp()
             enter(.celebrating)
         } else {
-            if Double.random(in: 0...1) < 0.5 {
-                say(LaserChaseLines.missed.randomElement() ?? "Mrr?", duration: 1.3)
-            }
             enter(.missed)
         }
     }
@@ -562,13 +546,6 @@ final class LaserChaseBreak: BreakMode {
             cat.eyesClosed = inState > 0.3 && inState < 1.2
         }
 
-        if cat.bubble != nil {
-            cat.bubbleAge = time - bubbleStart
-            cat.bubbleRemaining = bubbleEnd - time
-            if cat.bubbleRemaining <= 0 {
-                cat.bubble = nil
-            }
-        }
         if !cat.hearts.isEmpty {
             cat.hearts.removeAll { time - $0.birth > LaserChaseHeart.lifetime }
         }
@@ -591,35 +568,6 @@ final class LaserChaseBreak: BreakMode {
         if cat.hearts.count > 30 {
             cat.hearts.removeFirst(cat.hearts.count - 30)
         }
-    }
-
-    private func say(_ text: String, duration: TimeInterval) {
-        let time = now
-        cat.bubble = text
-        cat.bubbleAge = 0
-        cat.bubbleRemaining = duration
-        bubbleStart = time
-        bubbleEnd = time + duration
-    }
-
-    private func syncStatus() {
-        let message: String
-        switch state {
-        case .chasing, .missed:
-            message = String(localized: "Il gatto insegue il puntino. Tu riposa.")
-        case .wiggling, .pouncing:
-            message = String(localized: "Attenzione… sta per saltare!")
-        case .celebrating, .waiting:
-            message = String(localized: "Preso! Muovi il puntino per un'altra caccia.")
-        case .grooming:
-            message = String(localized: "Il gatto si lecca la zampa.")
-        case .proud:
-            message = String(localized: "Pausa finita. Il gatto è fiero di sé.")
-        }
-        if status.message != message { status.message = message }
-        if status.catches != catches { status.catches = catches }
-        let hint = state == .grooming
-        if status.showHint != hint { status.showHint = hint }
     }
 
     // MARK: - Screens

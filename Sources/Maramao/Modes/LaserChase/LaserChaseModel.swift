@@ -36,9 +36,6 @@ struct LaserChaseSnapshot {
     /// Last positions of the dot, oldest first, for the glowing trail.
     var trail: [CGPoint] = []
     var hearts: [LaserChaseHeart] = []
-    var bubble: String?
-    var bubbleAge: TimeInterval = 0
-    var bubbleRemaining: TimeInterval = 0
 
     var height: CGFloat { width * 0.8 }
 
@@ -59,15 +56,6 @@ final class LaserChaseModel: ObservableObject {
     }
 }
 
-/// Slow-changing state for the HUD and texts, kept apart so they do not redraw every frame.
-@MainActor
-final class LaserChaseStatus: ObservableObject {
-    @Published var message = String(localized: "Un puntino rosso! Il gatto lo vuole.")
-    @Published var catches = 0
-    @Published var showHint = false
-    @Published var ending = false
-}
-
 /// Bridges the selector-based frame timer to a closure on the main actor.
 @MainActor
 final class LaserChaseRelay: NSObject {
@@ -85,34 +73,4 @@ final class LaserChaseRelay: NSObject {
 /// Hosts a screen's scene and lets the skip button work on the first click.
 final class LaserChaseHostingView: NSHostingView<AnyView> {
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
-}
-
-/// What the cat says.
-enum LaserChaseLines {
-    static let start = [
-        String(localized: "Cos'è quel puntino rosso?!"),
-        String(localized: "Un puntino! È mio!"),
-        String(localized: "Mrrr… lo vedo, sai."),
-    ]
-
-    static let missed = [
-        String(localized: "Mancato!"),
-        String(localized: "Mrr?"),
-        String(localized: "Dov'è finito?"),
-        String(localized: "Era qui un attimo fa…"),
-    ]
-
-    static let wakeUp = [
-        String(localized: "Mrrr?!"),
-        String(localized: "Si muove!"),
-        String(localized: "Eccolo di nuovo!"),
-    ]
-
-    static func result(catches: Int) -> String {
-        switch catches {
-        case 0: return String(localized: "Catture: 0. Il puntino era troppo veloce 😼")
-        case 1: return String(localized: "Catture: 1. Il gatto è fiero di sé 😺")
-        default: return String(localized: "Catture: \(catches)! Cacciatore provetto 😻")
-        }
-    }
 }

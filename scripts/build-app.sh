@@ -116,6 +116,16 @@ if [ -n "$ICNS" ]; then
     || /usr/libexec/PlistBuddy -c "Add :CFBundleIconFile string AppIcon" "$APP/Contents/Info.plist" || true
 fi
 
+# Cat photos for "Non svegliare il gatto" (CC0, see Resources/cat-photos.tsv). In CI a
+# missing photo fails the build; locally the mode falls back to a plain emoji scene.
+if ! "$ROOT/scripts/fetch-cat-photos.sh" "$APP/Contents/Resources/CatPhotos"; then
+  if [ "${GITHUB_ACTIONS:-}" = "true" ]; then
+    echo "::error::Could not fetch the cat photos (scripts/fetch-cat-photos.sh)"
+    exit 1
+  fi
+  echo "warning: could not fetch the cat photos, the sleepy cat falls back to emoji" >&2
+fi
+
 # App Intents metadata (the Focus filter and the Shortcuts actions). Xcode extracts it for app targets
 # but not for SwiftPM executables, so do Xcode's two steps by hand: ask the
 # compiler for the "const values" of the app module, then run Xcode's

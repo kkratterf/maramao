@@ -13,25 +13,17 @@ import MaramaoCore
 /// plus `unchanged` for "whatever is in Settings".
 enum FocusFilterBreakMode: String, AppEnum {
     case unchanged
-    case walkingCat
-    case memeWall
     case sleepyCat
     case catPile
     case laserChase
-    case keyboardCat
-    case birdWatching
     case random
 
     static let typeDisplayRepresentation: TypeDisplayRepresentation = "Modalità pausa"
     static let caseDisplayRepresentations: [FocusFilterBreakMode: DisplayRepresentation] = [
         .unchanged: "Come nelle impostazioni",
-        .walkingCat: "Il gatto sulla finestra",
-        .memeWall: "Muro di meme",
         .sleepyCat: "Non svegliare il gatto",
         .catPile: "Invasione di gatti",
         .laserChase: "Caccia al laser",
-        .keyboardCat: "Il gatto sulla tastiera",
-        .birdWatching: "Il gatto alla finestra",
         .random: "Sorpresa",
     ]
 }

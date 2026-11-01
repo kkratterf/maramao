@@ -80,13 +80,23 @@ jobs:
           probe en
           probe it
           status=0
-          for want in "Start working" "1 pomodoro" "4 pomodoros" "Cat on your window"; do
+          for want in "Start working" "1 pomodoro" "4 pomodoros" "Laser chase"; do
             grep -qxF "$want" probe-en.txt || { echo "::error::English string missing at runtime: $want"; status=1; }
           done
-          for want in "Inizia a lavorare" "1 pomodoro" "4 pomodori" "Il gatto sulla finestra"; do
+          for want in "Inizia a lavorare" "1 pomodoro" "4 pomodori" "Caccia al laser"; do
             grep -qxF "$want" probe-it.txt || { echo "::error::Italian string missing at runtime: $want"; status=1; }
           done
           exit $status
+
+      - name: Check the cat photos
+        run: |
+          photos=dist/Maramao.app/Contents/Resources/CatPhotos
+          for kind in sleeping angry; do
+            count=$(find "$photos/$kind" -type f 2>/dev/null | wc -l | tr -d ' ')
+            [ "$count" -gt 0 ] || { echo "::error::No $kind cat photos in Maramao.app"; exit 1; }
+            echo "$kind: $count photos"
+          done
+          du -sh "$photos"
 
       - name: Check the App Intents metadata
         run: |

@@ -167,7 +167,8 @@ final class AppSettings: ObservableObject {
 
     /// Which cats 🎲 Sorpresa rotates through.
     var surpriseRotation: SurpriseRotation {
-        get { SurpriseRotation(modes: BreakModeID.concrete.map { $0.rawValue }, enabled: Set(surpriseModesRaw)) }
+        // No settings window any more: Sorpresa always rotates through every mode.
+        get { SurpriseRotation(modes: BreakModeID.concrete.map { $0.rawValue }, enabled: Set(BreakModeID.concrete.map { $0.rawValue })) }
         set { surpriseModesRaw = newValue.pool }
     }
 

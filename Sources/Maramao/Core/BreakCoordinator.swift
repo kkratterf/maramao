@@ -125,14 +125,10 @@ final class BreakCoordinator {
 
     private static func make(_ id: BreakModeID) -> BreakMode {
         switch id {
-        case .walkingCat: return WalkingCatBreak()
-        case .memeWall: return MemeWallBreak()
-        case .sleepyCat: return SleepyCatBreak()
-        case .catPile: return CatPileBreak()
         case .laserChase: return LaserChaseBreak()
-        case .keyboardCat: return KeyboardCatBreak()
-        case .birdWatching: return BirdWatchingBreak()
-        case .random: return WalkingCatBreak()
+        case .catPile: return CatPileBreak()
+        case .sleepyCat: return SleepyCatBreak()
+        case .random: return LaserChaseBreak()
         }
     }
 }

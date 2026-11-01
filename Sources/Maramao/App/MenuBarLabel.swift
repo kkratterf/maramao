@@ -2,31 +2,6 @@ import SwiftUI
 import Combine
 import MaramaoCore
 
-/// The menu bar item: emoji and countdown, emoji only, countdown only, or
-/// a symbol inside a progress ring, depending on Settings.
-///
-/// It observes `MenuBarModel`, not the engine, so it only re-renders when
-/// what it shows changes (once a second, or once a minute without seconds),
-/// not on every 0.25 s engine tick.
-struct MenuBarLabel: View {
-    @StateObject private var model = MenuBarModel()
-    @ObservedObject private var availability = AvailabilityStore.shared
-
-    var body: some View {
-        if let until = availability.snoozedUntil, PomodoroEngine.shared.phase == .idle {
-            // "Pausa per…": a sleeping cat and the resume time, whatever the style.
-            Text("😴 \(AvailabilityText.clock(until))")
-                .monospacedDigit()
-        } else if let ring = model.content.ring {
-            Image(nsImage: MenuBarRingRenderer.image(for: ring))
-                .renderingMode(.template)
-        } else {
-            Text(model.content.text)
-                .monospacedDigit()
-        }
-    }
-}
-
 /// Glyph in the middle of the ring, one per state.
 enum MenuBarRingGlyph: Hashable {
     case cat
@@ -177,23 +152,5 @@ private struct MenuBarRingView: View {
         }
         .padding(1)
         .frame(width: 18, height: 18)
-    }
-}
-
-/// Settings section "Barra dei menu".
-struct MenuBarSettingsSection: View {
-    @EnvironmentObject private var settings: AppSettings
-
-    var body: some View {
-        Section("Barra dei menu") {
-            Picker("Nella barra dei menu", selection: $settings.menuBarStyleRaw) {
-                ForEach(MenuBarStyle.allCases) { style in
-                    Text(style.title).tag(style.rawValue)
-                }
-            }
-            if settings.menuBarStyle.showsCountdown {
-                Toggle("Nascondi i secondi (24m invece di 24:59)", isOn: $settings.menuBarHideSeconds)
-            }
-        }
     }
 }

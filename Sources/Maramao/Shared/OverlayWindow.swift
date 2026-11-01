@@ -39,7 +39,7 @@ final class OverlayWindow: NSWindow {
 
     /// Hosts a SwiftUI view as the whole content of the window.
     func host<Content: View>(_ view: Content) {
-        let hosting = NSHostingView(rootView: view)
+        let hosting = FirstClickHostingView(rootView: view)
         hosting.frame = NSRect(origin: .zero, size: frame.size)
         hosting.autoresizingMask = [.width, .height]
         contentView = hosting
@@ -83,6 +83,12 @@ final class OverlayWindow: NSWindow {
             completion?()
         })
     }
+}
+
+/// Lets buttons in an overlay (like the HUD's "Chiudi") work on the first click, even
+/// though overlay windows never become key.
+final class FirstClickHostingView<Content: View>: NSHostingView<Content> {
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 }
 
 extension NSScreen {

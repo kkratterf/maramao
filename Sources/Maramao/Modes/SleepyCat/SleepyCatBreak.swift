@@ -1,9 +1,9 @@
 import AppKit
 import SwiftUI
 
-/// "Non svegliare il gatto": a cat sleeps in a cozy night scene on every screen.
-/// Moving the mouse, scrolling or typing wakes it up, and it is not pleased about it.
-/// The cat tracks how much of the break it managed to sleep.
+/// "Non svegliare il gatto": a full-screen photo of a sleeping cat on every screen.
+/// Moving the mouse, scrolling or typing wakes it up: a photo of an angry cat, a different
+/// one every time. Leave everything alone for a few seconds and it falls asleep again.
 ///
 /// Input is observed with local and global `NSEvent` monitors. Global key events need
 /// Accessibility; without it they are silently missing and mouse input is enough.
@@ -20,15 +20,9 @@ final class SleepyCatBreak: BreakMode {
     private var hasEnded = false
 
     private var startDate = Date()
-    private var lastTick = Date()
     private var lastInput = Date.distantPast
-    private var lastLineDate = Date.distantPast
-    private var lastWakeDate = Date.distantPast
-    private var lastDecayDate = Date.distantPast
+    private var lastPhotoDate = Date.distantPast
     private var anchor: NSPoint = .zero
-
-    private var asleepSeconds: TimeInterval = 0
-    private var totalSeconds: TimeInterval = 0
 
     /// Input in the first seconds is ignored: the user is still letting go of the mouse.
     private let gracePeriod: TimeInterval = 2
@@ -36,21 +30,18 @@ final class SleepyCatBreak: BreakMode {
     private let jitterThreshold: CGFloat = 6
     /// Seconds without input before the cat goes back to sleep.
     private let quietBeforeSleep: TimeInterval = 4
-    private let startledDuration: TimeInterval = 0.45
-    private let drowsyDuration: TimeInterval = 1.1
+    /// Still fiddling while the cat glares: another angry cat after this long.
+    private let photoInterval: TimeInterval = 2.5
 
     func begin(context: BreakContext) {
         guard !hasBegun, !hasEnded else { return }
         hasBegun = true
         self.context = context
 
-        let palettes: [CatPalette] = [.orange, .gray, .cream]
-        let model = SleepyCatModel(palette: palettes.randomElement() ?? .orange)
+        let model = SleepyCatModel(sleepingPhoto: CatPhotos.shared.next(.sleeping))
         self.model = model
 
-        let now = Date()
-        startDate = now
-        lastTick = now
+        startDate = Date()
         anchor = NSEvent.mouseLocation
 
         let screens = BreakScreens.current()
@@ -84,21 +75,12 @@ final class SleepyCatBreak: BreakMode {
         hasEnded = true
         removeMonitorsAndTimers()
 
-        if let model {
-            let percent = currentPercent()
-            model.sleepPercent = percent
-            model.resultLine = SleepyCatLines.result(percent: percent)
-            model.line = ""
-            model.setPhase(.stretching)
-        }
-
         let closing = windows
         windows = []
         guard !closing.isEmpty else { return }
-        // A short stretch, then fade out. Everything is closed within ~2 s.
+        // Fade out. Everything is closed within ~1 s.
         // The task captures self strongly to stay alive after the coordinator lets go.
         Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 1_100_000_000)
             for window in closing {
                 window.fadeOutAndClose(duration: 0.6)
             }
@@ -172,21 +154,14 @@ final class SleepyCatBreak: BreakMode {
         let now = Date()
         lastInput = now
         switch model.phase {
-        case .asleep, .drowsy:
-            model.annoyance = min(model.annoyance + 1, 6)
-            model.line = SleepyCatLines.pick(annoyance: model.annoyance, avoiding: model.line)
-            model.setPhase(.startled)
-            lastLineDate = now
-            lastWakeDate = now
-        case .startled, .awake:
-            // Still fiddling while the cat glares: it gets angrier, one line at a time.
-            if now.timeIntervalSince(lastLineDate) > 2.8 {
-                model.annoyance = min(model.annoyance + 1, 6)
-                model.line = SleepyCatLines.pick(annoyance: model.annoyance, avoiding: model.line)
-                lastLineDate = now
+        case .asleep:
+            model.wake(with: CatPhotos.shared.next(.angry))
+            lastPhotoDate = now
+        case .awake:
+            if now.timeIntervalSince(lastPhotoDate) > photoInterval {
+                model.wake(with: CatPhotos.shared.next(.angry))
+                lastPhotoDate = now
             }
-        case .stretching:
-            break
         }
     }
 
@@ -194,57 +169,15 @@ final class SleepyCatBreak: BreakMode {
 
     private func tick() {
         guard !hasEnded, let model else { return }
-        let now = Date()
-        let dt = min(max(now.timeIntervalSince(lastTick), 0), 0.5)
-        lastTick = now
-
-        totalSeconds += dt
-        if model.phase == .asleep {
-            asleepSeconds += dt
-        }
-        let percent = currentPercent()
-        if percent != model.sleepPercent {
-            model.sleepPercent = percent
-        }
-
         if isInGracePeriod {
             // Follow the pointer until the grace period is over, so letting go of the mouse is free.
             anchor = NSEvent.mouseLocation
         } else {
             checkMouseMovement()
         }
-
-        let inPhase = now.timeIntervalSince(model.phaseStart)
-        switch model.phase {
-        case .startled:
-            if inPhase >= startledDuration { model.setPhase(.awake) }
-        case .awake:
-            if now.timeIntervalSince(lastInput) >= quietBeforeSleep {
-                model.line = ""
-                model.setPhase(.drowsy)
-            }
-        case .drowsy:
-            if inPhase >= drowsyDuration { model.setPhase(.asleep) }
-        case .asleep:
-            // A long, quiet nap slowly calms the cat down again.
-            if model.annoyance > 0,
-               now.timeIntervalSince(lastWakeDate) > 20,
-               now.timeIntervalSince(lastDecayDate) > 20 {
-                model.annoyance -= 1
-                lastDecayDate = now
-            }
-        case .stretching:
-            break
+        if model.phase == .awake, Date().timeIntervalSince(lastInput) >= quietBeforeSleep {
+            model.fallAsleep()
         }
-
-        if let context, model.resultLine == nil, context.remaining <= 3 {
-            model.resultLine = SleepyCatLines.result(percent: percent)
-        }
-    }
-
-    private func currentPercent() -> Int {
-        guard totalSeconds > 0.5 else { return 100 }
-        return Int((asleepSeconds / totalSeconds * 100).rounded())
     }
 }
 

@@ -10,9 +10,9 @@ Maramao is a native macOS Pomodoro timer that lives in the menu bar. When it is 
 | Path | What it is |
 | --- | --- |
 | `Sources/MaramaoCore` | Pure Pomodoro logic (`PomodoroCycle`, `formatClock`). No AppKit, fully unit-tested |
-| `Sources/Maramao/App` | SwiftUI `MenuBarExtra` app, menu panel, settings window |
+| `Sources/Maramao/App` | The app: the menu bar item and its native `NSMenu` (`StatusItemController`), the welcome window |
 | `Sources/Maramao/Core` | `PomodoroEngine` (clock), `BreakCoordinator`, `BreakMode` protocol, `AppSettings`, `BreakModeID` |
-| `Sources/Maramao/Shared` | Building blocks for break modes: `OverlayWindow`, `BreakHUD`, `CatView` (the procedural cat) |
+| `Sources/Maramao/Shared` | Building blocks for break modes: `OverlayWindow`, `BreakHUD`, `CatView` (the procedural cat), `CatPhotos` |
 | `Sources/Maramao/Resources` | `Localizable.xcstrings`: String Catalog, Italian keys with English translations |
 | `Sources/Maramao/Modes/<Name>` | One folder per break concept, each a `BreakMode` |
 | `Tests/MaramaoCoreTests` | XCTest for `MaramaoCore` |
@@ -36,7 +36,7 @@ scripts/build-app.sh release   # dist/Maramao.app
 open dist/Maramao.app
 ```
 
-Every break mode can be tried without waiting 25 minutes: menu bar → "Prova un concept".
+Every break mode can be tried without waiting 25 minutes: menu bar → pick it under "Modalità" → "Prova la modalità".
 
 The website has no build step: preview it with `python3 -m http.server -d site 8000` and open http://localhost:8000.
 
@@ -49,7 +49,7 @@ The website has no build step: preview it with `python3 -m http.server -d site 8
   - it shows the countdown (use `BreakHUD`) and honours `BreakContext.requestSkip()`;
   - it works on every connected display or picks one deliberately;
   - it works **without** Accessibility or Screen Recording permissions. If an optional extra needs one, it degrades gracefully when the permission is missing.
-- **Cats are drawn in code (`CatView`) or come from CC0/public-domain art**, credited in the README. No copyrighted memes, GIFs or stickers, no hotlinking images from the web.
+- **Cats are drawn in code (`CatView`) or come from CC0/public-domain art**, credited in the README. Photos are listed in `Resources/cat-photos.tsv` and fetched into the app at build time by `scripts/fetch-cat-photos.sh`, never loaded from the web at runtime. No copyrighted memes, GIFs or stickers.
 - Keep PRs small and focused: one issue, one PR. Do not mix refactors with behaviour changes.
 - No third-party dependencies without a reason written in the PR description.
 - Match the style of the surrounding code.
@@ -73,7 +73,7 @@ The website has no build step: preview it with `python3 -m http.server -d site 8
 
 - Summary in English, imperative mood, lower case, no trailing period, ≤ 72 characters.
 - Types: `feat`, `fix`, `perf`, `refactor`, `test`, `docs` (README/comments only), `ci`, `build`, `chore`, `revert`.
-- Scopes: `core`, `app`, `engine`, `settings`, `cat` (shared cat drawing), `walking-cat`, `meme-wall`, `sleepy-cat`, `cat-pile` (one per break mode, kebab-case), `ci`, `release`.
+- Scopes: `core`, `app`, `engine`, `settings`, `cat` (shared cat drawing), `laser-chase`, `cat-pile`, `sleepy-cat` (one per break mode, kebab-case), `ci`, `release`.
 - Breaking changes: `feat(core)!: ...` plus a `BREAKING CHANGE:` footer.
 - Body explains *why*, wrapped at 72 columns.
 

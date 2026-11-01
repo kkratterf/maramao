@@ -15,9 +15,9 @@ enum GlobalShortcut: String, CaseIterable, Identifiable {
 
     var combo: HotKeyCombo {
         switch self {
-        // M for Maramao. ⌘⇧M was the first pick, but Teams (mute), Slack and
-        // VS Code already use it, and a global hot key would steal it.
-        case .startPause: return HotKeyCombo(keyCode: kVK_ANSI_M, modifiers: HotKeyCombo.controlOptionCommand)
+        // M for Maramao. The maintainer's pick (2026-11-01), knowing that a global
+        // hot key takes ⇧⌘M away from Teams (mute), Slack and VS Code.
+        case .startPause: return HotKeyCombo(keyCode: kVK_ANSI_M, modifiers: HotKeyCombo.shiftCommand)
         case .takeBreak: return HotKeyCombo(keyCode: kVK_ANSI_B, modifiers: HotKeyCombo.controlOptionCommand)
         case .skip: return HotKeyCombo(keyCode: kVK_ANSI_S, modifiers: HotKeyCombo.controlOptionCommand)
         case .snooze: return HotKeyCombo(keyCode: kVK_ANSI_R, modifiers: HotKeyCombo.controlOptionCommand)
@@ -123,35 +123,6 @@ final class GlobalShortcuts: ObservableObject {
         case .snooze:
             // `snoozeBreak()` itself checks the daily limit and the offer window.
             engine.snoozeBreak()
-        }
-    }
-}
-
-/// Settings section "Scorciatoie": the fixed shortcuts with an on/off toggle each.
-struct ShortcutsSettingsSection: View {
-    @ObservedObject private var shortcuts = GlobalShortcuts.shared
-
-    var body: some View {
-        Section("Scorciatoie") {
-            ForEach(GlobalShortcut.allCases) { shortcut in
-                Toggle(isOn: shortcuts.binding(shortcut)) {
-                    HStack {
-                        Text(shortcut.title)
-                        Spacer()
-                        Text(shortcut.combo.displayString)
-                            .font(.body.monospaced())
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                if shortcuts.failed.contains(shortcut) {
-                    Text("Combinazione già usata da un'altra app.")
-                        .font(.caption)
-                        .foregroundStyle(.red)
-                }
-            }
-            Text("Funzionano da qualsiasi app, senza permessi speciali.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
         }
     }
 }
