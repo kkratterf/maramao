@@ -43,24 +43,16 @@ struct TakeBreakIntent: AppIntent {
 /// compile time, so they must stay literal constants rather than a shared table.
 /// Raw values must match `BreakModeID`.
 enum BreakModeAppEnum: String, AppEnum {
-    case walkingCat
-    case memeWall
     case sleepyCat
     case catPile
     case laserChase
-    case keyboardCat
-    case birdWatching
     case random
 
     static let typeDisplayRepresentation: TypeDisplayRepresentation = "Modalità pausa"
     static let caseDisplayRepresentations: [BreakModeAppEnum: DisplayRepresentation] = [
-        .walkingCat: "Il gatto sulla finestra",
-        .memeWall: "Muro di meme",
         .sleepyCat: "Non svegliare il gatto",
         .catPile: "Invasione di gatti",
         .laserChase: "Caccia al laser",
-        .keyboardCat: "Il gatto sulla tastiera",
-        .birdWatching: "Il gatto alla finestra",
         .random: "Sorpresa",
     ]
 }
@@ -83,25 +75,17 @@ struct SetBreakModeIntent: AppIntent {
 /// Raw values must match `BreakModeID`, except `same`.
 enum LongBreakModeAppEnum: String, AppEnum {
     case same
-    case walkingCat
-    case memeWall
     case sleepyCat
     case catPile
     case laserChase
-    case keyboardCat
-    case birdWatching
     case random
 
     static let typeDisplayRepresentation: TypeDisplayRepresentation = "Gatto della pausa lunga"
     static let caseDisplayRepresentations: [LongBreakModeAppEnum: DisplayRepresentation] = [
         .same: "Come la pausa breve",
-        .walkingCat: "Il gatto sulla finestra",
-        .memeWall: "Muro di meme",
         .sleepyCat: "Non svegliare il gatto",
         .catPile: "Invasione di gatti",
         .laserChase: "Caccia al laser",
-        .keyboardCat: "Il gatto sulla tastiera",
-        .birdWatching: "Il gatto alla finestra",
         .random: "Sorpresa",
     ]
 }
@@ -140,7 +124,7 @@ enum TimerPresetAppEnum: String, AppEnum {
 
 struct SetTimerPresetIntent: AppIntent {
     static let title: LocalizedStringResource = "Scegli il ritmo"
-    static let description: IntentDescription? = IntentDescription("Cambia la durata di pomodoro e pause: Classico, Lungo, Profondo o i tempi delle Impostazioni.")
+    static let description: IntentDescription? = IntentDescription("Cambia la durata di pomodoro e pause: Classico, Lungo, Profondo o Personalizzato.")
 
     @Parameter(title: "Ritmo")
     var preset: TimerPresetAppEnum

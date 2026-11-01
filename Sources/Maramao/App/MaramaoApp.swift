@@ -6,30 +6,21 @@ import MaramaoCore
 @main
 struct MaramaoApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    @StateObject private var engine = PomodoroEngine.shared
-    @StateObject private var settings = AppSettings.shared
-    @StateObject private var stats = StatsStore.shared
 
     var body: some Scene {
-        MenuBarExtra {
-            MenuContentView()
-                .environmentObject(engine)
-                .environmentObject(settings)
-                .environmentObject(stats)
-        } label: {
-            MenuBarLabel()
+        // The UI is the menu bar item's NSMenu, owned by AppDelegate. SwiftUI needs at
+        // least one scene, and an empty Settings scene opens nothing on its own.
+        Settings {
+            EmptyView()
         }
-        .menuBarExtraStyle(.window)
     }
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private var settingsWindow: NSWindow?
+    private var statusItem: StatusItemController?
     /// The welcome window, alive only while it is on screen.
     private var onboardingWindow: NSWindow?
     private var onboardingCloseObserver: NSObjectProtocol?
-    /// The menu panel in a normal window, for when the menu bar item cannot be reached.
-    private var panelWindow: NSWindow?
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         // maramao:// URLs. Installed before launch finishes so the URL that
@@ -59,6 +50,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Menu bar only: no Dock icon (also set via LSUIElement in the bundle).
         NSApp.setActivationPolicy(.accessory)
+        Task { @MainActor in self.statusItem = StatusItemController() }
         // System-wide shortcuts (Carbon hot keys, no permission needed).
         Task { @MainActor in GlobalShortcuts.shared.activate() }
         // Community cat packs from ~/Library/Application Support/Maramao/Cats.
@@ -80,7 +72,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         Task { @MainActor in
             if AppSettings.shared.hasCompletedOnboarding {
-                self.showPanelWindow()
+                self.statusItem?.popUpAtPointer()
             } else {
                 self.showOnboarding()
             }
@@ -94,60 +86,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         PomodoroEngine.shared.shutdown()
     }
 
-    /// Opens the settings window. A plain NSWindow, because `Settings` scenes
-    /// cannot be opened reliably from a MenuBarExtra on every macOS version.
-    @MainActor
-    func showSettings() {
-        if settingsWindow == nil {
-            let window = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 520, height: 560),
-                styleMask: [.titled, .closable],
-                backing: .buffered,
-                defer: false
-            )
-            window.title = String(localized: "Impostazioni di Maramao")
-            window.isReleasedWhenClosed = false
-            window.contentView = NSHostingView(
-                rootView: SettingsView()
-                    .environmentObject(AppSettings.shared)
-                    .environmentObject(PomodoroEngine.shared)
-                    .environmentObject(StatsStore.shared)
-            )
-            window.center()
-            settingsWindow = window
-        }
-        NSApp.activate(ignoringOtherApps: true)
-        settingsWindow?.makeKeyAndOrderFront(nil)
-    }
-
-    /// Opens the menu panel in a regular window, with a hint about where the menu bar item is.
-    @MainActor
-    func showPanelWindow() {
-        if panelWindow == nil {
-            let content = VStack(alignment: .leading, spacing: 0) {
-                Text("Vivo nella barra dei menu, accanto all'orologio. Se lassù non mi vedi, la barra è troppo piena e la tacca dello schermo mi copre: togli qualche icona, oppure usami da questa finestra.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding([.horizontal, .top], 16)
-                    .frame(width: 300, alignment: .leading)
-                MenuContentView()
-                    .environmentObject(PomodoroEngine.shared)
-                    .environmentObject(AppSettings.shared)
-                    .environmentObject(StatsStore.shared)
-            }
-            let window = NSWindow(contentViewController: NSHostingController(rootView: content))
-            window.styleMask = [.titled, .closable]
-            window.title = "Maramao"
-            window.isReleasedWhenClosed = false
-            window.center()
-            panelWindow = window
-        }
-        NSApp.activate(ignoringOtherApps: true)
-        panelWindow?.makeKeyAndOrderFront(nil)
-    }
-
-    /// Opens the welcome window: on first launch, and from Settings. Created on demand and
+    /// Opens the welcome window on first launch. Created on demand and
     /// released when closed. Closing it in any way (finished, skipped, close button) counts
     /// as done, so it is shown once.
     @MainActor

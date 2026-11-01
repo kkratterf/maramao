@@ -48,11 +48,11 @@ struct OnboardingView: View {
         case .welcome:
             title("Ciao, sono Maramao")
             paragraph("Vivo nella barra dei menu, lassù accanto all'orologio: clicca il mio musetto per avviare il timer. Quando il pomodoro finisce, un gatto si prende lo schermo finché non fai una pausa.")
-            paragraph("Non vedi il mio musetto lassù? La barra è troppo piena e la tacca dello schermo mi copre: togli qualche icona, oppure riapri Maramao dalla cartella Applicazioni e ti apro una finestra.")
+            paragraph("Non vedi il mio musetto lassù? La barra è troppo piena e la tacca dello schermo mi copre: togli qualche icona, oppure riapri Maramao dalla cartella Applicazioni e ti apro il menu lì dove sei.")
             paragraph("Non è un virus: è per il tuo bene.")
         case .timing:
             title("Quanto lavori, quanto riposi")
-            paragraph("Il classico è 25 minuti di lavoro e 5 di pausa. Puoi cambiarli quando vuoi nelle Impostazioni.")
+            paragraph("Il classico è 25 minuti di lavoro e 5 di pausa.")
             minutesStepper("Lavoro", value: $settings.workMinutes, range: 1...120)
             minutesStepper("Pausa breve", value: $settings.shortBreakMinutes, range: 1...30)
         case .cat:
@@ -97,9 +97,6 @@ struct OnboardingView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
-            Text("Puoi rivedere questo benvenuto quando vuoi dalle Impostazioni.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
         }
     }
 

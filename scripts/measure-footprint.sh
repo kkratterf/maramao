@@ -20,7 +20,7 @@ WINDOW="${WINDOW:-20}"
 if [ "$#" -gt 0 ]; then
   SCENARIOS=("$@")
 else
-  SCENARIOS=(idle work walkingCat memeWall sleepyCat catPile laserChase keyboardCat birdWatching)
+  SCENARIOS=(idle work laserChase catPile sleepyCat)
 fi
 
 kb() { awk -v b="$1" 'BEGIN { printf "%.0f KB", b / 1024 }'; }

@@ -29,7 +29,7 @@ enum MeasurementHooks {
             String(localized: "Inizia a lavorare"),
             String(localized: "\(1) pomodori"),
             String(localized: "\(4) pomodori"),
-            BreakModeID.walkingCat.title,
+            BreakModeID.laserChase.title,
         ]
         print(lines.joined(separator: "\n"))
         fflush(stdout)

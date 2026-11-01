@@ -8,7 +8,6 @@ import MaramaoCore
 struct CatPackContent {
     var palettes: [CatPalette] = []
     var catNames: [String] = []
-    var captions: [MemeWallCaption] = []
     var imageURLs: [URL] = []
     var shortTips: [String] = []
     var longTips: [String] = []
@@ -137,7 +136,6 @@ final class CatPackLibrary: ObservableObject {
             seenIDs.insert(pack.id)
             content.palettes += pack.palettes.map(CatPalette.init(pack:))
             content.catNames += pack.catNames
-            content.captions += pack.captions.map { MemeWallCaption(top: $0.top, bottom: $0.bottom) }
             content.imageURLs += pack.images.map { CatPackLoader.imageURL(folder: entry.folder, path: $0) }
             content.shortTips += pack.shortTips
             content.longTips += pack.longTips
@@ -158,76 +156,5 @@ extension CatPalette {
             eyes: color(pack.eyes)
         )
         if let nose = pack.nose { self.nose = color(nose) }
-    }
-}
-
-/// Settings section "Pacchetti di gatti".
-struct CatPacksSettingsSection: View {
-    @ObservedObject private var library = CatPackLibrary.shared
-
-    var body: some View {
-        Section("Pacchetti di gatti") {
-            if library.entries.isEmpty {
-                Text("Nessun pacchetto installato. Metti una cartella con un file pack.json in Maramao/Cats e premi Ricarica.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            ForEach(library.entries) { entry in
-                if let pack = entry.pack {
-                    Toggle(isOn: binding(for: entry)) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(pack.name)
-                            Text(summary(pack))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                    }
-                } else {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("⚠️ \(entry.displayName)")
-                        Text(entry.error ?? String(localized: "Pacchetto non valido."))
-                            .font(.caption)
-                            .foregroundStyle(.red)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-            }
-            HStack {
-                Button("Apri cartella") { library.openFolder() }
-                Button("Ricarica") { library.reload() }
-                Spacer()
-            }
-            Text("Un pacchetto aggiunge colori per i gatti, nomi, meme e consigli per le pause. Solo licenze CC0 o CC-BY, niente link dal web.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-    }
-
-    private func binding(for entry: CatPackEntry) -> Binding<Bool> {
-        Binding<Bool>(
-            get: { library.isEnabled(entry) },
-            set: { library.setEnabled(entry, $0) }
-        )
-    }
-
-    private func summary(_ pack: CatPack) -> String {
-        var parts: [String] = []
-        let author = pack.author
-        if !author.isEmpty { parts.append(String(localized: "di \(author)")) }
-        parts.append(pack.license)
-        let palettes = pack.palettes.count
-        if palettes > 0 { parts.append(String(localized: "\(palettes) gatti")) }
-        let captions = pack.captions.count
-        if captions > 0 { parts.append(String(localized: "\(captions) meme")) }
-        let images = pack.images.count
-        if images > 0 { parts.append(String(localized: "\(images) immagini")) }
-        let tips = pack.shortTips.count + pack.longTips.count
-        if tips > 0 { parts.append(String(localized: "\(tips) consigli")) }
-        let names = pack.catNames.prefix(3).joined(separator: ", ")
-        if !names.isEmpty { parts.append(String(localized: "nomi: \(names)")) }
-        return parts.joined(separator: " · ")
     }
 }

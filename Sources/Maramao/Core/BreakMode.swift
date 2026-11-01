@@ -18,8 +18,6 @@ final class BreakContext {
     /// Snoozes left today, for the button's hint.
     let snoozesLeft: Int
     private let onSnooze: () -> Void
-    /// The cat's suggestion for this break, picked once and shared by every screen.
-    lazy var tip: String = BreakTipStore.shared.nextTip(isLongBreak: isLongBreak)
 
     init(
         duration: TimeInterval,

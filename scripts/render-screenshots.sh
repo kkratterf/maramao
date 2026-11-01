@@ -22,7 +22,7 @@ TIMEOUT="${TIMEOUT:-40}"
 if [ "$#" -gt 0 ]; then
   SCENARIOS=("$@")
 else
-  SCENARIOS=(walkingCat memeWall sleepyCat catPile laserChase keyboardCat)
+  SCENARIOS=(laserChase catPile sleepyCat)
 fi
 
 rm -rf "$OUT"

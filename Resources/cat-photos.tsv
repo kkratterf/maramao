@@ -1,0 +1,14 @@
+# Cat photos bundled with "Non svegliare il gatto". All CC0, from the WordPress Photo
+# Directory (https://wordpress.org/photos/). Fetched, resized and copied into the app by
+# scripts/fetch-cat-photos.sh, called from scripts/build-app.sh. Columns, tab separated:
+# kind	name	url	sha256 ("-" when not pinned)	page	author
+sleeping	sleeping-white-rock	https://pd.w.org/2026/05/9366a09d5b60bc546.41425940.jpg	-	https://wordpress.org/photos/photo/9366a09d5b/	Brandon Zhang
+sleeping	sleeping-tabby-bed	https://pd.w.org/2024/01/3565b94f9b57af76.28489349.jpeg	-	https://wordpress.org/photos/photo/3565b94f9b/	Julia Golomb
+sleeping	sleeping-orange-white	https://pd.w.org/2022/03/416228bc901968a4.39480407.jpeg	-	https://wordpress.org/photos/photo/416228bc90/	mdburnette
+angry	angry-orange-foliage	https://pd.w.org/2025/11/220690c3a975f2dc8.14261018.jpg	-	https://wordpress.org/photos/photo/220690c3a9/	Brandon Zhang
+angry	angry-yawn-grey	https://pd.w.org/2023/11/610654b432d110d55.98507445.jpg	-	https://wordpress.org/photos/photo/610654b432/	渡邉厚夫
+angry	angry-bangkok	https://pd.w.org/2023/04/892642d3bcdda6866.74959320.jpg	-	https://wordpress.org/photos/photo/892642d3bc/	Taco Verdonschot
+angry	angry-leaves	https://pd.w.org/2024/02/87265d6e114c11634.91341516.jpg	-	https://wordpress.org/photos/photo/87265d6e11/	Sakib MD Nazmush
+angry	angry-teeth	https://pd.w.org/2024/09/48266d8a3040bc7e2.12919143.jpeg	-	https://wordpress.org/photos/photo/48266d8a30/	Midhun P
+angry	angry-sidewalk	https://pd.w.org/2026/07/9306a67de418d8690.90761492-rotated.jpeg	-	https://wordpress.org/photos/photo/9306a67de4/	Noelia Segura
+angry	angry-park	https://pd.w.org/2026/10/6996abf42baeddbb3.04947923.jpeg	-	https://wordpress.org/photos/photo/6996abf42b/	Yam B Chhetri
