@@ -25,6 +25,19 @@ jobs:
         uses: actions/checkout@v4
 
       # The site is plain HTML, CSS and JS: no build step, site/ is published as is.
+      # The PostHog project key lives in the POSTHOG_KEY repository variable
+      # (Settings → Secrets and variables → Actions → Variables). Without it
+      # the placeholder stays and analytics are off.
+      - name: Insert the PostHog key
+        env:
+          POSTHOG_KEY: ${{ vars.POSTHOG_KEY }}
+        run: |
+          if [ -n "$POSTHOG_KEY" ]; then
+            sed -i "s/__POSTHOG_KEY__/$POSTHOG_KEY/" site/analytics.js
+          else
+            echo "::warning::POSTHOG_KEY is not set: the site deploys without analytics"
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
