@@ -154,4 +154,17 @@ final class CatVoiceTests: XCTestCase {
         }
         return sampleRate / Double(bestLag)
     }
+
+    func testHissIsPlayableAndFades() {
+        let hiss = CatVoice.renderHiss()
+        XCTAssertEqual(Double(hiss.count) / CatVoice.defaultSampleRate, CatVoice.hissDuration, accuracy: 0.001)
+        XCTAssertTrue(hiss.allSatisfy { $0.isFinite && abs($0) <= 1 })
+        let peak = hiss.map { abs($0) }.max() ?? 0
+        XCTAssertGreaterThan(peak, 0.5)
+        // Loud at the start (the spit), quiet at the very end.
+        let head = hiss.prefix(2_000).map { abs($0) }.max() ?? 0
+        let tail = hiss.suffix(200).map { abs($0) }.max() ?? 1
+        XCTAssertGreaterThan(head, tail * 5)
+        XCTAssertEqual(CatVoice.renderHiss(seed: 7), CatVoice.renderHiss(seed: 7))
+    }
 }

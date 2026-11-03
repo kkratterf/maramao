@@ -168,6 +168,8 @@ final class SleepyCatBreak: BreakMode {
         switch model.phase {
         case .asleep:
             wakeUps += 1
+            // The cat hisses or grumbles, every time it is woken up.
+            CatSounds.shared.angry()
             say(nextAngryLine(), awake: true)
             lastPhotoDate = now
         case .awake:

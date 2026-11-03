@@ -21,6 +21,7 @@ final class CatSounds {
         case purr(tenths: Int)
         case chirp
         case chime
+        case hiss
     }
 
     private let settings: AppSettings
@@ -39,6 +40,7 @@ final class CatSounds {
     /// After a failed start (no output device), wait a bit before trying again.
     private var retryAfter = Date.distantPast
     private var meowRotation = 0
+    private var angryRotation = 0
 
     init(settings: AppSettings = .shared) {
         self.settings = settings
@@ -82,6 +84,30 @@ final class CatSounds {
     /// A short trilled "mrrp".
     func chirp() {
         play(.chirp)
+    }
+
+    /// An angry hiss: someone woke the cat up.
+    func hiss() {
+        play(.hiss)
+    }
+
+    /// A cat that did not want to be woken: a hiss or a grumpy, rough meow, in turn.
+    func angry() {
+        angryRotation += 1
+        if angryRotation % 2 == 1 {
+            hiss()
+        } else {
+            meow(.grumpy)
+        }
+    }
+
+    /// Any of the cat's friendly noises, for a cat being poked: meows, a "mrrp", or a purr.
+    func randomPoke() {
+        switch Int.random(in: 0..<6) {
+        case 0: chirp()
+        case 1: purr(duration: 1)
+        default: randomMeow()
+        }
     }
 
     /// Two soft tones: the break is over.
@@ -183,6 +209,8 @@ final class CatSounds {
             return CatVoice.renderChirp(sampleRate: sampleRate)
         case .chime:
             return CatVoice.renderChime(sampleRate: sampleRate)
+        case .hiss:
+            return CatVoice.renderHiss(sampleRate: sampleRate, seed: UInt64.random(in: 1...1_000_000))
         }
     }
 
