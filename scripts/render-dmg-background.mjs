@@ -38,6 +38,8 @@ try {
     await tab.waitForTimeout(SETTLE_MS);
     const live = await tab.evaluate(() => document.querySelector('.grainient').classList.contains('is-live'));
     if (!live) throw new Error('the gradient did not start (no WebGL 2?)');
+    const geist = await tab.evaluate(async () => { await document.fonts.ready; return [...document.fonts].some(f => f.family.replace(/"/g, '') === 'Geist' && f.status === 'loaded'); });
+    if (!geist) throw new Error('Geist did not load (site/fonts/geist-latin.wght.woff2 missing?)');
     mkdirSync(dirname(join(root, out)), { recursive: true });
     await tab.locator('#bg').screenshot({ path: join(root, out) });
     console.log(`Wrote ${out}`);
