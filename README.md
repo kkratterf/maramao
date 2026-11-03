@@ -1,3 +1,5 @@
+<p align="center"><img src="Resources/logo/icon.png" alt="Maramao logo: a kitten mid-yawn" width="128" height="128"></p>
+
 # Maramao 🐈
 
 **The Pomodoro timer that stops you with cats**
@@ -245,6 +247,8 @@ Contributions are welcome, from a new cat to a timer fix.
 ---
 
 ## Art
+
+The logo and app icon are a frame of [Yawning kitten.ogv](https://commons.wikimedia.org/wiki/File:Yawning_kitten.ogv) by Andrew Krizhanovsky (public domain), built by `scripts/make-logo.py`.
 
 The cats in **Laser chase** and **Cat invasion** are drawn in code (`Sources/Maramao/Shared/CatView.swift`).
 
