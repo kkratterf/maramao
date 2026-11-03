@@ -6,6 +6,8 @@ Italian is the source language, so the keys are the Italian strings. Fails when:
 - a translation uses different format specifiers than its key (e.g. %lld vs %@);
 - a `String(localized: "...")` literal in Sources/ has no entry in the catalog;
 - an App Shortcut phrase in Intents.swift has no line in en.lproj/AppShortcuts.strings;
+- two keys differ only in case, punctuation, emoji or format specifiers ("Prrr" and "Prrr…"):
+  Xcode 26+ turns every key into a Swift symbol and fails the build when two get the same name;
 - a SwiftUI literal (Text("..."), Button("..."), Toggle, Label, Section, Picker, .help, ...)
   has no entry. SwiftUI looks these up automatically, so without an entry they stay Italian.
   Literals without letters (e.g. "\\(a) · \\(b)") and the names in UNTRANSLATED are skipped.
@@ -100,6 +102,16 @@ def main():
                     errors.append(f"format mismatch {lang}{label}: {key!r} -> {value!r}")
                 elif "variations" in locs[lang] and set(specifiers(value)) - set(specifiers(key)):
                     errors.append(f"format mismatch {lang}{label}: {key!r} -> {value!r}")
+
+    # Xcode 26+ generates a Swift symbol per key from its words, so keys that differ only in
+    # case, punctuation, emoji or format specifiers clash and break `xcstringstool`.
+    seen = {}
+    for key in keys:
+        words = " ".join(w.lower() for w in re.findall(r"[^\W_]+", SPEC.sub("", key)))
+        if words in seen:
+            errors.append(f"keys would generate the same Swift symbol: {seen[words]!r} and {key!r}")
+        else:
+            seen[words] = key
 
     # App Shortcut phrases live in en.lproj/AppShortcuts.strings (macOS 13 has no
     # AppShortcuts.xcstrings); every phrase in Intents.swift needs an English line.

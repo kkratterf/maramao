@@ -1,7 +1,7 @@
 import Foundation
 
 /// "Rimanda": postpone a break that just started by a few minutes, a limited number of
-/// times per day. Not to be confused with "Pausa per…" (`Availability`), which puts the
+/// times per day. Not to be confused with "Disattiva per…" (`Availability`), which puts the
 /// whole app to sleep.
 ///
 /// Pure rules; the engine ends the break mode, counts down `seconds` and then starts the

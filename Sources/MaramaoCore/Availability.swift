@@ -56,7 +56,7 @@ public struct WorkingHours: Codable, Equatable, Sendable {
     }
 }
 
-/// "Pausa per…" choices in the menu.
+/// "Disattiva per…" choices in the menu.
 public enum SnoozeOption: String, CaseIterable, Identifiable, Sendable {
     case thirtyMinutes
     case oneHour
