@@ -40,8 +40,8 @@ struct BreakHUD: View {
                     Image(systemName: "lock.fill")
                         .font(.system(size: 12))
                         .opacity(isHighContrast ? 1 : 0.6)
-                        .help("Modalità severa: la pausa non si salta")
-                        .accessibilityLabel("Modalità severa: la pausa non si salta")
+                        .help("Modalità severa: la pausa non si salta.")
+                        .accessibilityLabel("Modalità severa: la pausa non si salta.")
                 }
             }
             .foregroundStyle(foreground)

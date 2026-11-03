@@ -43,7 +43,7 @@ public enum TimerStatus: Equatable, Sendable {
             return String(localized: "Al lavoro · \(clock)")
         case let .paused(remaining):
             let clock = formatClock(remaining)
-            return String(localized: "Timer sospeso · \(clock)")
+            return String(localized: "Sospeso · \(clock)")
         case let .onBreak(remaining):
             let clock = formatClock(remaining)
             return String(localized: "Pausa gatto · \(clock)")

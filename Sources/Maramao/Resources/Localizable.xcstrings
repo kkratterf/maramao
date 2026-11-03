@@ -289,17 +289,6 @@
         }
       }
     },
-    "%lld/%lld pause rispettate": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld/%2$lld breaks taken"
-          }
-        }
-      }
-    },
     "'DOMANI LO FINISCO'": {
       "extractionState": "manual",
       "localizations": {
@@ -1213,17 +1202,6 @@
         }
       }
     },
-    "Consiglio del gatto: %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The cat's advice: %@"
-          }
-        }
-      }
-    },
     "Controlla aggiornamenti…": {
       "extractionState": "manual",
       "localizations": {
@@ -1253,17 +1231,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "What is that red dot?!"
-          }
-        }
-      }
-    },
-    "Croccantini": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Treats"
           }
         }
       }
@@ -1958,17 +1925,6 @@
         }
       }
     },
-    "Gatti": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cats"
-          }
-        }
-      }
-    },
     "Gatti come al solito": {
       "extractionState": "manual",
       "localizations": {
@@ -2042,17 +1998,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "General"
-          }
-        }
-      }
-    },
-    "Giorni": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Days"
           }
         }
       }
@@ -3394,17 +3339,6 @@
         }
       }
     },
-    "Miao?": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Meow?"
-          }
-        }
-      }
-    },
     "Modalità": {
       "extractionState": "manual",
       "localizations": {
@@ -3438,17 +3372,6 @@
         }
       }
     },
-    "Modalità severa: la pausa non si salta": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Strict mode: no skipping this break"
-          }
-        }
-      }
-    },
     "Modalità severa: la pausa non si salta mai": {
       "extractionState": "manual",
       "localizations": {
@@ -3456,17 +3379,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Strict mode: breaks can never be skipped"
-          }
-        }
-      }
-    },
-    "Modalità severa: la pausa non si salta.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Strict mode: this break can't be skipped."
           }
         }
       }
@@ -3577,17 +3489,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mrrr? I told you to rest."
-          }
-        }
-      }
-    },
-    "Mrrr?!": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mrrr?!"
           }
         }
       }
@@ -4010,17 +3911,6 @@
         }
       }
     },
-    "Pausa": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pause"
-          }
-        }
-      }
-    },
     "Pausa breve": {
       "extractionState": "manual",
       "localizations": {
@@ -4172,17 +4062,6 @@
         }
       }
     },
-    "Pausa per…": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pause for…"
-          }
-        }
-      }
-    },
     "Pausa rimandata: il gatto torna presto": {
       "extractionState": "manual",
       "localizations": {
@@ -4190,17 +4069,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Break snoozed: the cat will be back soon"
-          }
-        }
-      }
-    },
-    "PAUSA.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "BREAK."
           }
         }
       }
@@ -4223,17 +4091,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Break: %@."
-          }
-        }
-      }
-    },
-    "PAUSA?": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "BREAK?"
           }
         }
       }
@@ -4476,17 +4333,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Try a cat"
-          }
-        }
-      }
-    },
-    "Prrr": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Prrr"
           }
         }
       }
@@ -6006,28 +5852,6 @@
         }
       }
     },
-    "🐱 Miao": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🐱 Meow"
-          }
-        }
-      }
-    },
-    "💡 CONSIGLIO DEL GATTO": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "💡 CAT'S ADVICE"
-          }
-        }
-      }
-    },
     "📺 MARAMAO TV · PAUSA LUNGA": {
       "extractionState": "manual",
       "localizations": {
@@ -6068,17 +5892,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "🔥 %lld day"
-          }
-        }
-      }
-    },
-    "😴 Fermo %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "😴 Paused %@"
           }
         }
       }
@@ -6277,29 +6090,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "by %@"
-          }
-        }
-      }
-    },
-    "%lld gatti": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld cat"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld cats"
-                }
-              }
-            }
           }
         }
       }
@@ -7368,17 +7158,6 @@
         }
       }
     },
-    "Pausa per": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pause For"
-          }
-        }
-      }
-    },
     "Aggiorna alla versione %@…": {
       "extractionState": "manual",
       "localizations": {
@@ -7441,17 +7220,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Working · %@"
-          }
-        }
-      }
-    },
-    "Timer sospeso · %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Timer paused · %@"
           }
         }
       }
@@ -7628,6 +7396,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Turn Off For"
+          }
+        }
+      }
+    },
+    "Miaooo?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meooow?"
+          }
+        }
+      }
+    },
+    "Prrrr": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prrrr"
+          }
+        }
+      }
+    },
+    "Sospeso · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused · %@"
+          }
+        }
+      }
+    },
+    "Modalità severa: la pausa non si salta.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strict mode: no skipping this break."
           }
         }
       }
