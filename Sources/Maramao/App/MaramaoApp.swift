@@ -9,8 +9,10 @@ struct MaramaoApp: App {
 
     var body: some Scene {
         // The UI is the menu bar item's NSMenu, owned by AppDelegate. SwiftUI needs at
-        // least one scene, and an empty Settings scene opens nothing on its own.
-        Settings {
+        // least one scene. An empty Settings scene is not enough: opening a maramao:// URL
+        // with `open` while the app runs made SwiftUI show it as an empty window. A menu bar
+        // extra that is never inserted has no window SwiftUI could open.
+        MenuBarExtra("Maramao", isInserted: .constant(false)) {
             EmptyView()
         }
     }
