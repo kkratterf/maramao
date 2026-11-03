@@ -7,7 +7,8 @@ Krizhanovsky, public domain) caught at the top of its yawn. The clip is only
 of pavement above it (mirrored from the empty right side) before it is
 cropped square and scaled up.
 
-Usage: python3 scripts/make-logo.py   (needs ffmpeg, Pillow and numpy)
+Usage: python3 scripts/make-logo.py   (needs ffmpeg, Pillow, numpy and
+opencv-python-headless)
 
 Writes, all committed:
   Resources/logo/logo.png         1024px square master, full bleed
@@ -25,6 +26,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import cv2
 import numpy as np
 from PIL import Image, ImageEnhance, ImageFilter
 
@@ -43,8 +45,27 @@ def grab_frame(n: int) -> Image.Image:
     return Image.open(io.BytesIO(raw)).convert("RGB")
 
 
+def denoise(frame: Image.Image) -> Image.Image:
+    """Remove the clip's compression noise and block edges before scaling up,
+    so the upscale doesn't magnify them into grain."""
+    bgr = cv2.cvtColor(np.asarray(frame), cv2.COLOR_RGB2BGR)
+    bgr = cv2.fastNlMeansDenoisingColored(bgr, None, 3, 3, 5, 13)
+    return Image.fromarray(cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB))
+
+
+def upscale(img: Image.Image, size: int) -> Image.Image:
+    """Scale in 2x steps with an edge-aware pass in between: cleaner than one
+    big Lanczos jump, which turns every leftover artefact into grain."""
+    while img.width * 2 <= size:
+        img = img.resize((img.width * 2, img.height * 2), Image.BICUBIC)
+        bgr = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
+        bgr = cv2.edgePreservingFilter(bgr, flags=cv2.RECURS_FILTER, sigma_s=6, sigma_r=0.07)
+        img = Image.fromarray(cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB))
+    return img.resize((size, size), Image.LANCZOS)
+
+
 def master(frame: Image.Image) -> Image.Image:
-    im = np.asarray(frame, dtype=np.float32)
+    im = np.asarray(denoise(frame), dtype=np.float32)
     h, w, _ = im.shape
     ext = np.zeros((h + PAD, w, 3), np.float32)
     ext[PAD:] = im
@@ -59,8 +80,8 @@ def master(frame: Image.Image) -> Image.Image:
     ext[:PAD + 4] = np.asarray(top, dtype=np.float32)
 
     crop = Image.fromarray(ext[0:CROP, CROP_X:CROP_X + CROP].clip(0, 255).astype(np.uint8))
-    big = crop.resize((1024, 1024), Image.LANCZOS)
-    big = big.filter(ImageFilter.UnsharpMask(radius=6, percent=70, threshold=1))
+    big = upscale(crop, 1024)
+    big = big.filter(ImageFilter.UnsharpMask(radius=2, percent=45, threshold=3))
     big = ImageEnhance.Color(big).enhance(1.15)
     big = ImageEnhance.Contrast(big).enhance(1.05)
     # Soft vignette so the face reads first.
