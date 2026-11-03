@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Build every Maramao logo asset from one frame of the yawning kitten clip.
 
-The logo is the kitten from site/media/outro.mp4 ("Yawning kitten" by Andrew
-Krizhanovsky, public domain) caught at the top of its yawn. The clip is only
-320x320 and the kitten's ears touch the top edge, so the frame gets a strip
-of pavement above it (mirrored from the empty right side) before it is
-cropped square and scaled up.
+The logo is the kitten from "Yawning kitten" by Andrew Krizhanovsky (public
+domain, Wikimedia Commons) caught at the top of its yawn. The source is frame
+121 of the original 640x480 Theora file, kept losslessly in
+Resources/logo/source-frame.png. The ears sit close to the top edge, so the
+frame gets a strip of pavement above it (mirrored from the empty right side)
+before it is cropped square and scaled up.
 
-Usage: python3 scripts/make-logo.py   (needs ffmpeg, Pillow, numpy and
+Usage: python3 scripts/make-logo.py   (needs Pillow, numpy and
 opencv-python-headless)
 
 Writes, all committed:
@@ -22,7 +23,6 @@ Writes, all committed:
 import base64
 import io
 import struct
-import subprocess
 import sys
 from pathlib import Path
 
@@ -31,25 +31,16 @@ import numpy as np
 from PIL import Image, ImageEnhance, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
-CLIP = ROOT / "site/media/outro.mp4"
-FRAME = 41        # top of the yawn, eyes still half open
-PAD = 24          # pavement added above the ears, in clip pixels
-CROP_X, CROP = 70, 152
-
-
-def grab_frame(n: int) -> Image.Image:
-    raw = subprocess.run(
-        ["ffmpeg", "-v", "error", "-i", str(CLIP), "-vf", f"select=eq(n\\,{n})",
-         "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "-"],
-        check=True, capture_output=True).stdout
-    return Image.open(io.BytesIO(raw)).convert("RGB")
+SOURCE = ROOT / "Resources/logo/source-frame.png"
+PAD = 30          # pavement added above the ears, in source pixels
+CROP_X, CROP_Y, CROP = 298, 22, 222
 
 
 def denoise(frame: Image.Image) -> Image.Image:
     """Remove the clip's compression noise and block edges before scaling up,
     so the upscale doesn't magnify them into grain."""
     bgr = cv2.cvtColor(np.asarray(frame), cv2.COLOR_RGB2BGR)
-    bgr = cv2.fastNlMeansDenoisingColored(bgr, None, 3, 3, 5, 13)
+    bgr = cv2.fastNlMeansDenoisingColored(bgr, None, 2, 2, 5, 13)
     return Image.fromarray(cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB))
 
 
@@ -70,7 +61,7 @@ def master(frame: Image.Image) -> Image.Image:
     ext = np.zeros((h + PAD, w, 3), np.float32)
     ext[PAD:] = im
     # Pavement right of the ears, mirrored at the top row and tiled across.
-    patch = im[0:PAD, 235:w][::-1]
+    patch = im[0:PAD, 540:w][::-1]
     tiles = np.concatenate([patch, patch[:, ::-1]] * (w // (2 * patch.shape[1]) + 1), axis=1)
     ext[:PAD] = tiles[:, :w]
     for i in range(12):  # feather the seam into the first row of the frame
@@ -79,7 +70,7 @@ def master(frame: Image.Image) -> Image.Image:
     top = Image.fromarray(ext[:PAD + 4].clip(0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.6))
     ext[:PAD + 4] = np.asarray(top, dtype=np.float32)
 
-    crop = Image.fromarray(ext[0:CROP, CROP_X:CROP_X + CROP].clip(0, 255).astype(np.uint8))
+    crop = Image.fromarray(ext[CROP_Y:CROP_Y + CROP, CROP_X:CROP_X + CROP].clip(0, 255).astype(np.uint8))
     big = upscale(crop, 1024)
     big = big.filter(ImageFilter.UnsharpMask(radius=2, percent=45, threshold=3))
     big = ImageEnhance.Color(big).enhance(1.15)
@@ -143,7 +134,7 @@ def favicon_svg(logo: Image.Image) -> str:
 
 
 def main() -> int:
-    logo = master(grab_frame(FRAME))
+    logo = master(Image.open(SOURCE).convert("RGB"))
     (ROOT / "Resources/logo").mkdir(parents=True, exist_ok=True)
     logo.save(ROOT / "Resources/logo/logo.png", optimize=True)
     icon = app_icon(logo)
