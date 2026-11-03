@@ -7443,6 +7443,209 @@
           }
         }
       }
+    },
+    "Shh… il gatto dorme. Non toccare niente.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shh… the cat is asleep. Don't touch anything."
+          }
+        }
+      }
+    },
+    "Ah, ok. Le mail sono più importanti del mio sonno.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oh, sure. Your emails matter more than my nap."
+          }
+        }
+      }
+    },
+    "Mi hai svegliato per guardare Slack? Davvero?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You woke me up to check Slack? Seriously?"
+          }
+        }
+      }
+    },
+    "Non ti giudico. Ok, ti giudico.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'm not judging you. Fine, I'm judging you."
+          }
+        }
+      }
+    },
+    "Il tuo capo non ti vede. Io sì.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your boss can't see you. I can."
+          }
+        }
+      }
+    },
+    "Fai pure. Tanto io non dimentico.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go ahead. I never forget."
+          }
+        }
+      }
+    },
+    "Ti sembra il momento?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Does this look like the moment to you?"
+          }
+        }
+      }
+    },
+    "Muovi ancora quel mouse e ti butto il bicchiere giù dal tavolo.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch that mouse again and your glass goes off the table."
+          }
+        }
+      }
+    },
+    "Quando io mi siedo sulla tastiera, ti lamenti. Ecco.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When I sit on your keyboard, you complain. Just saying."
+          }
+        }
+      }
+    },
+    "Alzati. Stiracchiati. Bevi un bicchiere d'acqua. Lasciami dormire.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get up. Stretch. Drink some water. Let me sleep."
+          }
+        }
+      }
+    },
+    "Che bello farsi svegliare. Grazie, eh.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Love being woken up. Thanks a lot."
+          }
+        }
+      }
+    },
+    "Non riesci a stare senza computer per %lld minuti?": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Can't stay away from the computer for %lld minute?"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Can't stay away from the computer for %lld minutes?"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Non riesci a stare senza computer per %lld minuto?"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Non riesci a stare senza computer per %lld minuti?"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Mi hai svegliato %lld volte. Sto tenendo il conto.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "You've woken me up %lld time. I'm keeping count."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "You've woken me up %lld times. I'm keeping count."
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Mi hai svegliato %lld volta. Sto tenendo il conto."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Mi hai svegliato %lld volte. Sto tenendo il conto."
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "version": "1.0"

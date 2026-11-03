@@ -1,17 +1,22 @@
 import AppKit
 import SwiftUI
 
-/// A heart that floats up from the cat after a catch.
+/// A heart sprayed out of the catch point.
 struct LaserChaseHeart: Identifiable {
     let id: Int
     /// Global Cocoa coordinates.
     let origin: CGPoint
     /// Same clock as `LaserChaseSnapshot.time`. May be slightly in the future to stagger hearts.
     let birth: TimeInterval
-    let drift: CGFloat
+    /// Initial speed in points per second, Cocoa coordinates (up is positive).
+    let velocity: CGVector
     let size: CGFloat
+    /// Degrees turned over the heart's life.
+    let spin: Double
+    let symbol: String
 
-    static let lifetime: TimeInterval = 1.4
+    static let lifetime: TimeInterval = 1.3
+    static let symbols = ["❤️", "💖", "💕", "💗", "💘"]
 }
 
 /// Everything the stage views need to draw one frame: the cat, the laser dot and the effects.
