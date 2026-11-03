@@ -49,12 +49,12 @@
     });
   });
 
-  // The hero Mac: a few seconds of work, then the break takes over, and again.
+  // The hero Mac: a few seconds of work, then the recorded break takes over, and again.
   // With reduced motion it stays on the break, the part worth seeing.
   var demo = document.querySelector("[data-demo]");
   if (demo) {
     var clock = demo.querySelector("[data-demo-clock]");
-    var brk = demo.querySelector("[data-demo-break]");
+    var clip = demo.querySelector("[data-demo-clip]");
     var fmt = function (s) { return Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); };
     var setState = function (state) { demo.setAttribute("data-state", state); };
     if (still) {
@@ -64,15 +64,17 @@
       var tick = 0;
       setState("work");
       setInterval(function () {
-        tick = (tick + 1) % 14; // 5 s of work, 9 s of break
+        tick = (tick + 1) % 16; // 5 s of work, 11 s of break
         if (tick < 5) {
           setState("work");
           if (clock) clock.textContent = fmt(5 - tick);
         } else {
+          if (tick === 5 && clip) {
+            // Each break starts the recording from the top, so the cats fall again.
+            clip.currentTime = 0;
+            var p = clip.play(); if (p && p.catch) p.catch(function () {});
+          }
           setState("break");
-          var left = 299 - (tick - 5);
-          if (clock) clock.textContent = fmt(left);
-          if (brk) brk.textContent = fmt(left);
         }
       }, 1000);
     }
