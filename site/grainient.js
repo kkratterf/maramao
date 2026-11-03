@@ -555,7 +555,7 @@ document.querySelectorAll('[data-grainient]').forEach(container => {
   const d = container.dataset;
   const settings = Object.assign({}, defaults);
   if (d.colors) settings.colors = d.colors.split(',').map(c => c.trim()).slice(0, MAX_COLORS);
-  ['angle', 'speed', 'flow', 'scale', 'silk', 'grainAmount', 'contrast', 'saturation', 'variation', 'dpr'].forEach(k => {
+  ['angle', 'speed', 'flow', 'scale', 'silk', 'grainAmount', 'grainSize', 'contrast', 'saturation', 'variation', 'dpr'].forEach(k => {
     if (d[k] !== undefined) settings[k] = parseFloat(d[k]);
   });
   if (d.interactive === 'false') settings.interactive = false;
