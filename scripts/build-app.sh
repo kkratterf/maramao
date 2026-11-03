@@ -93,22 +93,12 @@ if [ ! -f "$RES/en.lproj/Localizable.strings" ]; then
 fi
 echo "Localizations: $(cd "$RES" && ls -d ./*.lproj | sed 's|^\./||' | tr '\n' ' ')"
 
-# App icon: drawn in code by scripts/make-icon.swift, so no binary is
-# committed. A failure here only costs the icon, never the build.
-ICON_DIR="$ROOT/.build/icon"
-ICNS=""
-if [ -f "$ROOT/Resources/AppIcon.icns" ]; then
-  ICNS="$ROOT/Resources/AppIcon.icns"
-else
-  rm -rf "$ICON_DIR"
-  mkdir -p "$ICON_DIR"
-  if swift "$ROOT/scripts/make-icon.swift" "$ICON_DIR/AppIcon.iconset" \
-    && iconutil -c icns "$ICON_DIR/AppIcon.iconset" -o "$ICON_DIR/AppIcon.icns"; then
-    ICNS="$ICON_DIR/AppIcon.icns"
-    echo "Created app icon $ICNS ($(wc -c < "$ICNS" | tr -d ' ') bytes)"
-  else
-    echo "warning: could not generate the app icon, building without it" >&2
-  fi
+# App icon: the yawning kitten, built from site/media/outro.mp4 by
+# scripts/make-logo.py and committed as Resources/AppIcon.icns.
+ICNS="$ROOT/Resources/AppIcon.icns"
+if [ ! -f "$ICNS" ]; then
+  echo "warning: Resources/AppIcon.icns missing, building without an icon" >&2
+  ICNS=""
 fi
 if [ -n "$ICNS" ]; then
   cp "$ICNS" "$APP/Contents/Resources/AppIcon.icns"
