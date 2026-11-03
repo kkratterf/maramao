@@ -32,11 +32,11 @@ final class SleepyCatBreak: BreakMode {
     private var lines = ShuffleBag(count: 0)
 
     /// Input in the first seconds is ignored: the user is still letting go of the mouse.
-    private let gracePeriod: TimeInterval = 2
+    private let gracePeriod: TimeInterval = 1.5
     /// Mouse movement below this distance (points) is jitter.
-    private let jitterThreshold: CGFloat = 6
+    private let jitterThreshold: CGFloat = 3
     /// Seconds without input before the cat goes back to sleep.
-    private let quietBeforeSleep: TimeInterval = 4
+    private let quietBeforeSleep: TimeInterval = 2.5
     /// Still fiddling while the cat glares: another remark after this long.
     private let photoInterval: TimeInterval = 2.5
 

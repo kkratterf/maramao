@@ -30,20 +30,16 @@ struct SleepyCatScene: View {
                             .strokeBorder(Color.white.opacity(0.12), lineWidth: 1)
                     )
                     .shadow(color: .black.opacity(0.4), radius: 30, y: 12)
+                    // The line swaps in place, with no animation: the cat snaps at once.
                     SleepyCatCaption(line: model.line, angry: model.phase == .awake)
-                        .id(model.lineID)
-                        .transition(.asymmetric(
-                            insertion: .move(edge: .bottom).combined(with: .opacity),
-                            removal: .opacity
-                        ))
                         .frame(maxWidth: photoSize.width)
+                        .transaction { $0.animation = nil }
                 }
                 .frame(width: geo.size.width, height: geo.size.height)
             }
         }
-        // Waking up is instant, falling asleep again is slow.
-        .animation(.easeInOut(duration: model.phase == .awake ? 0.12 : 0.9), value: model.phase)
-        .animation(.spring(response: 0.35, dampingFraction: 0.8), value: model.lineID)
+        // Waking up is instant, falling asleep again is a short fade.
+        .animation(model.phase == .awake ? nil : .easeInOut(duration: 0.4), value: model.phase)
         .ignoresSafeArea()
     }
 

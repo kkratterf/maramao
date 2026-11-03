@@ -14,8 +14,6 @@ final class SleepyCatModel: ObservableObject {
     @Published private(set) var phase: Phase = .asleep
     /// What the cat says under its photo. Changes every time it is woken up.
     @Published private(set) var line: String
-    /// Bumped with every new line, so the caption animates even when a line comes back.
-    @Published private(set) var lineID = 0
 
     /// One pair per break: this cat sleeps and this cat gets angry, for the whole break.
     let sleepingPhoto: NSImage?
@@ -29,13 +27,11 @@ final class SleepyCatModel: ObservableObject {
 
     func wake(saying line: String) {
         self.line = line
-        lineID += 1
         phase = .awake
     }
 
     func fallAsleep(saying line: String) {
         self.line = line
-        lineID += 1
         phase = .asleep
     }
 }

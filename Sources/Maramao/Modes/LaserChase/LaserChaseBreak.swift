@@ -335,14 +335,19 @@ final class LaserChaseBreak: BreakMode {
             }
         case .celebrating:
             brake(dt)
-            if inState >= celebrateDuration { enter(.waiting) }
+            // The hearts are out: if the dot is already running away, go after it.
+            if inState >= celebrateDuration * 0.5, hypot(mouse.x - catchPoint.x, mouse.y - catchPoint.y) > w * 0.2 {
+                enter(.chasing)
+            } else if inState >= celebrateDuration {
+                enter(.waiting)
+            }
         case .missed:
             brake(dt)
             if inState >= missedDuration { enter(.chasing) }
         case .waiting:
             brake(dt)
             faceDot()
-            if hypot(mouse.x - catchPoint.x, mouse.y - catchPoint.y) > w * 0.45 {
+            if hypot(mouse.x - catchPoint.x, mouse.y - catchPoint.y) > w * 0.2 {
                 enter(.chasing)
             } else if idleFor >= idleBeforeGrooming {
                 enter(.grooming)
