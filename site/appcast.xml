@@ -6,6 +6,16 @@
     <description>Aggiornamenti di Maramao</description>
     <language>it</language>
     <item>
+      <title>Maramao 0.5.0</title>
+      <pubDate>Tue, 03 Nov 2026 19:04:36 GMT</pubDate>
+      <link>https://github.com/kkratterf/maramao/releases/tag/v0.5.0</link>
+      <sparkle:version>0.5.0</sparkle:version>
+      <sparkle:shortVersionString>0.5.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/kkratterf/maramao/releases/tag/v0.5.0</sparkle:fullReleaseNotesLink>
+      <enclosure url="https://github.com/kkratterf/maramao/releases/download/v0.5.0/Maramao-0.5.0.zip" length="5582788" type="application/octet-stream" sparkle:edSignature="0H34tEqgioLNk7O+ucbjwnog0b8RZoXUHMHARFRzDmkbvomWbg4gItPM79thAoyWnfGtuLaRkoRXFXafSxISBw==" />
+    </item>
+    <item>
       <title>Maramao 0.4.0</title>
       <pubDate>Sun, 01 Nov 2026 11:00:36 GMT</pubDate>
       <link>https://github.com/kkratterf/maramao/releases/tag/v0.4.0</link>
