@@ -4,8 +4,8 @@
 # version and sha256 are bumped by .github/workflows/release.yml after each
 # stable release; sha256 stays :no_check until the first release with a DMG.
 cask "maramao" do
-  version "0.4.0"
-  sha256 "c2a8ecb19b5b11cd1431cba3e124fd6c054df60aaaad3721391593507de0d8df"
+  version "0.5.0"
+  sha256 "6007997b1007996f8eaad68713ba01650a1bcf58d7fbc8135eea45da545c6658"
 
   url "https://github.com/kkratterf/maramao/releases/download/v#{version}/Maramao-#{version}.dmg"
   name "Maramao"
