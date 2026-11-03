@@ -3,7 +3,7 @@ import Combine
 import MaramaoCore
 import os
 
-/// "Pausa per…" and working hours: persists both and wakes Maramao up when a snooze ends,
+/// "Disattiva per…" and working hours: persists both and wakes Maramao up when a snooze ends,
 /// also across restarts, sleep, clock and time zone changes.
 @MainActor
 final class AvailabilityStore: ObservableObject {
@@ -148,7 +148,7 @@ final class AvailabilityStore: ObservableObject {
 }
 
 extension PomodoroEngine {
-    /// "Pausa per…": stops the timer and sleeps until the chosen time. Not during a break.
+    /// "Disattiva per…": stops the timer and sleeps until the chosen time. Not during a break.
     func snooze(_ option: SnoozeOption) {
         guard !phase.isBreak else { return }
         reset()

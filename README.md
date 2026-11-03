@@ -33,7 +33,7 @@ Pick one from **Mode** (*Modalità*) in the menu, or let **Surprise** (*Sorpresa
 | 🐾 | **Cat invasion** (*Invasione di gatti*) | Cats rain from the top of the screen and pile up until everything is buried. |
 | 😴 | **Don't wake the cat** (*Non svegliare il gatto*) | A full-screen photo of a sleeping cat. Touch the mouse or the keyboard and an angry cat glares at you, a different one every time. Leave everything alone and it falls asleep again. |
 
-During a break the only thing on screen besides the cats is a small pill: a paw, the countdown and **Close** (*Chiudi*), which shows up once the break may be skipped (after a minute). Not to be confused with **Pause for…** (*Pausa per*) in the menu, which puts the whole app to sleep for a while.
+During a break the only thing on screen besides the cats is a small pill: a paw, the countdown and **Close** (*Chiudi*), which shows up once the break may be skipped (after a minute). Not to be confused with **Turn off for…** (*Disattiva per*) in the menu, which puts the whole app to sleep for a while.
 
 Switching rhythm takes one click: **Rhythm** (*Ritmo*) in the menu offers **Classic 25/5**, **Long 50/10** (long break 30) and **Deep 90/20** (long break 30). The session on screen keeps its length; the new rhythm starts with the next phase.
 
@@ -57,7 +57,7 @@ They work from any app and need no special permission.
 
 | Shortcut | Action |
 | --- | --- |
-| ⇧⌘M | Start a pomodoro, or pause / resume it |
+| ⇧⌘M | Start a pomodoro, or pause / resume it. A small bubble under the cat in the menu bar confirms what happened |
 | ⌃⌥⌘B | Take the cat break now |
 | ⌃⌥⌘S | Skip the current phase (a break only once skipping is allowed) |
 | ⌃⌥⌘R | Snooze the break that just started: the cat comes back a few minutes later (up to 3 times a day) |
@@ -197,9 +197,9 @@ The install script does this for you. You only need to do it once per version.
 
 ### 5. Where is it?
 
-Maramao lives in the **menu bar**, top right: look for the 🐱 (it turns into 🍅 and a countdown while you work). There is no Dock icon. The first time you open it, a cat welcomes you in a small window: it sets the timer, lets you pick a cat, shows a 10-second trial break and the emergency exit, and can turn on **Open Maramao at login**. If the menu bar is too full and the notch hides the cat, open Maramao again from Applications or Spotlight and its menu opens where your pointer is.
+Maramao lives in the **menu bar**, top right: look for the cat (a countdown appears next to it while you work). There is no Dock icon. The first time you open it, a cat welcomes you in a small window: it sets the timer, lets you pick a cat, shows a 10-second trial break and the emergency exit, and can turn on **Open Maramao at login**. If the menu bar is too full and the notch hides the cat, open Maramao again from Applications or Spotlight and its menu opens where your pointer is.
 
-The menu is a plain macOS menu: start or pause (⇧⌘M), pick and try a mode, change the rhythm, pause Maramao for a while, check for updates and **Quit Maramao** (*Esci da Maramao*).
+The menu is a plain macOS menu, laid out like the Timer in the Clock app. On top, a line says what the timer is doing (*Al lavoro · 18:32*), followed by the controls: **Start timer** (*Avvia timer*), **Pause timer** (*Sospendi timer*) or **Resume timer** (*Riprendi timer*) on ⇧⌘M, **Stop timer** (*Interrompi timer*), which goes back to the start, and **Take the cat break now** (*Fai la pausa gatto adesso*). Below, each in its own section: the modes, **Try mode**, **Rhythm**, **Turn off for…** (*Disattiva per*), updates and **Quit Maramao** (*Esci da Maramao*).
 
 ### 6. Updating
 

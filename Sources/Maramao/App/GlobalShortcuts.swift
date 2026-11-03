@@ -109,11 +109,17 @@ final class GlobalShortcuts: ObservableObject {
         let engine = PomodoroEngine.shared
         switch shortcut {
         case .startPause:
+            let wasIdle = engine.phase == .idle
             switch engine.phase {
-            case .idle: engine.startWork()
+            case .idle:
+                // Same as "Riprendi" in the menu: a shortcut press ends "Disattiva per" too.
+                if AvailabilityStore.shared.isSnoozed { AvailabilityStore.shared.endSnooze() }
+                engine.startWork()
             case .work: engine.togglePause()
             case .shortBreak, .longBreak: break // Breaks cannot be paused.
             }
+            // A global shortcut works from any app, so show that it did something.
+            TimerToast.shared.showTimerState(justStarted: wasIdle)
         case .takeBreak:
             guard !engine.phase.isBreak || engine.isBreakSnoozed else { return }
             engine.takeBreakNow()

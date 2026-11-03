@@ -12,6 +12,9 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let menu = NSMenu()
     private let model = MenuBarModel()
+    /// The status line on top of the menu ("Al lavoro · 18:32"), while the menu is open.
+    private weak var statusLine: NSMenuItem?
+    private var isMenuOpen = false
     private var cancellables: Set<AnyCancellable> = []
 
     private var engine: PomodoroEngine { .shared }
@@ -31,6 +34,19 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                 self?.render(content, snoozedUntil: phase == .idle ? snoozedUntil : nil)
             }
             .store(in: &cancellables)
+        // While the menu is open: the status line ticks, and the controls follow the timer.
+        engine.$remaining
+            .sink { [weak self] _ in
+                Task { @MainActor in self?.refreshStatusLine() }
+            }
+            .store(in: &cancellables)
+        engine.$phase.map { _ in () }
+            .merge(with: engine.$isPaused.map { _ in () }, engine.$isBreakSnoozed.map { _ in () })
+            .sink { [weak self] _ in
+                Task { @MainActor in self?.rebuildIfOpen() }
+            }
+            .store(in: &cancellables)
+        TimerToast.shared.anchor = { [weak self] in self?.visibleButtonFrame() }
     }
 
     /// Opens the menu under the pointer: for when the menu bar item is hidden behind the
@@ -42,20 +58,30 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
     // MARK: - Label
 
+    /// The cat is always there, followed by the countdown while the timer runs.
     private func render(_ content: MenuBarContent, snoozedUntil: Date?) {
         guard let button = statusItem.button else { return }
-        if let until = snoozedUntil {
-            // "Pausa per…": a sleeping cat and the resume time.
-            button.image = nil
-            button.title = "😴 \(AvailabilityText.clock(until))"
-        } else if let ring = content.ring {
-            button.title = ""
-            button.image = MenuBarRingRenderer.image(for: ring)
-        } else {
-            button.image = nil
-            button.title = content.text
-        }
         button.font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
+        if let until = snoozedUntil {
+            // "Disattiva per…": the cat sleeps until the resume time.
+            button.image = MenuBarCat.image
+            button.title = " 💤 \(AvailabilityText.clock(until))"
+        } else if let ring = content.ring {
+            button.image = MenuBarRingRenderer.image(for: ring)
+            button.title = ""
+        } else {
+            button.image = content.showsCat ? MenuBarCat.image : nil
+            let gap = content.showsCat && !content.text.isEmpty ? " " : ""
+            button.title = gap + content.text
+        }
+        button.imagePosition = button.title.isEmpty ? .imageOnly : .imageLeading
+    }
+
+    /// The cat's frame on screen, or nil when it is hidden behind the notch or a full menu bar.
+    private func visibleButtonFrame() -> NSRect? {
+        guard let button = statusItem.button, let window = button.window,
+              window.occlusionState.contains(.visible) else { return nil }
+        return window.convertToScreen(button.convert(button.bounds, to: nil))
     }
 
     // MARK: - NSMenuDelegate
@@ -64,12 +90,38 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         menu.items = makeItems()
     }
 
+    func menuWillOpen(_ menu: NSMenu) {
+        isMenuOpen = true
+        TimerToast.shared.close()
+    }
+
+    func menuDidClose(_ menu: NSMenu) {
+        isMenuOpen = false
+    }
+
+    private func rebuildIfOpen() {
+        guard isMenuOpen else { return }
+        menu.items = makeItems()
+    }
+
+    private func refreshStatusLine() {
+        guard isMenuOpen, let statusLine else { return }
+        let title = currentStatus().title
+        if statusLine.title != title { statusLine.title = title }
+    }
+
+    /// Sections, each between separators: the timer, the modes, trying a mode, the rhythm,
+    /// switching Maramao off for a while, updates, quit.
     private func makeItems() -> [NSMenuItem] {
         var items = timerItems()
         items.append(.separator())
         items.append(contentsOf: modeItems())
+        items.append(.separator())
+        items.append(tryModeItem())
+        items.append(.separator())
         items.append(rhythmItem())
         if let snooze = snoozeItem() {
+            items.append(.separator())
             items.append(snooze)
         }
         items.append(.separator())
@@ -81,35 +133,70 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         return items
     }
 
-    /// The main action on top (start, pause or skip), with what else makes sense right now.
-    private func timerItems() -> [NSMenuItem] {
-        switch engine.phase {
-        case .idle:
-            if availability.isSnoozed {
-                return [item(String(localized: "Riprendi ora")) { [weak self] in
-                    self?.availability.endSnooze()
-                    self?.engine.startWork()
-                }]
-            }
-            return [startPauseItem(String(localized: "Inizia a lavorare")) { [weak self] in self?.engine.startWork() }]
-        case .work:
-            let title = engine.isPaused ? String(localized: "Riprendi") : String(localized: "Metti in pausa")
-            return [
-                startPauseItem(title) { [weak self] in self?.engine.togglePause() },
-                item(String(localized: "Pausa gatto ora")) { [weak self] in self?.engine.takeBreakNow() },
-                item(String(localized: "Ricomincia da capo")) { [weak self] in self?.engine.reset() },
-            ]
-        case .shortBreak, .longBreak:
-            if engine.isBreakSnoozed {
-                return [item(String(localized: "Pausa gatto ora")) { [weak self] in self?.engine.takeBreakNow() }]
-            }
-            let skip = item(String(localized: "Salta pausa")) { [weak self] in self?.engine.skip() }
-            skip.isEnabled = engine.canSkipBreak
-            return [skip]
-        }
+    private func currentStatus() -> TimerStatus {
+        TimerStatus(
+            phase: engine.phase,
+            isPaused: engine.isPaused,
+            remaining: engine.remaining,
+            isBreakSnoozed: engine.isBreakSnoozed,
+            offUntil: engine.phase == .idle && availability.isSnoozed ? availability.untilText() : nil
+        )
     }
 
-    /// "Modalità": pick how the cats stop you, and try the picked one right away.
+    /// Like the Timer in the Clock app: a line that says what is going on, then the controls,
+    /// each with its symbol. The main one (start, pause, resume) carries ⇧⌘M. "Pausa" is
+    /// kept for cat breaks only, so pausing the timer reads "Sospendi".
+    private func timerItems() -> [NSMenuItem] {
+        let status = currentStatus()
+        let line = NSMenuItem(title: status.title, action: nil, keyEquivalent: "")
+        line.isEnabled = false
+        statusLine = line
+        var items = [line]
+
+        switch status {
+        case .ready:
+            items.append(startPauseItem(String(localized: "Avvia timer"), symbol: "play.fill") { [weak self] in
+                self?.engine.startWork()
+            })
+        case .off:
+            items.append(startPauseItem(String(localized: "Riattiva e avvia"), symbol: "play.fill") { [weak self] in
+                self?.availability.endSnooze()
+                self?.engine.startWork()
+            })
+        case .working:
+            items.append(startPauseItem(String(localized: "Sospendi timer"), symbol: "pause.fill") { [weak self] in
+                self?.engine.togglePause()
+            })
+        case .paused:
+            items.append(startPauseItem(String(localized: "Riprendi timer"), symbol: "play.fill") { [weak self] in
+                self?.engine.togglePause()
+            })
+        case .onBreak:
+            let skip = item(String(localized: "Salta la pausa gatto"), symbol: "forward.end.fill") { [weak self] in
+                self?.engine.skip()
+            }
+            skip.isEnabled = engine.canSkipBreak
+            items.append(skip)
+        case .breakSnoozed:
+            items.append(item(String(localized: "Fai la pausa gatto adesso"), symbol: "pawprint.fill") { [weak self] in
+                self?.engine.takeBreakNow()
+            })
+        }
+
+        if status.canStop {
+            let stop = item(String(localized: "Interrompi timer"), symbol: "stop.fill") { [weak self] in
+                self?.engine.reset()
+            }
+            stop.toolTip = String(localized: "Ferma il timer e torna all'inizio")
+            items.append(stop)
+            items.append(item(String(localized: "Fai la pausa gatto adesso"), symbol: "pawprint.fill") { [weak self] in
+                self?.engine.takeBreakNow()
+            })
+        }
+        return items
+    }
+
+    /// "Modalità": pick how the cats stop you.
     private func modeItems() -> [NSMenuItem] {
         var items: [NSMenuItem] = [Self.header(String(localized: "Modalità"))]
         for mode in BreakModeID.allCases {
@@ -119,15 +206,19 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             entry.indentationLevel = Self.headerIndent
             items.append(entry)
         }
+        return items
+    }
+
+    /// "Prova la modalità": a 30-second fake break with the picked mode, apart from the
+    /// modes because it does something instead of choosing something.
+    private func tryModeItem() -> NSMenuItem {
         let tryIt = item(String(localized: "Prova la modalità")) { [weak self] in
             guard let self else { return }
             self.engine.preview(self.settings.breakMode, seconds: 30)
         }
         tryIt.isEnabled = !engine.phase.isBreak && engine.activeBreakMode == nil
         tryIt.toolTip = String(localized: "Una pausa finta di 30 secondi")
-        tryIt.indentationLevel = Self.headerIndent
-        items.append(tryIt)
-        return items
+        return tryIt
     }
 
     /// "Ritmo ▸ Classico 25/5, Lungo 50/10, Profondo 90/20".
@@ -151,7 +242,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         return parent
     }
 
-    /// "Pausa per ▸ 30 minuti, 1 ora, …": stops Maramao for a while.
+    /// "Disattiva per ▸ 30 minuti, 1 ora, …": switches Maramao off for a while.
     private func snoozeItem() -> NSMenuItem? {
         guard !engine.phase.isBreak, !availability.isSnoozed else { return nil }
         let submenu = NSMenu()
@@ -159,7 +250,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         for option in SnoozeOption.allCases {
             submenu.addItem(item(option.title) { [weak self] in self?.engine.snooze(option) })
         }
-        let parent = NSMenuItem(title: String(localized: "Pausa per"), action: nil, keyEquivalent: "")
+        let parent = NSMenuItem(title: String(localized: "Disattiva per"), action: nil, keyEquivalent: "")
         parent.submenu = submenu
         return parent
     }
@@ -194,8 +285,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     /// The start/pause item shows the global shortcut as its key equivalent.
-    private func startPauseItem(_ title: String, action: @escaping () -> Void) -> NSMenuItem {
-        let entry = item(title, action: action)
+    private func startPauseItem(_ title: String, symbol: String, action: @escaping () -> Void) -> NSMenuItem {
+        let entry = item(title, symbol: symbol, action: action)
         let shortcuts = GlobalShortcuts.shared
         if shortcuts.isEnabled(.startPause), !shortcuts.failed.contains(.startPause) {
             let combo = GlobalShortcut.startPause.combo
@@ -205,8 +296,11 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         return entry
     }
 
-    private func item(_ title: String, key: String = "", action: @escaping () -> Void) -> NSMenuItem {
+    private func item(_ title: String, key: String = "", symbol: String? = nil, action: @escaping () -> Void) -> NSMenuItem {
         let entry = ClosureMenuItem(title: title, keyEquivalent: key, action: action)
+        if let symbol {
+            entry.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)
+        }
         return entry
     }
 }

@@ -7422,6 +7422,215 @@
           }
         }
       }
+    },
+    "Pronto a partire": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready to go"
+          }
+        }
+      }
+    },
+    "Al lavoro · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Working · %@"
+          }
+        }
+      }
+    },
+    "Timer sospeso · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timer paused · %@"
+          }
+        }
+      }
+    },
+    "Pausa gatto · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat break · %@"
+          }
+        }
+      }
+    },
+    "Il gatto torna tra %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat is back in %@"
+          }
+        }
+      }
+    },
+    "Maramao è disattivato %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maramao is off %@"
+          }
+        }
+      }
+    },
+    "Timer sospeso": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timer paused"
+          }
+        }
+      }
+    },
+    "Timer avviato": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timer started"
+          }
+        }
+      }
+    },
+    "Timer ripreso": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timer resumed"
+          }
+        }
+      }
+    },
+    "La pausa gatto non si ferma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cat breaks don't do pauses"
+          }
+        }
+      }
+    },
+    "Avvia timer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Timer"
+          }
+        }
+      }
+    },
+    "Riattiva e avvia": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn On and Start"
+          }
+        }
+      }
+    },
+    "Sospendi timer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause Timer"
+          }
+        }
+      }
+    },
+    "Riprendi timer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume Timer"
+          }
+        }
+      }
+    },
+    "Salta la pausa gatto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip Cat Break"
+          }
+        }
+      }
+    },
+    "Fai la pausa gatto adesso": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take Cat Break Now"
+          }
+        }
+      }
+    },
+    "Interrompi timer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop Timer"
+          }
+        }
+      }
+    },
+    "Ferma il timer e torna all'inizio": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stops the timer and goes back to the start"
+          }
+        }
+      }
+    },
+    "Disattiva per": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn Off For"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
