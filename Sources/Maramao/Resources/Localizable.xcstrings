@@ -7646,6 +7646,28 @@
           }
         }
       }
+    },
+    "La barra dei menu è piena": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your menu bar is full"
+          }
+        }
+      }
+    },
+    "Il gatto è nascosto dietro il notch. Premi ⇧⌘M per avviare il timer, o riapri Maramao per vedere il menu.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The cat is hiding behind the notch. Press ⇧⌘M to start the timer, or open Maramao again to see the menu."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

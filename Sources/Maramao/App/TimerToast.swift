@@ -11,9 +11,6 @@ import MaramaoCore
 final class TimerToast {
     static let shared = TimerToast()
 
-    /// How long the bubble stays before it fades out.
-    private static let stayOnScreen: TimeInterval = 1.6
-
     /// Where the cat is in the menu bar, in screen coordinates, or nil when it cannot be
     /// seen (behind the notch, or a full menu bar). Set by `StatusItemController`.
     var anchor: () -> NSRect? = { nil }
@@ -39,11 +36,24 @@ final class TimerToast {
         }
     }
 
-    func show(symbol: String, title: String, detail: String?) {
+    /// The menu bar is so full that macOS hides the cat (behind the notch): say so once, at
+    /// the top of the screen, with the ways in that still work.
+    func showHiddenItemWarning() {
+        show(
+            symbol: MenuBarCat.symbolName,
+            title: String(localized: "La barra dei menu è piena"),
+            detail: String(localized: "Il gatto è nascosto dietro il notch. Premi ⇧⌘M per avviare il timer, o riapri Maramao per vedere il menu."),
+            stay: 8,
+            forceTopCenter: true
+        )
+    }
+
+    func show(symbol: String, title: String, detail: String?, stay: TimeInterval = 1.6, forceTopCenter: Bool = false) {
         close()
         let hosting = NSHostingView(rootView: TimerToastView(symbol: symbol, title: title, detail: detail))
         let size = hosting.fittingSize
-        let radius = size.height / 2
+        // A pill for one line, a rounded card when the text wraps.
+        let radius = min(size.height / 2, 16)
 
         let background = NSVisualEffectView(frame: NSRect(origin: .zero, size: size))
         background.material = .popover
@@ -58,7 +68,7 @@ final class TimerToast {
         background.addSubview(hosting)
 
         let panel = NSPanel(
-            contentRect: NSRect(origin: origin(for: size), size: size),
+            contentRect: NSRect(origin: origin(for: size, forceTopCenter: forceTopCenter), size: size),
             styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
@@ -83,7 +93,7 @@ final class TimerToast {
         BreakAccessibility.announce(title)
 
         hideTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(nanoseconds: UInt64(TimerToast.stayOnScreen * 1_000_000_000))
+            try? await Task.sleep(nanoseconds: UInt64(max(0.5, stay) * 1_000_000_000))
             guard !Task.isCancelled else { return }
             self?.fadeOut()
         }
@@ -112,8 +122,8 @@ final class TimerToast {
 
     /// Centred under the cat, kept on its screen; top centre of the pointer's screen when
     /// the cat cannot be seen.
-    private func origin(for size: NSSize) -> NSPoint {
-        if let rect = anchor(),
+    private func origin(for size: NSSize, forceTopCenter: Bool) -> NSPoint {
+        if !forceTopCenter, let rect = anchor(),
            let screen = NSScreen.screens.first(where: { $0.frame.intersects(rect) }) {
             let visible = screen.visibleFrame
             let x = min(max(rect.midX - size.width / 2, visible.minX + 8), visible.maxX - size.width - 8)
@@ -132,15 +142,28 @@ private struct TimerToastView: View {
     let detail: String?
 
     var body: some View {
-        HStack(spacing: 7) {
+        HStack(alignment: .firstTextBaseline, spacing: 7) {
             Image(systemName: symbol)
                 .font(.system(size: 12, weight: .semibold))
-            Text(title)
-                .font(.system(size: 13, weight: .semibold))
-            if let detail {
-                Text(detail)
-                    .font(.system(size: 13).monospacedDigit())
-                    .foregroundStyle(.secondary)
+            if let detail, detail.count > 24 {
+                // A longer message: title on top, the text wrapped under it.
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(title)
+                        .font(.system(size: 13, weight: .semibold))
+                    Text(detail)
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
+                        .frame(width: 320, alignment: .leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            } else {
+                Text(title)
+                    .font(.system(size: 13, weight: .semibold))
+                if let detail {
+                    Text(detail)
+                        .font(.system(size: 13).monospacedDigit())
+                        .foregroundStyle(.secondary)
+                }
             }
         }
         .foregroundStyle(.primary)

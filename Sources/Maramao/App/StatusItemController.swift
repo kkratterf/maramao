@@ -77,11 +77,21 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         button.imagePosition = button.title.isEmpty ? .imageOnly : .imageLeading
     }
 
+    /// Warns, once, when macOS hides the cat because the menu bar is full (behind the notch).
+    /// Called a moment after launch, once the menu bar has laid out its items.
+    func warnIfHidden() {
+        guard statusItem.button != nil, visibleButtonFrame() == nil else { return }
+        TimerToast.shared.showHiddenItemWarning()
+    }
+
     /// The cat's frame on screen, or nil when it is hidden behind the notch or a full menu bar.
     private func visibleButtonFrame() -> NSRect? {
         guard let button = statusItem.button, let window = button.window,
               window.occlusionState.contains(.visible) else { return nil }
-        return window.convertToScreen(button.convert(button.bounds, to: nil))
+        let frame = window.convertToScreen(button.convert(button.bounds, to: nil))
+        // A hidden item can keep a window that sits off every screen.
+        guard NSScreen.screens.contains(where: { $0.frame.intersects(frame) }) else { return nil }
+        return frame
     }
 
     // MARK: - NSMenuDelegate
