@@ -254,13 +254,7 @@ The cats in **Laser chase** and **Cat invasion** are drawn in code (`Sources/Mar
 
 **Don't wake the cat** shows photos from the [WordPress Photo Directory](https://wordpress.org/photos/), all released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/). They are not committed: `scripts/build-app.sh` downloads them, shrinks them and copies them into the app. The list, with each photo's page and author, is [`Resources/cat-photos.tsv`](Resources/cat-photos.tsv). Thanks to Brandon Zhang, Julia Golomb, mdburnette, 渡邉厚夫, Taco Verdonschot, Sakib MD Nazmush, Midhun P, Noelia Segura and Yam B Chhetri.
 
-The [website](https://maramao.kkratter.com/) shows short clips of real cats from Wikimedia Commons, trimmed and re-encoded in `site/media/`. They are not part of the app. The CC BY-SA clips are shared under the same license:
-
-- [Black Cat walking.webm](https://commons.wikimedia.org/wiki/File:Black_Cat_walking.webm) by Dzkouslavia, CC0 ([license](https://creativecommons.org/publicdomain/zero/1.0/deed.en))
-- [Kitten sleeping 2 2014-08-24.ogv](https://commons.wikimedia.org/wiki/File:Kitten_sleeping_2_2014-08-24.ogv) by FASTILY, CC BY-SA 4.0 ([license](https://creativecommons.org/licenses/by-sa/4.0))
-- [Three kittens 1 2017-06-25.webm](https://commons.wikimedia.org/wiki/File:Three_kittens_1_2017-06-25.webm) by FASTILY, CC BY-SA 4.0 ([license](https://creativecommons.org/licenses/by-sa/4.0))
-- [Cat playing with a laser pointer.webm](https://commons.wikimedia.org/wiki/File:Cat_playing_with_a_laser_pointer.webm) by Clément Bucco-Lechat, CC BY-SA 3.0 ([license](https://creativecommons.org/licenses/by-sa/3.0))
-- [Yawning kitten.ogv](https://commons.wikimedia.org/wiki/File:Yawning_kitten.ogv) by Andrew Krizhanovsky, Public domain
+The [website](https://maramao.kkratter.com/) shows screen recordings of the app itself in `site/media/mode-*.mp4`, and the yawning kitten clip that the logo comes from in `site/media/outro.mp4`.
 
 The pictures in `packs/example/images` were drawn for this repository by a small script and are CC0, like the rest of that pack. Community packs declare their own license (CC0 or CC-BY) in `pack.json`.
 

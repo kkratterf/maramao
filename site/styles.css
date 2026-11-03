@@ -66,6 +66,13 @@ p { margin: 0; }
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 12px 32px -12px rgb(0 0 0 / 60%);
   -webkit-backdrop-filter: saturate(170%) blur(20px); backdrop-filter: saturate(170%) blur(20px);
 }
+/* The same warm hairline as the footer panel, on the bottom edge. */
+.top-in { position: relative; }
+.top-in::after {
+  content: ""; position: absolute; inset: auto 14% -1px; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(255 160 130 / 75%), transparent);
+  box-shadow: 0 1px 10px rgb(255 110 80 / 35%);
+}
 .brand { display: flex; align-items: center; gap: 10px; font: 400 20px/1 var(--display); letter-spacing: -.01em; }
 .brand img { width: 24px; height: 24px; border-radius: 6px; }
 .top-right { display: flex; align-items: center; gap: 6px; }
@@ -155,7 +162,9 @@ p { margin: 0; }
 .caret { display: inline-block; width: 2px; height: 1.2em; background: var(--accent); animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
-.brk { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; opacity: 0; transition: opacity .8s; background: rgb(8 6 6 / 45%); }
+/* The break is the real app, recorded: it covers the fake desktop, menu bar included */
+.brk { position: absolute; inset: 0; z-index: 4; opacity: 0; transition: opacity .6s; background: #000; }
+.brk video { width: 100%; height: 100%; object-fit: cover; }
 .cat-card { position: relative; width: 52%; transform: translateY(24px) scale(.96); transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
 .cat-card video, .cat-card img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 14px; border: 1px solid rgb(255 255 255 / 18%); box-shadow: 0 30px 80px -10px rgb(0 0 0 / 80%); }
 .say {
@@ -175,8 +184,6 @@ p { margin: 0; }
 
 .mac[data-state="break"] .brk { opacity: 1; }
 .mac[data-state="break"] .win { filter: blur(6px) brightness(.7); transform: scale(.98); }
-.mac[data-state="break"] .cat-card { transform: none; }
-.mac[data-state="break"] .mb-cat { background: var(--accent); }
 @media (max-width: 640px) {
   .menubar i.opt, .menubar > svg:not(.i-apple), .menubar > i { display: none; }
   .cat-card { width: 58%; margin-bottom: 24px; }

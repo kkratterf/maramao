@@ -49,12 +49,12 @@
     });
   });
 
-  // The hero Mac: a few seconds of work, then the break takes over, and again.
+  // The hero Mac: a few seconds of work, then the recorded break takes over, and again.
   // With reduced motion it stays on the break, the part worth seeing.
   var demo = document.querySelector("[data-demo]");
   if (demo) {
     var clock = demo.querySelector("[data-demo-clock]");
-    var brk = demo.querySelector("[data-demo-break]");
+    var clip = demo.querySelector("[data-demo-clip]");
     var fmt = function (s) { return Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); };
     var setState = function (state) { demo.setAttribute("data-state", state); };
     if (still) {
@@ -64,15 +64,17 @@
       var tick = 0;
       setState("work");
       setInterval(function () {
-        tick = (tick + 1) % 14; // 5 s of work, 9 s of break
+        tick = (tick + 1) % 16; // 5 s of work, 11 s of break
         if (tick < 5) {
           setState("work");
           if (clock) clock.textContent = fmt(5 - tick);
         } else {
+          if (tick === 5 && clip) {
+            // Each break starts the recording from the top, so the cats fall again.
+            clip.currentTime = 0;
+            var p = clip.play(); if (p && p.catch) p.catch(function () {});
+          }
           setState("break");
-          var left = 299 - (tick - 5);
-          if (clock) clock.textContent = fmt(left);
-          if (brk) brk.textContent = fmt(left);
         }
       }, 1000);
     }
@@ -147,6 +149,56 @@
         });
       })
       .catch(function () {});
+  }
+
+  // The logo meows when the pointer passes over it. The meow is synthesised
+  // with Web Audio (a buzzy source through two moving formants), so there is
+  // no sound file to download. Browsers keep audio locked until the visitor
+  // first clicks or types, so the very first hover may stay silent.
+  var logos = document.querySelectorAll(".brand");
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if (logos.length && AC) {
+    var ctx = null, last = 0;
+    var unlock = function () {
+      if (!ctx) { try { ctx = new AC(); } catch (e) { return; } }
+      if (ctx.state === "suspended") ctx.resume();
+    };
+    ["pointerdown", "keydown", "touchstart"].forEach(function (t) {
+      window.addEventListener(t, unlock, { passive: true });
+    });
+    var meow = function () {
+      var now = Date.now();
+      if (!ctx || ctx.state !== "running" || now - last < 900) return;
+      last = now;
+      var t = ctx.currentTime, len = 0.42 + Math.random() * 0.2;
+      var f0 = 430 + Math.random() * 160;
+      var src = ctx.createOscillator();
+      src.type = "sawtooth";
+      src.frequency.setValueAtTime(f0, t);
+      src.frequency.linearRampToValueAtTime(f0 * 1.45, t + len * 0.35);
+      src.frequency.exponentialRampToValueAtTime(f0 * 0.8, t + len);
+      var vib = ctx.createOscillator(), vibGain = ctx.createGain();
+      vib.frequency.value = 7; vibGain.gain.value = f0 * 0.02;
+      vib.connect(vibGain); vibGain.connect(src.frequency);
+      var out = ctx.createGain();
+      out.gain.setValueAtTime(0.0001, t);
+      out.gain.exponentialRampToValueAtTime(0.18, t + 0.05);
+      out.gain.setValueAtTime(0.18, t + len * 0.6);
+      out.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      // "m" (closed, dark) opens to "ia" (bright) and closes to "ow".
+      [[650, 1500, 900, 6], [1700, 3100, 1400, 9]].forEach(function (f) {
+        var bp = ctx.createBiquadFilter();
+        bp.type = "bandpass"; bp.Q.value = f[3];
+        bp.frequency.setValueAtTime(f[0], t);
+        bp.frequency.linearRampToValueAtTime(f[1], t + len * 0.35);
+        bp.frequency.linearRampToValueAtTime(f[2], t + len);
+        src.connect(bp); bp.connect(out);
+      });
+      out.connect(ctx.destination);
+      src.start(t); vib.start(t);
+      src.stop(t + len + 0.05); vib.stop(t + len + 0.05);
+    };
+    logos.forEach(function (el) { el.addEventListener("pointerenter", meow); });
   }
 
   var year = document.querySelector("[data-year]");
