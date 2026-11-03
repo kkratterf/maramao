@@ -33,7 +33,7 @@ from PIL import Image, ImageEnhance, ImageFilter
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "Resources/logo/source-frame.png"
 PAD = 30          # pavement added above the ears, in source pixels
-CROP_X, CROP = 298, 222
+CROP_X, CROP_Y, CROP = 298, 22, 222
 
 
 def denoise(frame: Image.Image) -> Image.Image:
@@ -70,7 +70,7 @@ def master(frame: Image.Image) -> Image.Image:
     top = Image.fromarray(ext[:PAD + 4].clip(0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.6))
     ext[:PAD + 4] = np.asarray(top, dtype=np.float32)
 
-    crop = Image.fromarray(ext[0:CROP, CROP_X:CROP_X + CROP].clip(0, 255).astype(np.uint8))
+    crop = Image.fromarray(ext[CROP_Y:CROP_Y + CROP, CROP_X:CROP_X + CROP].clip(0, 255).astype(np.uint8))
     big = upscale(crop, 1024)
     big = big.filter(ImageFilter.UnsharpMask(radius=2, percent=45, threshold=3))
     big = ImageEnhance.Color(big).enhance(1.15)
