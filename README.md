@@ -31,11 +31,11 @@ Pick one from **Mode** (*Modalità*) in the menu, or let **Surprise** (*Sorpresa
 
 | | Mode | What happens |
 | --- | --- | --- |
-| 🔴 | **Laser chase** (*Caccia al laser*) | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops. Leave the mouse alone and the cat sits down to groom. |
+| 🔴 | **Laser chase** (*Caccia al laser*) | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops; catch the dot and hearts spray out. Leave the mouse alone and the cat sits down to groom. |
 | 🐾 | **Cat invasion** (*Invasione di gatti*) | Cats rain from the top of the screen and pile up until everything is buried. |
-| 😴 | **Don't wake the cat** (*Non svegliare il gatto*) | A full-screen photo of a sleeping cat. Touch the mouse or the keyboard and an angry cat glares at you, a different one every time. Leave everything alone and it falls asleep again. |
+| 😴 | **Don't wake the cat** (*Non svegliare il gatto*) | A big photo of a sleeping cat over your blurred screen. Touch the mouse or the keyboard and the same break's angry cat glares at you, with a passive-aggressive remark underneath ("Can't stay away from the computer for 5 minutes?"). Leave everything alone and it falls asleep again. Each break brings a new pair of cats. |
 
-During a break the only thing on screen besides the cats is a small pill: a paw, the countdown and **Close** (*Chiudi*), which shows up once the break may be skipped (after a minute). Not to be confused with **Turn off for…** (*Disattiva per*) in the menu, which puts the whole app to sleep for a while.
+During a break the screen behind the cats is blurred and dimmed, like behind a Mac dialog, and the only control is a small pill: a paw, the countdown and **Close** (*Chiudi*), which shows up once the break may be skipped (after a minute). Not to be confused with **Turn off for…** (*Disattiva per*) in the menu, which puts the whole app to sleep for a while.
 
 Switching rhythm takes one click: **Rhythm** (*Ritmo*) in the menu offers **Classic 25/5**, **Long 50/10** (long break 30) and **Deep 90/20** (long break 30). The session on screen keeps its length; the new rhythm starts with the next phase.
 

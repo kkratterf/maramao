@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Everything shown on one screen: the dim curtain, the cat, on the main screen the HUD,
+/// Everything shown on one screen: the blurred backdrop, the cat, on the main screen the HUD,
 /// and the laser dot on top of everything. The dot is the pointer, so it must never hide
 /// under the HUD's close button.
 /// This view observes nothing itself, so the per-frame updates only redraw the stage.
@@ -13,7 +13,8 @@ struct LaserChaseScene: View {
 
     var body: some View {
         ZStack {
-            LaserChaseCurtain()
+            // Like a modal on the Mac: the desktop blurred and darkened, so the red dot pops.
+            ModalBackdrop(dim: 0.5)
             LaserChaseStage(model: model, screenFrame: screenFrame, layer: .cat)
                 .allowsHitTesting(false)
             if isMain {
@@ -28,32 +29,6 @@ struct LaserChaseScene: View {
         }
         .frame(width: screenFrame.width, height: screenFrame.height)
         .ignoresSafeArea()
-    }
-}
-
-/// A dark room with a faint warm spot on the floor, so the red dot pops.
-struct LaserChaseCurtain: View {
-    @Environment(\.colorSchemeContrast) private var contrast
-
-    var body: some View {
-        // Increase Contrast: a nearly opaque curtain behind the cat, the dot and the texts.
-        let solid = contrast == .increased
-        return ZStack {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.03, green: 0.03, blue: 0.07).opacity(solid ? 0.97 : 0.86),
-                    Color(red: 0.08, green: 0.06, blue: 0.1).opacity(solid ? 0.98 : 0.9),
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            RadialGradient(
-                colors: [Color(red: 1.0, green: 0.75, blue: 0.5).opacity(0.07), .clear],
-                center: UnitPoint(x: 0.5, y: 0.7),
-                startRadius: 0,
-                endRadius: 700
-            )
-        }
     }
 }
 
@@ -120,17 +95,24 @@ struct LaserChaseStage: View {
         .position(x: center.x + s.jitter, y: center.y)
     }
 
+    /// A heart flying out of the catch like a spray: fast at first, then slowing down and
+    /// falling a little, fading out at the end.
     private func heartLayer(_ heart: LaserChaseHeart, time: TimeInterval) -> some View {
         let age = time - heart.birth
         let progress = min(1.0, max(0.0, age / LaserChaseHeart.lifetime))
-        let p = CGFloat(progress)
-        let sway = CGFloat(sin(progress * 9.0)) * 5
-        let point = local(CGPoint(x: heart.origin.x + heart.drift * p + sway, y: heart.origin.y + 110 * p))
-        let grow = CGFloat(0.6 + 0.6 * min(1.0, progress * 4))
-        return Text("❤️")
+        let t = CGFloat(max(0, age))
+        // Ease-out travel plus a little gravity (Cocoa coordinates: y grows upwards).
+        let travel = 1 - pow(1 - CGFloat(progress), 3)
+        let reach = CGFloat(LaserChaseHeart.lifetime) * 0.55
+        let x = heart.origin.x + heart.velocity.dx * reach * travel
+        let y = heart.origin.y + heart.velocity.dy * reach * travel - 140 * t * t
+        let point = local(CGPoint(x: x, y: y))
+        let pop = CGFloat(0.4 + 0.8 * min(1.0, progress * 6))
+        return Text(heart.symbol)
             .font(.system(size: heart.size))
-            .scaleEffect(grow)
-            .opacity(age < 0 ? 0 : 1 - progress)
+            .scaleEffect(pop)
+            .rotationEffect(.degrees(heart.spin * progress))
+            .opacity(age < 0 ? 0 : 1 - pow(progress, 2))
             .position(x: point.x, y: point.y)
     }
 }

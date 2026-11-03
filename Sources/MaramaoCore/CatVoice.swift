@@ -33,6 +33,8 @@ public enum CatVoice {
     public static let chirpDuration: Double = 0.32
     /// Length of the "break over" chime, in seconds.
     public static let chimeDuration: Double = 1.6
+    /// Length of the angry hiss, in seconds.
+    public static let hissDuration: Double = 1.1
 
     // MARK: - Meow
 
@@ -182,6 +184,36 @@ public enum CatVoice {
             output[i] = y * envelope
         }
         return finish(output, peak: 0.8)
+    }
+
+    // MARK: - Hiss
+
+    /// An angry cat's hiss: a short "spit" burst, then a long breathy "hhhh" that shakes a
+    /// little and dies away. Filtered noise, no pitch.
+    public static func renderHiss(sampleRate: Double = defaultSampleRate, seed: UInt64 = 1) -> [Float] {
+        let duration = hissDuration
+        let count = sampleCount(sampleRate, duration)
+        guard count > 0 else { return [] }
+
+        var rng = SplitMix64(seed: seed)
+        var air = Biquad()
+        var throat = Biquad()
+        air.setBandPass(frequency: 5_200, bandwidth: 4_500, sampleRate: sampleRate)
+        throat.setBandPass(frequency: 2_400, bandwidth: 1_600, sampleRate: sampleRate)
+        var output = [Double](repeating: 0, count: count)
+
+        for i in 0..<count {
+            let t = Double(i) / sampleRate
+            let noise = rng.bipolar()
+            // The "spit": a loud, bright burst in the first 60 ms.
+            let spit = smoothstep(t / 0.004) * exp(-t * 45) * 1.6
+            // The long hiss: quick swell, a slow fade, and a nervous 11 Hz flutter.
+            let flutter = 0.82 + 0.18 * sin(2 * Double.pi * 11 * t)
+            let body = smoothstep((t - 0.03) / 0.06) * exp(-max(0, t - 0.15) * 2.2) * flutter
+            let envelope = (spit + body) * smoothstep((duration - t) / 0.12)
+            output[i] = (air.process(noise) + 0.6 * throat.process(noise)) * envelope
+        }
+        return finish(output, peak: 0.75)
     }
 
     // MARK: - Chime

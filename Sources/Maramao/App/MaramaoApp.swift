@@ -9,8 +9,10 @@ struct MaramaoApp: App {
 
     var body: some Scene {
         // The UI is the menu bar item's NSMenu, owned by AppDelegate. SwiftUI needs at
-        // least one scene, and an empty Settings scene opens nothing on its own.
-        Settings {
+        // least one scene. An empty Settings scene is not enough: opening a maramao:// URL
+        // with `open` while the app runs made SwiftUI show it as an empty window. A menu bar
+        // extra that is never inserted has no window SwiftUI could open.
+        MenuBarExtra("Maramao", isInserted: .constant(false)) {
             EmptyView()
         }
     }
@@ -63,6 +65,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // First launch: a cat explains what is about to happen (issue #88).
         Task { @MainActor in
             if !AppSettings.shared.hasCompletedOnboarding { self.showOnboarding() }
+        }
+        // A full menu bar on a Mac with a notch hides the cat without a word: say so, once
+        // the menu bar has had a moment to lay out its items.
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 2_500_000_000)
+            guard AppSettings.shared.hasCompletedOnboarding else { return }
+            self.statusItem?.warnIfHidden()
         }
     }
 

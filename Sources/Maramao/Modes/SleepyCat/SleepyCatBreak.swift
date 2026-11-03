@@ -1,9 +1,14 @@
 import AppKit
 import SwiftUI
+import MaramaoCore
 
-/// "Non svegliare il gatto": a full-screen photo of a sleeping cat on every screen.
-/// Moving the mouse, scrolling or typing wakes it up: a photo of an angry cat, a different
-/// one every time. Leave everything alone for a few seconds and it falls asleep again.
+/// "Non svegliare il gatto": a big photo of a sleeping cat over a blurred desktop, on every
+/// screen. Moving the mouse, scrolling or typing wakes it up: the same break's angry cat
+/// glares, and a passive-aggressive line shows up under it, a new one at every wake-up.
+/// Leave everything alone for a few seconds and it falls asleep again.
+///
+/// Each break picks one sleeping cat and one angry cat and keeps them for the whole break;
+/// the next break picks another pair.
 ///
 /// Input is observed with local and global `NSEvent` monitors. Global key events need
 /// Accessibility; without it they are silently missing and mouse input is enough.
@@ -23,14 +28,16 @@ final class SleepyCatBreak: BreakMode {
     private var lastInput = Date.distantPast
     private var lastPhotoDate = Date.distantPast
     private var anchor: NSPoint = .zero
+    private var wakeUps = 0
+    private var lines = ShuffleBag(count: 0)
 
     /// Input in the first seconds is ignored: the user is still letting go of the mouse.
-    private let gracePeriod: TimeInterval = 2
+    private let gracePeriod: TimeInterval = 1.5
     /// Mouse movement below this distance (points) is jitter.
-    private let jitterThreshold: CGFloat = 6
+    private let jitterThreshold: CGFloat = 3
     /// Seconds without input before the cat goes back to sleep.
-    private let quietBeforeSleep: TimeInterval = 4
-    /// Still fiddling while the cat glares: another angry cat after this long.
+    private let quietBeforeSleep: TimeInterval = 2.5
+    /// Still fiddling while the cat glares: another remark after this long.
     private let photoInterval: TimeInterval = 2.5
 
     func begin(context: BreakContext) {
@@ -38,8 +45,13 @@ final class SleepyCatBreak: BreakMode {
         hasBegun = true
         self.context = context
 
-        let model = SleepyCatModel(sleepingPhoto: CatPhotos.shared.next(.sleeping))
+        let model = SleepyCatModel(
+            sleepingPhoto: CatPhotos.shared.next(.sleeping),
+            angryPhoto: CatPhotos.shared.next(.angry),
+            line: SleepyCatLines.asleep
+        )
         self.model = model
+        lines = ShuffleBag(count: angryLines().count)
 
         startDate = Date()
         anchor = NSEvent.mouseLocation
@@ -155,14 +167,39 @@ final class SleepyCatBreak: BreakMode {
         lastInput = now
         switch model.phase {
         case .asleep:
-            model.wake(with: CatPhotos.shared.next(.angry))
+            wakeUps += 1
+            // The cat hisses or grumbles, every time it is woken up.
+            CatSounds.shared.angry()
+            say(nextAngryLine(), awake: true)
             lastPhotoDate = now
         case .awake:
+            // Still fiddling while the cat glares: another remark, not too often.
             if now.timeIntervalSince(lastPhotoDate) > photoInterval {
-                model.wake(with: CatPhotos.shared.next(.angry))
+                say(nextAngryLine(), awake: true)
                 lastPhotoDate = now
             }
         }
+    }
+
+    private func say(_ line: String, awake: Bool) {
+        guard let model else { return }
+        if awake {
+            model.wake(saying: line)
+        } else {
+            model.fallAsleep(saying: line)
+        }
+        BreakAccessibility.announce(line)
+    }
+
+    private func angryLines() -> [String] {
+        let minutes = Int(((context?.duration ?? 300) / 60).rounded())
+        return SleepyCatLines.angry(breakMinutes: minutes, wakeUps: wakeUps)
+    }
+
+    private func nextAngryLine() -> String {
+        let all = angryLines()
+        guard let index = lines.next(), index < all.count else { return all.first ?? "" }
+        return all[index]
     }
 
     // MARK: - Clock
@@ -176,7 +213,7 @@ final class SleepyCatBreak: BreakMode {
             checkMouseMovement()
         }
         if model.phase == .awake, Date().timeIntervalSince(lastInput) >= quietBeforeSleep {
-            model.fallAsleep()
+            say(SleepyCatLines.asleep, awake: false)
         }
     }
 }

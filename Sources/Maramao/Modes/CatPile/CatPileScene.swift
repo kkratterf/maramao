@@ -1,5 +1,6 @@
 import AppKit
 import SpriteKit
+import MaramaoCore
 
 /// An SKView that reacts to the very first click, even though its window never becomes key.
 final class CatPileSKView: SKView {
@@ -53,6 +54,8 @@ final class CatPileScene: SKScene {
     /// Whether a clicked cat can be grabbed and dragged (never with Reduce Motion).
     var canDrag: () -> Bool = { false }
     private var grabbed: SKNode?
+    /// When the last "stop shaking me" noise played (event time), so they do not pile up.
+    private var lastShakeSound: TimeInterval = 0
     /// Calm stacking: where the next cat goes in the current row.
     private var calmX: CGFloat = 0
     private var calmRowBase: CGFloat = 0
@@ -125,6 +128,7 @@ final class CatPileScene: SKScene {
 
         if elapsed - lastScan > 0.5 {
             lastScan = elapsed
+            rescueEscapedCats()
             scanPile()
         }
 
@@ -281,6 +285,11 @@ final class CatPileScene: SKScene {
         let topOfPile = visible.sorted { $0.position.y > $1.position.y }.prefix(4)
         guard let cat = topOfPile.randomElement() else { return }
         meow(at: cat)
+        // Half of the meows on the pile are heard too, softly.
+        if Bool.random() {
+            let options: [MeowVariant] = [.cute, .normal, .questioning, .demanding]
+            CatSounds.shared.play(.meow(options.randomElement() ?? .normal), gain: 0.45)
+        }
     }
 
     private func meow(at cat: SKNode, saying line: String? = nil) {
@@ -330,6 +339,18 @@ final class CatPileScene: SKScene {
         label.run(SKAction.sequence([pop, drift, SKAction.removeFromParent()]))
     }
 
+    /// A cat flung hard enough can slip through the thin walls and vanish. Drop it back in
+    /// from the top instead, so poking the pile never makes it shrink.
+    private func rescueEscapedCats() {
+        for cat in cats where cat !== grabbed {
+            let p = cat.position
+            guard p.y < -60 || p.x < -60 || p.x > size.width + 60 else { continue }
+            cat.position = CGPoint(x: CGFloat.random(in: size.width * 0.2...size.width * 0.8), y: size.height + 80)
+            cat.physicsBody?.velocity = .zero
+            cat.physicsBody?.angularVelocity = 0
+        }
+    }
+
     // MARK: - Clicks
 
     override func mouseDown(with event: NSEvent) {
@@ -343,11 +364,17 @@ final class CatPileScene: SKScene {
             }
         }
         let reaction = hit == nil ? nil : onPet?()
+        // Every poked cat makes a noise. A pet already purrs (see `onPet`).
+        if hit != nil, reaction == nil {
+            CatSounds.shared.randomPoke()
+        }
         if calm, let cat = hit {
             meow(at: cat, saying: reaction)
             return
         }
         guard let cat = hit, let body = cat.physicsBody else { return }
+        // A flung cat moves fast: check its collisions precisely so it cannot leave the screen.
+        body.usesPreciseCollisionDetection = true
         body.velocity = CGVector(dx: CGFloat.random(in: -160...160), dy: CGFloat.random(in: 650...900))
         body.angularVelocity = CGFloat.random(in: -5...5)
         meow(at: cat, saying: reaction)
@@ -368,6 +395,16 @@ final class CatPileScene: SKScene {
         let dy = min(limit, max(-limit, (point.y - cat.position.y) * 14))
         body.affectedByGravity = false
         body.velocity = CGVector(dx: dx, dy: dy)
+        // Shaken hard, the cat complains: now and then, so the noises do not pile up.
+        let now = event.timestamp
+        if hypot(dx, dy) > 1100, now - lastShakeSound > 0.7 {
+            lastShakeSound = now
+            if Bool.random() {
+                CatSounds.shared.meow(.demanding)
+            } else {
+                CatSounds.shared.angry()
+            }
+        }
         body.angularVelocity *= 0.8
         activeUntil = lastScan + 3
         setFrameRate(Self.activeFPS)

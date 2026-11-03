@@ -335,14 +335,19 @@ final class LaserChaseBreak: BreakMode {
             }
         case .celebrating:
             brake(dt)
-            if inState >= celebrateDuration { enter(.waiting) }
+            // The hearts are out: if the dot is already running away, go after it.
+            if inState >= celebrateDuration * 0.5, hypot(mouse.x - catchPoint.x, mouse.y - catchPoint.y) > w * 0.2 {
+                enter(.chasing)
+            } else if inState >= celebrateDuration {
+                enter(.waiting)
+            }
         case .missed:
             brake(dt)
             if inState >= missedDuration { enter(.chasing) }
         case .waiting:
             brake(dt)
             faceDot()
-            if hypot(mouse.x - catchPoint.x, mouse.y - catchPoint.y) > w * 0.45 {
+            if hypot(mouse.x - catchPoint.x, mouse.y - catchPoint.y) > w * 0.2 {
                 enter(.chasing)
             } else if idleFor >= idleBeforeGrooming {
                 enter(.grooming)
@@ -551,22 +556,29 @@ final class LaserChaseBreak: BreakMode {
         }
     }
 
+    /// A spray of hearts out of the paw that caught the dot, mostly upwards.
     private func spawnHearts() {
         let time = now
         let paw = pawPoint
-        for index in 0..<5 {
+        let count = calm ? 8 : 16
+        for index in 0..<count {
+            // Fan from about 20° to 160°: up and to the sides, never straight down.
+            let angle = Double.random(in: 0.35...(Double.pi - 0.35))
+            let speed = CGFloat.random(in: calm ? 120...220 : 260...520)
             let heart = LaserChaseHeart(
                 id: nextHeartID,
-                origin: CGPoint(x: paw.x + CGFloat.random(in: -30...30), y: paw.y + cat.height * CGFloat.random(in: 0.3...0.7)),
-                birth: time + Double(index) * 0.1,
-                drift: CGFloat.random(in: -30...30),
-                size: CGFloat.random(in: 18...30)
+                origin: CGPoint(x: paw.x, y: paw.y + cat.height * 0.25),
+                birth: time + Double(index) * 0.012,
+                velocity: CGVector(dx: CGFloat(cos(angle)) * speed, dy: CGFloat(sin(angle)) * speed),
+                size: CGFloat.random(in: 18...34),
+                spin: calm ? 0 : Double.random(in: -50...50),
+                symbol: LaserChaseHeart.symbols.randomElement() ?? "❤️"
             )
             nextHeartID += 1
             cat.hearts.append(heart)
         }
-        if cat.hearts.count > 30 {
-            cat.hearts.removeFirst(cat.hearts.count - 30)
+        if cat.hearts.count > 48 {
+            cat.hearts.removeFirst(cat.hearts.count - 48)
         }
     }
 
