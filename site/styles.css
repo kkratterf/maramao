@@ -105,7 +105,7 @@ p { margin: 0; }
 /* A soft dark veil keeps the headline readable over the brightest part of the gradient */
 .grainient::after { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 45% at 50% 22%, rgb(8 8 10 / 72%), transparent 75%); }
 .hero h1 { font-size: clamp(44px, 7.4vw, 84px); letter-spacing: -.02em; max-width: 13em; margin: 0 auto; }
-.hero h1 span { color: rgb(244 244 245 / 62%); font-style: italic; }
+.hero h1 span { color: #ff8266; font-style: italic; }
 .hero .lead { margin: 22px auto 0; font-size: 19px; color: rgb(244 244 245 / 72%); max-width: 30em; }
 .ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
 .meta { margin-top: 16px; font-size: 13px; color: rgb(244 244 245 / 50%); }
