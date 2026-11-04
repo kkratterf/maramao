@@ -116,6 +116,16 @@ if ! "$ROOT/scripts/fetch-cat-photos.sh" "$APP/Contents/Resources/CatPhotos"; th
   echo "warning: could not fetch the cat photos, the sleepy cat falls back to emoji" >&2
 fi
 
+# Recorded cat sounds (CC0, see Resources/cat-sounds.tsv). In CI a missing sound fails the
+# build; locally the app falls back to the synthesized voices.
+if ! "$ROOT/scripts/fetch-cat-sounds.sh" "$APP/Contents/Resources/CatSounds"; then
+  if [ "${GITHUB_ACTIONS:-}" = "true" ]; then
+    echo "::error::Could not fetch the cat sounds (scripts/fetch-cat-sounds.sh)"
+    exit 1
+  fi
+  echo "warning: could not fetch the cat sounds, the cats use their synthesized voices" >&2
+fi
+
 # App Intents metadata (the Focus filter and the Shortcuts actions). Xcode extracts it for app targets
 # but not for SwiftPM executables, so do Xcode's two steps by hand: ask the
 # compiler for the "const values" of the app module, then run Xcode's
