@@ -71,8 +71,20 @@ fi
 
 # 2. A read-write image with some headroom for Finder's .DS_Store.
 SIZE_MB=$(( $(du -sm "$STAGING" | cut -f1) + 20 ))
-hdiutil create -srcfolder "$STAGING" -volname "$VOLNAME" -fs HFS+ \
-  -format UDRW -size "${SIZE_MB}m" -ov "$RW_DMG" >/dev/null
+# On CI runners hdiutil sometimes fails with "Resource busy" while another disk
+# image is still being released: try a few times before giving up.
+for attempt in 1 2 3 4 5; do
+  if hdiutil create -srcfolder "$STAGING" -volname "$VOLNAME" -fs HFS+ \
+    -format UDRW -size "${SIZE_MB}m" -ov "$RW_DMG" >/dev/null; then
+    break
+  fi
+  if [ "$attempt" -eq 5 ]; then
+    echo "error: hdiutil create failed 5 times" >&2
+    exit 1
+  fi
+  echo "hdiutil create failed (attempt $attempt), retrying..." >&2
+  sleep $(( attempt * 3 ))
+done
 
 # 3. Mount it. The volume may come up as "Maramao 1" if a Maramao volume
 # is already mounted, so read the real mount point back from hdiutil.

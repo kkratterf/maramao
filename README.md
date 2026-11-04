@@ -254,6 +254,8 @@ The cats in **Laser chase** and **Cat invasion** are drawn in code (`Sources/Mar
 
 **Don't wake the cat** shows photos from the [WordPress Photo Directory](https://wordpress.org/photos/), all released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/). They are not committed: `scripts/build-app.sh` downloads them, shrinks them and copies them into the app. The list, with each photo's page and author, is [`Resources/cat-photos.tsv`](Resources/cat-photos.tsv). Thanks to Brandon Zhang, Julia Golomb, mdburnette, 渡邉厚夫, Taco Verdonschot, Sakib MD Nazmush, Midhun P, Noelia Segura and Yam B Chhetri.
 
+The cats' meows, growls and purrs are recordings by Joseph Sardin from [BigSoundBank](https://bigsoundbank.com/), released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/). Like the photos they are not committed: `scripts/build-app.sh` downloads them and copies them into the app. The list is [`Resources/cat-sounds.tsv`](Resources/cat-sounds.tsv).
+
 The [website](https://maramao.kkratter.com/) shows screen recordings of the app itself in `site/media/mode-*.mp4`, and the yawning kitten clip that the logo comes from in `site/media/outro.mp4`.
 
 The pictures in `packs/example/images` were drawn for this repository by a small script and are CC0, like the rest of that pack. Community packs declare their own license (CC0 or CC-BY) in `pack.json`.

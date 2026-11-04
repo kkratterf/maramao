@@ -2,9 +2,11 @@ import AVFoundation
 import Foundation
 import MaramaoCore
 
-/// Plays the cat sounds synthesized by `CatVoice`: meows, purrs, a "mrrp"
-/// and the gentle "break over" chime. No audio files: every sound is
-/// rendered once into a PCM buffer and cached.
+/// Plays the cats' voices: meows, little mews, growls and purrs recorded from real cats
+/// (CC0, bundled by `scripts/fetch-cat-sounds.sh`, see `Resources/cat-sounds.tsv`), and
+/// the gentle "break over" chime. A build without the recordings (`swift run`) falls back
+/// to the voices synthesized by `CatVoice`. Every sound is decoded or rendered once into
+/// a PCM buffer and cached.
 ///
 /// Respects `AppSettings.soundEnabled` and `soundVolume`. The audio engine
 /// starts lazily on the first sound, stops itself when idle, is rebuilt after
@@ -41,6 +43,22 @@ final class CatSounds {
     private var retryAfter = Date.distantPast
     private var meowRotation = 0
     private var angryRotation = 0
+
+    /// The recordings bundled with the app, by kind. Loaded on the first sound.
+    private enum Recording: String, CaseIterable {
+        /// Friendly meows.
+        case meow
+        /// Short little meows: pokes, chirps, kittens.
+        case mew
+        /// Growls and yowls: a cat woken up or shaken.
+        case angry
+        /// One long purr, cut or looped to length.
+        case purr
+    }
+
+    private lazy var recordings: [Recording: [AVAudioPCMBuffer]] = loadRecordings()
+    /// Every recording of a kind once before any repeats, never twice in a row.
+    private var recordingBags: [Recording: ShuffleBag] = [:]
 
     init(settings: AppSettings = .shared) {
         self.settings = settings
@@ -173,9 +191,15 @@ final class CatSounds {
     // MARK: - Buffers
 
     private func buffer(for sound: Sound) -> AVAudioPCMBuffer? {
+        if let recorded = recordedBuffer(for: sound) { return recorded }
         if let cached = buffers[sound] { return cached }
         guard let format else { return nil }
         let samples = render(sound)
+        return store(samples, as: sound, format: format)
+    }
+
+    /// Caches samples as the buffer for `sound`.
+    private func store(_ samples: [Float], as sound: Sound, format: AVAudioFormat) -> AVAudioPCMBuffer? {
         guard !samples.isEmpty,
               let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(samples.count)),
               let channel = buffer.floatChannelData?[0]
@@ -198,6 +222,135 @@ final class CatSounds {
         buffers[sound] = buffer
         return buffer
     }
+
+    // MARK: - Recordings
+
+    /// A real cat for this sound, or nil when the app has no recording of that kind.
+    private func recordedBuffer(for sound: Sound) -> AVAudioPCMBuffer? {
+        switch sound {
+        case .hiss, .meow(.grumpy):
+            return nextRecording(.angry)
+        case .chirp, .meow(.cute):
+            return nextRecording(.mew)
+        case .meow:
+            return nextRecording(.meow)
+        case .purr(let tenths):
+            return recordedPurr(tenths: tenths)
+        case .chime:
+            return nil
+        }
+    }
+
+    private func nextRecording(_ kind: Recording) -> AVAudioPCMBuffer? {
+        let all = recordings[kind] ?? []
+        guard !all.isEmpty else { return nil }
+        var bag = recordingBags[kind] ?? ShuffleBag(count: all.count)
+        let index = bag.next() ?? 0
+        recordingBags[kind] = bag
+        return all[min(index, all.count - 1)]
+    }
+
+    /// The recorded purr, cut to `tenths` of a second (or looped when it is shorter),
+    /// with a soft fade at the end. Cached like the synthesized purrs.
+    private func recordedPurr(tenths: Int) -> AVAudioPCMBuffer? {
+        guard let source = recordings[.purr]?.first,
+              let input = source.floatChannelData?[0],
+              let format
+        else { return nil }
+        let key = Sound.purr(tenths: tenths)
+        if let cached = buffers[key] { return cached }
+        let sourceCount = Int(source.frameLength)
+        guard sourceCount > 0 else { return nil }
+        let count = max(1, Int(Double(tenths) / 10 * sampleRate))
+        var samples = [Float](repeating: 0, count: count)
+        for i in 0..<count {
+            samples[i] = input[i % sourceCount]
+        }
+        let fade = min(count, Int(0.3 * sampleRate))
+        for i in 0..<fade {
+            samples[count - 1 - i] *= Float(i) / Float(fade)
+        }
+        return store(samples, as: key, format: format)
+    }
+
+    private func loadRecordings() -> [Recording: [AVAudioPCMBuffer]] {
+        guard let format,
+              let root = Bundle.main.resourceURL?.appendingPathComponent("CatSounds", isDirectory: true)
+        else { return [:] }
+        var result: [Recording: [AVAudioPCMBuffer]] = [:]
+        for kind in Recording.allCases {
+            let folder = root.appendingPathComponent(kind.rawValue, isDirectory: true)
+            guard let files = try? FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil) else { continue }
+            let audio = files
+                .filter { ["m4a", "caf", "wav", "aiff", "mp3"].contains($0.pathExtension.lowercased()) }
+                .sorted { $0.lastPathComponent < $1.lastPathComponent }
+            let loaded = audio.compactMap { Self.decode($0, to: format) }
+            if !loaded.isEmpty {
+                result[kind] = loaded
+            }
+        }
+        return result
+    }
+
+    /// Reads an audio file into a buffer in the players' format (mono, 44.1 kHz), with its
+    /// peak brought to a common level and a few milliseconds of fade at both ends, so
+    /// recordings of different loudness sit together and never click.
+    private static func decode(_ url: URL, to format: AVAudioFormat) -> AVAudioPCMBuffer? {
+        guard let file = try? AVAudioFile(forReading: url) else { return nil }
+        let source = file.processingFormat
+        let frames = AVAudioFrameCount(file.length)
+        guard frames > 0, let input = AVAudioPCMBuffer(pcmFormat: source, frameCapacity: frames) else { return nil }
+        do {
+            try file.read(into: input)
+        } catch {
+            return nil
+        }
+
+        let output: AVAudioPCMBuffer
+        if source == format {
+            output = input
+        } else {
+            guard let converter = AVAudioConverter(from: source, to: format) else { return nil }
+            converter.downmix = true
+            let ratio = format.sampleRate / source.sampleRate
+            let capacity = AVAudioFrameCount(Double(input.frameLength) * ratio) + 4096
+            guard let converted = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: capacity) else { return nil }
+            var delivered = false
+            var error: NSError?
+            let status = converter.convert(to: converted, error: &error) { _, inputStatus in
+                if delivered {
+                    inputStatus.pointee = .endOfStream
+                    return nil
+                }
+                delivered = true
+                inputStatus.pointee = .haveData
+                return input
+            }
+            guard status != .error else { return nil }
+            output = converted
+        }
+
+        let count = Int(output.frameLength)
+        guard count > 0, let samples = output.floatChannelData?[0] else { return nil }
+        var peak: Float = 0
+        for i in 0..<count {
+            peak = max(peak, abs(samples[i]))
+        }
+        let gain: Float = peak > 0.001 ? 0.7 / peak : 1
+        let fade = min(count / 2, Int(0.008 * format.sampleRate))
+        for i in 0..<count {
+            var value = samples[i] * gain
+            if i < fade {
+                value *= Float(i) / Float(fade)
+            } else if i >= count - fade {
+                value *= Float(count - 1 - i) / Float(fade)
+            }
+            samples[i] = value
+        }
+        return output
+    }
+
+    // MARK: - Synthesis
 
     private func render(_ sound: Sound) -> [Float] {
         switch sound {
