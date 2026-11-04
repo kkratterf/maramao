@@ -28,7 +28,6 @@ final class SleepyCatBreak: BreakMode {
     private var lastInput = Date.distantPast
     private var lastPhotoDate = Date.distantPast
     private var anchor: NSPoint = .zero
-    private var wakeUps = 0
     private var lines = ShuffleBag(count: 0)
 
     /// Input in the first seconds is ignored: the user is still letting go of the mouse.
@@ -167,7 +166,6 @@ final class SleepyCatBreak: BreakMode {
         lastInput = now
         switch model.phase {
         case .asleep:
-            wakeUps += 1
             // The cat hisses or grumbles, every time it is woken up.
             CatSounds.shared.angry()
             say(nextAngryLine(), awake: true)
@@ -193,7 +191,7 @@ final class SleepyCatBreak: BreakMode {
 
     private func angryLines() -> [String] {
         let minutes = Int(((context?.duration ?? 300) / 60).rounded())
-        return SleepyCatLines.angry(breakMinutes: minutes, wakeUps: wakeUps)
+        return SleepyCatLines.angry(breakMinutes: minutes)
     }
 
     private func nextAngryLine() -> String {

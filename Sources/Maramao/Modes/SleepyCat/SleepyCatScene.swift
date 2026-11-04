@@ -18,9 +18,9 @@ struct SleepyCatScene: View {
                         BreakHUD(context: context)
                     }
                     ZStack {
-                        SleepyCatPhoto(image: model.sleepingPhoto, fallback: "😴", size: photoSize)
+                        SleepyCatPhoto(image: model.sleepingPhoto, size: photoSize)
                             .opacity(model.phase == .asleep ? 1 : 0)
-                        SleepyCatPhoto(image: model.angryPhoto, fallback: "😾", size: photoSize)
+                        SleepyCatPhoto(image: model.angryPhoto, size: photoSize)
                             .opacity(model.phase == .awake ? 1 : 0)
                     }
                     .frame(width: photoSize.width, height: photoSize.height)
@@ -56,7 +56,6 @@ struct SleepyCatScene: View {
 /// with bars on the sides.
 struct SleepyCatPhoto: View {
     let image: NSImage?
-    let fallback: String
     let size: CGSize
 
     var body: some View {
@@ -68,12 +67,9 @@ struct SleepyCatPhoto: View {
                     .frame(width: size.width, height: size.height)
                     .clipped()
             } else {
-                ZStack {
-                    Color.white.opacity(0.06)
-                    Text(verbatim: fallback)
-                        .font(.system(size: size.height * 0.4))
-                }
-                .frame(width: size.width, height: size.height)
+                // No photos in this build (`swift run`): an empty card, so the layout holds.
+                Color.white.opacity(0.06)
+                    .frame(width: size.width, height: size.height)
             }
         }
         .accessibilityHidden(true)
@@ -89,15 +85,10 @@ struct SleepyCatCaption: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     var body: some View {
-        HStack(spacing: 10) {
-            Text(verbatim: angry ? "😾" : "😴")
-                .font(.system(size: 20))
-                .accessibilityHidden(true)
-            Text(line)
-                .font(.system(size: 20, weight: .semibold, design: .rounded))
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-        }
+        Text(line)
+            .font(.system(size: 20, weight: .semibold, design: .rounded))
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
         .foregroundStyle(.white)
         .padding(.horizontal, 22)
         .padding(.vertical, 12)
