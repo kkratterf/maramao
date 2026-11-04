@@ -1,0 +1,27 @@
+# Recorded cat sounds, played instead of the synthesized ones when they are in the app.
+# All CC0, by Joseph Sardin, from BigSoundBank (https://bigsoundbank.com/). Fetched,
+# converted and copied into the app by scripts/fetch-cat-sounds.sh, called from
+# scripts/build-app.sh. Kinds: meow (friendly meows), mew (short little meows, for pokes
+# and chirps), angry (growls and yowls, for a woken or shaken cat), purr.
+# Columns, tab separated: kind	name	url	sha256 ("-" when not pinned)	page	author
+meow	meow-1	https://bigsoundbank.com/UPLOAD/mp3/1889.mp3	-	https://bigsoundbank.com/meow-cat-1-s1889.html	Joseph Sardin
+meow	meow-3	https://bigsoundbank.com/UPLOAD/mp3/1891.mp3	-	https://bigsoundbank.com/meow-cat-3-s1891.html	Joseph Sardin
+meow	meow-7	https://bigsoundbank.com/UPLOAD/mp3/1895.mp3	-	https://bigsoundbank.com/meow-cat-7-s1895.html	Joseph Sardin
+meow	meow-8	https://bigsoundbank.com/UPLOAD/mp3/1896.mp3	-	https://bigsoundbank.com/meow-cat-8-s1896.html	Joseph Sardin
+meow	meow-10	https://bigsoundbank.com/UPLOAD/mp3/1898.mp3	-	https://bigsoundbank.com/meow-cat-10-s1898.html	Joseph Sardin
+meow	meow-12	https://bigsoundbank.com/UPLOAD/mp3/1900.mp3	-	https://bigsoundbank.com/meow-cat-12-s1900.html	Joseph Sardin
+mew	little-meow-1	https://bigsoundbank.com/UPLOAD/mp3/0494.mp3	-	https://bigsoundbank.com/little-meow-of-a-cat-s0494.html	Joseph Sardin
+mew	little-meow-2	https://bigsoundbank.com/UPLOAD/mp3/1472.mp3	-	https://bigsoundbank.com/little-meow-of-a-cat-2-s1472.html	Joseph Sardin
+mew	little-meow-3	https://bigsoundbank.com/UPLOAD/mp3/1473.mp3	-	https://bigsoundbank.com/little-meow-of-a-cat-3-s1473.html	Joseph Sardin
+mew	little-meow-4	https://bigsoundbank.com/UPLOAD/mp3/1474.mp3	-	https://bigsoundbank.com/little-meow-of-a-cat-4-s1474.html	Joseph Sardin
+mew	little-meow-5	https://bigsoundbank.com/UPLOAD/mp3/1475.mp3	-	https://bigsoundbank.com/little-meow-of-a-cat-5-s1475.html	Joseph Sardin
+mew	little-meow-7	https://bigsoundbank.com/UPLOAD/mp3/1477.mp3	-	https://bigsoundbank.com/little-meow-of-a-cat-7-s1477.html	Joseph Sardin
+mew	little-meow-9	https://bigsoundbank.com/UPLOAD/mp3/1479.mp3	-	https://bigsoundbank.com/little-meow-of-a-cat-9-s1479.html	Joseph Sardin
+mew	little-meow-11	https://bigsoundbank.com/UPLOAD/mp3/1481.mp3	-	https://bigsoundbank.com/little-meow-of-a-cat-11-s1481.html	Joseph Sardin
+angry	growl-1	https://bigsoundbank.com/UPLOAD/mp3/1885.mp3	-	https://bigsoundbank.com/growling-cat-1-s1885.html	Joseph Sardin
+angry	growl-2	https://bigsoundbank.com/UPLOAD/mp3/1886.mp3	-	https://bigsoundbank.com/growling-cat-2-s1886.html	Joseph Sardin
+angry	growl-3	https://bigsoundbank.com/UPLOAD/mp3/1887.mp3	-	https://bigsoundbank.com/growling-cat-3-s1887.html	Joseph Sardin
+angry	roar-1	https://bigsoundbank.com/UPLOAD/mp3/1881.mp3	-	https://bigsoundbank.com/cat-roar-1-s1881.html	Joseph Sardin
+angry	roar-2	https://bigsoundbank.com/UPLOAD/mp3/1882.mp3	-	https://bigsoundbank.com/cat-roar-2-s1882.html	Joseph Sardin
+angry	roar-3	https://bigsoundbank.com/UPLOAD/mp3/1883.mp3	-	https://bigsoundbank.com/cat-roar-3-s1883.html	Joseph Sardin
+purr	purr	https://bigsoundbank.com/UPLOAD/mp3/0436.mp3	-	https://bigsoundbank.com/cat-purr-s0436.html	Joseph Sardin
