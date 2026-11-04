@@ -14,9 +14,6 @@ struct SleepyCatScene: View {
             ZStack {
                 ModalBackdrop(dim: 0.5)
                 VStack(spacing: 24) {
-                    if isMain {
-                        BreakHUD(context: context)
-                    }
                     ZStack {
                         SleepyCatPhoto(image: model.sleepingPhoto, size: photoSize)
                             .opacity(model.phase == .asleep ? 1 : 0)
@@ -31,17 +28,35 @@ struct SleepyCatScene: View {
                     )
                     .shadow(color: .black.opacity(0.4), radius: 30, y: 12)
                     // The line swaps in place, with no animation: the cat snaps at once.
+                    // A fixed-height slot, so a line that wraps never moves the photo.
                     SleepyCatCaption(line: model.line, angry: model.phase == .awake)
                         .frame(maxWidth: photoSize.width)
+                        .frame(height: Self.captionHeight, alignment: .top)
                         .transaction { $0.animation = nil }
                 }
                 .frame(width: geo.size.width, height: geo.size.height)
+                // Nothing here takes clicks. A portrait photo filling the card is clipped
+                // only when drawn: it still covered the countdown above it and ate the
+                // clicks on "Chiudi".
+                .allowsHitTesting(false)
+                // The countdown and its "Chiudi" are pinned to the top and drawn last, as
+                // in the other modes, so nothing can sit over the button.
+                if isMain {
+                    VStack {
+                        BreakHUD(context: context)
+                        Spacer()
+                    }
+                    .padding(.top, 44)
+                }
             }
         }
         // Waking up is instant, falling asleep again is a short fade.
         .animation(model.phase == .awake ? nil : .easeInOut(duration: 0.4), value: model.phase)
         .ignoresSafeArea()
     }
+
+    /// Room for a caption of up to two lines.
+    static let captionHeight: CGFloat = 80
 
     /// A 3:2 landscape card, as big as fits with room for the countdown and the caption.
     static func photoSize(in screen: CGSize) -> CGSize {
