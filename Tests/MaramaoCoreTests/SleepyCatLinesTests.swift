@@ -2,11 +2,10 @@ import XCTest
 @testable import MaramaoCore
 
 final class SleepyCatLinesTests: XCTestCase {
-    func testLinesUseTheBreakLengthAndTheWakeUps() {
-        let lines = SleepyCatLines.angry(breakMinutes: 5, wakeUps: 3)
-        XCTAssertGreaterThanOrEqual(lines.count, 10)
+    func testLinesUseTheBreakLength() {
+        let lines = SleepyCatLines.angry(breakMinutes: 5)
+        XCTAssertGreaterThanOrEqual(lines.count, 5)
         XCTAssertTrue(lines.contains { $0.contains("5") })
-        XCTAssertTrue(lines.contains { $0.contains("3") })
         XCTAssertEqual(Set(lines).count, lines.count, "no duplicate lines")
         XCTAssertFalse(SleepyCatLines.asleep.isEmpty)
     }

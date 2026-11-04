@@ -1,31 +1,22 @@
 import Foundation
 
-/// What the cat says under its photo in "Non svegliare il gatto": one calm line while it
-/// sleeps, and passive-aggressive remarks every time someone wakes it up.
+/// What the cat says under its photo in "Non svegliare il gatto": one line while it
+/// sleeps, and a dry, passive-aggressive remark every time someone wakes it up.
 public enum SleepyCatLines {
     /// Under the sleeping cat.
     public static var asleep: String {
-        String(localized: "Shh… il gatto dorme. Non toccare niente.")
+        String(localized: "Sto dormendo. Non disturbarmi.")
     }
 
-    /// The remarks of a woken cat, in a fixed order. `breakMinutes` is the length of the
-    /// break, `wakeUps` how many times the cat was woken so far in this break (1 or more).
-    public static func angry(breakMinutes: Int, wakeUps: Int) -> [String] {
+    /// The remarks of a woken cat, in a fixed order. `breakMinutes` is the length of the break.
+    public static func angry(breakMinutes: Int) -> [String] {
         let minutes = max(1, breakMinutes)
-        let times = max(1, wakeUps)
         return [
-            String(localized: "Non riesci a stare senza computer per \(minutes) minuti?"),
-            String(localized: "Ah, ok. Le mail sono più importanti del mio sonno."),
-            String(localized: "Mi hai svegliato per guardare Slack? Davvero?"),
-            String(localized: "Non ti giudico. Ok, ti giudico."),
-            String(localized: "Il tuo capo non ti vede. Io sì."),
-            String(localized: "Fai pure. Tanto io non dimentico."),
-            String(localized: "Ti sembra il momento?"),
-            String(localized: "Muovi ancora quel mouse e ti butto il bicchiere giù dal tavolo."),
-            String(localized: "Quando io mi siedo sulla tastiera, ti lamenti. Ecco."),
-            String(localized: "Alzati. Stiracchiati. Bevi un bicchiere d'acqua. Lasciami dormire."),
-            String(localized: "Che bello farsi svegliare. Grazie, eh."),
-            String(localized: "Mi hai svegliato \(times) volte. Sto tenendo il conto."),
+            String(localized: "Pausa vuol dire pausa. Te lo devo spiegare?"),
+            String(localized: "Non riesci davvero a staccarti dal computer per \(minutes) minuti?"),
+            String(localized: "Pausa vuol dire pausa."),
+            String(localized: "Fai pure come se io non ci fossi."),
+            String(localized: "Continua pure a lavorare. Ti fa benissimo."),
         ]
     }
 }
