@@ -250,8 +250,8 @@ final class CatSounds {
         return all[min(index, all.count - 1)]
     }
 
-    /// The recorded purr, cut to `tenths` of a second (or looped when it is shorter),
-    /// with a soft fade at the end. Cached like the synthesized purrs.
+    /// The recorded purr, cut to `tenths` of a second (or looped without a gap when it is
+    /// shorter), with a soft fade at the end. Cached like the synthesized purrs.
     private func recordedPurr(tenths: Int) -> AVAudioPCMBuffer? {
         guard let source = recordings[.purr]?.first,
               let input = source.floatChannelData?[0],
@@ -262,10 +262,11 @@ final class CatSounds {
         let sourceCount = Int(source.frameLength)
         guard sourceCount > 0 else { return nil }
         let count = max(1, Int(Double(tenths) / 10 * sampleRate))
-        var samples = [Float](repeating: 0, count: count)
-        for i in 0..<count {
-            samples[i] = input[i % sourceCount]
-        }
+        var samples = CatRecording.looped(
+            Array(UnsafeBufferPointer(start: input, count: sourceCount)),
+            count: count,
+            crossfade: Int(0.25 * sampleRate)
+        )
         let fade = min(count, Int(0.3 * sampleRate))
         for i in 0..<fade {
             samples[count - 1 - i] *= Float(i) / Float(fade)
@@ -284,7 +285,8 @@ final class CatSounds {
             let audio = files
                 .filter { ["m4a", "caf", "wav", "aiff", "mp3"].contains($0.pathExtension.lowercased()) }
                 .sorted { $0.lastPathComponent < $1.lastPathComponent }
-            let loaded = audio.compactMap { Self.decode($0, to: format) }
+            let target = kind == .purr ? CatRecording.purrLoudness : CatRecording.voiceLoudness
+            let loaded = audio.compactMap { Self.decode($0, to: format, target: target) }
             if !loaded.isEmpty {
                 result[kind] = loaded
             }
@@ -292,10 +294,11 @@ final class CatSounds {
         return result
     }
 
-    /// Reads an audio file into a buffer in the players' format (mono, 44.1 kHz), with its
-    /// peak brought to a common level and a few milliseconds of fade at both ends, so
-    /// recordings of different loudness sit together and never click.
-    private static func decode(_ url: URL, to format: AVAudioFormat) -> AVAudioPCMBuffer? {
+    /// Reads an audio file into a buffer in the players' format (mono, 44.1 kHz), without
+    /// the silence around the cat, at `target` loudness and with a few milliseconds of
+    /// fade at both ends, so a recording starts at once, sits with the others and never
+    /// clicks.
+    private static func decode(_ url: URL, to format: AVAudioFormat, target: Float) -> AVAudioPCMBuffer? {
         guard let file = try? AVAudioFile(forReading: url) else { return nil }
         let source = file.processingFormat
         let frames = AVAudioFrameCount(file.length)
@@ -331,23 +334,21 @@ final class CatSounds {
         }
 
         let count = Int(output.frameLength)
-        guard count > 0, let samples = output.floatChannelData?[0] else { return nil }
-        var peak: Float = 0
-        for i in 0..<count {
-            peak = max(peak, abs(samples[i]))
+        guard count > 0, let decoded = output.floatChannelData?[0] else { return nil }
+        let rate = format.sampleRate
+        var samples = Array(UnsafeBufferPointer(start: decoded, count: count))
+        samples = CatRecording.trimmed(samples, sampleRate: rate)
+        samples = CatRecording.leveled(samples, sampleRate: rate, target: target)
+        samples = CatRecording.faded(samples, sampleRate: rate)
+        guard !samples.isEmpty,
+              let prepared = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(samples.count)),
+              let channel = prepared.floatChannelData?[0]
+        else { return nil }
+        for i in 0..<samples.count {
+            channel[i] = samples[i]
         }
-        let gain: Float = peak > 0.001 ? 0.7 / peak : 1
-        let fade = min(count / 2, Int(0.008 * format.sampleRate))
-        for i in 0..<count {
-            var value = samples[i] * gain
-            if i < fade {
-                value *= Float(i) / Float(fade)
-            } else if i >= count - fade {
-                value *= Float(count - 1 - i) / Float(fade)
-            }
-            samples[i] = value
-        }
-        return output
+        prepared.frameLength = AVAudioFrameCount(samples.count)
+        return prepared
     }
 
     // MARK: - Synthesis
