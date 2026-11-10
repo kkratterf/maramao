@@ -16,7 +16,7 @@ struct OnboardingView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            CatView(pose: catPose, palette: .orange, eyesClosed: step == .launchAtLogin)
+            CatView(pose: catPose, palette: .orange, eyesClosed: step == .launchAtLogin, expression: catExpression)
                 .frame(width: 150, height: 120)
                 .padding(.top, 8)
 
@@ -37,6 +37,15 @@ struct OnboardingView: View {
         case .welcome, .cat, .emergencyExit: return .sitting
         case .timing, .trial: return .stretching
         case .launchAtLogin: return .sleeping
+        }
+    }
+
+    /// Glad to meet you, and not amused by people who skip their break.
+    private var catExpression: CatExpression {
+        switch step {
+        case .welcome: return .happy
+        case .emergencyExit: return .grumpy
+        case .cat, .timing, .trial, .launchAtLogin: return .neutral
         }
     }
 

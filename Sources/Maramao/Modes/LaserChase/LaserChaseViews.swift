@@ -87,10 +87,14 @@ struct LaserChaseStage: View {
             pose: s.pose,
             palette: model.palette,
             eyesClosed: s.eyesClosed,
+            expression: s.expression,
+            gaze: s.gaze,
             facingLeft: s.facingLeft,
             tailWag: s.tailWag
         )
         .frame(width: s.width, height: s.height)
+        // A faint halo, so a dark cat stands out from the darkened desktop.
+        .shadow(color: .white.opacity(0.22), radius: 5)
         .scaleEffect(x: 1, y: s.squashY, anchor: .bottom)
         .position(x: center.x + s.jitter, y: center.y)
     }

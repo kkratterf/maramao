@@ -18,16 +18,19 @@ enum CatPileArt {
     private struct Variant {
         let pose: CatPose
         let eyesClosed: Bool
+        var expression: CatExpression = .neutral
         /// The part of the 200×160 design space (y down) the pose covers.
         let content: CGRect
     }
 
     private static let variants: [Variant] = [
-        Variant(pose: .sitting, eyesClosed: false, content: CGRect(x: 50, y: 16, width: 112, height: 144)),
-        Variant(pose: .sitting, eyesClosed: true, content: CGRect(x: 50, y: 16, width: 112, height: 144)),
-        Variant(pose: .sleeping, eyesClosed: true, content: CGRect(x: 28, y: 84, width: 152, height: 76)),
-        Variant(pose: .stretching, eyesClosed: false, content: CGRect(x: 12, y: 14, width: 176, height: 142)),
-        Variant(pose: .walking(step: 0.8), eyesClosed: false, content: CGRect(x: 6, y: 26, width: 188, height: 132)),
+        Variant(pose: .sitting, eyesClosed: false, content: CGRect(x: 24, y: 6, width: 138, height: 148)),
+        Variant(pose: .sitting, eyesClosed: true, content: CGRect(x: 24, y: 6, width: 138, height: 148)),
+        Variant(pose: .sitting, eyesClosed: false, expression: .happy, content: CGRect(x: 24, y: 6, width: 138, height: 148)),
+        Variant(pose: .sitting, eyesClosed: false, expression: .grumpy, content: CGRect(x: 24, y: 6, width: 138, height: 148)),
+        Variant(pose: .sleeping, eyesClosed: true, content: CGRect(x: 28, y: 78, width: 150, height: 82)),
+        Variant(pose: .stretching, eyesClosed: false, content: CGRect(x: 14, y: 22, width: 180, height: 132)),
+        Variant(pose: .walking(step: 0.8), eyesClosed: false, content: CGRect(x: 12, y: 28, width: 182, height: 126)),
     ]
 
     /// Renders every pose in every palette at the given backing scale.
@@ -37,7 +40,7 @@ enum CatPileArt {
         var result: [CatPileArtwork] = []
         for palette in CatPalette.all {
             for variant in variants {
-                let view = CatView(pose: variant.pose, palette: palette, eyesClosed: variant.eyesClosed)
+                let view = CatView(pose: variant.pose, palette: palette, eyesClosed: variant.eyesClosed, expression: variant.expression)
                     .frame(width: renderWidth, height: renderHeight)
                 let renderer = ImageRenderer(content: view)
                 renderer.scale = scale
