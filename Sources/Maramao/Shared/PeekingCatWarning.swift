@@ -119,7 +119,7 @@ struct PeekingCatView: View {
 
     private let catSize = CGSize(width: 150, height: 120)
     /// How far below its resting place the cat sits while peeking: only head and shoulders show.
-    private let peekOffset: CGFloat = 48
+    private let peekOffset: CGFloat = 40
 
     /// Reduce Motion: the cat and its bubble fade in place instead of sliding and popping.
     private var calm: Bool { BreakAccessibility.currentReduceMotion }

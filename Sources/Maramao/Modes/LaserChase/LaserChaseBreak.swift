@@ -370,13 +370,13 @@ final class LaserChaseBreak: BreakMode {
     /// Where the cat's body should be so that its front paws land on the dot.
     private func chaseTarget() -> CGPoint {
         let dir: CGFloat = cat.facingLeft ? -1 : 1
-        let raw = CGPoint(x: mouse.x - dir * cat.width * 0.27, y: mouse.y - cat.height * 0.08)
+        let raw = CGPoint(x: mouse.x - dir * cat.width * 0.19, y: mouse.y - cat.height * 0.08)
         return clampToScreen(raw, of: mouse)
     }
 
     private var pawPoint: CGPoint {
         let dir: CGFloat = cat.facingLeft ? -1 : 1
-        return CGPoint(x: cat.position.x + dir * cat.width * 0.27, y: cat.position.y + cat.height * 0.08)
+        return CGPoint(x: cat.position.x + dir * cat.width * 0.19, y: cat.position.y + cat.height * 0.08)
     }
 
     private func pawDistance() -> CGFloat {
@@ -492,6 +492,7 @@ final class LaserChaseBreak: BreakMode {
         let blinking = time.truncatingRemainder(dividingBy: blinkCycle) > blinkCycle - 0.3
         cat.jitter = 0
         cat.squashY = 1
+        cat.expression = .neutral
 
         switch state {
         case .chasing:
@@ -523,12 +524,14 @@ final class LaserChaseBreak: BreakMode {
             let bounce = calm ? 0 : max(0, sin(inState * 9)) * max(0, 1 - inState / celebrateDuration)
             cat.squashY = CGFloat(1 + 0.05 * bounce)
             cat.tailWag = sin(time * 9) * 0.7
-            cat.eyesClosed = inState < 0.5
+            cat.eyesClosed = false
+            cat.expression = .happy
         case .missed:
             walking = false
             cat.pose = .sitting
             cat.tailWag = sin(time * 14) * 0.4
             cat.eyesClosed = false
+            cat.expression = .grumpy
         case .waiting:
             walking = false
             cat.pose = .sitting
@@ -548,8 +551,14 @@ final class LaserChaseBreak: BreakMode {
             cat.pose = .sitting
             cat.squashY = CGFloat(1 + 0.04 * min(1, inState / 0.4))
             cat.tailWag = sin(time * 1.6) * 0.45
-            cat.eyesClosed = inState > 0.3 && inState < 1.2
+            cat.eyesClosed = false
+            cat.expression = inState > 0.3 && inState < 1.2 ? .happy : .neutral
         }
+
+        // The eyes follow the dot: fully turned once it is half a cat away from the face.
+        let face = CGPoint(x: cat.position.x, y: cat.position.y + cat.lift + cat.height * 0.6)
+        let reach = max(1, w * 0.5)
+        cat.gaze = CGVector(dx: (cat.dot.x - face.x) / reach, dy: (face.y - cat.dot.y) / reach)
 
         if !cat.hearts.isEmpty {
             cat.hearts.removeAll { time - $0.birth > LaserChaseHeart.lifetime }
