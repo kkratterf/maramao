@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- README banner (Resources/readme/banner.jpg), rendered by scripts/render-og.mjs.
+     Same look as the social card (og.html), in a wide strip. DM Serif Display is by
+     Colophon Foundry, SIL Open Font License 1.1. -->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "DM Serif Display"; font-weight: 400; src: url(dm-serif-display-400.woff2) format("woff2"); }
+  @font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: italic; src: url(dm-serif-display-400-italic.woff2) format("woff2"); }
+  html, body { margin: 0; background: #08080a; }
+  #card { position: relative; width: 1280px; height: 440px; overflow: hidden; font-family: Inter, -apple-system, system-ui, sans-serif; color: #f4f4f5; }
+  .grainient, .grainient canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(8 8 10 / 74%) 0%, rgb(8 8 10 / 38%) 55%, rgb(8 8 10 / 0%) 100%); }
+  .copy { position: absolute; left: 80px; top: 64px; bottom: 64px; width: 760px; display: flex; flex-direction: column; }
+  .brand { display: flex; align-items: center; gap: 14px; font-family: "DM Serif Display", serif; font-size: 36px; letter-spacing: -0.01em; }
+  .brand img { width: 52px; height: 52px; border-radius: 13px; }
+  h1 { margin: auto 0 0; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 68px; line-height: 1.04; letter-spacing: -0.02em; }
+  h1 span { display: block; font-style: italic; color: #ff8266; }
+  p { margin: 22px 0 0; font-weight: 500; font-size: 25px; color: rgb(244 244 245 / 72%); letter-spacing: -0.01em; }
+  .cat { position: absolute; right: 96px; top: 50%; width: 300px; height: 300px; transform: translateY(-50%) rotate(3deg);
+         border-radius: 70px; overflow: hidden; box-shadow: 0 30px 80px rgb(0 0 0 / 45%), 0 0 0 1px rgb(255 255 255 / 14%); }
+  .cat img { width: 100%; height: 100%; display: block; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="grainient" data-grainient data-colors="#08080a,#1d0c08,#8a2a12,#ff5a3c,#ffc2a8" data-angle="20" data-speed="0.8" data-flow="0.9" data-silk="0.3" data-grain-amount="0.03" data-dpr="2"><canvas></canvas></div>
+  <div class="shade"></div>
+  <div class="copy">
+    <div class="brand"><img src="../../Resources/logo/logo.png" alt=""> Maramao</div>
+    <h1>Work for 25 minutes<span>Then the cat takes over</span></h1>
+    <p>Free Pomodoro timer for the Mac menu bar</p>
+  </div>
+  <div class="cat"><img src="../../Resources/logo/logo.png" alt=""></div>
+</div>
+<script src="../../site/grainient.js"></script>
+</body>
+</html>
