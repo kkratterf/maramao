@@ -229,7 +229,10 @@ jobs:
           ISSUER_ID: ${{ secrets.APPLE_NOTARY_ISSUER_ID }}
         run: |
           zip="dist/Maramao-$VERSION.zip"
-          xcrun notarytool submit "$zip" --wait --timeout 30m \
+          # Apple usually answers in minutes, but a team's first submissions
+          # can sit "In Progress" for hours (v0.7.1's first run timed out at
+          # 30m). Two waits of 2h stay inside the job's 6h limit.
+          xcrun notarytool submit "$zip" --wait --timeout 2h \
             --key "$NOTARY_KEY_PATH" --key-id "$KEY_ID" --issuer "$ISSUER_ID"
           xcrun stapler staple dist/Maramao.app
           xcrun stapler validate dist/Maramao.app
@@ -248,7 +251,7 @@ jobs:
           ISSUER_ID: ${{ secrets.APPLE_NOTARY_ISSUER_ID }}
         run: |
           dmg="dist/Maramao-$VERSION.dmg"
-          xcrun notarytool submit "$dmg" --wait --timeout 30m \
+          xcrun notarytool submit "$dmg" --wait --timeout 2h \
             --key "$NOTARY_KEY_PATH" --key-id "$KEY_ID" --issuer "$ISSUER_ID"
           xcrun stapler staple "$dmg"
           xcrun stapler validate "$dmg"
