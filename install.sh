@@ -155,7 +155,8 @@ if [ -e "$dest" ]; then
   rm -rf "$dest" || fail "non riesco a sostituire $dest"
 fi
 ditto "$tmp/unzipped/$APP_NAME" "$dest" || fail "non riesco a copiare l'app in $dir"
-# Not notarized yet: clear the quarantine flag so Gatekeeper lets it start.
+# Releases from 0.8.0 on are notarized; this still lets an older one
+# (MARAMAO_VERSION) start without a Gatekeeper prompt.
 xattr -dr com.apple.quarantine "$dest" 2>/dev/null || true
 
 say "Tutto pronto! 🐱 Maramao $version installato in $dest"

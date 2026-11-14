@@ -30,11 +30,4 @@ cask "maramao" do
     "~/Library/Preferences/com.kkratterf.maramao.plist",
     "~/Library/Saved Application State/com.kkratterf.maramao.savedState",
   ]
-
-  caveats <<~EOS
-    Maramao is not notarized by Apple yet, so macOS may block the first launch.
-    Open it once, then click Open Anyway in System Settings > Privacy & Security,
-    or run:
-      xattr -dr com.apple.quarantine #{appdir}/Maramao.app
-  EOS
 end
