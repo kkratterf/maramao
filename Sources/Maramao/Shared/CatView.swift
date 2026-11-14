@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 /// Fur colours for the procedural cat.
@@ -15,9 +16,9 @@ struct CatPalette: Equatable {
         eyes: Color(red: 0.35, green: 0.7, blue: 0.3)
     )
     static let black = CatPalette(
-        fur: Color(white: 0.13),
+        fur: Color(white: 0.17),
         stripes: nil,
-        belly: Color(white: 0.2),
+        belly: Color(white: 0.29),
         eyes: Color(red: 0.95, green: 0.8, blue: 0.2)
     )
     static let gray = CatPalette(
@@ -51,6 +52,15 @@ enum CatPose: Equatable {
     case stretching
 }
 
+/// The look on the cat's face.
+enum CatExpression: Equatable {
+    case neutral
+    /// Eyes squeezed shut in two arches and a wide smile: caught the dot, got petted.
+    case happy
+    /// Heavy eyelids and a frown: missed the dot, woken up, shaken.
+    case grumpy
+}
+
 /// A cat drawn with vector shapes, facing right, in a 200×160 design space scaled to the frame.
 /// Use `.scaleEffect(x: -1)` (or `facingLeft: true`) to make it face left.
 /// Shared by every break mode so the cats look like one family.
@@ -58,6 +68,9 @@ struct CatView: View {
     var pose: CatPose = .sitting
     var palette: CatPalette = .orange
     var eyesClosed = false
+    var expression: CatExpression = .neutral
+    /// Where the open eyes look, as seen on screen: x to the right, y down, up to a length of 1.
+    var gaze: CGVector = .zero
     var facingLeft = false
     /// Extra tail swing in radians, e.g. driven by a timer for an annoyed tail.
     var tailWag: Double = 0
@@ -97,94 +110,114 @@ struct CatView: View {
     // MARK: - Poses
 
     private func drawWalking(_ ctx: inout GraphicsContext, step: Double) {
-        let swing = sin(step) * 10
+        let swing = sin(step) * 12
         // Far legs first, slightly darker.
-        leg(&ctx, x: 72, top: 105, swing: -swing, dark: true)
-        leg(&ctx, x: 132, top: 105, swing: swing, dark: true)
-        tail(&ctx, from: CGPoint(x: 52, y: 92), wave: sin(step * 0.5) * 0.3 + tailWag, up: true)
+        leg(&ctx, x: 68, top: 116, swing: -swing, dark: true)
+        leg(&ctx, x: 124, top: 116, swing: swing, dark: true)
+        tailUp(&ctx, from: CGPoint(x: 48, y: 100), wave: sin(step * 0.5) * 0.3 + tailWag)
         // Body.
-        let body = Path(ellipseIn: CGRect(x: 45, y: 70, width: 115, height: 50))
-        ctx.fill(body, with: .color(palette.fur))
-        ctx.fill(Path(ellipseIn: CGRect(x: 70, y: 98, width: 70, height: 20)), with: .color(palette.belly))
-        stripes(&ctx, in: CGRect(x: 70, y: 70, width: 70, height: 20))
-        leg(&ctx, x: 62, top: 105, swing: swing, dark: false)
-        leg(&ctx, x: 142, top: 105, swing: -swing, dark: false)
-        head(&ctx, center: CGPoint(x: 160, y: 68 + sin(step * 2) * 1.5), radius: 27)
+        ctx.fill(Path(ellipseIn: CGRect(x: 42, y: 77, width: 100, height: 54)), with: .color(palette.fur))
+        ctx.fill(Path(ellipseIn: CGRect(x: 62, y: 111, width: 64, height: 17)), with: .color(palette.belly))
+        stripes(&ctx, in: CGRect(x: 62, y: 78, width: 60, height: 20))
+        leg(&ctx, x: 58, top: 116, swing: swing, dark: false)
+        leg(&ctx, x: 134, top: 116, swing: -swing, dark: false)
+        chinShadow(&ctx, in: CGRect(x: 118, y: 93, width: 44, height: 14))
+        head(&ctx, center: CGPoint(x: 146, y: 72 + sin(step * 2) * 1.5), scale: 0.8)
     }
 
     private func drawSitting(_ ctx: inout GraphicsContext) {
-        tail(&ctx, from: CGPoint(x: 70, y: 142), wave: tailWag, up: false)
-        // Haunch and chest.
-        ctx.fill(Path(ellipseIn: CGRect(x: 58, y: 82, width: 84, height: 68)), with: .color(palette.fur))
-        ctx.fill(Path(ellipseIn: CGRect(x: 95, y: 70, width: 50, height: 70)), with: .color(palette.fur))
-        ctx.fill(Path(ellipseIn: CGRect(x: 108, y: 88, width: 30, height: 48)), with: .color(palette.belly))
-        stripes(&ctx, in: CGRect(x: 64, y: 88, width: 40, height: 30))
-        // Front legs.
-        for x in [112.0, 128.0] {
-            let legRect = CGRect(x: x, y: 112, width: 13, height: 38)
-            ctx.fill(Path(roundedRect: legRect, cornerRadius: 6), with: .color(palette.fur))
-            ctx.fill(Path(ellipseIn: CGRect(x: x - 2, y: 144, width: 17, height: 9)), with: .color(palette.belly))
+        var tail = Path()
+        tail.move(to: CGPoint(x: 76, y: 139))
+        tail.addCurve(
+            to: CGPoint(x: 46 + tailWag * 18, y: 101),
+            control1: CGPoint(x: 48, y: 145),
+            control2: CGPoint(x: 32, y: 123)
+        )
+        strokeTail(&ctx, tail, width: 14)
+        // A small round body under a big head.
+        var body = Path()
+        body.move(to: CGPoint(x: 68, y: 145))
+        body.addCurve(to: CGPoint(x: 104, y: 89), control1: CGPoint(x: 62, y: 113), control2: CGPoint(x: 80, y: 89))
+        body.addCurve(to: CGPoint(x: 140, y: 145), control1: CGPoint(x: 128, y: 89), control2: CGPoint(x: 146, y: 113))
+        body.addCurve(to: CGPoint(x: 68, y: 145), control1: CGPoint(x: 138, y: 152), control2: CGPoint(x: 70, y: 152))
+        body.closeSubpath()
+        ctx.fill(body, with: .color(palette.fur))
+        ctx.fill(Path(ellipseIn: CGRect(x: 85, y: 106, width: 38, height: 42)), with: .color(palette.belly))
+        // Front paws.
+        for x in [89.0, 119.0] {
+            ctx.fill(Path(ellipseIn: CGRect(x: x - 11.5, y: 139.5, width: 23, height: 13)), with: .color(palette.fur))
         }
-        head(&ctx, center: CGPoint(x: 124, y: 56), radius: 28)
+        chinShadow(&ctx, in: CGRect(x: 74, y: 87, width: 60, height: 14))
+        head(&ctx, center: CGPoint(x: 104, y: 58))
     }
 
     private func drawSleeping(_ ctx: inout GraphicsContext) {
         // A loaf: one big round body, head tucked on the right, tail wrapped in front.
-        ctx.fill(Path(ellipseIn: CGRect(x: 35, y: 95, width: 140, height: 58)), with: .color(palette.fur))
-        stripes(&ctx, in: CGRect(x: 60, y: 98, width: 80, height: 22))
-        head(&ctx, center: CGPoint(x: 150, y: 118), radius: 24, forceClosed: true, tilt: 0.15)
-        var tailPath = Path()
-        tailPath.move(to: CGPoint(x: 40, y: 135))
-        tailPath.addQuadCurve(to: CGPoint(x: 140, y: 148), control: CGPoint(x: 70, y: 165 + tailWag * 10))
-        ctx.stroke(tailPath, with: .color(palette.fur), style: StrokeStyle(lineWidth: 13, lineCap: .round))
-        if let stripes = palette.stripes {
-            ctx.stroke(tailPath, with: .color(stripes.opacity(0.5)), style: StrokeStyle(lineWidth: 13, lineCap: .round, dash: [6, 10]))
-        }
+        ctx.fill(Path(ellipseIn: CGRect(x: 32, y: 90, width: 136, height: 64)), with: .color(palette.fur))
+        stripes(&ctx, in: CGRect(x: 54, y: 93, width: 64, height: 20))
+        head(&ctx, center: CGPoint(x: 134, y: 118), scale: 0.72, forceClosed: true, tilt: 0.12)
+        var tail = Path()
+        tail.move(to: CGPoint(x: 38, y: 138))
+        tail.addQuadCurve(to: CGPoint(x: 122, y: 149), control: CGPoint(x: 66, y: 158 + tailWag * 8))
+        strokeTail(&ctx, tail, width: 13)
     }
 
     private func drawStretching(_ ctx: inout GraphicsContext) {
-        tail(&ctx, from: CGPoint(x: 50, y: 78), wave: 0.5 + tailWag, up: true)
+        tailUp(&ctx, from: CGPoint(x: 50, y: 84), wave: 0.5 + tailWag)
         // Back legs straight, rear end high.
-        leg(&ctx, x: 58, top: 95, swing: 0, dark: true, length: 55)
-        leg(&ctx, x: 70, top: 95, swing: 0, dark: false, length: 55)
+        leg(&ctx, x: 56, top: 98, swing: 0, dark: true, length: 50)
+        leg(&ctx, x: 70, top: 98, swing: 0, dark: false, length: 50)
         var body = Path()
-        body.addEllipse(in: CGRect(x: 45, y: 72, width: 60, height: 44))
-        body.addEllipse(in: CGRect(x: 85, y: 92, width: 75, height: 40))
+        body.addEllipse(in: CGRect(x: 44, y: 70, width: 62, height: 48))
+        body.addEllipse(in: CGRect(x: 82, y: 96, width: 76, height: 40))
         ctx.fill(body, with: .color(palette.fur))
-        stripes(&ctx, in: CGRect(x: 55, y: 76, width: 50, height: 20))
+        stripes(&ctx, in: CGRect(x: 56, y: 74, width: 46, height: 18))
         // Front paws stretched forward on the ground.
-        let paw = Path(roundedRect: CGRect(x: 120, y: 136, width: 55, height: 12), cornerRadius: 6)
+        let paw = Path(roundedRect: CGRect(x: 118, y: 138, width: 58, height: 13), cornerRadius: 6.5)
         ctx.fill(paw, with: .color(palette.fur))
-        ctx.fill(Path(ellipseIn: CGRect(x: 165, y: 136, width: 16, height: 12)), with: .color(palette.belly))
-        head(&ctx, center: CGPoint(x: 155, y: 112), radius: 25, forceClosed: true)
+        ctx.fill(Path(ellipseIn: CGRect(x: 163, y: 138, width: 18, height: 13)), with: .color(palette.belly))
+        head(&ctx, center: CGPoint(x: 150, y: 114), scale: 0.72, forceClosed: true)
     }
 
     // MARK: - Parts
 
-    private func leg(_ ctx: inout GraphicsContext, x: Double, top: Double, swing: Double, dark: Bool, length: Double = 45) {
+    /// The dark of pupils, closed eyes and mouths.
+    private static let ink = Color(red: 0.11, green: 0.08, blue: 0.07)
+
+    /// A coat too dark for dark lines to show: its closed eyes and whiskers are drawn light.
+    private var hasDarkCoat: Bool {
+        guard let fur = NSColor(palette.fur).usingColorSpace(.sRGB) else { return false }
+        return 0.2126 * fur.redComponent + 0.7152 * fur.greenComponent + 0.0722 * fur.blueComponent < 0.2
+    }
+
+    /// A short, stubby leg ending in a light paw.
+    private func leg(_ ctx: inout GraphicsContext, x: Double, top: Double, swing: Double, dark: Bool, length: Double = 30) {
         var c = ctx
         c.translateBy(x: x, y: top)
         c.rotate(by: .degrees(swing))
-        let rect = CGRect(x: -6, y: 0, width: 13, height: length)
-        let color = dark ? palette.fur.opacity(0.75) : palette.fur
-        c.fill(Path(roundedRect: rect, cornerRadius: 6), with: .color(color))
-        c.fill(Path(ellipseIn: CGRect(x: -8, y: length - 6, width: 17, height: 9)), with: .color(palette.belly.opacity(dark ? 0.7 : 1)))
+        let shape = Path(roundedRect: CGRect(x: -7.5, y: 0, width: 15, height: length), cornerRadius: 7.5)
+        c.fill(shape, with: .color(palette.fur))
+        if dark {
+            c.fill(shape, with: .color(.black.opacity(0.14)))
+        }
+        let paw = Path(ellipseIn: CGRect(x: -8.5, y: length - 8.5, width: 19, height: 11))
+        c.fill(paw, with: .color(palette.belly.opacity(dark ? 0.8 : 1)))
     }
 
-    private func tail(_ ctx: inout GraphicsContext, from start: CGPoint, wave: Double, up: Bool) {
+    /// A tail held up behind the cat, swinging with `wave`.
+    private func tailUp(_ ctx: inout GraphicsContext, from start: CGPoint, wave: Double) {
         var path = Path()
         path.move(to: start)
-        if up {
-            let tip = CGPoint(x: start.x - 30 + wave * 25, y: start.y - 55)
-            path.addQuadCurve(to: tip, control: CGPoint(x: start.x - 40, y: start.y - 5))
-        } else {
-            let tip = CGPoint(x: start.x + 85, y: start.y + 6 - wave * 20)
-            path.addQuadCurve(to: tip, control: CGPoint(x: start.x - 10, y: start.y + 18))
-        }
-        ctx.stroke(path, with: .color(palette.fur), style: StrokeStyle(lineWidth: 12, lineCap: .round))
-        if let stripes = palette.stripes {
-            ctx.stroke(path, with: .color(stripes.opacity(0.6)), style: StrokeStyle(lineWidth: 12, lineCap: .butt, dash: [6, 9]))
-        }
+        let tip = CGPoint(x: start.x - 22 + wave * 25, y: start.y - 52)
+        path.addQuadCurve(to: tip, control: CGPoint(x: start.x - 38, y: start.y - 6))
+        strokeTail(&ctx, path, width: 13)
+    }
+
+    /// A round tail with its tip in the colour of the stripes, or of the belly on a plain coat.
+    private func strokeTail(_ ctx: inout GraphicsContext, _ path: Path, width: Double) {
+        let style = StrokeStyle(lineWidth: width, lineCap: .round)
+        ctx.stroke(path, with: .color(palette.fur), style: style)
+        ctx.stroke(path.trimmedPath(from: 0.82, to: 1), with: .color(palette.stripes ?? palette.belly), style: style)
     }
 
     private func stripes(_ ctx: inout GraphicsContext, in rect: CGRect) {
@@ -192,82 +225,152 @@ struct CatView: View {
         for i in 0..<3 {
             let x = rect.minX + rect.width * (0.2 + Double(i) * 0.3)
             var p = Path()
-            p.move(to: CGPoint(x: x - 4, y: rect.minY + 2))
-            p.addQuadCurve(to: CGPoint(x: x + 2, y: rect.maxY), control: CGPoint(x: x + 6, y: rect.midY))
+            p.move(to: CGPoint(x: x - 3, y: rect.minY + 2))
+            p.addQuadCurve(to: CGPoint(x: x + 1, y: rect.maxY), control: CGPoint(x: x + 5, y: rect.midY))
             ctx.stroke(p, with: .color(stripes), style: StrokeStyle(lineWidth: 5, lineCap: .round))
         }
     }
 
-    private func head(_ ctx: inout GraphicsContext, center: CGPoint, radius r: Double, forceClosed: Bool = false, tilt: Double = 0) {
+    /// The soft shadow the head casts on the body.
+    private func chinShadow(_ ctx: inout GraphicsContext, in rect: CGRect) {
+        ctx.fill(Path(ellipseIn: rect), with: .color(.black.opacity(0.07)))
+    }
+
+    /// The head, seen from the front: wide and round, 96×72 at `scale` 1, with big eyes,
+    /// pink cheeks and rounded ears.
+    private func head(_ ctx: inout GraphicsContext, center: CGPoint, scale: Double = 1, forceClosed: Bool = false, tilt: Double = 0) {
         var c = ctx
         c.translateBy(x: center.x, y: center.y)
         c.rotate(by: .radians(tilt))
+        c.scaleBy(x: scale, y: scale)
+        let dark = hasDarkCoat
+        let lines: Color = dark ? Color(white: 0.62) : Self.ink
 
         // Ears.
         for side in [-1.0, 1.0] {
             var ear = Path()
-            ear.move(to: CGPoint(x: side * r * 0.85, y: -r * 0.35))
-            ear.addLine(to: CGPoint(x: side * r * 0.75, y: -r * 1.25))
-            ear.addLine(to: CGPoint(x: side * r * 0.15, y: -r * 0.8))
+            ear.move(to: CGPoint(x: side * 40, y: -9))
+            ear.addQuadCurve(to: CGPoint(x: side * 35, y: -50), control: CGPoint(x: side * 45, y: -43))
+            ear.addQuadCurve(to: CGPoint(x: side * 7, y: -27), control: CGPoint(x: side * 20, y: -46))
             ear.closeSubpath()
             c.fill(ear, with: .color(palette.fur))
             var inner = Path()
-            inner.move(to: CGPoint(x: side * r * 0.72, y: -r * 0.5))
-            inner.addLine(to: CGPoint(x: side * r * 0.68, y: -r * 1.05))
-            inner.addLine(to: CGPoint(x: side * r * 0.3, y: -r * 0.8))
+            inner.move(to: CGPoint(x: side * 34, y: -17))
+            inner.addQuadCurve(to: CGPoint(x: side * 32, y: -41), control: CGPoint(x: side * 37, y: -36))
+            inner.addQuadCurve(to: CGPoint(x: side * 16, y: -26), control: CGPoint(x: side * 23, y: -38))
             inner.closeSubpath()
-            c.fill(inner, with: .color(palette.nose.opacity(0.6)))
+            c.fill(inner, with: .color(palette.nose.opacity(0.75)))
         }
 
-        c.fill(Path(ellipseIn: CGRect(x: -r, y: -r * 0.95, width: r * 2, height: r * 1.85)), with: .color(palette.fur))
+        var face = Path()
+        face.move(to: CGPoint(x: 0, y: -36))
+        face.addCurve(to: CGPoint(x: 48, y: 1), control1: CGPoint(x: 33, y: -36), control2: CGPoint(x: 48, y: -19))
+        face.addCurve(to: CGPoint(x: 0, y: 36), control1: CGPoint(x: 48, y: 24), control2: CGPoint(x: 29, y: 36))
+        face.addCurve(to: CGPoint(x: -48, y: 1), control1: CGPoint(x: -29, y: 36), control2: CGPoint(x: -48, y: 24))
+        face.addCurve(to: CGPoint(x: 0, y: -36), control1: CGPoint(x: -48, y: -19), control2: CGPoint(x: -33, y: -36))
+        face.closeSubpath()
+        c.fill(face, with: .color(palette.fur))
         // Muzzle.
-        c.fill(Path(ellipseIn: CGRect(x: -r * 0.55, y: r * 0.1, width: r * 1.1, height: r * 0.7)), with: .color(palette.belly))
+        c.fill(Path(ellipseIn: CGRect(x: -17, y: 7, width: 34, height: 22)), with: .color(palette.belly))
+
         if let stripes = palette.stripes {
-            for dx in [-0.25, 0.0, 0.25] {
+            // Three on the forehead, two on each cheek.
+            for dx in [-11.0, 0.0, 11.0] {
                 var p = Path()
-                p.move(to: CGPoint(x: r * dx, y: -r * 0.9))
-                p.addLine(to: CGPoint(x: r * dx * 0.8, y: -r * 0.55))
-                c.stroke(p, with: .color(stripes), style: StrokeStyle(lineWidth: 3.5, lineCap: .round))
+                p.move(to: CGPoint(x: dx, y: dx == 0 ? -32 : -30))
+                p.addLine(to: CGPoint(x: dx * 0.82, y: dx == 0 ? -22 : -21))
+                c.stroke(p, with: .color(stripes), style: StrokeStyle(lineWidth: 4.2, lineCap: .round))
             }
+            for side in [-1.0, 1.0] {
+                for (x, y, length) in [(46.0, -3.0, 8.0), (47.0, 5.0, 9.0)] {
+                    var p = Path()
+                    p.move(to: CGPoint(x: side * x, y: y))
+                    p.addLine(to: CGPoint(x: side * (x - length), y: y))
+                    c.stroke(p, with: .color(stripes), style: StrokeStyle(lineWidth: 3.6, lineCap: .round))
+                }
+            }
+        }
+
+        // Cheeks.
+        for side in [-1.0, 1.0] {
+            let cheek = Path(ellipseIn: CGRect(x: side * 32 - 7.5, y: 12.8, width: 15, height: 8.4))
+            c.fill(cheek, with: .color(palette.nose.opacity(0.55)))
         }
 
         // Eyes.
         let closed = eyesClosed || forceClosed
+        let lidColor: Color = dark ? palette.eyes : Self.ink
+        // The pupils slide inside the iris towards what the cat looks at.
+        let gazeLength = max(1, hypot(gaze.dx, gaze.dy))
+        let lookX = (facingLeft ? -gaze.dx : gaze.dx) / gazeLength * 2.2
+        let lookY = gaze.dy / gazeLength * 2.2
         for side in [-1.0, 1.0] {
-            let ex = side * r * 0.42
-            let ey = -r * 0.12
-            if closed {
+            let ex = side * 19
+            if expression == .happy {
+                var arch = Path()
+                arch.move(to: CGPoint(x: ex - 8, y: 6))
+                arch.addQuadCurve(to: CGPoint(x: ex + 8, y: 6), control: CGPoint(x: ex, y: -5))
+                c.stroke(arch, with: .color(lidColor), style: StrokeStyle(lineWidth: 3.2, lineCap: .round))
+            } else if closed {
                 var lid = Path()
-                lid.move(to: CGPoint(x: ex - r * 0.18, y: ey))
-                lid.addQuadCurve(to: CGPoint(x: ex + r * 0.18, y: ey), control: CGPoint(x: ex, y: ey + r * 0.16))
-                c.stroke(lid, with: .color(.black.opacity(0.75)), style: StrokeStyle(lineWidth: 2.5, lineCap: .round))
+                lid.move(to: CGPoint(x: ex - 8, y: 2))
+                lid.addQuadCurve(to: CGPoint(x: ex + 8, y: 2), control: CGPoint(x: ex, y: 10))
+                c.stroke(lid, with: .color(lidColor), style: StrokeStyle(lineWidth: 3.2, lineCap: .round))
             } else {
-                c.fill(Path(ellipseIn: CGRect(x: ex - r * 0.17, y: ey - r * 0.2, width: r * 0.34, height: r * 0.4)), with: .color(palette.eyes))
-                c.fill(Path(ellipseIn: CGRect(x: ex - r * 0.06, y: ey - r * 0.17, width: r * 0.12, height: r * 0.34)), with: .color(.black))
-                c.fill(Path(ellipseIn: CGRect(x: ex - r * 0.02, y: ey - r * 0.14, width: r * 0.07, height: r * 0.07)), with: .color(.white))
+                c.fill(Path(ellipseIn: CGRect(x: ex - 9, y: -6, width: 18, height: 18)), with: .color(palette.eyes))
+                let px = ex + lookX
+                let py = 3 + lookY
+                c.fill(Path(ellipseIn: CGRect(x: px - 6.6, y: py - 6.6, width: 13.2, height: 13.2)), with: .color(Self.ink))
+                c.fill(Path(ellipseIn: CGRect(x: px - 5.1, y: py - 5.5, width: 5, height: 5)), with: .color(.white))
+                c.fill(Path(ellipseIn: CGRect(x: px + 1.4, y: py + 1.6, width: 2.4, height: 2.4)), with: .color(.white.opacity(0.85)))
+                if expression == .grumpy {
+                    // A heavy lid, lower towards the nose.
+                    var lid = Path()
+                    lid.move(to: CGPoint(x: ex + side * 11, y: -8))
+                    lid.addLine(to: CGPoint(x: ex - side * 11, y: -8))
+                    lid.addLine(to: CGPoint(x: ex - side * 11, y: 4.5))
+                    lid.addLine(to: CGPoint(x: ex + side * 11, y: -1.5))
+                    lid.closeSubpath()
+                    c.fill(lid, with: .color(palette.fur))
+                    var edge = Path()
+                    edge.move(to: CGPoint(x: ex + side * 9.6, y: -1.1))
+                    edge.addLine(to: CGPoint(x: ex - side * 9.6, y: 4.1))
+                    c.stroke(edge, with: .color(dark ? Color(white: 0.52) : Self.ink), style: StrokeStyle(lineWidth: 2.6, lineCap: .round))
+                }
             }
         }
 
         // Nose and mouth.
         var nose = Path()
-        nose.move(to: CGPoint(x: -r * 0.1, y: r * 0.2))
-        nose.addLine(to: CGPoint(x: r * 0.1, y: r * 0.2))
-        nose.addLine(to: CGPoint(x: 0, y: r * 0.32))
+        nose.move(to: CGPoint(x: -4, y: 13.5))
+        nose.addQuadCurve(to: CGPoint(x: 4, y: 13.5), control: CGPoint(x: 0, y: 12))
+        nose.addQuadCurve(to: CGPoint(x: 0, y: 18.5), control: CGPoint(x: 2.5, y: 18.5))
+        nose.addQuadCurve(to: CGPoint(x: -4, y: 13.5), control: CGPoint(x: -2.5, y: 18.5))
         nose.closeSubpath()
         c.fill(nose, with: .color(palette.nose))
         var mouth = Path()
-        mouth.move(to: CGPoint(x: -r * 0.16, y: r * 0.42))
-        mouth.addQuadCurve(to: CGPoint(x: 0, y: r * 0.34), control: CGPoint(x: -r * 0.06, y: r * 0.48))
-        mouth.addQuadCurve(to: CGPoint(x: r * 0.16, y: r * 0.42), control: CGPoint(x: r * 0.06, y: r * 0.48))
-        c.stroke(mouth, with: .color(.black.opacity(0.6)), style: StrokeStyle(lineWidth: 1.8, lineCap: .round))
+        switch expression {
+        case .neutral:
+            mouth.move(to: CGPoint(x: -6, y: 22))
+            mouth.addQuadCurve(to: CGPoint(x: 0, y: 22), control: CGPoint(x: -3, y: 25.5))
+            mouth.addQuadCurve(to: CGPoint(x: 6, y: 22), control: CGPoint(x: 3, y: 25.5))
+        case .happy:
+            mouth.move(to: CGPoint(x: -8, y: 21.5))
+            mouth.addQuadCurve(to: CGPoint(x: 0, y: 21.5), control: CGPoint(x: -4, y: 27))
+            mouth.addQuadCurve(to: CGPoint(x: 8, y: 21.5), control: CGPoint(x: 4, y: 27))
+        case .grumpy:
+            mouth.move(to: CGPoint(x: -5.5, y: 25))
+            mouth.addQuadCurve(to: CGPoint(x: 5.5, y: 25), control: CGPoint(x: 0, y: 20.5))
+        }
+        c.stroke(mouth, with: .color(lines.opacity(0.8)), style: StrokeStyle(lineWidth: 1.9, lineCap: .round, lineJoin: .round))
 
         // Whiskers.
         for side in [-1.0, 1.0] {
-            for dy in [-0.06, 0.08] {
+            for (from, to) in [(CGPoint(x: 42, y: 21), CGPoint(x: 56, y: 19)), (CGPoint(x: 41, y: 26), CGPoint(x: 54, y: 29))] {
                 var w = Path()
-                w.move(to: CGPoint(x: side * r * 0.35, y: r * (0.3 + dy)))
-                w.addLine(to: CGPoint(x: side * r * 1.15, y: r * (0.22 + dy * 2)))
-                c.stroke(w, with: .color(.black.opacity(0.35)), lineWidth: 1.2)
+                w.move(to: CGPoint(x: side * from.x, y: from.y))
+                w.addLine(to: CGPoint(x: side * to.x, y: to.y))
+                c.stroke(w, with: .color(lines.opacity(0.4)), style: StrokeStyle(lineWidth: 1.3, lineCap: .round))
             }
         }
     }

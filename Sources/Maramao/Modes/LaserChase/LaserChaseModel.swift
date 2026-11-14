@@ -29,6 +29,9 @@ struct LaserChaseSnapshot {
     var pose: CatPose = .sitting
     var facingLeft = false
     var eyesClosed = false
+    var expression: CatExpression = .neutral
+    /// Where the cat looks: towards the dot. See `CatView.gaze`.
+    var gaze: CGVector = .zero
     var tailWag: Double = 0
     /// Height of the cat above its shadow while it pounces.
     var lift: CGFloat = 0
