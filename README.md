@@ -1,19 +1,26 @@
-<p align="center"><img src="Resources/logo/icon.png" alt="Maramao logo: a kitten mid-yawn" width="128" height="128"></p>
+<p align="center">
+  <a href="https://maramao.kkratter.com/"><img src="Resources/readme/banner.jpg" alt="Maramao. Work for 25 minutes, then the cat takes over. Free Pomodoro timer for the Mac menu bar" width="100%"></a>
+</p>
 
-# Maramao 🐈
+<p align="center">
+  <a href="https://github.com/kkratterf/maramao/actions/workflows/ci.yml"><img src="https://github.com/kkratterf/maramao/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/kkratterf/maramao/releases/latest"><img src="https://img.shields.io/github/v/release/kkratterf/maramao?color=ff5a3c" alt="Latest release"></a>
+  <img src="https://img.shields.io/badge/macOS-13%2B-1d1d1f?logo=apple" alt="macOS 13 or later">
+  <img src="https://img.shields.io/badge/notarized-by%20Apple-1d1d1f" alt="Signed and notarized">
+  <a href="#license"><img src="https://img.shields.io/badge/license-MIT-1d1d1f" alt="MIT license"></a>
+</p>
 
-**The Pomodoro timer that stops you with cats**
-
-[![CI](https://github.com/kkratterf/maramao/actions/workflows/ci.yml/badge.svg)](https://github.com/kkratterf/maramao/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/kkratterf/maramao)](https://github.com/kkratterf/maramao/releases/latest)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](#license)
-[![Website](https://img.shields.io/badge/website-maramao.kkratter.com-E8402F)](https://maramao.kkratter.com/)
+<p align="center">
+  <a href="https://github.com/kkratterf/maramao/releases/latest"><b>Download for Mac</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://maramao.kkratter.com/">Website</a>
+  &nbsp;·&nbsp;
+  <a href="#install">Other ways to install</a>
+</p>
 
 A native macOS menu bar app for the Pomodoro technique. Work for 25 minutes, then a cat makes sure you actually take the break. Written in Swift with SwiftUI and AppKit.
 
 The app speaks Italian and English and follows the language of your Mac. This README uses the English labels; where it helps, the Italian one follows in parentheses.
-
-**Website:** [maramao.kkratter.com](https://maramao.kkratter.com/)
 
 **Install** (macOS 13+, free, no special permissions):
 
@@ -29,11 +36,27 @@ or download the DMG from the [latest release](https://github.com/kkratterf/maram
 
 Pick one from **Mode** (*Modalità*) in the menu, or let **Surprise** (*Sorpresa*) choose a different one every break. **Try mode** (*Prova la modalità*), right under the list, plays the one you picked for 30 seconds.
 
-| | Mode | What happens |
-| --- | --- | --- |
-| 🔴 | **Laser chase** (*Caccia al laser*) | Your mouse pointer turns into a red laser dot and a cat chases it all over the screen, pouncing when it stops; catch the dot and hearts spray out. Leave the mouse alone and the cat sits down to groom. |
-| 🐾 | **Cat invasion** (*Invasione di gatti*) | Cats rain from the top of the screen and pile up until everything is buried. |
-| 😴 | **Don't wake the cat** (*Non svegliare il gatto*) | A big photo of a sleeping cat over your blurred screen. Touch the mouse or the keyboard and the same break's angry cat glares at you, with a passive-aggressive remark underneath ("Can't stay away from the computer for 5 minutes?"). Leave everything alone and it falls asleep again. Each break brings a new pair of cats. |
+<table>
+  <tr>
+    <td width="33%" valign="top">
+      <img src="Resources/readme/mode-laser.webp" alt="Laser chase: a cat chases the red dot across the screen" width="100%">
+      <h4>🔴 Laser chase<br><sub><i>Caccia al laser</i></sub></h4>
+      Your pointer turns into a red laser dot and a cat chases it all over the screen, eyes locked on the dot. It pounces when the dot stops, beams when it catches it (hearts!) and frowns when it misses. Leave the mouse alone and it sits down to groom.
+    </td>
+    <td width="33%" valign="top">
+      <img src="Resources/readme/mode-pile.webp" alt="Cat invasion: cats rain down and pile up over the screen" width="100%">
+      <h4>🐾 Cat invasion<br><sub><i>Invasione di gatti</i></sub></h4>
+      Cats rain from the top of the screen, happy ones and grumpy ones, and pile up until everything is buried.
+    </td>
+    <td width="33%" valign="top">
+      <img src="Resources/readme/mode-sleepy.webp" alt="Don't wake the cat: a sleeping cat that wakes up angry when you touch the mouse" width="100%">
+      <h4>😴 Don't wake the cat<br><sub><i>Non svegliare il gatto</i></sub></h4>
+      A big photo of a sleeping cat over your blurred screen. Touch the mouse or the keyboard and an angry cat glares at you, with a passive-aggressive remark underneath ("Can't stay away from the computer for 5 minutes?"). Leave everything alone and it falls asleep again. Each break brings a new pair of cats.
+    </td>
+  </tr>
+</table>
+
+The cats meow, growl and purr with real recorded voices.
 
 During a break the screen behind the cats is blurred and dimmed, like behind a Mac dialog, and the only control is a small pill: a paw, the countdown and **Close** (*Chiudi*), which shows up once the break may be skipped (after a minute). Not to be confused with **Turn off for…** (*Disattiva per*) in the menu, which puts the whole app to sleep for a while.
 
@@ -67,6 +90,11 @@ They work from any app and need no special permission.
 A global shortcut wins over the app in front, so while Maramao runs ⇧⌘M no longer reaches Teams (mute), Slack or VS Code.
 
 ### Automation
+
+Drive Maramao from Shortcuts, Siri, Raycast, Alfred, a Stream Deck or the terminal with `maramao://` URLs.
+
+<details>
+<summary>Show the details</summary>
 
 Maramao answers to `maramao://` URLs, so Shortcuts ("Open URLs"), Raycast, Alfred, a Stream Deck or the terminal can drive it:
 
@@ -102,7 +130,14 @@ A Raycast script command, for example:
 open "maramao://toggle"
 ```
 
+</details>
+
 ### Cat packs
+
+Add your own fur colours for the drawn cats with a folder and a `pack.json`, no code needed.
+
+<details>
+<summary>Show the details</summary>
 
 A cat pack adds your own cats without touching the code: fur colours for the drawn cats in **Laser chase** and **Cat invasion**. Packs are plain folders in `~/Library/Application Support/Maramao/Cats/`, loaded when Maramao starts. To start, copy [`packs/example`](packs/example) there. The format also has cat names, meme captions, pictures and tips: they are still accepted, but no mode shows them any more.
 
@@ -139,6 +174,8 @@ Rules, checked when the pack loads (a pack that breaks one is skipped; it never 
 - `id`: lower-case letters, digits and dashes, up to 40 characters. Colours are `#RRGGBB`; `stripes` and `nose` are optional.
 - `images` are PNG, GIF or JPEG files **inside the pack folder**: no web addresses, no `..`, at most 5 MB each, 50 images and 30 MB per pack.
 - Text limits: names 30 characters, captions 80 per line, tips 160; at most 16 palettes, 50 names, 200 captions, 100 tips per kind. `pack.json` up to 256 KB.
+
+</details>
 
 ---
 
@@ -242,9 +279,9 @@ The cats in **Laser chase** and **Cat invasion** are drawn in code (`Sources/Mar
 
 **Don't wake the cat** shows photos from the [WordPress Photo Directory](https://wordpress.org/photos/), all released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/). They are not committed: `scripts/build-app.sh` downloads them, shrinks them and copies them into the app. The list, with each photo's page and author, is [`Resources/cat-photos.tsv`](Resources/cat-photos.tsv). Thanks to Brandon Zhang, Julia Golomb, mdburnette, 渡邉厚夫, Taco Verdonschot, Sakib MD Nazmush, Midhun P, Noelia Segura and Yam B Chhetri.
 
-The cats' meows, growls and purrs are recordings by Joseph Sardin from [BigSoundBank](https://bigsoundbank.com/), released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/). Like the photos they are not committed: `scripts/build-app.sh` downloads them and copies them into the app. The list is [`Resources/cat-sounds.tsv`](Resources/cat-sounds.tsv).
+The cats' meows, growls and purrs are recordings by Joseph Sardin from [BigSoundBank](https://bigsoundbank.com/), released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/). Like the photos they are not committed: `scripts/build-app.sh` downloads them and copies them into the app, which trims the silence around each one, brings them all to the same loudness and loops the purr without a gap. The list is [`Resources/cat-sounds.tsv`](Resources/cat-sounds.tsv).
 
-The [website](https://maramao.kkratter.com/) shows screen recordings of the app itself in `site/media/mode-*.mp4`, and the yawning kitten clip that the logo comes from in `site/media/outro.mp4`.
+The [website](https://maramao.kkratter.com/) shows screen recordings of the app itself in `site/media/mode-*.mp4`, and the yawning kitten clip that the logo comes from in `site/media/outro.mp4`. The mode previews in this README are made from those recordings by `scripts/make-readme-previews.sh`, and the banner by `scripts/render-og.mjs`.
 
 The pictures in `packs/example/images` were drawn for this repository by a small script and are CC0, like the rest of that pack. Community packs declare their own license (CC0 or CC-BY) in `pack.json`.
 

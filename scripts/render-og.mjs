@@ -1,5 +1,7 @@
 // Renders the social preview cards from scripts/og/og.html into
-// site/og.jpg (English) and site/og-it.jpg (Italian), 1200x630.
+// site/og.jpg (English) and site/og-it.jpg (Italian), 1200x630, and the
+// README banner from scripts/og/banner.html into Resources/readme/banner.jpg
+// (1280x440 at 2x).
 //
 // Usage: node scripts/render-og.mjs
 // Needs Playwright with Chromium (npm i -D playwright && npx playwright install chromium)
@@ -16,18 +18,23 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const page = pathToFileURL(join(root, 'scripts/og/og.html')).href;
 const SETTLE_MS = 6000;
-const shots = [{ hash: '', out: 'site/og.jpg' }, { hash: '#it', out: 'site/og-it.jpg' }];
+const og = pathToFileURL(join(root, 'scripts/og/og.html')).href;
+const banner = pathToFileURL(join(root, 'scripts/og/banner.html')).href;
+const shots = [
+  { url: og, out: 'site/og.jpg', width: 1200, height: 630, scale: 1 },
+  { url: og + '#it', out: 'site/og-it.jpg', width: 1200, height: 630, scale: 1 },
+  { url: banner, out: 'Resources/readme/banner.jpg', width: 1280, height: 440, scale: 2 },
+];
 
 const tmp = mkdtempSync(join(tmpdir(), 'maramao-og-'));
 const browser = await chromium.launch({
   args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'],
 });
 try {
-  for (const { hash, out } of shots) {
-    const tab = await browser.newPage({ viewport: { width: 1200, height: 630 } });
-    await tab.goto(page + hash);
+  for (const { url, out, width, height, scale } of shots) {
+    const tab = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: scale });
+    await tab.goto(url);
     await tab.evaluate(() => document.fonts.ready);
     await tab.waitForTimeout(SETTLE_MS);
     const live = await tab.evaluate(() => document.querySelector('.grainient').classList.contains('is-live'));
