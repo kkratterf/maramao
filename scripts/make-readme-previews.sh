@@ -21,7 +21,7 @@ while read -r name seconds speed quality; do
     "$OUT/mode-$name.webp"
   echo "Wrote Resources/readme/mode-$name.webp ($(du -k "$OUT/mode-$name.webp" | cut -f1) KB)"
 done <<'LIST'
-laser 12 1.5 60
-pile 19 2 40
-sleepy 10 1 60
+laser 18 1.5 60
+pile 18 2 40
+sleepy 12 1 60
 LIST
