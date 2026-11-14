@@ -38,15 +38,49 @@
       });
       if (focus) tab.focus();
     }
+    // Until the visitor picks a tab, the modes play through one after the
+    // other: each clip runs once, its tab fills up, then the next one starts.
+    // A click or an arrow key stops that and loops the chosen clip.
+    var auto = !still && "IntersectionObserver" in window;
+    var stopAuto = function () {
+      if (!auto) return;
+      auto = false;
+      box.classList.remove("is-auto");
+      tabs.forEach(function (t) {
+        var v = document.getElementById(t.getAttribute("aria-controls")).querySelector("video");
+        if (v) { v.loop = true; if (v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
+      });
+    };
     tabs.forEach(function (tab, i) {
-      tab.addEventListener("click", function () { select(tab); });
+      var bar = document.createElement("i");
+      bar.className = "mode-progress";
+      bar.setAttribute("aria-hidden", "true");
+      tab.appendChild(bar);
+      var v = document.getElementById(tab.getAttribute("aria-controls")).querySelector("video");
+      if (v && auto) {
+        v.loop = false;
+        v.addEventListener("timeupdate", function () {
+          if (auto && v.duration) bar.style.setProperty("--p", String(v.currentTime / v.duration));
+        });
+        v.addEventListener("ended", function () {
+          if (!auto) return;
+          var nextTab = tabs[(i + 1) % tabs.length];
+          var nv = document.getElementById(nextTab.getAttribute("aria-controls")).querySelector("video");
+          if (nv) nv.currentTime = 0;
+          bar.style.setProperty("--p", "0");
+          select(nextTab);
+        });
+      }
+      tab.addEventListener("click", function () { stopAuto(); select(tab); });
       tab.addEventListener("keydown", function (e) {
         var step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
         if (!step) return;
         e.preventDefault();
+        stopAuto();
         select(tabs[(i + step + tabs.length) % tabs.length], true);
       });
     });
+    if (auto) box.classList.add("is-auto");
   });
 
   // FAQ accordion: every answer is open without JavaScript. With it they
@@ -120,54 +154,91 @@
       .catch(function () {});
   }
 
-  // The logo meows when the pointer passes over it. The meow is synthesised
-  // with Web Audio (a buzzy source through two moving formants), so there is
-  // no sound file to download. Browsers keep audio locked until the visitor
-  // first clicks or types, so the very first hover may stay silent.
+  // The logo meows when the pointer passes over it: a real recorded cat, a
+  // different one each time (CC0, Joseph Sardin, BigSoundBank: the same voices
+  // the app uses, trimmed and levelled). Browsers keep audio locked until the
+  // visitor first clicks, taps or types, so the sounds are fetched only then and
+  // a hover before that stays silent. On the home page a click on the logo
+  // counts as that first gesture: it meows and scrolls to the top instead of
+  // reloading the page.
   var logos = document.querySelectorAll(".brand");
   var AC = window.AudioContext || window.webkitAudioContext;
-  if (logos.length && AC) {
-    var ctx = null, last = 0;
+  if (logos.length && AC && window.fetch) {
+    var base = (document.querySelector('script[src$="site.js"]') || {}).src || "";
+    base = base.replace(/site\.js.*$/, "media/meows/");
+    var names = ["meow-1", "meow-3", "meow-7", "meow-8", "meow-10", "meow-12",
+      "little-meow-1", "little-meow-2", "little-meow-3", "little-meow-4",
+      "little-meow-5", "little-meow-7", "little-meow-9", "little-meow-11"];
+    var ctx = null, voices = [], bag = [], last = null, playing = null, pending = false;
+    var load = function () {
+      names.forEach(function (n) {
+        fetch(base + n + ".mp3")
+          .then(function (r) { return r.ok ? r.arrayBuffer() : null; })
+          .then(function (data) {
+            if (!data) return;
+            // Safari only has the callback form of decodeAudioData.
+            ctx.decodeAudioData(data, function (buf) {
+              voices.push(buf);
+              if (pending) { pending = false; meow(); }
+            }, function () {});
+          })
+          .catch(function () {});
+      });
+    };
     var unlock = function () {
-      if (!ctx) { try { ctx = new AC(); } catch (e) { return; } }
+      if (!ctx) {
+        try { ctx = new AC(); } catch (e) { return; }
+        load();
+      }
       if (ctx.state === "suspended") ctx.resume();
     };
-    ["pointerdown", "keydown", "touchstart"].forEach(function (t) {
-      window.addEventListener(t, unlock, { passive: true });
+    ["pointerdown", "pointerup", "keydown", "touchend"].forEach(function (t) {
+      window.addEventListener(t, unlock, { passive: true, capture: true });
     });
-    var meow = function () {
-      var now = Date.now();
-      if (!ctx || ctx.state !== "running" || now - last < 900) return;
-      last = now;
-      var t = ctx.currentTime, len = 0.42 + Math.random() * 0.2;
-      var f0 = 430 + Math.random() * 160;
-      var src = ctx.createOscillator();
-      src.type = "sawtooth";
-      src.frequency.setValueAtTime(f0, t);
-      src.frequency.linearRampToValueAtTime(f0 * 1.45, t + len * 0.35);
-      src.frequency.exponentialRampToValueAtTime(f0 * 0.8, t + len);
-      var vib = ctx.createOscillator(), vibGain = ctx.createGain();
-      vib.frequency.value = 7; vibGain.gain.value = f0 * 0.02;
-      vib.connect(vibGain); vibGain.connect(src.frequency);
-      var out = ctx.createGain();
-      out.gain.setValueAtTime(0.0001, t);
-      out.gain.exponentialRampToValueAtTime(0.18, t + 0.05);
-      out.gain.setValueAtTime(0.18, t + len * 0.6);
-      out.gain.exponentialRampToValueAtTime(0.0001, t + len);
-      // "m" (closed, dark) opens to "ia" (bright) and closes to "ow".
-      [[650, 1500, 900, 6], [1700, 3100, 1400, 9]].forEach(function (f) {
-        var bp = ctx.createBiquadFilter();
-        bp.type = "bandpass"; bp.Q.value = f[3];
-        bp.frequency.setValueAtTime(f[0], t);
-        bp.frequency.linearRampToValueAtTime(f[1], t + len * 0.35);
-        bp.frequency.linearRampToValueAtTime(f[2], t + len);
-        src.connect(bp); bp.connect(out);
-      });
-      out.connect(ctx.destination);
-      src.start(t); vib.start(t);
-      src.stop(t + len + 0.05); vib.stop(t + len + 0.05);
+    // A shuffled bag: every voice plays once before any repeats, and never
+    // the same one twice in a row.
+    var next = function () {
+      if (!bag.length) {
+        bag = voices.slice();
+        for (var i = bag.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1)), t = bag[i]; bag[i] = bag[j]; bag[j] = t;
+        }
+        if (bag.length > 1 && bag[bag.length - 1] === last) bag.unshift(bag.pop());
+      }
+      return (last = bag.pop());
     };
-    logos.forEach(function (el) { el.addEventListener("pointerenter", meow); });
+    var meow = function () {
+      if (!ctx || ctx.state !== "running" || !voices.length) return;
+      var t = ctx.currentTime;
+      // A new hover cuts the meow that is still going, so every hover answers.
+      if (playing) {
+        playing.gain.gain.setTargetAtTime(0, t, 0.02);
+        playing.src.stop(t + 0.1);
+      }
+      var src = ctx.createBufferSource(), gain = ctx.createGain();
+      src.buffer = next();
+      src.playbackRate.value = 0.94 + Math.random() * 0.12;
+      gain.gain.value = 0.55;
+      src.connect(gain); gain.connect(ctx.destination);
+      src.start(t);
+      var me = playing = { src: src, gain: gain };
+      src.onended = function () { if (playing === me) playing = null; };
+    };
+    logos.forEach(function (el) {
+      el.addEventListener("pointerenter", function (e) { if (e.pointerType !== "touch") meow(); });
+      el.addEventListener("click", function (e) {
+        var here = el.href && el.href.split("#")[0] === location.href.split("#")[0];
+        if (!here) return;
+        e.preventDefault();
+        unlock();
+        // On the first click the context may still be resuming and the
+        // voices still loading: meow as soon as both are ready.
+        if (!voices.length) pending = true;
+        else if (ctx && ctx.state !== "running" && ctx.resume) ctx.resume().then(meow, function () {});
+        else meow();
+        window.scrollTo({ top: 0, behavior: still ? "auto" : "smooth" });
+      });
+    });
   }
 
   var year = document.querySelector("[data-year]");
