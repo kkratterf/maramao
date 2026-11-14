@@ -62,7 +62,7 @@ h1, h2, .lead, .section-head p { text-wrap: balance; }
 .top { position: sticky; top: 0; z-index: 20; padding: 14px 16px 0; }
 .top-in {
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  width: 100%; max-width: 560px; height: 52px; margin: 0 auto; padding: 0 8px 0 16px; border-radius: 16px;
+  width: 100%; max-width: 894px; height: 52px; margin: 0 auto; padding: 0 8px 0 16px; border-radius: 16px;
   background: rgb(20 20 23 / 62%); border: 1px solid var(--line);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 12px 32px -12px rgb(0 0 0 / 60%);
   -webkit-backdrop-filter: saturate(170%) blur(20px); backdrop-filter: saturate(170%) blur(20px);
@@ -267,14 +267,42 @@ kbd {
   background: linear-gradient(180deg, #2a2a2f, #1a1a1e); border: 1px solid var(--line-strong);
   box-shadow: inset 0 -3px 0 rgb(0 0 0 / 50%), 0 1px 0 rgb(255 255 255 / 6%);
 }
+/* A slice of the macOS menu bar over a warm wallpaper, Maramao's cat and countdown lit up */
+.cell .vis:has(.mini-bar) { margin: -28px -28px 24px; height: 162px; border-radius: 0; align-items: flex-start; padding-top: 0;
+  background: linear-gradient(180deg, transparent 40%, var(--bg-2)), radial-gradient(90% 140% at 70% 0%, #8a2a12, #1d0c08 60%, #08080a); }
 .mini-bar {
-  display: flex; align-items: center; gap: 14px; width: min(100%, 440px); height: 34px; padding: 0 14px; border-radius: 10px;
-  background: rgb(255 255 255 / 6%); border: 1px solid var(--line); font: 500 13px/1 var(--font);
+  display: flex; align-items: center; gap: 16px; width: 100%; height: 30px; padding: 0 16px;
+  background: rgb(30 22 20 / 55%); border-bottom: 1px solid rgb(255 255 255 / 8%);
+  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  font: 500 13px/1 var(--font); color: rgb(255 255 255 / 92%); white-space: nowrap;
 }
-.mini-bar svg { width: 14px; height: 14px; flex: none; }
+.mini-bar svg { width: 15px; height: 15px; flex: none; }
+.mini-bar .mb-batt { width: 24px; height: 12px; }
+.mini-bar .mb-app { font-weight: 700; }
 .mini-bar .sp { margin-left: auto; }
-.mini-bar b { font-variant-numeric: tabular-nums; font-weight: 600; padding: 4px 8px; border-radius: 6px; background: var(--accent-soft); color: #ffc2b3; box-shadow: 0 0 24px rgb(255 90 60 / 30%); }
-.mini-bar i { font-style: normal; color: var(--muted); }
+.mini-bar i { font-style: normal; font-variant-numeric: tabular-nums; }
+.mb-cat {
+  display: inline-flex; align-items: center; gap: 5px; height: 22px; margin: 0 -2px; padding: 0 8px; border-radius: 6px;
+  font-variant-numeric: tabular-nums; font-weight: 500; color: #fff;
+  background: rgb(255 255 255 / 16%); box-shadow: 0 0 0 1px rgb(255 120 90 / 45%), 0 0 26px rgb(255 90 60 / 45%);
+}
+.mini-bar .mb-cat svg { width: 16px; height: 16px; }
+@media (max-width: 1000px) { .mini-bar .mb-menu { display: none; } }
+@media (max-width: 520px) { .mini-bar { gap: 12px; padding: 0 12px; } .mini-bar .mb-app, .mini-bar svg:not(.i-apple):not(.mb-catsvg):not(.mb-batt) { display: none; } }
+/* Rhythms: each one a strip of work then break, to scale, so 90/20 really is longer */
+.rhythms { display: grid; gap: 16px; width: 100%; max-width: 340px; }
+.rh { display: grid; grid-template-columns: 64px 1fr 48px; align-items: center; gap: 12px; color: var(--dim); font-size: 12px; font-weight: 600; }
+.rh em { font-style: normal; }
+.rh .track { display: flex; gap: 3px; height: 12px; }
+.rh .track i { display: block; height: 100%; border-radius: 3px; background: #2e2e33; }
+.rh .track i:first-child { width: calc(var(--w) / 110 * 100%); }
+.rh .track i:last-child { width: calc(var(--b) / 110 * 100%); background: #3a2420; }
+.rh b { font: 400 18px/1 var(--display); color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+.rh b small { font: 500 11px/1 var(--font); color: var(--dim); margin-left: 1px; }
+.rh.on { color: var(--ink); }
+.rh.on .track i:first-child { background: #e4e4e7; }
+.rh.on .track i:last-child { background: var(--accent); box-shadow: 0 0 14px rgb(255 90 60 / 55%); }
+.rh.on b { color: var(--ink); }
 .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .chip { display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: rgb(255 255 255 / 4%); font-size: 13px; font-weight: 600; color: var(--muted); }
 .chip.on { background: var(--accent-soft); border-color: rgb(255 90 60 / 40%); color: #ffc2b3; }
@@ -290,20 +318,6 @@ kbd {
 .menu span.on { background: var(--accent); color: #fff; box-shadow: 0 0 24px rgb(255 90 60 / 35%); }
 .menu i { font-style: normal; color: var(--dim); }
 .menu hr { width: calc(100% - 20px); margin: 4px 10px; border: 0; border-top: 1px solid rgb(255 255 255 / 10%); }
-.dials { display: flex; gap: 22px; }
-.dial { display: grid; grid-template-areas: "ring" "name"; justify-items: center; row-gap: 10px; color: var(--dim); font-size: 12px; font-weight: 600; }
-.dial i, .dial b { grid-area: ring; }
-.dial i {
-  display: block; width: 68px; height: 68px; border-radius: 50%;
-  background: conic-gradient(#3f3f46 0 calc(var(--w) / (var(--w) + var(--b)) * 100%), #27272a 0);
-  -webkit-mask: radial-gradient(closest-side, transparent 80%, #000 82%); mask: radial-gradient(closest-side, transparent 80%, #000 82%);
-}
-.dial b { align-self: center; display: flex; align-items: baseline; font: 400 22px/1 var(--display); color: var(--muted); font-variant-numeric: tabular-nums; }
-.dial b small { font-size: 11px; font-weight: 500; color: var(--dim); letter-spacing: 0; }
-.dial em { grid-area: name; font-style: normal; }
-.dial.on { color: var(--ink); }
-.dial.on i { background: conic-gradient(#e4e4e7 0 calc(var(--w) / (var(--w) + var(--b)) * 100%), var(--accent) 0); filter: drop-shadow(0 0 14px rgb(255 90 60 / 40%)); }
-.dial.on b { color: var(--ink); }
 
 /* Closing call to action */
 .outro { position: relative; text-align: center; padding: 140px 0; overflow: hidden; }
@@ -358,7 +372,7 @@ kbd {
 .foot .brand { color: var(--ink); margin-bottom: 12px; font-size: 18px; }
 .foot .brand img { width: 28px; height: 28px; border-radius: 7px; }
 .foot-grid > :first-child p:last-child { max-width: 22em; }
-.foot-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding: 0 8px; color: var(--dim); font-size: 13px; }
+.foot-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding: 0 16px; color: var(--dim); font-size: 13px; }
 .made { display: flex; align-items: center; gap: 4px; }
 .made .maker { text-decoration: none; }
 .maker { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px 4px 5px; border-radius: 8px; color: var(--muted); font-weight: 500; }
