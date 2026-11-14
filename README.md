@@ -40,17 +40,17 @@ Pick one from **Mode** (*Modalità*) in the menu, or let **Surprise** (*Sorpresa
   <tr>
     <td width="33%" valign="top">
       <img src="Resources/readme/mode-laser.webp" alt="Laser chase: a cat chases the red dot across the screen" width="100%">
-      <h4>🔴 Laser chase<br><sub><i>Caccia al laser</i></sub></h4>
+      <h4>🔴 Laser chase</h4>
       Your pointer turns into a red laser dot and a cat chases it all over the screen, eyes locked on the dot. It pounces when the dot stops, beams when it catches it (hearts!) and frowns when it misses. Leave the mouse alone and it sits down to groom.
     </td>
     <td width="33%" valign="top">
       <img src="Resources/readme/mode-pile.webp" alt="Cat invasion: cats rain down and pile up over the screen" width="100%">
-      <h4>🐾 Cat invasion<br><sub><i>Invasione di gatti</i></sub></h4>
+      <h4>🐾 Cat invasion</h4>
       Cats rain from the top of the screen, happy ones and grumpy ones, and pile up until everything is buried.
     </td>
     <td width="33%" valign="top">
       <img src="Resources/readme/mode-sleepy.webp" alt="Don't wake the cat: a sleeping cat that wakes up angry when you touch the mouse" width="100%">
-      <h4>😴 Don't wake the cat<br><sub><i>Non svegliare il gatto</i></sub></h4>
+      <h4>😴 Don't wake the cat</h4>
       A big photo of a sleeping cat over your blurred screen. Touch the mouse or the keyboard and an angry cat glares at you, with a passive-aggressive remark underneath ("Can't stay away from the computer for 5 minutes?"). Leave everything alone and it falls asleep again. Each break brings a new pair of cats.
     </td>
   </tr>
